@@ -1,10 +1,35 @@
-# Set up prompt
-# PROMPT='%F{26}%n%f : %F{28}%~%f : '
-PROMPT='%n : %~ : '
-autoload -U colors && colors
-#export PS1='%F{26}%K{000}%n'
-export PS1="%F{214}%K{000}%m%F{015}%K{000}:%F{039}%K{000}%~%F{015}%K{000}\$ "
-
-
 # Aliases
 alias zshreload='source ~/.zshrc'
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+alias ls='ls --color'
+
+# Word skipping
+bindkey ";5C" forward-word
+bindkey ";5D" backward-word
+
+### Set up prompt ###
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+
+# Show current git branch right of prompt
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '%b'
+
+# Prompt definition
+NEWLINE=$'\n'
+PROMPT="%F{214}%B%~${NEWLINE}%%%b "
+RPROMPT='${vcs_info_msg_0_}'
+
+### One time things ###
+
+# Syntax highligthing
+source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+export EDITOR=$(which vim)
