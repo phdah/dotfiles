@@ -1,22 +1,21 @@
 #!/bin/bash
 
 # Define source directory
-SOURCE_DIR=$HOME/repos
+HOME=/home/$1
+SOURCE_DIR=$HOME/repos/linux_set_up
 
 # Clean up folders
 rm -r $HOME/Desktop $HOME/Documents $HOME/Downloads $HOME/Music $HOME/Pictures $HOME/Public $HOME/Templates $HOME/Videos
 
 # Set up folders
-mkdir stuff scripts downloads
-# Create repos is not exists
-if ! [[ -d $SOURCE_DIR ]]
-then mkdir -p $SOURCE_DIR
-fi
+[ -d $HOME/repos ] || mkdir -p $HOME/repos
+[ -d $HOME/scripts ] || mkdir -p $HOME/scripts
+[ -d $HOME/downloads ] || mkdir -p $HOME/downloads
 
 # Install Google Chrome
-wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-sudo dpkg -i google-chrome-stable_current_amd64.deb
-rm google-chrome-stable_current_amd64.deb
+# wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+# sudo dpkg -i google-chrome-stable_current_amd64.deb
+# rm google-chrome-stable_current_amd64.deb
 
 # Install packages
 ## install git manually, this is requeried to get this script lol
@@ -39,6 +38,7 @@ chsh -s $(which zsh)
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $SOURCE_DIR
 
 # Symlink dotfiles to repo
+echo "NOT DOING symlink to $SOURCE_DIR/zshrc"
 ln -s $SOURCE_DIR/zshrc $HOME/.zshrc
 
 # Create nvim is not exists
