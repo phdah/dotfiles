@@ -3,6 +3,9 @@ alias zshreload='source ~/.zshrc'
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color'
+alias bat='batcat'
+
+alias gitall="git add . && git commit -m '$1' && git push"
 
 # Word skipping
 bindkey ";5C" forward-word
