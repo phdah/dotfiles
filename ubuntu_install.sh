@@ -63,6 +63,7 @@ git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR
 ln -s $SOURCE_DIR/zshrc $HOME/.zshrc
 ln -s $SOURCE_DIR/i3status.conf $HOME/.config/i3/i3status.conf
 ln -s $SOURCE_DIR/config $HOME/.config/i3/config
+ln -s $SOURCE_DIR/xprofile $HOME/.xprofile
 
 # Create nvim is not exists
 [ -d $HOME/.config/nvim ] && mkdir -p $HOME/.config/nvim
