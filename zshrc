@@ -4,8 +4,20 @@ alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color'
 alias bat='batcat'
+alias vim='nvim'
+alias gitl='git log --pretty=oneline'
+alias gits='git status'
 
-alias gitall="git add . && git commit -m '$1' && git push"
+# Functions
+function gitall() {
+git add . && git commit -m "$1" && git push
+}
+function batp() {
+bat $1 --style=plain
+}
+function rgf() {
+rg --files | rg $1
+}
 
 # Word skipping
 bindkey ";5C" forward-word
@@ -27,7 +39,7 @@ zstyle ':vcs_info:git:*' formats '%b'
 
 # Prompt definition
 NEWLINE=$'\n'
-PROMPT="%F{214}%B%~${NEWLINE}%%%b "
+PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
 RPROMPT='${vcs_info_msg_0_}'
 
 ### One time things ###
