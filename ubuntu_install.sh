@@ -10,8 +10,9 @@
 # git clone git@github.com:phdah/linux_set_up.git
 
 # Define source directory
+(! [ "$1" ] || ! [ "$2" ]) && printf 'Incorrect input. Make sure to input\n1: user\n2: touchpad name\n\n' && xinput && exit 1
 HOME=/home/$1
-SOURCE_DIR=$HOME/repos/linux_set_up
+SOURCE_DIR=$HOME/repos
 
 # Clean up folders
 [ -d $HOME/Desktop ] && rm -r $HOME/Desktop
@@ -49,22 +50,26 @@ apt install --yes \
 
 apt update --yes
 
+# Install gitgutter
+! [ -d $HOME/.config/nvim/pack/airblade/start/vim-gitgutter ] && mkdir -p $HOME/.config/nvim/pack/airblade/start && git clone https://github.com/airblade/vim-gitgutter.git $HOME/.config/nvim/pack/airblade/start/vim-gitgutter
+nvim -u NONE -c "helptags $HOME/.config/nvim/pack/airblade/start/vim-gitgutter/doc" -c q
+
 # Set zsh to the default shell
 chsh -s $(which zsh)
 
 # Set zsh synbtax highligthing
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $SOURCE_DIR
+! [ -d $SOURCE_DIR/zsh-syntax-highlighting ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $SOURCE_DIR/zsh-syntax-highlighting
 
 # GNOME color theme
-git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR
-./$SOURCE_DIR/nord-gnome-terminal/src/nord.sh
+! [ -d $SOURCE_DIR/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR/nord-gnome-terminal && $SOURCE_DIR/nord-gnome-terminal/src/nord.sh
 
 # Symlink dotfiles to repo
-ln -s $SOURCE_DIR/zshrc $HOME/.zshrc
-ln -s $SOURCE_DIR/i3status.conf $HOME/.config/i3/i3status.conf
-ln -s $SOURCE_DIR/config $HOME/.config/i3/config
-ln -s $SOURCE_DIR/xprofile $HOME/.xprofile
+ln -sf $SOURCE_DIR/linux_set_up/zshrc $HOME/.zshrc
+ln -sf $SOURCE_DIR/linux_set_up/xprofile $HOME/.xprofile
 
-# Create nvim is not exists
-[ -d $HOME/.config/nvim ] && mkdir -p $HOME/.config/nvim
-ln -s $SOURCE_DIR/vimrc $HOME/.config/nvim/init.vim
+cp $SOURCE_DIR/linux_set_up/i3status.conf $HOME/.config/i3/i3status.conf
+cp $SOURCE_DIR/linux_set_up/config $HOME/.config/i3/config
+cp $SOURCE_DIR/linux_set_up/vimrc $HOME/.config/nvim/init.vim
+
+sed -i "$ a\exec xinput set-prop '$2' 'libinput Tapping Enabled' 1" .config/i3/config
+sed -i "$ a\exec xinput set-prop '$2' 'libinput Natural Scrolling Enabled' 1" .config/i3/config

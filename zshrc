@@ -12,8 +12,8 @@ alias gits='git status'
 function gitall() {
 git add . && git commit -m "$1" && git push
 }
-function batp() {
-bat $1 --style=plain
+function cat() {
+bat $1 --style=plain --paging=never
 }
 function rgf() {
 rg --files | rg $1
