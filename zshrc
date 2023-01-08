@@ -1,5 +1,4 @@
 # Aliases
-alias zshreload='source ~/.zshrc'
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color'
@@ -22,6 +21,9 @@ rg --files | rg $1
 # Word skipping
 bindkey ";5C" forward-word
 bindkey ";5D" backward-word
+
+# Path
+path+=/home/phdah/scripts
 
 ### Set up prompt ###
 
