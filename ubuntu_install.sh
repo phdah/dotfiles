@@ -47,7 +47,8 @@ apt install --yes \
 	curl \
 	neovim \
         ripgrep \
-        bat
+        bat \
+        xsel
 
 apt update --yes
 
