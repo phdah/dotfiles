@@ -66,6 +66,7 @@ chsh -s $(which zsh)
 # Symlink dotfiles to repo
 ln -sf $SOURCE_DIR/linux_set_up/zshrc $HOME/.zshrc
 ln -sf $SOURCE_DIR/linux_set_up/xprofile $HOME/.xprofile
+ln -sf $SOURCE_DIR/linux_set_up/gdbinit $HOME/.gdbinit
 
 cp $SOURCE_DIR/linux_set_up/i3status.conf $HOME/.config/i3/i3status.conf
 cp $SOURCE_DIR/linux_set_up/config $HOME/.config/i3/config
