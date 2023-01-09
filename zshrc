@@ -6,6 +6,7 @@ alias bat='batcat'
 alias vim='nvim'
 alias gitl='git log --pretty=oneline'
 alias gits='git status'
+alias gitp='git pull'
 
 # Functions
 function gitall() {
