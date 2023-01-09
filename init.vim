@@ -30,11 +30,11 @@ set number
 
 "" tabs https://vim.fandom.com/wiki/Converting_tabs_to_spaces
 "set up default tabs
-set softtabstop=4 "set number of spaces, but treat as one object 
+set softtabstop=4 "set number of spaces, but treat as one object
 set shiftwidth=4 "set width for 'enter' after tabbed line
 set expandtab "use spaces instead of tab (use CTR-V<tab> for normal tab)
-    
-    "tabs make
+
+"tabs make
 autocmd FileType make setlocal noexpandtab
 
 "" syntax
