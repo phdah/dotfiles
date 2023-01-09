@@ -50,4 +50,4 @@ RPROMPT='${vcs_info_msg_0_}'
 # Syntax highligthing
 source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export EDITOR=$(which vim)
+export EDITOR=$(which nvim)
