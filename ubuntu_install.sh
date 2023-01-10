@@ -60,6 +60,9 @@ apt autoremove --yes
 # Set zsh to the default shell
 chsh -s $(which zsh)
 
+# Set up git editor
+git config --global core.editor nvim
+
 # Install gitgutter
 printf '\nSetting up gitgutter\n\n'
 ! [ -d $HOME/.config/nvim/pack/airblade/start/vim-gitgutter ] && mkdir -p $HOME/.config/nvim/pack/airblade/start && git clone https://github.com/airblade/vim-gitgutter.git $HOME/.config/nvim/pack/airblade/start/vim-gitgutter && nvim -u NONE -c "helptags $HOME/.config/nvim/pack/airblade/start/vim-gitgutter/doc" -c q
