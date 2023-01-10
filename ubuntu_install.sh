@@ -48,7 +48,9 @@ apt install --yes \
 	neovim \
         ripgrep \
         bat \
-        xsel
+        xsel \
+        maim \
+        xclip
 
 apt update --yes
 
