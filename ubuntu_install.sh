@@ -45,12 +45,12 @@ apt install --yes \
 	zsh \
 	arandr \
 	curl \
-	neovim \
         ripgrep \
         bat \
         xsel \
         maim \
-        xclip
+        xclip \
+        cmake
 
 apt update --yes
 
@@ -76,6 +76,18 @@ printf 'Setting up zsh highlighting\n'
 # GNOME color theme
 printf 'Setting up Nord Gnome terminal\n'
 ! [ -d $SOURCE_DIR/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR/nord-gnome-terminal && $SOURCE_DIR/nord-gnome-terminal/src/nord.sh
+
+# Source neovim
+# TODO: https://github.com/neovim/neovim/wiki/Building-Neovim
+
+# neovim packer
+# TODO: https://github.com/wbthomason/packer.nvim
+
+# nvim-tree
+# TODO: https://github.com/nvim-tree/nvim-tree.lua
+
+# barbar.nvim
+# TODO: https://github.com/romgrk/barbar.nvim
 
 # Symlink dotfiles to repo
 printf 'Setting up symlinks\n'

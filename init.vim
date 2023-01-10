@@ -1,6 +1,6 @@
 """ Set up vim
 "set show number as default
-" Git Gutter"
+"Git Gutter"
 set updatetime=100
 let g:gitgutter_max_signs = 500
 " No mapping
@@ -18,15 +18,57 @@ function! GitBranch()
   return system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
 endfunction
 
-function! GitStatus()
-  let [a,m,r] = GitGutterGetHunkSummary()
-  return printf('+%d ~%d -%d', a, m, r)
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
 endfunction
 
-set statusline+=%{GitStatus()}
-set laststatus=2
+function! GitStatus()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf(' | +%d ~%d -%d ', a, m, r)
+endfunction
+
+function! Buffer_lower()
+    let buffer_total = len(getbufinfo({'buflisted':1}))
+    let current_buffer = bufnr('%')
+    let lower_bound = range(1,current_buffer-1)
+    if buffer_total == 1
+        return printf('')
+    elseif current_buffer == 1
+        return printf('')
+    else
+        return printf('%s', string(lower_bound))
+    endif
+endfunction
+
+function! Buffer_upper()
+    let buffer_total = len(getbufinfo({'buflisted':1}))
+    let current_buffer = bufnr('%')
+    let upper_bound = range(current_buffer+1,buffer_total)
+    if buffer_total == 1
+        return printf('')
+    elseif current_buffer == buffer_total
+        return printf('')
+    else
+        return printf('%s', string(upper_bound))
+    endif
+endfunction
+
+" Git and path/filename
+set statusline=
+set statusline+=%#PmenuSel#%{StatuslineGit()}%{GitStatus()}%#LineNr#
+set statusline+=\ %f%m
+" Buffers
+set statusline+=%=
+set statusline+=%{Buffer_lower()}%#CursorColumn#\[\ %n\ \]%#LineNr#%{Buffer_upper()}
+" Fileformat and lines
+set statusline+=%=
+set statusline+=%#CursorColumn#\ %y\ %{&fileencoding?&fileencoding:&encoding}\[%{&fileformat}\]
+set statusline+=\ %p%%\ %l:%c\ 
 
 set number
+
+" TODO: set colorcolumn=80
 
 "" tabs https://vim.fandom.com/wiki/Converting_tabs_to_spaces
 "set up default tabs
@@ -44,6 +86,7 @@ syntax on
 "search
 set hls
 set incsearch
+
 "https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)#Creating_keymaps
 nnoremap <CR> :noh<CR><CR>
 "whitespace
