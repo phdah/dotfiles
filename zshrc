@@ -24,14 +24,19 @@ bindkey ";5C" forward-word
 bindkey ";5D" backward-word
 
 # Path
-path+=/home/phdah/scripts
+# TODO: have a sepperate path file that's sources here. That ways I can have unique paths for each setup.
+path+=$HOME/scripts
+path+=/opt/awsvpnclient/
+path+=$HOME/.local/bin/
+path+=/usr/local/bin
+path+=$HOME/.screenlayout
 
 ### Set up prompt ###
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
 SAVEHIST=1000
-HISTFILE=~/.zsh_history
+HISTFILE=$HOME/.zsh_history
 
 # Show current git branch right of prompt
 autoload -Uz vcs_info

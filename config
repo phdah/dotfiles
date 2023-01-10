@@ -198,9 +198,12 @@ bar {
   status_command i3status --config /home/phdah/.config/i3/i3status.conf
 }
 
-bindsym $mod+d exec "dmenu_run -nf '#BBBBBB' -nb '#222222' -sb '#03B4A8' -sf '#000000' -fn 'monospace-10' -p 'dmenu prompt &gt;'"
+# Set up search bar color
+bindsym $mod+d exec "dmenu_run -nf '#FFFFFF' -nb '#2E3440' -sb '#88C0D0' -sf '#000000' -fn 'monospace-10' -p 'dmenu prompt &gt;'"
 
-bindsym --release Print exec --no-startup-id import ~/downloads/screenshot.png
+# Screendump select or whole screen
+bindsym $mod+p exec --no-startup-id maim -s | tee ~/downloads/screenshot_$(date +%s).png | xclip -selection clipboard -t image/png
+bindsym $mod+Shift+p exec --no-startup-id maim -i | tee ~/downloads/screenshot_$(date +%s).png | xclip -selection clipboard -t image/png
 
 # Remove titlebar
 default_border pixel
