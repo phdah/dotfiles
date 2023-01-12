@@ -95,6 +95,7 @@
     "search
     set hls
     set incsearch
+    set inccommand=nosplit
 
     "https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)#Creating_keymaps
     nnoremap <CR> :noh<CR><CR>
