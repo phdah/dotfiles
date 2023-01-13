@@ -92,7 +92,6 @@ printf 'Setting up symlinks\n'
     ln -sf $SOURCE_DIR/linux_set_up/config $HOME/.config/i3/config
     ln -sf $SOURCE_DIR/linux_set_up/init.vim $HOME/.config/nvim/init.vim
     ln -sf $SOURCE_DIR/linux_set_up/user-dirs.dirs $HOME/.config/user-dirs.dirs
-    ln -sf $SOURCE_DIR/linux_set_up/dunstrc /etc/xdg/dunst/dunstrc
 
     [ -d $HOME/.paths ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
 
