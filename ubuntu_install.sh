@@ -7,11 +7,6 @@
     HOME=/home/$1
     SOURCE_DIR=$HOME/repos
 
-# Install Google Chrome
-printf '\nInstall Google chrome\n\n'
-    wget -P $HOME https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    dpkg -i $HOME/google-chrome-stable_current_amd64.deb
-
 # Set up folders
     # Clean up folders
 printf '\nClean up and add directories\n\n'
@@ -45,12 +40,19 @@ printf '\nApt installs\n\n'
             xsel \
             maim \
             xclip \
-            cmake
+            cmake \
+            neofetch
 
     apt update --yes
     printf 'Packages not updated\n'
     apt list --upgradable
     apt autoremove --yes
+
+# Install Google Chrome
+printf '\nInstall Google chrome\n\n'
+    wget -P $HOME https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    dpkg -i $HOME/google-chrome-stable_current_amd64.deb
+    apt-get install -f --yes
 
 # Set zsh to the default shell
 chsh -s $(which zsh)
@@ -92,9 +94,9 @@ printf 'Setting up symlinks\n'
     ln -sf $SOURCE_DIR/linux_set_up/config $HOME/.config/i3/config
     ln -sf $SOURCE_DIR/linux_set_up/init.vim $HOME/.config/nvim/init.vim
     ln -sf $SOURCE_DIR/linux_set_up/user-dirs.dirs $HOME/.config/user-dirs.dirs
-    ln -sf $SOURCE_DIR/linux_set_up/dunstrc /etc/xdg/dunst/dunstrc
+    ln -sf $SOURCE_DIR/linux_set_up/kitty.conf $HOME/.config/kitty/kitty.conf
 
-    [ -d $HOME/.paths ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
+    ! [ -f "$HOME/.paths" ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
 
 # Set up mousepad
     printf 'Setting mousepad\n\n'
@@ -105,4 +107,5 @@ printf 'Setting up symlinks\n'
     printf 'Removing files\n\n'
     rm $HOME/google-chrome-stable_current_amd64.deb
 
+clear && neofetch
 printf '\nDone!\n'
