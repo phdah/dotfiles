@@ -19,6 +19,9 @@ function rgf() {
 rg --files | rg $1
 }
 
+# Default to emacs keybindings
+bindkey -e
+
 # Word skipping
 bindkey ";5C" forward-word
 bindkey ";5D" backward-word
