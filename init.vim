@@ -1,4 +1,20 @@
 " # Set up vim # "
+
+" Key mapping
+    let mapleader = " "
+
+    nnoremap <CR> :noh<CR><CR>
+
+    nnoremap <leader>1 :b1<CR>
+    nnoremap <leader>2 :b2<CR>
+    nnoremap <leader>3 :b3<CR>
+    nnoremap <leader>4 :b4<CR>
+    nnoremap <leader>5 :b5<CR>
+    nnoremap <leader>6 :b6<CR>
+    nnoremap <leader>7 :b7<CR>
+    nnoremap <leader>8 :b8<CR>
+    nnoremap <leader>9 :b9<CR>
+
 "set show number as default "
     set number
 
@@ -97,8 +113,6 @@
     set incsearch
     set inccommand=nosplit
 
-    "https://vim.fandom.com/wiki/Mapping_keys_in_Vim_-_Tutorial_(Part_1)#Creating_keymaps
-    nnoremap <CR> :noh<CR><CR>
     "whitespace
     " The following alternative may be less obtrusive.
     highlight ExtraWhitespace ctermbg=red guibg=red
