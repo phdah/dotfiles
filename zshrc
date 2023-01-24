@@ -26,6 +26,15 @@ bindkey -e
 bindkey ";5C" forward-word
 bindkey ";5D" backward-word
 
+# Home/End/Del
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+bindkey  "^[[3~"  delete-char
+
+# PgUp/Down
+bindkey "^[[5~" history-beginning-search-backward
+bindkey "^[[6~" history-beginning-search-forward
+
 # Path
 source $HOME/.paths
 
