@@ -20,39 +20,33 @@ printf '\nClean up and add directories\n\n'
     [ -d $HOME/Videos ] && rm -r $HOME/Videos
 
     # Set up folders
-    ! [ -d $HOME/repos ] || mkdir -p $HOME/repos
-    ! [ -d $HOME/repos/work ] || mkdir -p $HOME/repos/work
-    ! [ -d $HOME/repos/privat ] || mkdir -p $HOME/repos/privat
-    ! [ -d $HOME/scripts ] || mkdir -p $HOME/scripts
-    ! [ -d $HOME/downloads ] || mkdir -p $HOME/downloads
+    ! [ -d $HOME/repos ] && mkdir -p $HOME/repos
+    ! [ -d $HOME/repos/work ] && mkdir -p $HOME/repos/work
+    ! [ -d $HOME/repos/privat ] && mkdir -p $HOME/repos/privat
+    ! [ -d $HOME/scripts ] && mkdir -p $HOME/scripts
+    ! [ -d $HOME/downloads ] && mkdir -p $HOME/downloads
 
 # Install packages
-printf '\nApt installs\n\n'
-    apt upgrade --yes
-    apt update --yes
-    apt install --yes \
-            i3 \
+printf '\nParu installs\n\n'
+    paru
+    paru -Syy \
+            i3-wm \
+	    i3lock \
+	    i3status \
+            dmenu \
+	    dunst \
+            xorg-xsetroot \
             zsh \
             arandr \
-            curl \
             ripgrep \
             bat \
             xsel \
             maim \
             xclip \
             cmake \
-            neofetch
-
-    apt update --yes
-    printf 'Packages not updated\n'
-    apt list --upgradable
-    apt autoremove --yes
-
-# Install Google Chrome
-printf '\nInstall Google chrome\n\n'
-    wget -P $HOME https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    dpkg -i $HOME/google-chrome-stable_current_amd64.deb
-    apt-get install -f --yes
+            neofetch \
+	    google-chrome
+    paru
 
 # Set zsh to the default shell
 chsh -s $(which zsh)
@@ -72,9 +66,6 @@ printf 'Setting up zsh highlighting\n'
 printf 'Setting up Nord Gnome terminal\n'
     ! [ -d $SOURCE_DIR/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR/nord-gnome-terminal && $SOURCE_DIR/nord-gnome-terminal/src/nord.sh
 
-# Source neovim
-# TODO: https://github.com/neovim/neovim/wiki/Building-Neovim
-
 # neovim packer
 # TODO: https://github.com/wbthomason/packer.nvim
 
@@ -84,27 +75,28 @@ printf 'Setting up Nord Gnome terminal\n'
 # barbar.nvim
 # TODO: https://github.com/romgrk/barbar.nvim
 
-# Symlink dotfiles to repo
+# Symlink and copy (dot)files from repo
 printf 'Setting up symlinks\n'
     ln -sf $SOURCE_DIR/linux_set_up/zshrc $HOME/.zshrc
     ln -sf $SOURCE_DIR/linux_set_up/xprofile $HOME/.xprofile
     ln -sf $SOURCE_DIR/linux_set_up/gdbinit $HOME/.gdbinit
+    ln -sf $SOURCE_DIR/linux_set_up/xinitrc $HOME/.xinitrc
 
+    ln -sf $SOURCE_DIR/linux_set_up/dunstrc $HOME/.config/dunst/dunstrc
     ln -sf $SOURCE_DIR/linux_set_up/i3status.conf $HOME/.config/i3/i3status.conf
-    ln -sf $SOURCE_DIR/linux_set_up/config $HOME/.config/i3/config
+    ln -sf $SOURCE_DIR/linux_set_up/config_kitty $HOME/.config/i3/config
     ln -sf $SOURCE_DIR/linux_set_up/init.vim $HOME/.config/nvim/init.vim
     ln -sf $SOURCE_DIR/linux_set_up/user-dirs.dirs $HOME/.config/user-dirs.dirs
+    ln -sf $SOURCE_DIR/linux_set_up/kitty.conf $HOME/.config/kitty/kitty.conf
 
     ! [ -f "$HOME/.paths" ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
+
+    cp $SOURCE_DIR/linux_set_up/scripts/* $HOME/scripts/
 
 # Set up mousepad
     printf 'Setting mousepad\n\n'
     xinput set-prop "$2" 'libinput Tapping Enabled' 1
     xinput set-prop "$2" 'libinput Natural Scrolling Enabled' 1
-
-# Remove files
-    printf 'Removing files\n\n'
-    rm $HOME/google-chrome-stable_current_amd64.deb
 
 clear && neofetch
 printf '\nDone!\n'

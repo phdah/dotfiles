@@ -15,8 +15,13 @@
     nnoremap <leader>8 :b8<CR>
     nnoremap <leader>9 :b9<CR>
 
-"set show number as default "
+    nnoremap <leader>q :bd<CR>
+
+" Set show number as default "
     set number
+
+" Set clipboard on
+    set clipboard=unnamedplus
 
 " Autoindent "
     set noautoindent
@@ -90,10 +95,10 @@
     set statusline+=\ %p%%\ %l:%c\ 
 
 " Width limit "
-" TODO: set colorcolumn=80
+    set colorcolumn=80
+    highlight ColorColumn ctermbg=238
 
-"" tabs https://vim.fandom.com/wiki/Converting_tabs_to_spaces
-"set up default tabs "
+" Set up default tabs "
     set softtabstop=4 "set number of spaces, but treat as one object
     set shiftwidth=4 "set width for 'enter' after tabbed line
     set expandtab "use spaces instead of tab (use CTR-V<tab> for normal tab)
@@ -101,13 +106,13 @@
     "tabs make
     autocmd FileType make setlocal noexpandtab
 
-" folding "
+" Folding "
     set foldmethod=indent
 
-" syntax "
+" Syntax "
    syntax on
 
-" hilighting "
+" Hilighting "
     "search
     set hls
     set incsearch
