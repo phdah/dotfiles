@@ -3,6 +3,7 @@
 path+=$HOME/scripts
 path+=$HOME/.local/bin/
 path+=/usr/local/bin
+path+=/usr/bin
 path+=$HOME/.screenlayout
 
 # Spesific paths
