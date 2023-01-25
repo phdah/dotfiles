@@ -77,7 +77,7 @@ printf 'Setting up Nord Gnome terminal\n'
 
 # Symlink and copy (dot)files from repo
 printf 'Setting up symlinks\n'
-    ln -sf $SOURCE_DIR/linux_set_up/zshrc $HOME/.zshrc
+    ln -sf $SOURCE_DIR/linux_set_up/arch_zshrc $HOME/.zshrc
     ln -sf $SOURCE_DIR/linux_set_up/xprofile $HOME/.xprofile
     ln -sf $SOURCE_DIR/linux_set_up/gdbinit $HOME/.gdbinit
     ln -sf $SOURCE_DIR/linux_set_up/xinitrc $HOME/.xinitrc
