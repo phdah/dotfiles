@@ -58,30 +58,45 @@
     endfunction
 
     function! Buffer_lower()
-        let buffer_total = len(getbufinfo({'buflisted':1}))
+        let bufferinfo = getbufinfo({'bufloaded': 1, 'buflisted': 1})
+        let buffer_total = bufferinfo[len(bufferinfo)-1].bufnr
         let current_buffer = bufnr('%')
-        let lower_bound = range(1,current_buffer-1)
-        if buffer_total == 1
-            return printf('')
-        elseif current_buffer == 1
+
+        let lower_bound = []
+
+        for item in bufferinfo
+            if item.bufnr >= current_buffer
+                continue
+            endif
+            call add(lower_bound, item.bufnr)
+        endfor
+
+        if current_buffer == 1
             return printf('')
         else
-            return printf('%s', string(lower_bound))
-        endif
+            return printf('%s', lower_bound)
     endfunction
 
     function! Buffer_upper()
-        let buffer_total = len(getbufinfo({'buflisted':1}))
+        let bufferinfo = getbufinfo({'bufloaded': 1, 'buflisted': 1})
+        let buffer_total = bufferinfo[len(bufferinfo)-1].bufnr
         let current_buffer = bufnr('%')
-        let upper_bound = range(current_buffer+1,buffer_total)
-        if buffer_total == 1
-            return printf('')
-        elseif current_buffer == buffer_total
+
+        let upper_bound = []
+
+        for item in bufferinfo
+            if item.bufnr <= current_buffer
+                continue
+            endif
+            call add(upper_bound, item.bufnr)
+        endfor
+
+        if current_buffer == buffer_total
             return printf('')
         else
-            return printf('%s', string(upper_bound))
-        endif
+            return printf('%s', upper_bound)
     endfunction
+
     " Git and path/filename
     set statusline=
     set statusline+=%#PmenuSel#%{StatuslineGit()}%{GitStatus()}%#LineNr#
