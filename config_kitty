@@ -212,8 +212,5 @@ bindsym $mod+Shift+p exec --no-startup-id maim -i | tee ~/downloads/screenshot_$
 default_border pixel
 for_window [class="Google-chrome" title="Google Chrome"] border pixel
 
-# Enable mousepad touch klick https://major.io/2021/07/18/tray-icons-in-i3/
-# xinput
-# xinput list-props "<Name of TouchPad>"
-# exec xinput set-prop '<Name of TouchPad>' 'libinput Tapping Enabled' 1
-# exec xinput set-prop '<Name of TouchPad>' 'libinput Natural Scrolling Enabled' 1
+# Set up computer unique touchpad
+exec sh ~/.i3mousepad

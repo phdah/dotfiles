@@ -94,9 +94,14 @@ printf 'Setting up symlinks\n'
     cp $SOURCE_DIR/linux_set_up/scripts/* $HOME/scripts/
 
 # Set up mousepad
+    # Setting manually now
     printf 'Setting mousepad\n\n'
     xinput set-prop "$2" 'libinput Tapping Enabled' 1
     xinput set-prop "$2" 'libinput Natural Scrolling Enabled' 1
+    # Making it persistant and computer unique
+    cp $SOURCE_DIR/linux_set_up/i3mousepad $HOME/.i3mousepad
+    echo "xinput set-prop '$1' 'libinput Tapping Enable' 1" >> $HOME/.i3mousepad
+    echo "xinput set-prop '$1' 'libinput Natural Scrolling Enabled' 1" >> $HOME/.i3mousepad
 
 clear && neofetch
 printf '\nDone!\n'
