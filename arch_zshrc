@@ -6,6 +6,7 @@ alias vim='nvim'
 alias gitl='git log --pretty=oneline'
 alias gits='git status'
 alias gitp='git pull'
+alias gitd='git diff'
 
 # Functions
 function gitall() {

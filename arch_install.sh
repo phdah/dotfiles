@@ -45,7 +45,11 @@ printf '\nParu installs\n\n'
             xclip \
             cmake \
             neofetch \
-	    google-chrome
+	    google-chrome \
+            bluez \
+            bluez-utils \
+            pulseaudio \
+            pavucontrol
     paru
 
 # Set zsh to the default shell
@@ -53,6 +57,8 @@ chsh -s $(which zsh)
 
 # Set up git editor
 git config --global core.editor nvim
+git config --global user.email phdah.sjoberg@gmail.com
+git config --global user.name Philip
 
 # Install gitgutter
 printf '\nSetting up gitgutter\n\n'
