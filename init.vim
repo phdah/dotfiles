@@ -71,7 +71,7 @@
             call add(lower_bound, item.bufnr)
         endfor
 
-        if len(bufferinfo) == 1 || current_buffer == 1
+        if current_buffer == bufferinfo[0].bufnr
             return printf('')
         else
             return printf('%s', lower_bound)
