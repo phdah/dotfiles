@@ -43,6 +43,12 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+Return exec kitty
 
+# set up F1 keys
+# Volume
+bindsym "XF86AudioMute" exec "pactl set-sink-mute `pactl get-default-sink` toggle"
+bindsym "XF86AudioLowerVolume" exec "pactl set-sink-volume `pactl get-default-sink` -10%"
+bindsym "XF86AudioRaiseVolume" exec "pactl set-sink-volume `pactl get-default-sink` +10%"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -214,3 +220,6 @@ for_window [class="Google-chrome" title="Google Chrome"] border pixel
 
 # Set up computer unique touchpad
 exec sh ~/.i3mousepad
+
+# Start dunst notifications
+exec dunst &
