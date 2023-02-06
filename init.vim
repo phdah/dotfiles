@@ -3,6 +3,7 @@
 " Key mapping
     let mapleader = " "
 
+    " Buffer control
     nnoremap <CR> :noh<CR><CR>
 
     nnoremap <leader>1 :b1<CR>
@@ -17,8 +18,30 @@
 
     nnoremap <leader>q :bd<CR>
 
+    " Open vim browser
+    nnoremap <leader>f :e .<CR>
+
+    " Center search
+    set scrolloff=0
+    nnoremap gg ggzz
+    nnoremap n nzz
+    nnoremap N Nzz
+    nnoremap <C-d> <C-d>zz
+    nnoremap <C-u> <C-u>zz
+    nnoremap g* g*zz
+    nnoremap g# g#zz
+    nnoremap # #zz
+    nnoremap * *zz
+
+    " Toggle relative linenumbers
+    nnoremap <leader>l :set invrelativenumber<CR>
+
 " Set show number as default "
     set number
+    set relativenumber
+
+" Disable mouse
+    set mouse=
 
 " Set clipboard on
     set clipboard=unnamedplus
@@ -27,7 +50,6 @@
     set noautoindent
     filetype indent off
     autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-    "set fo-=ro
 
 " Git Gutter "
     set updatetime=100
@@ -49,7 +71,7 @@
 
     function! StatuslineGit()
       let l:branchname = GitBranch()
-      return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+      return strlen(l:branchname) > 0?' Branch: '.l:branchname.' ':''
     endfunction
 
     function! GitStatus()
@@ -59,7 +81,6 @@
 
     function! Buffer_lower()
         let bufferinfo = getbufinfo({'bufloaded': 1, 'buflisted': 1})
-        let buffer_total = bufferinfo[len(bufferinfo)-1].bufnr
         let current_buffer = bufnr('%')
 
         let lower_bound = []
@@ -71,15 +92,15 @@
             call add(lower_bound, item.bufnr)
         endfor
 
-        if current_buffer == bufferinfo[0].bufnr
+        if lower_bound == []
             return printf('')
         else
             return printf('%s', lower_bound)
+        endif
     endfunction
 
     function! Buffer_upper()
         let bufferinfo = getbufinfo({'bufloaded': 1, 'buflisted': 1})
-        let buffer_total = bufferinfo[len(bufferinfo)-1].bufnr
         let current_buffer = bufnr('%')
 
         let upper_bound = []
@@ -91,10 +112,11 @@
             call add(upper_bound, item.bufnr)
         endfor
 
-        if current_buffer == buffer_total
+        if upper_bound == []
             return printf('')
         else
             return printf('%s', upper_bound)
+        endif
     endfunction
 
     " Git and path/filename
