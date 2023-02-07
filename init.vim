@@ -26,6 +26,7 @@
 
     " Open vim browser
     nnoremap <leader>f :Files<CR>
+    nnoremap <leader>b :Buffers<CR>
 
     " Center search
     set scrolloff=0
