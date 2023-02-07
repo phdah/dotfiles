@@ -7,6 +7,7 @@ alias gitl='git log --pretty=oneline'
 alias gits='git status'
 alias gitp='git pull'
 alias gitd='git diff'
+alias vfzf='vim $(fzf)'
 
 # Functions
 function gitall() {
@@ -65,3 +66,6 @@ RPROMPT='${vcs_info_msg_0_}'
 source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export EDITOR=$(which nvim)
+
+# Set default fzf stdout
+export FZF_DEFAULT_COMMAND='rg --hidden -l ""'

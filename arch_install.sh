@@ -49,7 +49,8 @@ printf '\nParu installs\n\n'
             bluez \
             bluez-utils \
             pulseaudio \
-            pavucontrol
+            pavucontrol \
+            nvim-packer-git
     paru
 
 # Set zsh to the default shell
@@ -72,14 +73,14 @@ printf 'Setting up zsh highlighting\n'
 printf 'Setting up Nord Gnome terminal\n'
     ! [ -d $SOURCE_DIR/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR/nord-gnome-terminal && $SOURCE_DIR/nord-gnome-terminal/src/nord.sh
 
-# neovim packer
-# TODO: https://github.com/wbthomason/packer.nvim
-
 # nvim-tree
 # TODO: https://github.com/nvim-tree/nvim-tree.lua
 
 # barbar.nvim
 # TODO: https://github.com/romgrk/barbar.nvim
+
+# devcontainer
+# TODO: https://github.com/esensar/nvim-dev-container
 
 # Symlink and copy (dot)files from repo
 printf 'Setting up symlinks\n'
@@ -94,6 +95,8 @@ printf 'Setting up symlinks\n'
     ln -sf $SOURCE_DIR/linux_set_up/init.vim $HOME/.config/nvim/init.vim
     ln -sf $SOURCE_DIR/linux_set_up/user-dirs.dirs $HOME/.config/user-dirs.dirs
     ln -sf $SOURCE_DIR/linux_set_up/kitty.conf $HOME/.config/kitty/kitty.conf
+    Ln -sf $SOURCE_DIR/linux_set_up/plugins.lua $HOME/.config/nvim/lua/plugins.lua
+
 
     ! [ -f "$HOME/.paths" ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
 
