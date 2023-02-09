@@ -3,11 +3,12 @@ alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color'
 alias vim='nvim'
-alias gitl='git log --pretty=oneline'
+alias gitl='git log --oneline'
 alias gits='git status'
 alias gitp='git pull'
 alias gitd='git diff'
 alias vfzf='vim $(fzf)'
+alias nb='vim ~/repos/privat/logbook/README.md'
 
 # Functions
 function gitall() {
@@ -40,6 +41,8 @@ bindkey "^[[6~" history-beginning-search-forward
 
 # Path
 source $HOME/.paths
+# Envs
+source $HOME/.envvar
 
 ### Set up prompt ###
 
@@ -68,4 +71,4 @@ source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export EDITOR=$(which nvim)
 
 # Set default fzf stdout
-export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+export FZF_DEFAULT_COMMAND='rg --hidden -l "" ~'

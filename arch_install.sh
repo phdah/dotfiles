@@ -73,6 +73,10 @@ printf 'Setting up zsh highlighting\n'
 printf 'Setting up Nord Gnome terminal\n'
     ! [ -d $SOURCE_DIR/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR/nord-gnome-terminal && $SOURCE_DIR/nord-gnome-terminal/src/nord.sh
 
+# Set zsh synbtax highlighting
+printf 'Clone personal logbook repo\n'
+    ! [ -d $SOURCE_DIR/privat/logbook ] && git clone git@github.com:phdah/logbook.git $SOURCE_DIR/privat/logbook
+
 # nvim-tree
 # TODO: https://github.com/nvim-tree/nvim-tree.lua
 
@@ -99,6 +103,7 @@ printf 'Setting up symlinks\n'
 
 
     ! [ -f "$HOME/.paths" ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
+    ! [ -f "$HOME/.envvar" ] && cp $SOURCE_DIR/linux_set_up/envvar $HOME/.envvar
 
     cp $SOURCE_DIR/linux_set_up/scripts/* $HOME/scripts/
 
