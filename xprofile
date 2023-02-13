@@ -1,2 +1,5 @@
+#!/bin/bash
+### Not sure for when I would use this. I can just rely on only
+### .xinitrc for now.
 # Set background
-xsetroot -solid "#2E3440"
+#xsetroot -solid "#2E3440"

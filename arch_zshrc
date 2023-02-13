@@ -2,11 +2,13 @@
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color'
-alias bat='batcat'
 alias vim='nvim'
-alias gitl='git log --pretty=oneline'
+alias gitl='git log --oneline'
 alias gits='git status'
 alias gitp='git pull'
+alias gitd='git diff'
+alias vfzf='vim $(fzf)'
+alias nb='vim ~/repos/privat/logbook/README.md'
 
 # Functions
 function gitall() {
@@ -19,12 +21,28 @@ function rgf() {
 rg --files | rg $1
 }
 
+# Default to emacs keybindings
+bindkey -e
+
 # Word skipping
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
 bindkey ";5C" forward-word
 bindkey ";5D" backward-word
 
+# Home/End/Del
+bindkey  "^[[H"   beginning-of-line
+bindkey  "^[[F"   end-of-line
+bindkey  "^[[3~"  delete-char
+
+# PgUp/Down
+bindkey "^[[5~" history-beginning-search-backward
+bindkey "^[[6~" history-beginning-search-forward
+
 # Path
 source $HOME/.paths
+# Envs
+source $HOME/.envvar
 
 ### Set up prompt ###
 
@@ -51,3 +69,6 @@ RPROMPT='${vcs_info_msg_0_}'
 source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export EDITOR=$(which nvim)
+
+# Set default fzf stdout
+export FZF_DEFAULT_COMMAND='rg --hidden -l "" ~'

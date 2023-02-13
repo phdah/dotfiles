@@ -1,8 +1,9 @@
 #!/bin/bash
 # General paths
-path+=$HOME/scripts
+path+=$HOME/scripts/
 path+=$HOME/.local/bin/
-path+=/usr/local/bin
-path+=$HOME/.screenlayout
+path+=/usr/local/bin/
+path+=/usr/bin/
+path+=$HOME/.screenlayout/
 
 # Spesific paths
