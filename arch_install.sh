@@ -92,6 +92,7 @@ printf 'Setting up symlinks\n'
     ln -sf $SOURCE_DIR/linux_set_up/xprofile $HOME/.xprofile
     ln -sf $SOURCE_DIR/linux_set_up/gdbinit $HOME/.gdbinit
     ln -sf $SOURCE_DIR/linux_set_up/xinitrc $HOME/.xinitrc
+    ln -sf $SOURCE_DIR/linux_set_up/zprofile $HOME/.zprofile
 
     ln -sf $SOURCE_DIR/linux_set_up/dunstrc $HOME/.config/dunst/dunstrc
     ln -sf $SOURCE_DIR/linux_set_up/i3status.conf $HOME/.config/i3/i3status.conf
