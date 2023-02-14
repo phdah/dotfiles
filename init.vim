@@ -35,6 +35,8 @@
     nnoremap N Nzz
     nnoremap <C-d> <C-d>zz
     nnoremap <C-u> <C-u>zz
+    nnoremap j jzz
+    nnoremap k kzz
     nnoremap g* g*zz
     nnoremap g# g#zz
     nnoremap # #zz
