@@ -17,6 +17,9 @@ alias gitc='git checkout'
 function gitall() {
 git add . && git commit -m "$1" && git push
 }
+function gitallremote() {
+git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+}
 function cat() {
 bat $1 --style=plain --paging=never
 }
