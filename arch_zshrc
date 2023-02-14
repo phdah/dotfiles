@@ -18,7 +18,7 @@ function gitall() {
 git status && git add . && git commit -m "$1" && git push
 }
 function gitallremote() {
-got -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
 }
 function cat() {
 bat $1 --style=plain --paging=never
