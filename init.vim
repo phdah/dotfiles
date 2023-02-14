@@ -7,6 +7,36 @@
     highlight Normal guibg=blue
 
 " Key mapping
+    " Remove newbie crutches in Normal and Visual Mode
+    noremap <Up> <Nop>
+    noremap <Down> <Nop>
+    noremap <Left> <Nop>
+    noremap <Right> <Nop>
+
+    " Remove newbie crutches in Normal Ctrl Mode
+    nnoremap <C-Right> <Nop>
+    nnoremap <C-Left> <Nop>
+    nnoremap <C-Up> <Nop>
+    nnoremap <C-Down> <Nop>
+
+    " Remove newbie crutches in Visual Ctrl Mode
+    vnoremap <C-Right> <Nop>
+    vnoremap <C-Left> <Nop>
+    vnoremap <C-Up> <Nop>
+    vnoremap <C-Down> <Nop>
+
+    " Remove newbie crutches in Insert Mode
+    inoremap <Down> <Nop>
+    inoremap <Left> <Nop>
+    inoremap <Right> <Nop>
+    inoremap <Up> <Nop>
+
+    " Remove newbie crutches in Insert Ctrl Mode
+    inoremap <C-Right> <Nop>
+    inoremap <C-Left> <Nop>
+    inoremap <C-Up> <Nop>
+    inoremap <C-Down> <Nop>
+
     let mapleader = " "
 
     " Buffer control
@@ -33,8 +63,6 @@
     nnoremap gg ggzz
     nnoremap n nzz
     nnoremap N Nzz
-    nnoremap <C-d> <C-d>zz
-    nnoremap <C-u> <C-u>zz
     nnoremap j jzz
     nnoremap k kzz
     nnoremap g* g*zz
@@ -64,7 +92,7 @@
     autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Git Gutter "
-    set updatetime=100
+    set updatetime=50
     let g:gitgutter_max_signs = 500
     " No mapping
     let g:gitgutter_map_keys = 0
