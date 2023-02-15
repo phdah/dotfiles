@@ -1,6 +1,5 @@
 #!/bin/bash
 
-homesetup.sh
+# Empty downloads folder
 ls downloads/
 sudo rm  /home/phdah/downloads/*
-#vpn_fix.sh
