@@ -30,28 +30,32 @@ printf '\nClean up and add directories\n\n'
 printf '\nParu installs\n\n'
     paru
     paru -Syy \
-            i3-wm \
-	    i3lock \
-	    i3status \
-            dmenu \
-	    dunst \
-            xorg-xsetroot \
-            zsh \
-            arandr \
-            ripgrep \
-            bat \
-            xsel \
-            maim \
-            xclip \
-            cmake \
-            neofetch \
-	    google-chrome \
-            bluez \
-            bluez-utils \
-            pulseaudio \
-            pavucontrol \
-            nvim-packer-git
+            i3-wm \ # Window manager
+	    i3lock \ # Lock screen
+	    i3status \ # Status bar
+            dmenu \ # Application meny
+	    dunst \ # Notifications
+            xorg-xsetroot \ # X
+            zsh \ # Shell
+            arandr \ # Monitor ctl
+            ripgrep \ # A better grep
+            bat \ # A better cat
+            xsel \ # Allow to copy
+            maim \ # Allow to screen snippet
+            xclip \ # Allo to screen snippet
+            cmake \ # Make for c
+            neofetch \ # Display os info
+	    google-chrome \ # Web browser
+            bluez \ # Bluethooth
+            bluez-utils \ # Bluethooth, use bluetoothctl
+            pulseaudio \ # Sound software used by pavucontrol
+            pavucontrol \ # Sound and mic controller
+            brightnessctl \ # Light controller
+            nvim-packer-git # Package manager for nvim
     paru
+
+    # Other tools to interact with things
+    # nmcli - networkmanager
 
 # Set zsh to the default shell
 chsh -s $(which zsh)
