@@ -55,11 +55,12 @@
     nnoremap <leader>q :bd<CR>
 
     " Open vim browser
-    nnoremap <leader>f :Files<CR>
+    nnoremap <leader>f :execute 'Files '.expand('%:p:h')<CR>
+    nnoremap <leader>F :execute 'Files ~'<CR>
     nnoremap <leader>b :Buffers<CR>
 
     " Open help in its own buffer, use ':H <arg>'
-    command! -nargs=1 -complete=help -bar H help <args> | only
+    command! -nargs=1 -complete=command -bar H help <args> | only
 
     " Center search
     set scrolloff=0
