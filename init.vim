@@ -121,12 +121,12 @@
     endfunction
 
     function! Cbuffer_number(number)
-        let buffer = getbufinfo({'bufloaded': 1, 'buflisted': 1})[a:number-1].bufnr
+        let buffer = getbufinfo({'bufloaded': 1})[a:number-1].bufnr
         return buffer
     endfunction
 
     function! Buffer_lower()
-        let bufferinfo = getbufinfo({'bufloaded': 1, 'buflisted': 1})
+        let bufferinfo = getbufinfo({'bufloaded': 1})
         let current_buffer = bufnr('%')
 
         let lower_bound = []
@@ -145,7 +145,7 @@
     endfunction
 
     function! Buffer_upper()
-        let bufferinfo = getbufinfo({'bufloaded': 1, 'buflisted': 1})
+        let bufferinfo = getbufinfo({'bufloaded': 1})
         let current_buffer = bufnr('%')
 
 	let i = 1
@@ -163,7 +163,7 @@
     endfunction
 
     function! Buffer_current()
-        let bufferinfo = getbufinfo({'bufloaded': 1, 'buflisted': 1})
+        let bufferinfo = getbufinfo({'bufloaded': 1})
         let current_buffer = bufnr('%')
 
 	let i = 1
