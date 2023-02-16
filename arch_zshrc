@@ -3,7 +3,8 @@ alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color'
 alias vim='nvim'
-alias vfzf='nvim $(fzf)'
+alias vfzf='nvim $(rg -l --hidden "" . | fzf)'
+alias Vfzf='nvim $(rg -l --hidden "" ~ | fzf)'
 alias nb='nvim ~/repos/privat/logbook/README.md'
 # Git alias
 alias gitl='git log --oneline'
@@ -15,16 +16,16 @@ alias gitc='git checkout'
 
 # Functions
 function gitall() {
-git status && git add . && git commit -m "$1" && git push
+    git status && git add . && git commit -m "$1" && git push
 }
 function gitallremote() {
-git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+    git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
 }
 function cat() {
-bat $1 --style=plain --paging=never
+    bat $1 --style=plain --paging=never
 }
 function rgf() {
-rg --files | rg $1
+    rg --files | rg $1
 }
 
 # Default to emacs keybindings
