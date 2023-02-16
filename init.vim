@@ -58,6 +58,9 @@
     nnoremap <leader>f :Files<CR>
     nnoremap <leader>b :Buffers<CR>
 
+    " Open help in its own buffer, use ':H <arg>'
+    command! -nargs=1 -complete=help -bar H help <args> | only
+
     " Center search
     set scrolloff=0
     nnoremap gg ggzz
@@ -70,6 +73,16 @@
     nnoremap g# g#zz
     nnoremap # #zz
     nnoremap * *zz
+    nnoremap <C-d> <C-d>zz
+    nnoremap <C-u> <C-u>zz
+
+    " Git gutter commands
+    nnoremap gj :GitGutterNextHunk<CR>zz
+    nnoremap gk :GitGutterPrevHunk<CR>zz
+    nnoremap gu :GitGutterUndoHunk<CR>
+    nnoremap gd :GitGutterDiffOrig<CR>
+    nnoremap gM :GitGutterFold<CR>
+    nnoremap gs :GitGutterStageHunk<CR>
 
     " Toggle relative linenumbers
     nnoremap <leader>l :set invrelativenumber<CR>
@@ -200,6 +213,7 @@
 
 " Folding "
     set foldmethod=indent
+    set nofoldenable
 
 " Syntax "
    syntax on
