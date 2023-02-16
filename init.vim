@@ -61,6 +61,7 @@
     " Center search
     set scrolloff=0
     nnoremap gg ggzz
+    nnoremap G Gzz
     nnoremap n nzz
     nnoremap N Nzz
     nnoremap j jzz
