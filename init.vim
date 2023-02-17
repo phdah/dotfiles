@@ -3,9 +3,6 @@
 " Neovim package manager
     lua require('plugins')
 
-" Neovim color scheme
-    highlight Normal guibg=blue
-
 " Key mapping
     " Remove newbie crutches in Normal and Visual Mode
     noremap <Up> <Nop>
@@ -84,6 +81,17 @@
     nnoremap gd :GitGutterDiffOrig<CR>
     nnoremap gM :GitGutterFold<CR>
     nnoremap gs :GitGutterStageHunk<CR>
+
+    " Repeat previous f, t, F or T movement
+    nnoremap <C-h> ,
+    nnoremap <C-l> ;
+
+    " Jump between code blocks
+    nnoremap <C-j> }zz
+    nnoremap <C-k> {zz
+
+    " Toggle relative linenumbers
+    xnoremap <leader>p "_dP
 
     " Toggle relative linenumbers
     nnoremap <leader>l :set invrelativenumber<CR>
@@ -231,3 +239,8 @@
 
     " Show trailing whitespace:
     match ExtraWhitespace /\s\+$/
+
+    " Highlight signs to jump to
+    let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+    highlight QuickScopePrimary guifg=#ff000 gui=underline ctermfg=DarkRed cterm=underline
+    highlight QuickScopeSecondary guifg=#ff000 gui=underline ctermfg=DarkMagenta cterm=underline
