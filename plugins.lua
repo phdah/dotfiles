@@ -12,4 +12,7 @@ return require('packer').startup(function()
     }
     use { 'junegunn/fzf.vim' }
 
+    use {
+      'unblevable/quick-scope'
+    }
 end)
