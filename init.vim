@@ -3,12 +3,18 @@
 " Neovim package manager
     lua require('plugins')
 
+" Keymap leader key
+    let mapleader = " "
+
+" Reload vim config (rememeber to save the file first)
+    nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
+
 " Key mapping
     " Remove newbie crutches in Normal and Visual Mode
-    noremap <Up> <Nop>
-    noremap <Down> <Nop>
-    noremap <Left> <Nop>
-    noremap <Right> <Nop>
+    nnoremap <Up> <Nop>
+    nnoremap <Downn> <Nop>
+    nnoremap <Left> <Nop>
+    nnoremap <Right> <Nop>
 
     " Remove newbie crutches in Normal Ctrl Mode
     nnoremap <C-Right> <Nop>
@@ -34,8 +40,6 @@
     inoremap <C-Up> <Nop>
     inoremap <C-Down> <Nop>
 
-    let mapleader = " "
-
     " Buffer control
     nnoremap <CR> :noh<CR><CR>
 
@@ -56,7 +60,12 @@
     nnoremap <leader>F :execute 'Files ~'<CR>
     nnoremap <leader>b :Buffers<CR>
 
-    " Open help in its own buffer, use ':H <arg>'
+    " Spell checking
+    nnoremap <leader>z :setlocal spell! spelllang=en_us<CR>
+    nnoremap zl ]szz
+    nnoremap zh [szz
+
+    " Open help in its own buffer, use ':H <args>'
     command! -nargs=1 -complete=command -bar H help <args> | only
 
     " Center search
@@ -90,10 +99,10 @@
     nnoremap <C-j> }zz
     nnoremap <C-k> {zz
 
-    " Toggle relative linenumbers
+    " Toggle relative line numbers
     xnoremap <leader>p "_dP
 
-    " Toggle relative linenumbers
+    " Toggle relative line numbers
     nnoremap <leader>l :set invrelativenumber<CR>
 
     " Packer Sync
@@ -109,7 +118,7 @@
 " Set clipboard on
     set clipboard=unnamedplus
 
-" Autoindent "
+" Auto indent "
     set noautoindent
     filetype indent off
     autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -196,14 +205,14 @@
         return printf('%s', i)
     endfunction
 
-    " Git and path/filename
+    " Git and path/file name
     set statusline=
     set statusline+=%#PmenuSel#%{StatuslineGit()}%{GitStatus()}%#LineNr#
     set statusline+=\ %f%m
     " Buffers
     set statusline+=%=
     set statusline+=%{Buffer_lower()}%#CursorColumn#\[\ %{Buffer_current()}\ \]%#LineNr#%{Buffer_upper()}
-    " Fileformat and lines
+    " File format and lines
     set statusline+=%=
     set statusline+=%#CursorColumn#\ %y\ %{&fileencoding?&fileencoding:&encoding}\[%{&fileformat}\]
     set statusline+=\ %p%%\ %l:%c\ 
@@ -227,17 +236,17 @@
 " Syntax "
    syntax on
 
-" Hilighting "
+" Highlighting "
     "search
     set hls
     set incsearch
     set inccommand=nosplit
 
-    "whitespace
+    "white space
     " The following alternative may be less obtrusive.
     highlight ExtraWhitespace ctermbg=red guibg=red
 
-    " Show trailing whitespace:
+    " Show trailing white space:
     match ExtraWhitespace /\s\+$/
 
     " Highlight signs to jump to
