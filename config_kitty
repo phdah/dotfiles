@@ -35,6 +35,7 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec kitty
+bindsym $mod+g exec guake-toggle
 
 # set up F1 keys
 # Volume
@@ -187,3 +188,4 @@ exec sh ~/.i3mousepad
 
 # Start dunst notifications
 exec dunst &
+exec guake &

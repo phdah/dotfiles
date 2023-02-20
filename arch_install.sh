@@ -45,6 +45,8 @@ printf '\nParu installs\n\n'
             xclip \ # Allo to screen snippet
             cmake \ # Make for c
             neofetch \ # Display os info
+            gdb \ # Debugger
+            guake \ # Guake terminal
 	    google-chrome \ # Web browser
             bluez \ # Bluethooth
             bluez-utils \ # Bluethooth, use bluetoothctl

@@ -9,6 +9,9 @@
 " Reload vim config (rememeber to save the file first)
     nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
 
+" Execute vim line in shell
+    nnoremap <leader><Enter> :.!zsh<CR>
+
 " Key mapping
     " Remove newbie crutches in Normal and Visual Mode
     nnoremap <Up> <Nop>
@@ -82,6 +85,10 @@
     nnoremap * *zz
     nnoremap <C-d> <C-d>zz
     nnoremap <C-u> <C-u>zz
+
+    " Open line above and below
+    nnoremap <leader>o o<Esc>
+    nnoremap <leader>O O<Esc>
 
     " Git gutter commands
     nnoremap gj :GitGutterNextHunk<CR>zz
