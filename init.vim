@@ -99,8 +99,8 @@
     nnoremap gs :GitGutterStageHunk<CR>
 
     " Repeat previous f, t, F or T movement
-    nnoremap <C-h> ;
-    nnoremap <C-l> ,
+    nnoremap <C-h> ,
+    nnoremap <C-l> ;
 
     " Jump between code blocks
     nnoremap <C-j> }zz

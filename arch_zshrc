@@ -1,3 +1,7 @@
+# Autocomplete in cli
+autoload -Uz compinit
+compinit
+
 # Aliases
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
@@ -69,8 +73,6 @@ zstyle ':vcs_info:git:*' formats '%b'
 NEWLINE=$'\n'
 PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
 RPROMPT='${vcs_info_msg_0_}'
-
-### One time things ###
 
 # Syntax highligthing
 source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
