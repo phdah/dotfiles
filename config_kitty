@@ -158,18 +158,20 @@ client.placeholder      #000000 #0C0C0C #FFFFFF #000000   #0C0C0C
 client.background       #000000
 
 bar {
-  colors {
-    background #2E3440
-    statusline #FFFFFF
-    separator  #666666
+    colors {
+        background #2E3440
+            statusline #FFFFFF
+            separator  #666666
 
-    focused_workspace  #88C0D0 #88C0D0 #FFFFFF
-    active_workspace   #222222 #222222 #FFFFFF
-    inactive_workspace #222222 #222222 #888888
-    urgent_workspace   #BF616A #BF616A #FFFFFF
-    binding_mode       #BF616A #BF616A #FFFFFF
-  }
-  status_command i3status --config /home/phdah/.config/i3/i3status.conf
+            focused_workspace  #88C0D0 #88C0D0 #FFFFFF
+            active_workspace   #222222 #222222 #FFFFFF
+            inactive_workspace #222222 #222222 #888888
+            urgent_workspace   #BF616A #BF616A #FFFFFF
+            binding_mode       #BF616A #BF616A #FFFFFF
+    }
+    tray_output none
+    status_command i3status --config /home/phdah/.config/i3/i3status.conf
+    separator_symbol "|"
 }
 
 # Set up search bar color
