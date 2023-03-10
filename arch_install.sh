@@ -37,6 +37,8 @@ printf '\nParu installs\n\n'
 	    dunst \ # Notifications
             xorg-xsetroot \ # X
             zsh \ # Shell
+            zsh-vi-mode.plugin.zsh \ # zsh terminal vim mode
+            fast-syntax-highlighting.plugin.zsh \ # zsh terminal highlighting
             arandr \ # Monitor ctl
             ripgrep \ # A better grep
             bat \ # A better cat
@@ -70,10 +72,6 @@ git config --global user.name Philip
 # Install gitgutter
 printf '\nSetting up gitgutter\n\n'
     ! [ -d $HOME/.config/nvim/pack/airblade/start/vim-gitgutter ] && mkdir -p $HOME/.config/nvim/pack/airblade/start && git clone https://github.com/airblade/vim-gitgutter.git $HOME/.config/nvim/pack/airblade/start/vim-gitgutter && nvim -u NONE -c "helptags $HOME/.config/nvim/pack/airblade/start/vim-gitgutter/doc" -c q
-
-# Set zsh synbtax highlighting
-printf 'Setting up zsh highlighting\n'
-    ! [ -d $SOURCE_DIR/zsh-syntax-highlighting ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $SOURCE_DIR/zsh-syntax-highlighting
 
 # GNOME color theme
 printf 'Setting up Nord Gnome terminal\n'
