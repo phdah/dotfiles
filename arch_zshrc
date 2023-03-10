@@ -3,6 +3,7 @@ autoload -Uz compinit
 compinit
 
 # Aliases
+alias sudo='sudo ' # Allow to append users alias etc to sudo commands
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color'
@@ -10,6 +11,7 @@ alias vim='nvim'
 alias vfzf='nvim $(rg -l --hidden "" . | fzf)'
 alias Vfzf='nvim $(rg -l --hidden "" ~ | fzf)'
 alias nb='nvim ~/repos/privat/logbook/README.md'
+alias open='xdg-open'
 # Git alias
 alias gitl='git log --oneline'
 alias gits='git status'
@@ -32,23 +34,20 @@ function rgf() {
     rg --files | rg $1
 }
 
-# Default to emacs keybindings
-bindkey -e
+# Set Vim as default keymapping
+ZVM_VI_ESCAPE_BINDKEY=^K
+source /usr/share/zsh/plugins/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 
-# Word skipping
-bindkey "^[[1;5C" forward-word
-bindkey "^[[1;5D" backward-word
-bindkey ";5C" forward-word
-bindkey ";5D" backward-word
+# Set some vim command, to see keymaps run: bindkey
+# Insert mode
+bindkey -M viins ^X delete-char
+bindkey -M viins ^B beginning-of-line
+bindkey -M viins ^E end-of-line
+# Normal mode
+bindkey -M vicmd ^B beginning-of-line
+bindkey -M vicmd ^E end-of-line
 
-# Home/End/Del
-bindkey  "^[[H"   beginning-of-line
-bindkey  "^[[F"   end-of-line
-bindkey  "^[[3~"  delete-char
-
-# PgUp/Down
-bindkey "^[[5~" history-beginning-search-backward
-bindkey "^[[6~" history-beginning-search-forward
+# TODO: fix clipboard yank and paste
 
 # Path
 source $HOME/.paths
@@ -75,7 +74,7 @@ PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
 RPROMPT='${vcs_info_msg_0_}'
 
 # Syntax highligthing
-source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 
 export EDITOR=$(which nvim)
 

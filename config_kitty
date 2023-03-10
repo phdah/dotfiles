@@ -34,7 +34,7 @@ exec --no-startup-id nm-applet
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec kitty
+bindsym $mod+Control+j exec kitty
 bindsym $mod+g exec guake-toggle
 
 # set up F1 keys
@@ -141,8 +141,8 @@ mode "resize" {
         bindsym l resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape or $mod+r
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+        bindsym Control+j mode "default"
+        bindsym Control+k mode "default"
         bindsym $mod+r mode "default"
 }
 

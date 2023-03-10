@@ -6,18 +6,51 @@
 " Keymap leader key
     let mapleader = " "
 
-" Reload vim config (rememeber to save the file first)
-    nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>
+" Key mapping
+    " Reload vim config (rememeber to save the file first)
+    nnoremap <leader>r :source ~/.config/nvim/init.vim<CR>:noh<CR>
 
-" Execute vim line in shell
+    " Keybind insert
+    inoremap <C-j> <Enter>
+    inoremap <C-h> <BS>
+    inoremap <C-x> <Del>
+
+    " Keybind normal
+    nnoremap <C-e> <End>
+    nnoremap <C-b> <Home>
+    nnoremap <C-h> xh
+
+    " Keybind visual
+    vnoremap <C-e> <End>
+    vnoremap <C-b> <Home>
+
+    " Keybind Esc
+    inoremap <C-k> <Esc>
+    cnoremap <C-k> <Esc>
+    nnoremap <C-k> <Esc>
+    vnoremap <C-k> <Esc>
+
+    " Keybind command
+    cnoremap <C-j> <Enter>
+    cnoremap <C-h> <BS>
+
+    " Enter command mode
+    nnoremap <C-f> :
+
+    " Execute vim line in shell
     nnoremap <leader><Enter> :.!zsh<CR>
 
-" Key mapping
-    " Remove newbie crutches in Normal and Visual Mode
+    " Remove newbie crutches in Normal and Mode
     nnoremap <Up> <Nop>
-    nnoremap <Downn> <Nop>
+    nnoremap <Down> <Nop>
     nnoremap <Left> <Nop>
     nnoremap <Right> <Nop>
+
+    " Remove newbie crutches in Visual Visual Mode
+    vnoremap <Right> <Nop>
+    vnoremap <Left> <Nop>
+    vnoremap <Up> <Nop>
+    vnoremap <Down> <Nop>
 
     " Remove newbie crutches in Normal Ctrl Mode
     nnoremap <C-Right> <Nop>
@@ -45,7 +78,7 @@
 
     " Buffer control
     nnoremap <CR> :noh<CR><CR>
-
+    nnoremap <C-m> :noh<CR>
     nnoremap <leader>1 :execute 'b'.Cbuffer_number(1)<CR>
     nnoremap <leader>2 :execute 'b'.Cbuffer_number(2)<CR>
     nnoremap <leader>3 :execute 'b'.Cbuffer_number(3)<CR>
@@ -65,6 +98,7 @@
 
     " Spell checking
     nnoremap <leader>z :setlocal spell! spelllang=en_us<CR>
+    nnoremap <leader>Z 1z=
     nnoremap zl ]szz
     nnoremap zh [szz
 
@@ -90,6 +124,9 @@
     nnoremap <leader>o o<Esc>
     nnoremap <leader>O O<Esc>
 
+    " Delete line and insert empty line
+    nnoremap <leader>d Vc<Esc>
+
     " Git gutter commands
     nnoremap gj :GitGutterNextHunk<CR>zz
     nnoremap gk :GitGutterPrevHunk<CR>zz
@@ -99,18 +136,18 @@
     nnoremap gs :GitGutterStageHunk<CR>
 
     " Repeat previous f, t, F or T movement
-    nnoremap <C-h> ,
-    nnoremap <C-l> ;
+    nnoremap <leader>h ,
+    nnoremap <leader>l ;
 
     " Jump between code blocks
     nnoremap <C-j> }zz
     nnoremap <C-k> {zz
 
-    " Toggle relative line numbers
+    " Paste without yanking
     xnoremap <leader>p "_dP
 
-    " Toggle relative line numbers
-    nnoremap <leader>l :set invrelativenumber<CR>
+    " Toggle number adn sign column
+    nnoremap <leader>n :set invrelativenumber invnumber<CR>:GitGutterToggle<CR>
 
     " Packer Sync
     nnoremap <leader>s :PackerSync<CR>
