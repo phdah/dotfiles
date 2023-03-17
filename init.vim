@@ -19,6 +19,7 @@
     nnoremap <C-e> <End>
     nnoremap <C-b> <Home>
     nnoremap <C-h> xh
+    nnoremap <C-x> x
 
     " Keybind visual
     vnoremap <C-e> <End>
@@ -140,8 +141,10 @@
     nnoremap <leader>l ;
 
     " Jump between code blocks
-    nnoremap <C-j> }zz
-    nnoremap <C-k> {zz
+    nnoremap <leader>j }zz
+    nnoremap <leader>k {zz
+    vnoremap <leader>j }zzk
+    vnoremap <leader>k {zzj
 
     " Paste without yanking
     xnoremap <leader>p "_dP
