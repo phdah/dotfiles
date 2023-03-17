@@ -15,4 +15,8 @@ return require('packer').startup(function()
     use {
       'unblevable/quick-scope'
     }
+
+    use {
+      'hashivim/vim-terraform'
+    }
 end)

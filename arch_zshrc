@@ -6,7 +6,8 @@ compinit
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
-alias ls='ls --color'
+alias ls='ls --color --sort=extension'
+alias ll='ls --color -Al'
 alias vim='nvim'
 alias vfzf='nvim $(rg -l --hidden "" . | fzf)'
 alias Vfzf='nvim $(rg -l --hidden "" ~ | fzf)'
@@ -19,6 +20,8 @@ alias gitp='git pull'
 alias gitd='git diff'
 alias gitb='git branch'
 alias gitc='git checkout'
+# Dockerized apps
+alias az='docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli'
 
 # Functions
 function gitall() {
