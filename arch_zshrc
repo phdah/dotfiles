@@ -20,8 +20,6 @@ alias gitp='git pull'
 alias gitd='git diff'
 alias gitb='git branch'
 alias gitc='git checkout'
-# Dockerized apps
-alias az='docker run -it -v ${HOME}/.ssh:/root/.ssh mcr.microsoft.com/azure-cli'
 
 # Functions
 function gitall() {
@@ -35,6 +33,12 @@ function cat() {
 }
 function rgf() {
     rg --files | rg $1
+}
+function sedall() {
+    sed -i "s/$1/$2/g" $(rg $1 -l)
+}
+function sedtrailingspace() {
+    sed -i 's/\s\+$//g' $(rg '' -l)
 }
 
 # Set Vim as default keymapping
