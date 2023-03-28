@@ -13,11 +13,13 @@
     " Keybind insert
     inoremap <C-j> <Enter>
     inoremap <C-h> <BS>
+    inoremap <C-e> <Esc>A
+    inoremap <C-b> <Esc>I
     inoremap <C-x> <Del>
 
     " Keybind normal
     nnoremap <C-e> <End>
-    nnoremap <C-b> <Home>
+    nnoremap <C-b> I<Esc>
     nnoremap <C-h> xh
     nnoremap <C-x> x
 
