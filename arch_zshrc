@@ -9,8 +9,6 @@ alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color --sort=extension'
 alias ll='ls --color -Al'
 alias vim='nvim'
-alias vfzf='FZF_FILE_VIM=$(rg -l --hidden "" . | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi'
-alias Vfzf='FZF_FILE_VIM=$(rg -l --hidden "" ~ | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi'
 alias nb='nvim ~/repos/privat/logbook/README.md'
 alias open='xdg-open'
 # Git alias
@@ -22,6 +20,18 @@ alias gitb='git branch'
 alias gitc='git checkout'
 
 # Functions
+function vfzf() {
+    if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
+        then FZF_FILE_VIM=$(rg -l --hidden "" $(git rev-parse --show-toplevel) -g '!.git/' | fzf)
+        else FZF_FILE_VIM=$(rg -l --hidden "" . -g '!.git/' | fzf)
+    fi
+    if [ -e "$FZF_FILE_VIM" ]
+        then nvim $FZF_FILE_VIM;
+    fi
+}
+function Vfzf() {
+    FZF_FILE_VIM=$(rg -l --hidden "" ~ | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
+}
 function gitall() {
     git status && git add . && git commit -m "$1" && git push
 }
@@ -92,4 +102,4 @@ source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.
 export EDITOR=$(which nvim)
 
 # Set default fzf stdout
-export FZF_DEFAULT_COMMAND='rg --hidden -l ""'
+export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"
