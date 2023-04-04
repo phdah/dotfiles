@@ -105,6 +105,10 @@
     nnoremap zl ]szz
     nnoremap zh [szz
 
+    " Line toggle comment
+    nnoremap <C-'> :CommentToggle<CR>
+    vnoremap <C-'> :CommentToggle<CR>
+
     " Open help in its own buffer, use ':H <args>'
     command! -nargs=1 -complete=command -bar H help <args> | only
 
