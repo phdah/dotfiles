@@ -95,7 +95,16 @@
     nnoremap <leader>q :bd<CR>
 
     " Open vim browser
-    nnoremap <leader>f :execute 'Files '.expand('%:p:h')<CR>
+    function! FilesGitRoot()
+        " If git repo, show all files in repo.
+        let root = trim(system('git rev-parse --show-toplevel'))
+        if root == 'fatal: not a git repository (or any of the parent directories): .git'
+            execute 'Files'
+        else
+            execute 'Files' root
+        endif
+    endfunction
+    nnoremap <leader>f :call FilesGitRoot()<CR>
     nnoremap <leader>F :execute 'Files ~'<CR>
     nnoremap <leader>b :Buffers<CR>
 
