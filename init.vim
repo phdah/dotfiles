@@ -26,6 +26,7 @@
     " Keybind visual
     vnoremap <C-e> <End>
     vnoremap <C-b> <Home>
+    vnoremap <leader> <Nop>
 
     " Keybind Esc
     inoremap <C-k> <Esc>
@@ -93,6 +94,7 @@
     nnoremap <leader>9 :execute 'b'.Cbuffer_number(9)<CR>
 
     nnoremap <leader>q :bd<CR>
+    nnoremap <leader>Q :bufdo bd!<CR>:q!<CR>
 
     " Open vim browser
     function! FilesGitRoot()

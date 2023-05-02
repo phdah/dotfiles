@@ -192,4 +192,3 @@ exec sh ~/.i3mousepad
 
 # Start dunst notifications
 exec dunst &
-exec guake &
