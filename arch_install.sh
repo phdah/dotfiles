@@ -48,7 +48,6 @@ printf '\nParu installs\n\n'
             cmake \ # Make for c
             neofetch \ # Display os info
             gdb \ # Debugger
-            guake \ # Guake terminal
 	    google-chrome \ # Web browser
             bluez \ # Bluethooth
             bluez-utils \ # Bluethooth, use bluetoothctl
