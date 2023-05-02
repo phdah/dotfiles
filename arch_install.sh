@@ -77,15 +77,6 @@ printf '\nSetting up gitgutter\n\n'
 printf 'Clone personal logbook repo\n'
     ! [ -d $SOURCE_DIR/privat/logbook ] && git clone git@github.com:phdah/logbook.git $SOURCE_DIR/privat/logbook
 
-# nvim-tree
-# TODO: https://github.com/nvim-tree/nvim-tree.lua
-
-# barbar.nvim
-# TODO: https://github.com/romgrk/barbar.nvim
-
-# devcontainer
-# TODO: https://github.com/esensar/nvim-dev-container
-
 # Symlink and copy (dot)files from repo
 printf 'Setting up symlinks\n'
     ln -sf $SOURCE_DIR/linux_set_up/arch_zshrc $HOME/.zshrc
