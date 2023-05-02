@@ -1,28 +1,63 @@
+# Autocomplete in cli
+autoload -Uz compinit
+compinit
+
 # Aliases
+# Aliases
+alias sudo='sudo ' # Allow to append users alias etc to sudo commands
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
-alias ls='ls --color'
-alias bat='batcat'
+alias ls='ls --color --sort=extension'
+alias ll='ls --color -Al'
 alias vim='nvim'
-alias gitl='git log --pretty=oneline'
+alias nb='nvim ~/repos/privat/logbook/README.md'
+alias open='xdg-open'
+# Git alias
+alias gitl='git log --oneline'
 alias gits='git status'
 alias gitp='git pull'
+alias gitd='git diff'
+alias gitb='git branch'
+alias gitc='git checkout'
 
 # Functions
+function vfzf() {
+    if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
+        then FZF_FILE_VIM=$(rg -l --hidden "" $(git rev-parse --show-toplevel) -g '!.git/' | fzf)
+        else FZF_FILE_VIM=$(rg -l --hidden "" . -g '!.git/' | fzf)
+    fi
+    if [ -e "$FZF_FILE_VIM" ]
+        then nvim $FZF_FILE_VIM;
+    fi
+}
+function Vfzf() {
+    FZF_FILE_VIM=$(rg -l --hidden "" ~ | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
+}
 function gitall() {
-git add . && git commit -m "$1" && git push
+    git status && git add . && git commit -m "$1" && git push
+}
+function gitallremote() {
+    git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
 }
 function cat() {
-bat $1 --style=plain --paging=never
+    bat $1 --style=plain --paging=never
 }
 function rgf() {
-rg --files | rg $1
+    rg --files | rg $1
+}
+function sedall() {
+    sed -i "s/$1/$2/g" $(rg $1 -l)
+}
+function sedtrailingspace() {
+    sed -i 's/\s\+$//g' $(rg '' -l)
 }
 
 # Default to emacs keybindings
 bindkey -e
 
 # Word skipping
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
 bindkey ";5C" forward-word
 bindkey ";5D" backward-word
 
@@ -35,8 +70,13 @@ bindkey  "^[[3~"  delete-char
 bindkey "^[[5~" history-beginning-search-backward
 bindkey "^[[6~" history-beginning-search-forward
 
+bindkey -s "^f" "Vfzf^j"
+bindkey -s "^g" "vfzf^j"
+
 # Path
 source $HOME/.paths
+# Envs
+source $HOME/.envvar
 
 ### Set up prompt ###
 
@@ -57,9 +97,12 @@ NEWLINE=$'\n'
 PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
 RPROMPT='${vcs_info_msg_0_}'
 
-### One time things ###
-
 # Syntax highligthing
+# TODO: use the fast-syntax-highlighting.plugin.zsh instead. Then the arch
+# and ubuntu one are the same.
 source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export EDITOR=$(which nvim)
+
+# Set default fzf stdout
+export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"
