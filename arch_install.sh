@@ -73,10 +73,6 @@ git config --global user.name Philip
 printf '\nSetting up gitgutter\n\n'
     ! [ -d $HOME/.config/nvim/pack/airblade/start/vim-gitgutter ] && mkdir -p $HOME/.config/nvim/pack/airblade/start && git clone https://github.com/airblade/vim-gitgutter.git $HOME/.config/nvim/pack/airblade/start/vim-gitgutter && nvim -u NONE -c "helptags $HOME/.config/nvim/pack/airblade/start/vim-gitgutter/doc" -c q
 
-# GNOME color theme
-printf 'Setting up Nord Gnome terminal\n'
-    ! [ -d $SOURCE_DIR/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $SOURCE_DIR/nord-gnome-terminal && $SOURCE_DIR/nord-gnome-terminal/src/nord.sh
-
 # Set zsh synbtax highlighting
 printf 'Clone personal logbook repo\n'
     ! [ -d $SOURCE_DIR/privat/logbook ] && git clone git@github.com:phdah/logbook.git $SOURCE_DIR/privat/logbook
