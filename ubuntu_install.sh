@@ -20,28 +20,41 @@ printf '\nClean up and add directories\n\n'
     [ -d $HOME/Videos ] && rm -r $HOME/Videos
 
     # Set up folders
-    ! [ -d $HOME/repos ] || mkdir -p $HOME/repos
-    ! [ -d $HOME/repos/work ] || mkdir -p $HOME/repos/work
-    ! [ -d $HOME/repos/privat ] || mkdir -p $HOME/repos/privat
-    ! [ -d $HOME/scripts ] || mkdir -p $HOME/scripts
-    ! [ -d $HOME/downloads ] || mkdir -p $HOME/downloads
+    ! [ -d $HOME/repos ] && mkdir -p $HOME/repos
+    ! [ -d $HOME/repos/work ] && mkdir -p $HOME/repos/work
+    ! [ -d $HOME/repos/privat ] && mkdir -p $HOME/repos/privat
+    ! [ -d $HOME/scripts ] && mkdir -p $HOME/scripts
+    ! [ -d $HOME/downloads ] && mkdir -p $HOME/downloads
 
 # Install packages
+# TODO: https://askubuntu.com/questions/4983/what-are-ppas-and-how-do-i-use-them
+# TODO: https://github.com/pacstall/pacstall AUR for Ubuntu
+# TODO: check out https://snapcraft.io/ for updated packages
 printf '\nApt installs\n\n'
     apt upgrade --yes
     apt update --yes
     apt install --yes \
-            i3 \
-            zsh \
-            arandr \
+            i3 \ # Window manger
+            zsh \ # Shell
+            arandr \ # Monitor ctl
+	    dunst \ # Notifications
             curl \
-            ripgrep \
-            bat \
-            xsel \
-            maim \
-            xclip \
-            cmake \
-            neofetch
+            ripgrep \ # Better grep
+            bat \ # Better cat
+            xsel \ # Allow to copy
+            maim \ # Allow to screen snippet
+            xclip \ # Allo to screen snippet
+            cmake \ # Make for c
+            fzf \ # Fuzzy finder
+            gdb \ # Debugger
+            neofetch \ # Display os info
+            pulseaudio \ # Sound software used by pavucontrol
+            pavucontrol \ # Sound and mic controller
+            brightnessctl # Light controller
+            # TODO:
+            # fast-syntax-highlighting.plugin.zsh
+            # https://github.com/neovim/neovim
+            # https://github.com/wbthomason/packer.nvim#quickstart
 
     apt update --yes
     printf 'Packages not updated\n'
@@ -67,6 +80,7 @@ printf '\nSetting up gitgutter\n\n'
     ! [ -d $HOME/.config/nvim/pack/airblade/start/vim-gitgutter ] && mkdir -p $HOME/.config/nvim/pack/airblade/start && git clone https://github.com/airblade/vim-gitgutter.git $HOME/.config/nvim/pack/airblade/start/vim-gitgutter && nvim -u NONE -c "helptags $HOME/.config/nvim/pack/airblade/start/vim-gitgutter/doc" -c q
 
 # Set zsh synbtax highlighting
+# TODO: substitute for fast-syntax-highlighting.plugin.zsh
 printf 'Setting up zsh highlighting\n'
     ! [ -d $SOURCE_DIR/zsh-syntax-highlighting ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $SOURCE_DIR/zsh-syntax-highlighting
 
@@ -80,29 +94,34 @@ printf 'Setting up Nord Gnome terminal\n'
 # neovim packer
 # TODO: https://github.com/wbthomason/packer.nvim
 
-# nvim-tree
-# TODO: https://github.com/nvim-tree/nvim-tree.lua
-
-# barbar.nvim
-# TODO: https://github.com/romgrk/barbar.nvim
-
 # Symlink dotfiles to repo
 printf 'Setting up symlinks\n'
     ln -sf $SOURCE_DIR/linux_set_up/ubuntu_zshrc $HOME/.zshrc
     ln -sf $SOURCE_DIR/linux_set_up/xprofile $HOME/.xprofile
     ln -sf $SOURCE_DIR/linux_set_up/gdbinit $HOME/.gdbinit
+    ln -sf $SOURCE_DIR/linux_set_up/xinitrc $HOME/.xinitrc
 
+    ln -sf $SOURCE_DIR/linux_set_up/dunstrc $HOME/.config/dunst/dunstrc
     ln -sf $SOURCE_DIR/linux_set_up/i3status.conf $HOME/.config/i3/i3status.conf
-    ln -sf $SOURCE_DIR/linux_set_up/config $HOME/.config/i3/config
+    ln -sf $SOURCE_DIR/linux_set_up/config_gnome $HOME/.config/i3/config
     ln -sf $SOURCE_DIR/linux_set_up/init.vim $HOME/.config/nvim/init.vim
     ln -sf $SOURCE_DIR/linux_set_up/user-dirs.dirs $HOME/.config/user-dirs.dirs
+    Ln -sf $SOURCE_DIR/linux_set_up/plugins.lua $HOME/.config/nvim/lua/plugins.lua
 
     ! [ -f "$HOME/.paths" ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
+    ! [ -f "$HOME/.envvar" ] && cp $SOURCE_DIR/linux_set_up/envvar $HOME/.envvar
+
+    cp $SOURCE_DIR/linux_set_up/scripts/* $HOME/scripts/
 
 # Set up mousepad
+    # Setting manually now
     printf 'Setting mousepad\n\n'
     xinput set-prop "$2" 'libinput Tapping Enabled' 1
     xinput set-prop "$2" 'libinput Natural Scrolling Enabled' 1
+    # Making it persistant and computer unique
+    cp $SOURCE_DIR/linux_set_up/i3mousepad $HOME/.i3mousepad
+    echo "xinput set-prop '$1' 'libinput Tapping Enable' 1" >> $HOME/.i3mousepad
+    echo "xinput set-prop '$1' 'libinput Natural Scrolling Enabled' 1" >> $HOME/.i3mousepad
 
 # Remove files
     printf 'Removing files\n\n'
