@@ -46,6 +46,7 @@ printf '\nParu installs\n\n'
             maim \ # Allow to screen snippet
             xclip \ # Allo to screen snippet
             cmake \ # Make for c
+            fzf \ # Fuzzy finder
             neofetch \ # Display os info
             gdb \ # Debugger
 	    google-chrome \ # Web browser
