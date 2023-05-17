@@ -281,7 +281,7 @@
 
     " Git and path/file name
     set statusline=
-    set statusline+=%#PmenuSel#%{StatuslineGit()}%{GitStatus()}%#LineNr#
+    set statusline+=%#CursorColumn#%{StatuslineGit()}%{GitStatus()}%#LineNr#
     set statusline+=\ %f%m
     " Buffers
     set statusline+=%=
