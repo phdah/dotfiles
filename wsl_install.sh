@@ -66,6 +66,7 @@ printf 'Setting up symlinks\n'
 
     ! [ -f "$HOME/.paths" ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
     ! [ -f "$HOME/.envvar" ] && cp $SOURCE_DIR/linux_set_up/envvar $HOME/.envvar
+    ! [ -f "$HOME/.alias" ] && cp $SOURCE_DIR/linux_set_up/alias $HOME/.alias
 
 clear && neofetch
 printf '\nDone!\n'

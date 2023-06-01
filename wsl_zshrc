@@ -12,6 +12,7 @@ alias ll='ls --color -Al'
 alias vim='nvim'
 alias nb='nvim ~/repos/privat/logbook/README.md'
 alias bat='batcat'
+alias fzfc="fzf --preview='batcat {} --color always' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 # Git alias
 alias gitl='git log --oneline'
 alias gits='git status'
@@ -19,9 +20,8 @@ alias gitp='git pull'
 alias gitd='git diff'
 alias gitb='git branch'
 alias gitc='git checkout'
-alias fzfc="fzf --preview='batcat {} --color always' --bind shift-up:preview-page-up,shift-down:preview-page-down"
-# AWS
-alias awscommon='aws --profile common --endpoint-url=https://s3-sbab-uv.common.sbab.se'
+# Specific alias
+source $HOME/.alias
 
 # Functions
 function vfzf() {
@@ -32,7 +32,6 @@ function vfzf() {
     if [ -e "$FZF_FILE_VIM" ]
         then nvim $FZF_FILE_VIM;
     fi
-    2& > /dev/null
 }
 function vrg() {
     if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
@@ -49,11 +48,28 @@ function Vfzf() {
 function Vrg() {
     FZF_FILE_VIM=$(rg -l --hidden "$1" ~ 2>/dev/null | fzfc) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
 }
+function gc() {
+    msg="$(git rev-parse --abbrev-ref HEAD | sed 's/^\([A-Z-]*[0-9]*\).*/\1/') $1"
+    git commit -m "$msg"
+}
+function gitr() {
+    git rebase -i HEAD~$1
+    echo 'now run: git push -f origin YOUR_BRANCH'
+}
 function gitall() {
-    git status && git add . && git commit -m "$1" && git push
+    msg="$(git rev-parse --abbrev-ref HEAD | sed 's/^\([A-Z-]*[0-9]*\).*/\1/') $1"
+    git status && git add . && git commit -m "$msg" && git push
 }
 function gitallremote() {
     git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+}
+fzfd() {
+    preview="git diff $@ --color=always -- {-1}"
+    git diff $@ --name-only | fzf -m --ansi --preview $preview
+}
+fzfbd() {
+    preview="git diff {-1}.. --color=always"
+    gitb -a | fzf -m --ansi --preview $preview
 }
 function cat() {
     batcat $1 --style=plain --paging=never

@@ -40,6 +40,7 @@
 
     " Enter command mode
     nnoremap <C-f> :
+    vnoremap <C-f> :
 
     " Execute vim line in shell
     nnoremap <leader><Enter> :.!zsh<CR>
@@ -83,15 +84,16 @@
     " Buffer control
     nnoremap <CR> :noh<CR><CR>
     nnoremap <C-m> :noh<CR>
-    nnoremap <leader>1 :execute 'b'.Cbuffer_number(1)<CR>
-    nnoremap <leader>2 :execute 'b'.Cbuffer_number(2)<CR>
-    nnoremap <leader>3 :execute 'b'.Cbuffer_number(3)<CR>
-    nnoremap <leader>4 :execute 'b'.Cbuffer_number(4)<CR>
-    nnoremap <leader>5 :execute 'b'.Cbuffer_number(5)<CR>
-    nnoremap <leader>6 :execute 'b'.Cbuffer_number(6)<CR>
-    nnoremap <leader>7 :execute 'b'.Cbuffer_number(7)<CR>
-    nnoremap <leader>8 :execute 'b'.Cbuffer_number(8)<CR>
-    nnoremap <leader>9 :execute 'b'.Cbuffer_number(9)<CR>
+    nnoremap <silent> <C-n> :bn<CR>
+    nnoremap <silent> <leader>1 :execute 'b'.Cbuffer_number(1)<CR>
+    nnoremap <silent> <leader>2 :execute 'b'.Cbuffer_number(2)<CR>
+    nnoremap <silent> <leader>3 :execute 'b'.Cbuffer_number(3)<CR>
+    nnoremap <silent> <leader>4 :execute 'b'.Cbuffer_number(4)<CR>
+    nnoremap <silent> <leader>5 :execute 'b'.Cbuffer_number(5)<CR>
+    nnoremap <silent> <leader>6 :execute 'b'.Cbuffer_number(6)<CR>
+    nnoremap <silent> <leader>7 :execute 'b'.Cbuffer_number(7)<CR>
+    nnoremap <silent> <leader>8 :execute 'b'.Cbuffer_number(8)<CR>
+    nnoremap <silent> <leader>9 :execute 'b'.Cbuffer_number(9)<CR>
 
     nnoremap <leader>q :bd<CR>
     nnoremap <leader>Q :bufdo bd!<CR>:q!<CR>
@@ -191,6 +193,20 @@
 
 " Set clipboard on
     set clipboard=unnamedplus
+    " Setup copy and paste to work in WSL
+    let g:clipboard = {
+                \   'name': 'WslClipboard',
+                \   'copy': {
+                \      '+': 'clip.exe',
+                \      '*': 'clip.exe',
+                \    },
+                \   'paste': {
+                \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+                \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+                \   },
+                \   'cache_enabled': 0,
+                \ }
+
 
 " Auto indent "
     set noautoindent
@@ -328,3 +344,4 @@
     let g:qs_accepted_chars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '_', 'å', 'ä', 'ö', 'Å', 'Ä', 'Ö']
     highlight QuickScopePrimary guifg=#ff000 gui=underline ctermfg=DarkRed cterm=underline
     highlight QuickScopeSecondary guifg=#ff000 gui=underline ctermfg=DarkMagenta cterm=underline
+
