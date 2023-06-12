@@ -10,6 +10,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Test installation of WSL
-        run: echo $PWD
-      - name: ls
-        run: ls
+        run: echo $PWD && ls
