@@ -9,6 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Create annotation for build error
+      - name: Test installation of WSL
         run: echo $PWD
+      - name: ls
         run: ls
