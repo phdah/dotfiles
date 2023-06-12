@@ -18,4 +18,6 @@ jobs:
       - name: List files
         run: ls
       - name: Test installation of WSL
-        run: bash ${GITHUB_WORKSPACE}/wsl_install.sh
+        env:
+          USER: 'CI'
+        run: bash ${GITHUB_WORKSPACE}/wsl_install.sh $USER

@@ -4,7 +4,12 @@
 
 # Define source directory
     (! [ "$1" ] ) && printf 'Incorrect input. Make sure to input\n1: user\n\n' && exit 1
-    HOME=/home/$1
+    if [[ $1 == 'CI' ]];
+        then
+            HOME=${GITHUB_WORKSPACE}
+        else
+            HOME=/home/$1
+    fi
     SOURCE_DIR=$HOME/repos
 
 # Set up folders
