@@ -20,4 +20,4 @@ jobs:
       - name: Test installation of WSL
         env:
           USER: 'CI'
-        run: bash ${GITHUB_WORKSPACE}/wsl_install.sh $USER
+        run: sudo ${GITHUB_WORKSPACE}/wsl_install.sh $USER
