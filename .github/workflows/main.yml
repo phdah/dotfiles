@@ -1,15 +1,21 @@
+name: Test WSL installation
+
 on:
   push:
-    branches:
-      - master
-    workflow_dispatch:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
 
-name: Test WSL installation
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.sha }}
       - name: List files
-        run: ls $GITHUB_WORKSPACE
+        run: ls
       - name: Test installation of WSL
         run: bash ${GITHUB_WORKSPACE}/wsl_install.sh
