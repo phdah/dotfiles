@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: List files
+        run: ls $GITHUB_WORKSPACE
       - name: Test installation of WSL
         run: bash ${GITHUB_WORKSPACE}/wsl_install.sh
-      - name: View
-        run: bash echo $PWD && ls && echo ${GITHUB_WORKSPACE}
