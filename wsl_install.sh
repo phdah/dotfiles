@@ -8,9 +8,11 @@
         then
             HOME=${GITHUB_WORKSPACE}
             SOURCE_DIR=$HOME
+            BUILD_DIR=$SOURCE_DIR
         else
             HOME=/home/$1
             SOURCE_DIR=$HOME/repos
+            BUILD_DIR=$BUILD_DIR
     fi
 
 # Set up folders
@@ -47,6 +49,7 @@ printf '\nApt installs\n\n'
 
     printf 'Snap installs\n\n'
     snap install nvim --classic
+    mkdir -p $HOME/.config/nvim/lua
 
 # Set zsh to the default shell
 chsh -s $(which zsh)
@@ -66,16 +69,16 @@ printf '\nSetting up nvim packer\n\n'
 
 # Symlink dotfiles to repo
 printf 'Setting up symlinks\n'
-    ln -sf $SOURCE_DIR/linux_set_up/wsl_zshrc $HOME/.zshrc
-    ln -sf $SOURCE_DIR/linux_set_up/gdbinit $HOME/.gdbinit
+    ln -sf $BUILD_DIR/wsl_zshrc $HOME/.zshrc
+    ln -sf $BUILD_DIR/gdbinit $HOME/.gdbinit
 
-    ln -sf $SOURCE_DIR/linux_set_up/init.vim $HOME/.config/nvim/init.vim
-    ln -sf $SOURCE_DIR/linux_set_up/user-dirs.dirs $HOME/.config/user-dirs.dirs
-    ln -sf $SOURCE_DIR/linux_set_up/wsl_plugins.lua $HOME/.config/nvim/lua/plugins.lua
+    ln -sf $BUILD_DIR/init.vim $HOME/.config/nvim/init.vim
+    ln -sf $BUILD_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
+    ln -sf $BUILD_DIR/wsl_plugins.lua $HOME/.config/nvim/lua/plugins.lua
 
-    ! [ -f "$HOME/.paths" ] && cp $SOURCE_DIR/linux_set_up/paths $HOME/.paths
-    ! [ -f "$HOME/.envvar" ] && cp $SOURCE_DIR/linux_set_up/envvar $HOME/.envvar
-    ! [ -f "$HOME/.alias" ] && cp $SOURCE_DIR/linux_set_up/alias $HOME/.alias
+    ! [ -f "$HOME/.paths" ] && cp $BUILD_DIR/paths $HOME/.paths
+    ! [ -f "$HOME/.envvar" ] && cp $BUILD_DIR/envvar $HOME/.envvar
+    ! [ -f "$HOME/.alias" ] && cp $BUILD_DIR/alias $HOME/.alias
 
 clear && neofetch
 printf '\nDone!\n'
