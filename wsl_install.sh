@@ -7,10 +7,11 @@
     if [[ $1 == 'CI' ]];
         then
             HOME=${GITHUB_WORKSPACE}
+            SOURCE_DIR=$HOME
         else
             HOME=/home/$1
+            SOURCE_DIR=$HOME/repos
     fi
-    SOURCE_DIR=$HOME/repos
 
 # Set up folders
 printf '\nSetting up base directories\n\n'
