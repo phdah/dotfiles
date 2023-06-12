@@ -6,7 +6,7 @@
     (! [ "$1" ] ) && printf 'Incorrect input. Make sure to input\n1: user\n\n' && exit 1
     if [[ $1 == 'CI' ]];
         then
-            HOME=${GITHUB_WORKSPACE}
+            HOME=/home/runner/work/linux_set_up/linux_set_up
             SOURCE_DIR=$HOME
             BUILD_DIR=$SOURCE_DIR
         else
