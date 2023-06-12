@@ -15,8 +15,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.sha }}
-      - name: List files
-        run: ls
       - name: Test installation of WSL
         env:
           USER: 'CI'

@@ -12,7 +12,7 @@
         else
             HOME=/home/$1
             SOURCE_DIR=$HOME/repos
-            BUILD_DIR=$BUILD_DIR
+            BUILD_DIR=$SOURCE_DIR/linux_set_up
     fi
 
 # Set up folders
