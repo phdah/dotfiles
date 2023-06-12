@@ -10,4 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create annotation for build error
-        run: ./wsl_install.sh
+        run: echo $PWD
+        run: ls
