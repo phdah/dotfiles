@@ -35,7 +35,7 @@ printf '\nApt installs\n\n'
             fzf \
             gdb \
             neofetch \
-            neovim
+            snap
             # TODO:
             # fast-syntax-highlighting.plugin.zsh
 
@@ -43,6 +43,9 @@ printf '\nApt installs\n\n'
     printf 'Packages not updated\n'
     apt list --upgradable
     apt autoremove --yes
+
+    printf 'Snap installs\n\n'
+    snap install nvim --classic
 
 # Set zsh to the default shell
 chsh -s $(which zsh)
