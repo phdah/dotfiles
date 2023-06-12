@@ -1,0 +1,12 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Test WSL installation
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create annotation for build error
+        run: ./wsl_install.sh
