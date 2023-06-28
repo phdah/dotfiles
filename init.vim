@@ -173,9 +173,6 @@
     vnoremap <leader>j }zzk
     vnoremap <leader>k {zzj
 
-    " Paste without yanking
-    xnoremap <leader>p "_dP
-
     " Toggle number adn sign column
     nnoremap <leader>n :set invrelativenumber invnumber<CR>:GitGutterToggle<CR>
 
@@ -201,6 +198,12 @@
 
 " Set clipboard on
     set clipboard+=unnamedplus
+    " Paste without yanking
+    xnoremap <leader> "_dP:%s///g<CR> <Nop>
+    nnoremap p p:%s///g<CR> <Nop>
+    nnoremap P P:%s///g<CR> <Nop>
+    vnoremap p p:%s///g<CR> <Nop>
+    vnoremap P P:%s///g<CR> <Nop>
     let g:clipboard = {
           \   'name': 'pbcopy/paste',
           \   'copy': {
