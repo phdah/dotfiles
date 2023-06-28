@@ -200,7 +200,6 @@
     set mouse=
 
 " Set clipboard on
-    nnoremap p :e ++ff=dos<CR> | p
     set clipboard+=unnamedplus
     let g:clipboard = {
           \   'name': 'pbcopy/paste',
