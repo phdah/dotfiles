@@ -5,14 +5,14 @@ compinit
 # Aliases
 # Aliases
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color --sort=extension'
 alias ll='ls --color -Al'
 alias vim='nvim'
 alias nb='nvim ~/repos/privat/logbook/README.md'
 alias bat='batcat'
 alias fzfc="fzf --preview='batcat {} --color always' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+alias venv="rm -r /tmp/python_venv > /dev/null 2>&1; python3 -m venv /tmp/python_venv && source /tmp/python_venv/bin/activate"
+alias updatedb="updatedb --prunepaths='/mnt'"
 # Git alias
 alias gitl='git log --oneline'
 alias gits='git status'
@@ -58,7 +58,7 @@ function gitr() {
 }
 function gitall() {
     msg="$(git rev-parse --abbrev-ref HEAD | sed 's/^\([A-Z-]*[0-9]*\).*/\1/') $1"
-    git status && git add . && git commit -m "$msg" && git push
+    git status && git add . && git commit -m "$msg" && git push || git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 }
 function gitallremote() {
     git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
