@@ -80,5 +80,11 @@ printf 'Setting up symlinks\n'
     ! [ -f "$HOME/.envvar" ] && cp $BUILD_DIR/envvar $HOME/.envvar
     ! [ -f "$HOME/.alias" ] && cp $BUILD_DIR/alias $HOME/.alias
 
-clear && neofetch
+    # TODO: Setup binaries /usr/bin/pbcopy and /usr/bin/pbpaste
+    # which are used for vim clipboard
+
+if [[ $1 != 'CI' ]]
+    then
+        clear && neofetch
+fi
 printf '\nDone!\n'
