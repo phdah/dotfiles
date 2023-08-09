@@ -47,12 +47,12 @@ printf '\nApt installs\n\n'
     apt list --upgradable
     apt autoremove --yes
 
-    printf 'Snap installs\n\n'
-    snap install nvim --classic
-    mkdir -p $HOME/.config/nvim/lua
-
 # Set zsh to the default shell
 chsh -s $(which zsh)
+
+# Install neovim from source
+printf '\nBuilding (stable) neovim from source\n\n'
+    ! [ -d $SOURCE_DIR/neovim ] && git clone https://github.com/neovim/neovim.git $SOURCE_DIR/neovim && apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip && cd neovim && git checkout stable && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
 
 # Install gitgutter
 printf '\nSetting up gitgutter\n\n'
