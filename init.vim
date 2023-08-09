@@ -2,6 +2,11 @@
 
 " Neovim package manager
     lua require('plugins')
+    lua require('dapui').setup()
+    lua require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+    nnoremap <leader>b :lua require('dap').toggle_breakpoint()<CR>
+    nnoremap <leader>c :lua require('dap').continue()<CR>
+    nnoremap <leader>t :lua require('dapui').toggle()<CR>
 
 " Keymap leader key
     let mapleader = " "
@@ -22,6 +27,7 @@
     nnoremap <C-b> I<Esc>
     nnoremap <C-h> xh
     nnoremap <C-x> x
+    nnoremap <leader> <Nop>
 
     " Keybind visual
     vnoremap <C-e> <End>
@@ -110,7 +116,7 @@
     endfunction
     nnoremap <leader>f :call FilesGitRoot()<CR>
     nnoremap <leader>F :execute 'Files ~'<CR>
-    nnoremap <leader>b :Buffers<CR>
+    nnoremap <leader>B :Buffers<CR>
 
     " Spell checking
     nnoremap <leader>z :setlocal spell! spelllang=en_us<CR>
@@ -144,6 +150,8 @@
     nnoremap <leader>o o<Esc>
     nnoremap <leader>O O<Esc>
 
+    " Open vertical split
+    nnoremap <leader>v :vsplit<CR>
     " Delete line and insert empty line
     nnoremap <leader>d Vc<Esc>
 
@@ -164,9 +172,6 @@
     nnoremap <leader>k {zz
     vnoremap <leader>j }zzk
     vnoremap <leader>k {zzj
-
-    " Paste without yanking
-    xnoremap <leader>p "_dP
 
     " Toggle number adn sign column
     nnoremap <leader>n :set invrelativenumber invnumber<CR>:GitGutterToggle<CR>
@@ -192,21 +197,25 @@
     set mouse=
 
 " Set clipboard on
-    set clipboard=unnamedplus
-    " Setup copy and paste to work in WSL
+    set clipboard+=unnamedplus
+    " Paste without yanking
+    xnoremap <leader> "_dP:%s///g<CR> <Nop>
+    nnoremap p p:%s///g<CR> <Nop>
+    nnoremap P P:%s///g<CR> <Nop>
+    vnoremap p p:%s///g<CR> <Nop>
+    vnoremap P P:%s///g<CR> <Nop>
     let g:clipboard = {
-                \   'name': 'WslClipboard',
-                \   'copy': {
-                \      '+': 'clip.exe',
-                \      '*': 'clip.exe',
-                \    },
-                \   'paste': {
-                \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-                \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
-                \   },
-                \   'cache_enabled': 0,
-                \ }
-
+          \   'name': 'pbcopy/paste',
+          \   'copy': {
+          \      '+': 'pbcopy',
+          \      '*': 'pbcopy',
+          \    },
+          \   'paste': {
+          \      '+': 'pbpaste',
+          \      '*': 'pbpaste',
+          \   },
+          \   'cache_enabled': 0,
+          \ }
 
 " Auto indent "
     set noautoindent
