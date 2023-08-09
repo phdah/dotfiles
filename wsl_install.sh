@@ -4,7 +4,7 @@
 
 # Define source directory
     (! [ "$1" ] ) && printf 'Incorrect input. Make sure to input\n1: user\n\n' && exit 1
-    if [[ $1 == 'CI' ]];
+    if [[ "$1" == 'CI' ]]
         then
             HOME=/home/runner/work/linux_set_up/linux_set_up
             SOURCE_DIR=$HOME
@@ -51,8 +51,11 @@ printf '\nApt installs\n\n'
 chsh -s $(which zsh)
 
 # Install neovim from source
-printf '\nBuilding (stable) neovim from source\n\n'
-    ! [ -d $SOURCE_DIR/neovim ] && git clone https://github.com/neovim/neovim.git $SOURCE_DIR/neovim && apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip && cd neovim && git checkout stable && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
+if [[ "$1" != 'CI' ]]
+    then
+        printf '\nBuilding (stable) neovim from source\n\n'
+            ! [ -d $SOURCE_DIR/neovim ] && git clone https://github.com/neovim/neovim.git $SOURCE_DIR/neovim && apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip && cd neovim && git checkout stable && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
+    fi
 
 # Install gitgutter
 printf '\nSetting up gitgutter\n\n'
