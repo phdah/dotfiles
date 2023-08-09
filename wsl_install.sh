@@ -59,7 +59,7 @@ if [[ "$1" != 'CI' ]]
 
 # Install gitgutter
 printf '\nSetting up gitgutter\n\n'
-    ! [ -d $HOME/.config/nvim/pack/airblade/start/vim-gitgutter ] && mkdir -p $HOME/.config/nvim/pack/airblade/start && git clone https://github.com/airblade/vim-gitgutter.git $HOME/.config/nvim/pack/airblade/start/vim-gitgutter && nvim -u NONE -c "helptags $HOME/.config/nvim/pack/airblade/start/vim-gitgutter/doc" -c q
+    ! [ -d $BUILD_DIR/nvim/pack/airblade/vim-gitgutter ] && mkdir -p $BUILD_DIR/nvim/pack/airblade/vim-gitgutter && git clone https://github.com/airblade/vim-gitgutter.git $BUILD_DIR/nvim/pack/airblade/vim-gitgutter && nvim -u NONE -c "helptags $BUILD_DIR/nvim/pack/airblade/vim-gitgutter/doc" -c q
 
 # Set zsh synbtax highlighting
 # TODO: substitute for fast-syntax-highlighting.plugin.zsh
@@ -75,9 +75,9 @@ printf 'Setting up symlinks\n'
     ln -sf $BUILD_DIR/wsl_zshrc $HOME/.zshrc
     ln -sf $BUILD_DIR/gdbinit $HOME/.gdbinit
 
-    ln -sf $BUILD_DIR/init.vim $HOME/.config/nvim/init.vim
+    ln -s $BUILD_DIR/nvim $HOME/.config/nvim
+
     ln -sf $BUILD_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
-    ln -sf $BUILD_DIR/wsl_plugins.lua $HOME/.config/nvim/lua/plugins.lua
 
     ! [ -f "$HOME/.paths" ] && cp $BUILD_DIR/paths $HOME/.paths
     ! [ -f "$HOME/.envvar" ] && cp $BUILD_DIR/envvar $HOME/.envvar
