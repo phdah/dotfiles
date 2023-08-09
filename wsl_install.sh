@@ -4,15 +4,15 @@
 
 # Define source directory
     (! [ "$1" ] ) && printf 'Incorrect input. Make sure to input\n1: user\n\n' && exit 1
-    if [[ $1 == 'CI' ]];
+    if [[ "$1" == 'CI' ]]
         then
-            HOME=${GITHUB_WORKSPACE}
+            HOME=/home/runner/work/linux_set_up/linux_set_up
             SOURCE_DIR=$HOME
             BUILD_DIR=$SOURCE_DIR
         else
             HOME=/home/$1
             SOURCE_DIR=$HOME/repos
-            BUILD_DIR=$BUILD_DIR
+            BUILD_DIR=$SOURCE_DIR/linux_set_up
     fi
 
 # Set up folders
@@ -47,12 +47,15 @@ printf '\nApt installs\n\n'
     apt list --upgradable
     apt autoremove --yes
 
-    printf 'Snap installs\n\n'
-    snap install nvim --classic
-    mkdir -p $HOME/.config/nvim/lua
-
 # Set zsh to the default shell
 chsh -s $(which zsh)
+
+# Install neovim from source
+if [[ "$1" != 'CI' ]]
+    then
+        printf '\nBuilding (stable) neovim from source\n\n'
+            ! [ -d $SOURCE_DIR/neovim ] && git clone https://github.com/neovim/neovim.git $SOURCE_DIR/neovim && apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip && cd neovim && git checkout stable && make CMAKE_BUILD_TYPE=RelWithDebInfo && make install
+    fi
 
 # Install gitgutter
 printf '\nSetting up gitgutter\n\n'
@@ -80,5 +83,11 @@ printf 'Setting up symlinks\n'
     ! [ -f "$HOME/.envvar" ] && cp $BUILD_DIR/envvar $HOME/.envvar
     ! [ -f "$HOME/.alias" ] && cp $BUILD_DIR/alias $HOME/.alias
 
-clear && neofetch
+    # TODO: Setup binaries /usr/bin/pbcopy and /usr/bin/pbpaste
+    # which are used for vim clipboard
+
+if [[ $1 != 'CI' ]]
+    then
+        clear && neofetch
+fi
 printf '\nDone!\n'
