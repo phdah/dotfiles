@@ -6,6 +6,9 @@ vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 -- Key mapping
 vim.api.nvim_set_keymap('n', '<leader>r', ':so<CR>', { noremap = true, silent = true })
 
+-- LSP keymaps
+vim.api.nvim_set_keymap('n', '<leader>g', ':lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+
 -- Dap keymaps
 vim.api.nvim_set_keymap('n', '<leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>c', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })

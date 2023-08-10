@@ -4,14 +4,29 @@
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
-  -- Packer can manage itself
-  use ({'wbthomason/packer.nvim'})
+    -- Packer can manage itself
+    use ({
+        'wbthomason/packer.nvim'
+    })
 
-  use ({
-	"nvim-treesitter/nvim-treesitter",
-	run = ":TSUpdate"
-	})
-  use ({
+    use ({
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate"
+        })
+    use ({"p00f/nvim-ts-rainbow"})
+
+    use ({
+        'VonHeikemen/lsp-zero.nvim',
+        branch = 'v1.x',
+        requires = {
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
+        }
+      })
+
+    use ({
         'junegunn/fzf',
         run = ":call fzf#install()"
     })
@@ -41,5 +56,12 @@ return require('packer').startup(function(use)
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
     })
-    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", 'mfussenegger/nvim-dap-python'} }
+    use ({
+        "rcarriga/nvim-dap-ui",
+        requires = {
+            "mfussenegger/nvim-dap",
+            'mfussenegger/nvim-dap-python'
+        }
+    })
+
   end)
