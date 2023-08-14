@@ -78,9 +78,9 @@ printf 'Setting up symlinks\n'
     ln -sf $BUILD_DIR/wsl_zshrc $HOME/.zshrc
     ln -sf $BUILD_DIR/gdbinit $HOME/.gdbinit
 
-    ln -s $BUILD_DIR/nvim $HOME/.config/nvim
+    (! [ -f "$HOME/.config/nvim" ] && mkdir $HOME/.config/nvim) ; ln -s $BUILD_DIR/nvim $HOME/.config/nvim
 
-    ln -sf $BUILD_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
+    (! [ -f "$HOME/.config/user-dirs.dirs" ] && mkdir $HOME/.config/user-dirs.dirs) ; ln -sf $BUILD_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
 
     ! [ -f "$HOME/.paths" ] && cp $BUILD_DIR/paths $HOME/.paths
     ! [ -f "$HOME/.envvar" ] && cp $BUILD_DIR/envvar $HOME/.envvar
