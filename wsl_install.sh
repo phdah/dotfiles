@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Install git manually, this is requeried to get this script lol
 
