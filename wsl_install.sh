@@ -25,6 +25,8 @@ printf '\nSetting up base directories\n\n'
     ! [ -d $HOME/downloads ] && mkdir -p $HOME/downloads
 
 printf '\nApt installs\n\n'
+if [[ "$1" != 'CI' ]]
+    then
     apt upgrade --yes
     apt update --yes
     apt install --yes \
@@ -46,6 +48,7 @@ printf '\nApt installs\n\n'
     printf 'Packages not updated\n'
     apt list --upgradable
     apt autoremove --yes
+    fi
 
 # Set zsh to the default shell
 chsh -s $(which zsh)
