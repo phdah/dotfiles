@@ -10,10 +10,10 @@ return require('packer').startup(function(use)
     })
 
     use ({
-        "nvim-treesitter/nvim-treesitter",
-        run = ":TSUpdate"
-        })
-    use ({"p00f/nvim-ts-rainbow"})
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate'
+    })
+    use ({'p00f/nvim-ts-rainbow'})
 
     use ({
         'VonHeikemen/lsp-zero.nvim',
@@ -23,14 +23,14 @@ return require('packer').startup(function(use)
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
-	    -- DAP support
-	    {"jay-babu/mason-nvim-dap.nvim"}
+            -- DAP support
+            {'jay-babu/mason-nvim-dap.nvim'}
         }
-      })
+    })
 
     use ({
         'junegunn/fzf',
-        run = ":call fzf#install()"
+        run = ':call fzf#install()'
     })
     use ({
         'junegunn/fzf.vim'
@@ -44,7 +44,7 @@ return require('packer').startup(function(use)
         'hashivim/vim-terraform'
     })
     use ({
-        "terrortylor/nvim-comment"
+        'terrortylor/nvim-comment'
     })
 
     use ({
@@ -55,16 +55,16 @@ return require('packer').startup(function(use)
     })
     -- install without yarn or npm
     use ({
-        "iamcco/markdown-preview.nvim",
-        run = function() vim.fn["mkdp#util#install"]() end,
+        'iamcco/markdown-preview.nvim',
+        run = function() vim.fn['mkdp#util#install']() end,
     })
     use ({
-        "rcarriga/nvim-dap-ui",
+        'rcarriga/nvim-dap-ui',
         requires = {
-            "mfussenegger/nvim-dap",
+            'mfussenegger/nvim-dap',
             'mfussenegger/nvim-dap-python',
-	    'jbyuki/one-small-step-for-vimkind',
+            'jbyuki/one-small-step-for-vimkind',
         }
     })
 
-  end)
+end)
