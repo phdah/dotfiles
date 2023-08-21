@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # Install git manually, this is requeried to get this script lol
 
@@ -9,22 +10,29 @@
             HOME=/home/runner/work/linux_set_up/linux_set_up
             SOURCE_DIR=$HOME
             BUILD_DIR=$SOURCE_DIR
+            CONFIG=$HOME/.config
         else
             HOME=/home/$1
             SOURCE_DIR=$HOME/repos
             BUILD_DIR=$SOURCE_DIR/linux_set_up
+            CONFIG=$HOME/.config
     fi
 
 # Set up folders
 printf '\nSetting up base directories\n\n'
     # Set up folders
-    ! [ -d $HOME/repos ] && mkdir -p $HOME/repos
+    ! [ -d "$HOME/repos" ] && mkdir -p "$HOME/repos"
     ! [ -d $HOME/repos/work ] && mkdir -p $HOME/repos/work
     ! [ -d $HOME/repos/privat ] && mkdir -p $HOME/repos/privat
     ! [ -d $HOME/scripts ] && mkdir -p $HOME/scripts
     ! [ -d $HOME/downloads ] && mkdir -p $HOME/downloads
 
+    ! [ -d "$CONFIG" ] && mkdir -p $CONFIG
+    ! [ -d "$CONFIG/clangd" ] && mkdir -p $CONFIG/clangd
+
 printf '\nApt installs\n\n'
+if [[ "$1" != 'CI' ]]
+    then
     apt upgrade --yes
     apt update --yes
     apt install --yes \
@@ -46,11 +54,15 @@ printf '\nApt installs\n\n'
     printf 'Packages not updated\n'
     apt list --upgradable
     apt autoremove --yes
+    fi
 
 # Set zsh to the default shell
-chsh -s $(which zsh)
+if [[ "$1" != 'CI' ]]
+    then
+        chsh -s $(which zsh)
+    fi
 
-# Install neovim from source
+# Install neovim from source, unless CI mode, since it's like 10m install
 if [[ "$1" != 'CI' ]]
     then
         printf '\nBuilding (stable) neovim from source\n\n'
@@ -58,8 +70,12 @@ if [[ "$1" != 'CI' ]]
     fi
 
 # Install gitgutter
-printf '\nSetting up gitgutter\n\n'
-    ! [ -d $HOME/.config/nvim/pack/airblade/start/vim-gitgutter ] && mkdir -p $HOME/.config/nvim/pack/airblade/start && git clone https://github.com/airblade/vim-gitgutter.git $HOME/.config/nvim/pack/airblade/start/vim-gitgutter && nvim -u NONE -c "helptags $HOME/.config/nvim/pack/airblade/start/vim-gitgutter/doc" -c q
+    printf '\nSetting up gitgutter\n\n'
+        ! [ -d $BUILD_DIR/nvim/pack/airblade/vim-gitgutter ] && mkdir -p $BUILD_DIR/nvim/pack/airblade/vim-gitgutter && git clone https://github.com/airblade/vim-gitgutter.git $BUILD_DIR/nvim/pack/airblade/vim-gitgutter
+if [[ "$1" != 'CI' ]]
+    then
+        nvim -u NONE -c "helptags $BUILD_DIR/nvim/pack/airblade/vim-gitgutter/doc" -c q
+    fi
 
 # Set zsh synbtax highlighting
 # TODO: substitute for fast-syntax-highlighting.plugin.zsh
@@ -72,19 +88,20 @@ printf '\nSetting up nvim packer\n\n'
 
 # Symlink dotfiles to repo
 printf 'Setting up symlinks\n'
+    # Files
     ln -sf $BUILD_DIR/wsl_zshrc $HOME/.zshrc
     ln -sf $BUILD_DIR/gdbinit $HOME/.gdbinit
+    ln -sf $BUILD_DIR/user-dirs.dirs $CONFIG/user-dirs.dirs
 
-    ln -sf $BUILD_DIR/init.vim $HOME/.config/nvim/init.vim
-    ln -sf $BUILD_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
-    ln -sf $BUILD_DIR/wsl_plugins.lua $HOME/.config/nvim/lua/plugins.lua
+    # Directories
+    ln -s $BUILD_DIR/nvim $CONFIG/nvim
 
+printf 'Copying files\n'
+    # Only copy over these if they don't exists
+    ! [ -f "$BUILD_DIR/compile_flags.txt" ] && cp $BUILD_DIR/compile_flags.txt $CONFIG/clangd/compile_flags.txt
     ! [ -f "$HOME/.paths" ] && cp $BUILD_DIR/paths $HOME/.paths
     ! [ -f "$HOME/.envvar" ] && cp $BUILD_DIR/envvar $HOME/.envvar
     ! [ -f "$HOME/.alias" ] && cp $BUILD_DIR/alias $HOME/.alias
-
-    # TODO: Setup binaries /usr/bin/pbcopy and /usr/bin/pbpaste
-    # which are used for vim clipboard
 
 if [[ $1 != 'CI' ]]
     then
