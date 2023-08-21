@@ -10,20 +10,25 @@ set -e
             HOME=/home/runner/work/linux_set_up/linux_set_up
             SOURCE_DIR=$HOME
             BUILD_DIR=$SOURCE_DIR
+            CONFIG=$HOME/.config
         else
             HOME=/home/$1
             SOURCE_DIR=$HOME/repos
             BUILD_DIR=$SOURCE_DIR/linux_set_up
+            CONFIG=$HOME/.config
     fi
 
 # Set up folders
 printf '\nSetting up base directories\n\n'
     # Set up folders
-    ! [ -d $HOME/repos ] && mkdir -p $HOME/repos
+    ! [ -d "$HOME/repos" ] && mkdir -p "$HOME/repos"
     ! [ -d $HOME/repos/work ] && mkdir -p $HOME/repos/work
     ! [ -d $HOME/repos/privat ] && mkdir -p $HOME/repos/privat
     ! [ -d $HOME/scripts ] && mkdir -p $HOME/scripts
     ! [ -d $HOME/downloads ] && mkdir -p $HOME/downloads
+
+    ! [ -d "$CONFIG" ] && mkdir -p $CONFIG
+    ! [ -d "$CONFIG/clangd" ] && mkdir -p $CONFIG/clangd
 
 printf '\nApt installs\n\n'
 if [[ "$1" != 'CI' ]]
@@ -54,7 +59,7 @@ if [[ "$1" != 'CI' ]]
 # Set zsh to the default shell
 chsh -s $(which zsh)
 
-# Install neovim from source
+# Install neovim from source, unless CI mode, since it's like 10m install
 if [[ "$1" != 'CI' ]]
     then
         printf '\nBuilding (stable) neovim from source\n\n'
@@ -76,19 +81,19 @@ printf '\nSetting up nvim packer\n\n'
 
 # Symlink dotfiles to repo
 printf 'Setting up symlinks\n'
+    # Files
     ln -sf $BUILD_DIR/wsl_zshrc $HOME/.zshrc
     ln -sf $BUILD_DIR/gdbinit $HOME/.gdbinit
+    ln -sf $BUILD_DIR/user-dirs.dirs $CONFIG/user-dirs.dirs
 
-    (! [ -f "$HOME/.config/nvim" ] && mkdir $HOME/.config/nvim) ; ln -s $BUILD_DIR/nvim $HOME/.config/nvim
+    # Directories
+    ln -s $BUILD_DIR/nvim $CONFIG/nvim
 
-    (! [ -f "$HOME/.config/user-dirs.dirs" ] && mkdir $HOME/.config/user-dirs.dirs) ; ln -sf $BUILD_DIR/user-dirs.dirs $HOME/.config/user-dirs.dirs
-
+    # Only copy over these if they don't exists
+    ! [ -f "$BUILD_DIR/compile_flags.txt" ] && cp $BUILD_DIR/compile_flags.txt $CONFIG/clangd/compile_flags.txt
     ! [ -f "$HOME/.paths" ] && cp $BUILD_DIR/paths $HOME/.paths
     ! [ -f "$HOME/.envvar" ] && cp $BUILD_DIR/envvar $HOME/.envvar
     ! [ -f "$HOME/.alias" ] && cp $BUILD_DIR/alias $HOME/.alias
-
-    # TODO: Setup binaries /usr/bin/pbcopy and /usr/bin/pbpaste
-    # which are used for vim clipboard
 
 if [[ $1 != 'CI' ]]
     then

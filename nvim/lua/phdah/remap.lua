@@ -7,15 +7,16 @@ vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>r', ':so<CR>', { noremap = true, silent = true })
 
 -- LSP keymaps
-vim.api.nvim_set_keymap('n', '<leader>g', ':lua vim.lsp.buf.definition()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>', { noremap = true, silent = true })
 
 -- Dap keymaps
 vim.api.nvim_set_keymap('n', '<leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>c', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>t', ':lua require("dap").terminate()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>c', ':lua _G.MyDapContinue()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>t', ':lua _G.Dapui_terminate()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>i', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>m', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>cb', ':lua require("dap").clear_breakpoints()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>dr', ':DapToggleRepl<CR>', { noremap = true, silent = true })
 
 -- Execute vim line in shell
 vim.api.nvim_set_keymap('n', '<leader><Enter>', ':.!zsh<CR>', { noremap = true })

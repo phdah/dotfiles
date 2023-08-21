@@ -15,17 +15,17 @@ _G.nvim_GitStatus = function()
 end
 
 _G.nvim_Cbuffer_number = function(number)
-  local buffer = vim.fn.getbufinfo({bufloaded = 1})[number].bufnr
+  local buffer = vim.fn.getbufinfo({buflisted = 1})[number].bufnr
   return buffer
 end
 
 _G.nvim_Buffer_lower = function()
-  local bufferinfo = vim.fn.getbufinfo({bufloaded = 1})
+  local bufferinfo = vim.fn.getbufinfo({buflisted = 1})
   local current_buffer = vim.fn.bufnr('%')
   local lower_bound = {}
-
   local i = 1
-  while bufferinfo[i].bufnr < current_buffer do
+
+  while i <= #bufferinfo and bufferinfo[i].bufnr and bufferinfo[i].bufnr < current_buffer do
     table.insert(lower_bound, i)
     i = i + 1
   end
@@ -34,15 +34,15 @@ _G.nvim_Buffer_lower = function()
 end
 
 _G.nvim_Buffer_upper = function()
-  local bufferinfo = vim.fn.getbufinfo({bufloaded = 1})
+  local bufferinfo = vim.fn.getbufinfo({buflisted = 1})
   local current_buffer = vim.fn.bufnr('%')
+  local upper_bound = {}
   local i = 1
 
-  while bufferinfo[i].bufnr ~= current_buffer do
+  while i <= #bufferinfo and bufferinfo[i].bufnr ~= current_buffer do
     i = i + 1
   end
 
-  local upper_bound = {}
   for j = i+1, #bufferinfo do
     table.insert(upper_bound, j)
   end
@@ -51,15 +51,29 @@ _G.nvim_Buffer_upper = function()
 end
 
 _G.nvim_Buffer_current = function()
-  local bufferinfo = vim.fn.getbufinfo({bufloaded = 1})
+  local bufferinfo = vim.fn.getbufinfo({buflisted = 1})
   local current_buffer = vim.fn.bufnr('%')
   local i = 1
 
-  while bufferinfo[i].bufnr ~= current_buffer do
+  -- Handle case if bufferinfo is empty
+  if #bufferinfo == 0 then return "0" end
+
+  -- Check if the first buffer matches
+  if bufferinfo[i].bufnr == current_buffer then
+    return tostring(i)
+  end
+
+  -- Check the subsequent buffers while ensuring we don't go out of bounds
+  while i < #bufferinfo and bufferinfo[i].bufnr ~= current_buffer do
     i = i + 1
   end
 
-  return tostring(i)
+  -- If the buffer was found, i will be its index; otherwise, i will be greater than #bufferinfo
+  if i <= #bufferinfo then
+    return tostring(i)
+  else
+    return "Buffer not found"  -- or any other appropriate error message or value
+  end
 end
 
 -- Git and path/file name

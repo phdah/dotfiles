@@ -23,6 +23,8 @@ return require('packer').startup(function(use)
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
             {'williamboman/mason-lspconfig.nvim'},
+	    -- DAP support
+	    {"jay-babu/mason-nvim-dap.nvim"}
         }
       })
 
@@ -60,7 +62,8 @@ return require('packer').startup(function(use)
         "rcarriga/nvim-dap-ui",
         requires = {
             "mfussenegger/nvim-dap",
-            'mfussenegger/nvim-dap-python'
+            'mfussenegger/nvim-dap-python',
+	    'jbyuki/one-small-step-for-vimkind',
         }
     })
 
