@@ -57,7 +57,10 @@ if [[ "$1" != 'CI' ]]
     fi
 
 # Set zsh to the default shell
-chsh -s $(which zsh)
+if [[ "$1" != 'CI' ]]
+    then
+        chsh -s $(which zsh)
+    fi
 
 # Install neovim from source, unless CI mode, since it's like 10m install
 if [[ "$1" != 'CI' ]]
@@ -67,8 +70,12 @@ if [[ "$1" != 'CI' ]]
     fi
 
 # Install gitgutter
-printf '\nSetting up gitgutter\n\n'
-    ! [ -d $BUILD_DIR/nvim/pack/airblade/vim-gitgutter ] && mkdir -p $BUILD_DIR/nvim/pack/airblade/vim-gitgutter && git clone https://github.com/airblade/vim-gitgutter.git $BUILD_DIR/nvim/pack/airblade/vim-gitgutter && nvim -u NONE -c "helptags $BUILD_DIR/nvim/pack/airblade/vim-gitgutter/doc" -c q
+    printf '\nSetting up gitgutter\n\n'
+        ! [ -d $BUILD_DIR/nvim/pack/airblade/vim-gitgutter ] && mkdir -p $BUILD_DIR/nvim/pack/airblade/vim-gitgutter && git clone https://github.com/airblade/vim-gitgutter.git $BUILD_DIR/nvim/pack/airblade/vim-gitgutter
+if [[ "$1" != 'CI' ]]
+    then
+        nvim -u NONE -c "helptags $BUILD_DIR/nvim/pack/airblade/vim-gitgutter/doc" -c q
+    fi
 
 # Set zsh synbtax highlighting
 # TODO: substitute for fast-syntax-highlighting.plugin.zsh
@@ -89,6 +96,7 @@ printf 'Setting up symlinks\n'
     # Directories
     ln -s $BUILD_DIR/nvim $CONFIG/nvim
 
+printf 'Copying files\n'
     # Only copy over these if they don't exists
     ! [ -f "$BUILD_DIR/compile_flags.txt" ] && cp $BUILD_DIR/compile_flags.txt $CONFIG/clangd/compile_flags.txt
     ! [ -f "$HOME/.paths" ] && cp $BUILD_DIR/paths $HOME/.paths

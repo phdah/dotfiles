@@ -18,9 +18,10 @@ vim.wo.colorcolumn = "80"
 vim.cmd('highlight ColorColumn ctermbg=238')
 
 -- Set up default tabs
-vim.bo.softtabstop = 4 -- set number of spaces, but treat as one object
-vim.bo.shiftwidth = 4 -- set width for 'enter' after tabbed line
-vim.bo.expandtab = true -- use spaces instead of tab
+vim.o.tabstop = 4
+vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
+vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
+vim.o.expandtab = true -- use spaces instead of tab
 
 
 -- Special setting for 'make' files
@@ -48,6 +49,6 @@ vim.cmd[[command! -nargs=1 -complete=command -bar H help <args> | only]]
 vim.o.scrolloff = 0
 
 -- Auto indent configurations
-vim.o.autoindent = false
+vim.opt.autoindent = false
 vim.cmd[[filetype indent off]]
 vim.cmd[[autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
