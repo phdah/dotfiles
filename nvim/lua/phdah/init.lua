@@ -1,5 +1,4 @@
 require("phdah.packer")
-require("phdah.statusline")
 require("phdah.browser")
 require("phdah.defaultremap")
 require("phdah.remap")

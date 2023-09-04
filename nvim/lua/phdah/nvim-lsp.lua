@@ -64,21 +64,21 @@ _G.remove_compile_flags = function()
 end
 
 -- Helper function to set up the autocmds
--- local function setup_autocmds()
---             -- autocmd BufEnter *.c,*.cpp lua _G.copy_compile_flags()
---     vim.cmd([[
---         augroup ClangdSetup
---             autocmd!
---             autocmd VimLeave * lua _G.remove_compile_flags()
---         augroup END
---     ]])
--- end
+local function setup_autocmds()
+            -- autocmd BufEnter *.c,*.cpp lua _G.copy_compile_flags()
+    vim.cmd([[
+        augroup ClangdSetup
+            autocmd!
+            autocmd VimLeave * lua _G.remove_compile_flags()
+        augroup END
+    ]])
+end
 
--- local lspconfig = require('lspconfig')
--- lspconfig.clangd.setup {
---   on_attach = function()
---     copy_compile_flags()
---   end
--- }
+local lspconfig = require('lspconfig')
+lspconfig.clangd.setup {
+  on_attach = function()
+    copy_compile_flags()
+  end
+}
 
--- setup_autocmds()
+setup_autocmds()
