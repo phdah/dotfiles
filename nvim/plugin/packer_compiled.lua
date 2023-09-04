@@ -74,6 +74,11 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["buff-statusline.nvim"] = {
+    loaded = true,
+    path = "/home/phdah/.local/share/nvim/site/pack/packer/start/buff-statusline.nvim",
+    url = "https://github.com/phdah/buff-statusline.nvim"
+  },
   fzf = {
     loaded = true,
     path = "/home/phdah/.local/share/nvim/site/pack/packer/start/fzf",

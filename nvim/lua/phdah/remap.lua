@@ -29,17 +29,6 @@ vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-m>', ':noh<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-n>', ':bn<CR>', { noremap = true, silent = true })
 
--- Buffer control related to nvim_Cbuffer_number
-vim.api.nvim_set_keymap('n', '<leader>1', ':lua vim.cmd("b" .. nvim_Cbuffer_number(1))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>2', ':lua vim.cmd("b" .. nvim_Cbuffer_number(2))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>3', ':lua vim.cmd("b" .. nvim_Cbuffer_number(3))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>4', ':lua vim.cmd("b" .. nvim_Cbuffer_number(4))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>5', ':lua vim.cmd("b" .. nvim_Cbuffer_number(5))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>6', ':lua vim.cmd("b" .. nvim_Cbuffer_number(6))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>7', ':lua vim.cmd("b" .. nvim_Cbuffer_number(7))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>8', ':lua vim.cmd("b" .. nvim_Cbuffer_number(8))<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>9', ':lua vim.cmd("b" .. nvim_Cbuffer_number(9))<CR>', { noremap = true, silent = true })
-
 -- Open vertical split
 vim.api.nvim_set_keymap('n', '<leader>v', ':vsplit<CR>', { noremap = true, silent = true })
 

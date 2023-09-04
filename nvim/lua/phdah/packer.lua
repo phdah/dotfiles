@@ -66,5 +66,6 @@ return require('packer').startup(function(use)
             'jbyuki/one-small-step-for-vimkind',
         }
     })
+    use ({'phdah/buff-statusline.nvim'})
 
 end)

@@ -52,3 +52,22 @@ vim.o.scrolloff = 0
 vim.opt.autoindent = false
 vim.cmd[[filetype indent off]]
 vim.cmd[[autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
+
+-- Function to set the executor based on file type
+_G.Define_Make = function(args)
+    local filetype = vim.bo.filetype
+    if filetype == 'python' then
+        vim.cmd('!python3 % ' .. args)
+    elseif filetype == 'sh' then
+        vim.cmd('!bash % ' .. args)
+    elseif filetype == 'lua' then
+        vim.cmd('!lua % ' .. args)
+    elseif filetype == 'c' or filetype == 'cpp' then
+        vim.cmd('!make -C build && ./build/%< ' .. args)
+    elseif filetype == 'scala' then
+        vim.cmd("!scalac % && scala %< " .. args)
+    end
+end
+
+-- Create the :Make command
+vim.cmd("command! -nargs=* Make lua _G.Define_Make(<q-args>)")
