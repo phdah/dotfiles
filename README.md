@@ -28,3 +28,6 @@ Background              #2E3440
 Cursor color            #81A1C1
 Selection background    #FFFACD
 ```
+
+### TODO
+* Remove CustomLSP from repo. It should be somewhere else since it's to large.
