@@ -66,6 +66,7 @@ return require('packer').startup(function(use)
             'jbyuki/one-small-step-for-vimkind',
         }
     })
+    use ({'shaunsingh/nord.nvim'})
     use ({'phdah/buff-statusline.nvim'})
 
 end)
