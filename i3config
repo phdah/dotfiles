@@ -33,8 +33,8 @@ exec --no-startup-id nm-applet
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
-# start a terminal
-bindsym $mod+Control+j exec gnome-terminal
+# start a terminal, based on which i have installed
+bindsym $mod+Control+j exec --no-startup-id sh -c 'command -v kitty &>/dev/null && exec kitty || exec gnome-terminal'
 bindsym $mod+g exec guake-toggle
 
 # set up F1 keys
