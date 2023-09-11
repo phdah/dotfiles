@@ -210,6 +210,8 @@ copy-dirs: ## Copy files and dirs
 	@if [ ! -f "$(HOME)/.paths" ]; then cp $(BUILD_DIR)/paths $(HOME)/.paths; fi
 	@if [ ! -f "$(HOME)/.envvar" ]; then cp $(BUILD_DIR)/envvar $(HOME)/.envvar; fi
 	@if [ ! -f "$(HOME)/.alias" ]; then cp $(BUILD_DIR)/alias $(HOME)/.alias; fi
+	@if [ ! -f "/bin/pbcopy" ]; then sudo cp $(BUILD_DIR)/pbcopy /bin/pbcopy; fi
+	@if [ ! -f "/bin/pbpaste" ]; then sudo cp $(BUILD_DIR)/pbpaste /bin/pbpaste; fi
 
 finish: ## Finish the install
 	@if [ "$(USR)" != "CI" ]; then \
