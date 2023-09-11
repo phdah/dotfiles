@@ -16,6 +16,9 @@ BUILD_DIR=$(SOURCE_DIR)/linux_set_up
 CONFIG=$(HOME)/.config
 endif
 
+help:
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+
 args: ## Print all args
 	@echo "HOME=$(HOME)"
 	@echo "SOURCE_DIR=$(SOURCE_DIR)"
