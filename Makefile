@@ -10,7 +10,6 @@ SOURCE_DIR=$(HOME)
 BUILD_DIR=$(SOURCE_DIR)
 CONFIG=$(HOME)/.config
 else
-HOME=/home/$(USR)
 SOURCE_DIR=$(HOME)/repos
 BUILD_DIR=$(SOURCE_DIR)/linux_set_up
 CONFIG=$(HOME)/.config
@@ -20,6 +19,7 @@ help:
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 args: ## Print all args
+	@echo "USR=$(USR)"
 	@echo "HOME=$(HOME)"
 	@echo "SOURCE_DIR=$(SOURCE_DIR)"
 	@echo "BUILD_DIR=$(BUILD_DIR)"
@@ -46,6 +46,12 @@ base-dir: ## Setup base directories
 	@printf '\nSetting up base directories\n\n'
 	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd
 
+brew-install: ## Install Homebrew on Mac
+	@printf '\nSetting up Homebrew\n\n'
+	@printf 'Follow this guide: https://setapp.com/how-to/install-homebrew-on-mac\n\n'
+	@/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+	@brew analytics off
+
 base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 	@printf '\nApt installs\n\n'
 	@if [ "$(USR)" != "CI" ]; then \
@@ -63,6 +69,7 @@ base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 			gdb \
 			neofetch \
 			snap \
+			ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip \
 			; \
 		sudo apt update --yes; \
 		printf 'Packages not updated\n'; \
@@ -122,6 +129,19 @@ arch-pkr: ## Install packges for arch
 			brightnessctl \ # Light controller
 		@paru
 
+mac-pkr: ## Install Mac packages using Homebrew
+	@brew install \
+		curl \
+		bat \
+		ripgrep \
+		fzf \
+		# gdb \ TODO: Sort out how to get this
+		neofetch \
+		xsel \
+		zsh-fast-syntax-highlighting \ # zsh cli highlighting TODO: fix source and envarr
+		npm \ # For lsp in neovim
+		cmake automake autoconf libtool pkg-config gettext # Needed to install Neovim from source
+
 
 google-chrome: ## Install Google Chrome from source
 	# Install Google Chrome
@@ -144,7 +164,6 @@ nvim-install: ## Install neovim from source, unless CI mode, since it's like 10m
 		printf '\nBuilding (stable) neovim from source\n\n'; \
 		if [ ! -d $(SOURCE_DIR)/neovim ]; then \
 			git clone https://github.com/neovim/neovim.git $(SOURCE_DIR)/neovim; \
-			# sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip; \
 			cd $(SOURCE_DIR)/neovim && git checkout stable && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install && cd $(BUILD_DIR); \
 		fi \
 	fi
@@ -179,6 +198,7 @@ gnome-nord: ## Install Nord colors for Gnome
 	@! [ -d $(SOURCE_DIR)/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $(SOURCE_DIR)/nord-gnome-terminal && $(SOURCE_DIR)/nord-gnome-terminal/src/nord.sh
 
 base-symlink: ## Symlink dotfiles to repo
+	printf 'BUILD_DIR: $(BUILD_DIR)\n'
 	@printf 'Setting up symlinks\n'
 	@ln -sf $(BUILD_DIR)/gdbinit $(HOME)/.gdbinit
 	@ln -sf $(BUILD_DIR)/user-dirs.dirs $(CONFIG)/user-dirs.dirs
@@ -204,14 +224,18 @@ arch-symlink: ## Symlink for arch
 	@ln -sf $(BUILD_DIR)/i3config $(CONFIG)/i3/config
 	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
 
+mac-symlink: ## Symlink dotfiles to repo
+	@printf 'Setting up symlinks for Mac\n'
+	@ln -sf $(BUILD_DIR)/mac_zshrc $(HOME)/.zshrc
+	@ln -sf $(BUILD_DIR)/yabairc $(CONFIG)/.yabairc
+	@ln -sf $(BUILD_DIR)/skhdrc $(CONFIG)/.skhdrc
+
 copy-dirs: ## Copy files and dirs
 	@printf 'Copying files\n'
 	# @if [ ! -f "$(BUILD_DIR)/compile_flags.txt" ]; then cp $(BUILD_DIR)/compile_flags.txt $(CONFIG)/clangd/compile_flags.txt; fi
 	@if [ ! -f "$(HOME)/.paths" ]; then cp $(BUILD_DIR)/paths $(HOME)/.paths; fi
 	@if [ ! -f "$(HOME)/.envvar" ]; then cp $(BUILD_DIR)/envvar $(HOME)/.envvar; fi
 	@if [ ! -f "$(HOME)/.alias" ]; then cp $(BUILD_DIR)/alias $(HOME)/.alias; fi
-	@if [ ! -f "/bin/pbcopy" ]; then sudo cp $(BUILD_DIR)/pbcopy /bin/pbcopy; fi
-	@if [ ! -f "/bin/pbpaste" ]; then sudo cp $(BUILD_DIR)/pbpaste /bin/pbpaste; fi
 
 finish: ## Finish the install
 	@if [ "$(USR)" != "CI" ]; then \
@@ -227,3 +251,6 @@ arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install git
 
 ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr google-chrome zsh-shell nvim-install gitgutter-install zshhl-install packer-install gnome-nord base-symlink ubuntu-symlink copy-dirs finish
 	@echo "Ubuntu install done"
+
+mac-install : args base-dir brew-install mac-pkr nvim-install gitgutter packer-install base-symlink mac-symlink copy-dirs finish
+	@echo "Mac install done"
