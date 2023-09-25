@@ -1,6 +1,9 @@
 # Autocomplete in cli
+autoload bashcompinit
+bashcompinit
 autoload -Uz compinit
 compinit
+source /opt/homebrew/etc/bash_completion.d/az
 
 # Aliases
 # Aliases
