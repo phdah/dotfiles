@@ -7,8 +7,8 @@ vim.g.gitgutter_override_sign_column_highlight = 0
 -- Highlight commands
 vim.cmd([[
   highlight clear SignColumn
-  highlight GitGutterAdd guifg=#00ff00 ctermfg=2
-  highlight GitGutterChange guifg=#ffff00 ctermfg=3
-  highlight GitGutterDelete guifg=#ff0000 ctermfg=1
-  highlight GitGutterChangeDelete guifg=#ff0000 ctermfg=4
+  highlight GitGutterAdd guifg=#A3BE8C
+  highlight GitGutterChange guifg=#EBCB8B
+  highlight GitGutterDelete guifg=#BF616A
+  highlight GitGutterChangeDelete guifg=#BF616A
 ]])

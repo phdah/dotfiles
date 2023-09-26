@@ -1,3 +1,10 @@
+-- TODO: Move all coloring to it's own file.
+-- It's importatnt that the nord theme coloring is 
+-- caled last.
+
+-- Enable True color support
+vim.opt.termguicolors = true
+
 -- Setup copy/paste for Windows
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 vim.g.clipboard = {
@@ -15,7 +22,7 @@ vim.g.clipboard = {
 
 -- Width limit
 vim.wo.colorcolumn = "80"
-vim.cmd('highlight ColorColumn ctermbg=238')
+vim.cmd('highlight ColorColumn guifg=#4C566A')
 
 -- Set up default tabs
 vim.o.tabstop = 4
@@ -32,8 +39,23 @@ vim.wo.foldmethod = 'indent'
 vim.wo.foldenable = false
 
 -- Highlighting for white space
-vim.cmd('highlight ExtraWhitespace ctermbg=red guibg=red')
+vim.cmd([[
+augroup MyCustomHighlights
+  autocmd!
+  autocmd ColorScheme * highlight ExtraWhitespace guibg=#BF616A
+augroup END
+]])
+-- Match command
 vim.cmd('match ExtraWhitespace /\\s\\+$/')
+
+-- Set highlight groups for QuickScope
+vim.cmd([[
+augroup MyCustomHighlights
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg=#BF616A gui=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg=#D08770 gui=underline
+augroup END
+]])
 
 -- Set show number as default
 vim.wo.number = true
@@ -71,3 +93,6 @@ end
 
 -- Create the :Make command
 vim.cmd("command! -nargs=* Make lua _G.Define_Make(<q-args>)")
+
+-- Set colorscheme to nord
+vim.cmd[[colorscheme nord]]

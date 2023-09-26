@@ -6,9 +6,3 @@ vim.g.qs_accepted_chars = {
     'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7',
     '8', '9', '_', 'å', 'ä', 'ö', 'Å', 'Ä', 'Ö'
 }
-
--- Set highlight groups for QuickScope
-vim.cmd [[
-  highlight QuickScopePrimary guifg=#ff0000 gui=underline ctermfg=DarkRed cterm=underline
-  highlight QuickScopeSecondary guifg=#ff0000 gui=underline ctermfg=DarkMagenta cterm=underline
-]]
