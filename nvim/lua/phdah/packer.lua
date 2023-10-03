@@ -41,9 +41,6 @@ return require('packer').startup(function(use)
     })
 
     use ({
-        'hashivim/vim-terraform'
-    })
-    use ({
         'terrortylor/nvim-comment'
     })
 
