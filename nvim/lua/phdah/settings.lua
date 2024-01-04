@@ -1,5 +1,5 @@
 -- TODO: Move all coloring to it's own file.
--- It's importatnt that the nord theme coloring is 
+-- It's importatnt that the nord theme coloring is
 -- caled last.
 
 -- Enable True color support
@@ -30,7 +30,6 @@ vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
 vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
 vim.o.expandtab = true -- use spaces instead of tab
 
-
 -- Special setting for 'make' files
 vim.cmd('autocmd FileType make setlocal noexpandtab')
 
@@ -38,15 +37,17 @@ vim.cmd('autocmd FileType make setlocal noexpandtab')
 vim.wo.foldmethod = 'indent'
 vim.wo.foldenable = false
 
+-- Match command
+vim.cmd('match ExtraWhitespace /\\s\\+$/')
+
+
 -- Highlighting for white space
 vim.cmd([[
-augroup MyCustomHighlights
+augroup MyCustomWhiteSpaceHighlights
   autocmd!
   autocmd ColorScheme * highlight ExtraWhitespace guibg=#BF616A
 augroup END
 ]])
--- Match command
-vim.cmd('match ExtraWhitespace /\\s\\+$/')
 
 -- Set highlight groups for QuickScope
 vim.cmd([[
@@ -75,11 +76,14 @@ vim.opt.autoindent = false
 vim.cmd[[filetype indent off]]
 vim.cmd[[autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
 
+-- Set colorscheme to nord
+vim.cmd[[colorscheme nord]]
+
 -- Function to set the executor based on file type
 _G.Define_Make = function(args)
     local filetype = vim.bo.filetype
     if filetype == 'python' then
-        vim.cmd('!python3 % ' .. args)
+        vim.cmd('!python3.10 % ' .. args)
     elseif filetype == 'sh' then
         vim.cmd('!bash % ' .. args)
     elseif filetype == 'lua' then
@@ -88,11 +92,63 @@ _G.Define_Make = function(args)
         vim.cmd('!make -C build && ./build/%< ' .. args)
     elseif filetype == 'scala' then
         vim.cmd("!scalac % && scala %< " .. args)
+    elseif filetype == 'haskell' then
+        vim.cmd("!ghc -no-keep-hi-files -no-keep-o-files -o %:r % && ./%:r " .. args)
     end
 end
 
 -- Create the :Make command
 vim.cmd("command! -nargs=* Make lua _G.Define_Make(<q-args>)")
 
--- Set colorscheme to nord
-vim.cmd[[colorscheme nord]]
+-- Global variable to hold the buffer ID
+local buffer_id = nil
+local buffer_opts = nil
+
+-- Open floating buffer
+vim.api.nvim_create_user_command('RunDB', function()
+    -- Calculate window size as 90% of the current Neovim window
+    local width = math.floor(vim.o.columns * 0.9)
+    local height = math.floor(vim.o.lines * 0.9)
+
+    -- Calculate window position to be centered
+    local row = math.floor((vim.o.lines - height) / 2)
+    local col = math.floor((vim.o.columns - width) / 2)
+
+    -- Create a new buffer and floating window
+    local buf = vim.api.nvim_create_buf(false, true)
+    buffer_id = buf
+    local opts = {
+        relative = 'editor',
+        width = width,
+        height = height,
+        row = row,
+        col = col,
+        style = 'minimal',
+        border = 'single'  -- Add a border here
+    }
+    buffer_opts = opts
+    local win = vim.api.nvim_open_win(buf, true, opts)
+
+    -- Start the terminal with the command
+    local file_path = vim.fn.expand('#:p')  -- Get the alternate buffer path
+    vim.fn.termopen('runDB ' .. file_path, {detach = true})
+
+    -- Set key mapping for 'q' to close the floating window
+    local close_command = string.format(":lua vim.api.nvim_win_close(%s, false)<CR>", win)
+    vim.api.nvim_buf_set_keymap(buf, 'n', 'q', close_command, {noremap = true, silent = true})
+
+    -- Set the buffer to the terminal buffer
+    vim.api.nvim_set_current_buf(buf)
+end, {})
+
+-- Open the result buffer
+vim.api.nvim_create_user_command('OpenRunDB', function()
+    -- Open the already existing buffer
+    if buffer_id then
+        local win = vim.api.nvim_open_win(buffer_id, true, buffer_opts)
+        local close_command = string.format(":lua vim.api.nvim_win_close(%s, false)<CR>", win)
+        vim.api.nvim_buf_set_keymap(buffer_id, 'n', 'q', close_command, {noremap = true, silent = true})
+    else
+        print("No results to show, run :RunDB to generate it")
+    end
+end, {})

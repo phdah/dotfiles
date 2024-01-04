@@ -12,6 +12,11 @@ alias ls='ls -G'
 alias ll='ls -G -Al'
 alias vim='nvim'
 alias nb='nvim ~/repos/privat/logbook/README.md'
+alias tree='tree -C'
+alias act='act --container-architecture linux/amd64'
+alias dbsqlcli='dbsqlcli --table-format ascii'
+alias python="/opt/homebrew/bin//python3.10"
+alias pip="/opt/homebrew/bin//pip3.10"
 # Git alias
 alias gitl='git log --oneline'
 alias gits='git status'
@@ -21,6 +26,9 @@ alias gitb='git branch'
 alias gitc='git checkout'
 
 # Functions
+setenv() {
+  export "$1=$2"
+}
 function vfzf() {
     if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
         then FZF_FILE_VIM=$(rg -l --hidden "" $(git rev-parse --show-toplevel) -g '!.git/' | fzf)
@@ -38,6 +46,10 @@ function gitall() {
 }
 function gitallremote() {
     git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+}
+function gitr() {
+    git rebase -i HEAD~$1
+    echo 'now run: git push -f origin YOUR_BRANCH'
 }
 function cat() {
     bat $1 --style=plain --paging=never
@@ -102,6 +114,9 @@ RPROMPT='${vcs_info_msg_0_}'
 # and ubuntu one are the same.
 #source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+
+# Set executable color to green
+export LS_COLORS="$LS_COLORS:ex=01;32"
 
 export EDITOR=$(which nvim)
 

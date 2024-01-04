@@ -3,7 +3,7 @@ vim.g.mapleader = " "
 -- Packer Sync
 vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 
--- Key mapping
+-- Reload current lua file
 vim.api.nvim_set_keymap('n', '<leader>r', ':so<CR>', { noremap = true, silent = true })
 
 -- LSP keymaps
@@ -29,15 +29,18 @@ vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-m>', ':noh<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<C-n>', ':bn<CR>', { noremap = true, silent = true })
 
+-- Close buffers
+vim.api.nvim_set_keymap('n', '<leader>q', ':bd<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>Q', ':bufdo bd!<CR>:q!<CR>', { noremap = true })
+
 -- Open vertical split
 vim.api.nvim_set_keymap('n', '<leader>v', ':vsplit<CR>', { noremap = true, silent = true })
 
 -- Delete line and insert empty line
 vim.api.nvim_set_keymap('n', '<leader>d', 'Vc<Esc>', { noremap = true, silent = true })
 
--- Dadbod commands
-vim.api.nvim_set_keymap('n', '<leader>q', ':bd<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>Q', ':bufdo bd!<CR>:q!<CR>', { noremap = true })
+-- Dadbood database
+vim.api.nvim_set_keymap('n', '<leader>ö', ':DBUIToggle<CR>', { noremap = true, silent = true })
 
 -- Browse files
 vim.api.nvim_set_keymap('n', '<leader>f', ':lua nvim_FilesGitRoot()<CR>', { noremap = true })
@@ -95,3 +98,4 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':set invrelativenumber invnumber<CR>:
 
 -- Toggle markdown preview
 vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
+

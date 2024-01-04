@@ -76,7 +76,10 @@ ctrl + alt - 9 : yabai -m window --space 9;
 # ctrl + alt - s : brew services start yabai
 # ctrl + alt - r : brew services restart yabai
 
+# Open new Chrome
+ctrl + alt - c : open -na Google\ Chrome.app
+
 # Opening terminal
-# open terminal
 ctrl + alt - j : open -na kitty
-shift + alt - q : if [ $(yabai -m query --windows --window | grep '"app"' | awk -F':' '{print $2}' | tr -d '",' | awk '{$1=$1};1') = "kitty" ]; then kill -9 $(yabai -m query --windows --window | grep '"pid"' | awk -F':' '{print $2}' | tr -d '",' | awk '{$1=$1};1'); else yabai -m window --close $(yabai -m query --windows --window | grep '"id"' | awk -F':' '{print $2}' | tr -d '",' | awk '{$1=$1};1'); fi
+shift + alt - q : if [ $(yabai -m query --windows --window | grep '"app"' | awk -F':' '{print $2}' | tr -d '",' | awk '{$1=$1};1') = "kitty" ]; then kill -9 $(yabai -m query --windows --window | grep '"pid"' | awk -F':' '{print $2}' | tr -d '",' | awk '{$1=$1};1'); else yabai -m window --close $(yabai -m query --windows --window | grep '"id"' | awk -F':' '{print $2}' | tr -d '",' | awk '{$1=$1};1'); fi && /Users/Philip.Sjoberg/.local/bin//focus_closest_window.sh
+

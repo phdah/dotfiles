@@ -64,6 +64,7 @@ return require('packer').startup(function(use)
         }
     })
     use ({'shaunsingh/nord.nvim'})
-    use ({'phdah/buff-statusline.nvim'})
+    use ({'phdah/nvim-statusline'})
+    use ({'phdah/nvim-databricks'})
 
 end)

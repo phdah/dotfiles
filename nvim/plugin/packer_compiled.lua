@@ -74,11 +74,6 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
-  ["buff-statusline.nvim"] = {
-    loaded = true,
-    path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/buff-statusline.nvim",
-    url = "https://github.com/phdah/buff-statusline.nvim"
-  },
   fzf = {
     loaded = true,
     path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/fzf",
@@ -139,10 +134,20 @@ _G.packer_plugins = {
     path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
     url = "https://github.com/rcarriga/nvim-dap-ui"
   },
+  ["nvim-databricks"] = {
+    loaded = true,
+    path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/nvim-databricks",
+    url = "https://github.com/phdah/nvim-databricks"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
+  },
+  ["nvim-statusline"] = {
+    loaded = true,
+    path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/nvim-statusline",
+    url = "https://github.com/phdah/nvim-statusline"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -178,11 +183,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/vim-dadbod-ui",
     url = "https://github.com/kristijanhusak/vim-dadbod-ui"
-  },
-  ["vim-terraform"] = {
-    loaded = true,
-    path = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/vim-terraform",
-    url = "https://github.com/hashivim/vim-terraform"
   }
 }
 
