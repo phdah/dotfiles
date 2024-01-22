@@ -42,10 +42,10 @@ function Vfzf() {
     FZF_FILE_VIM=$(rg -l --hidden "" ~ | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
 }
 function gitall() {
-    git status && git add . && git commit -m "$1" && git push
+    git status && git add --all && git commit -m "$1" && git push
 }
 function gitallremote() {
-    git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+    git -C "$1" status && git -C "$1" add --all && git -C $1 commit -m $2 && git -C "$1" push
 }
 function gitr() {
     git rebase -i HEAD~$1
@@ -74,9 +74,11 @@ bindkey ";5C" forward-word
 bindkey ";5D" backward-word
 
 # Home/End/Del
-bindkey  "^[[H"   beginning-of-line
-bindkey  "^[[F"   end-of-line
-bindkey  "^[[3~"  delete-char
+bindkey  "^[[H"    beginning-of-line
+bindkey  "^[[F"    end-of-line
+bindkey  "^[[3~"   delete-char
+bindkey  "^[[1;9D" beginning-of-line
+bindkey  "^[[1;9C" end-of-line
 
 # PgUp/Down
 bindkey "^[[5~" history-beginning-search-backward
@@ -119,6 +121,14 @@ source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-high
 export LS_COLORS="$LS_COLORS:ex=01;32"
 
 export EDITOR=$(which nvim)
+
+# Lua stuff
+# Lua(JIT) shared library path
+export LUA_CPATH='./?.dylib:./lib?.dylib:../lib/lib?.dylib:./lib/lib?.dylib:./build/lib?.dylib:./build/lib/lib?.dylib'
+# clang++ include path
+export CPLUS_INCLUDE_PATH=/opt/homebrew/opt/nlohmann-json/include:/opt/homebrew/include/luajit-2.1/:../include:$CPLUS_INCLUDE_PATH
+# Set lua path for luajit, lua and luarocks
+export LUA_PATH='./?.lua;/opt/homebrew/share/luajit-2.1/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/opt/homebrew/share/lua/5.1/?.lua;/opt/homebrew/share/lua/5.1/?/init.lua;/opt/homebrew/Cellar/luarocks/3.9.2/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?/init.lua;/opt/homebrew/lib/lua/5.4/?.lua;/opt/homebrew/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?/init.lua'
 
 # Set default fzf stdout
 export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"

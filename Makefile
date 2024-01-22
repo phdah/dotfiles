@@ -140,7 +140,8 @@ mac-pkr: ## Install Mac packages using Homebrew
 		xsel \
 		zsh-fast-syntax-highlighting \ # zsh cli highlighting TODO: fix source and envarr
 		npm \ # For lsp in neovim
-		cmake automake autoconf libtool pkg-config gettext # Needed to install Neovim from source
+		cmake automake autoconf libtool pkg-config gettext \ # Needed to install Neovim from source
+		tree-sitter # This is needed to install all languages
 
 
 google-chrome: ## Install Google Chrome from source

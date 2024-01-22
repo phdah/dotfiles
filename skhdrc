@@ -69,6 +69,11 @@ ctrl + alt - 7 : yabai -m window --space 7;
 ctrl + alt - 8 : yabai -m window --space 8;
 ctrl + alt - 9 : yabai -m window --space 9;
 
+# -- Special keybindings --
+
+home : skhd --key "cmd - left"
+end : skhd --key "cmd - right"
+
 # -- Starting/Stopping/Restarting Yabai --
 
 # stop/start/restart yabai

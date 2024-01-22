@@ -43,7 +43,7 @@ dap.configurations.rust = dap.configurations.cpp
 
 
 -- Configure dap-python
-require('dap-python').setup('/usr/bin/python3')
+require('dap-python').setup('/opt/homebrew/bin/python3.10')
 
 -- Configure dap bash
 dap.adapters.bashdb = {
