@@ -189,6 +189,35 @@ controls = {
   }
 })
 
+-- Setup debugger for nvim lua
+[[
+Launch the server in the debuggee using `DapNvimDebugee`
+Open another Neovim instance with the source file
+Place breakpoint and start debugger with `DapNvimSource`
+In the debuggee, call the specific function to debug
+]]
+vim.api.nvim_create_user_command('DapNvimDebugee', function()
+    require("osv").launch({port = 8086})
+end, {})
+
+vim.api.nvim_create_user_command('DapNvimSource', function()
+    dap.configurations.lua = {
+      {
+        type = 'nlua',
+        request = 'attach',
+        name = "Attach to running Neovim instance",
+      }
+    }
+
+    dap.adapters.nlua = function(callback, config)
+      callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+    end
+    require("dap").continue()
+end, {})
+
+
+
+
 -- Setup start and stop
 
 -- Setup event listener to start dapui
