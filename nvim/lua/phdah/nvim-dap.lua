@@ -190,7 +190,8 @@ controls = {
 })
 
 -- Setup debugger for nvim lua
-[[
+
+--[[
 Launch the server in the debuggee using `DapNvimDebugee`
 Open another Neovim instance with the source file
 Place breakpoint and start debugger with `DapNvimSource`
