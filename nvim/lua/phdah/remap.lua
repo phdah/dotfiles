@@ -3,9 +3,6 @@ vim.g.mapleader = " "
 -- Packer Sync
 vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 
--- Reload current lua file
-vim.api.nvim_set_keymap('n', '<leader>r', ':so<CR>', { noremap = true, silent = true })
-
 -- LSP keymaps
 vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>', { noremap = true, silent = true })
 
@@ -15,14 +12,12 @@ vim.api.nvim_set_keymap('n', '<leader>c', ':lua _G.MyDapContinue()<CR>', { norem
 vim.api.nvim_set_keymap('n', '<leader>t', ':lua _G.Dapui_terminate()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>i', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>m', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>e', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>cb', ':lua require("dap").clear_breakpoints()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>dr', ':DapToggleRepl<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>r', ':lua require("dapui").open({reset = true})<CR>', { noremap = true, silent = true })
 
 -- Execute vim line in shell
 vim.api.nvim_set_keymap('n', '<leader><Enter>', ':.!zsh<CR>', { noremap = true })
-
--- Paste without yanking
-vim.api.nvim_set_keymap('x', '<leader>p', '"_dP', { noremap = true, silent = true })
 
 -- Buffer control
 vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', { noremap = true })

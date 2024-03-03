@@ -61,6 +61,8 @@ return require('packer').startup(function(use)
             'mfussenegger/nvim-dap',
             'mfussenegger/nvim-dap-python',
             'jbyuki/one-small-step-for-vimkind',
+            'theHamsta/nvim-dap-virtual-text',
+            'tomblind/local-lua-debugger-vscode',
         }
     })
     use ({'shaunsingh/nord.nvim'})

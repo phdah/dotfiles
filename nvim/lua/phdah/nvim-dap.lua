@@ -1,3 +1,4 @@
+-- DAP setup
 local dap_ok, dap = pcall(require, "dap")
 if not (dap_ok) then
   print("nvim-dap not installed!")
@@ -7,11 +8,13 @@ end
 require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
 
 -- Mason setup
+require("nvim-dap-virtual-text").setup()
 require("mason").setup()
 require("mason-nvim-dap").setup({
-    ensure_installed = { "codelldb", "bash-debug-adapter" }
+    ensure_installed = { "codelldb", "bash-debug-adapter", "debugpy"}
 })
 
+-- Setup adaptors
 dap.adapters.codelldb = {
   type = 'server',
   port = "${port}",
@@ -25,6 +28,38 @@ dap.adapters.codelldb = {
   }
 }
 
+local pythonPath = '/opt/homebrew/bin/python3.10'
+dap.adapters.python = {
+  type = 'executable',
+  command = pythonPath,
+  args = { '-m', 'debugpy.adapter' },
+}
+
+dap.adapters.bashdb = {
+  type = 'executable';
+  command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
+  name = 'bashdb';
+}
+
+dap.adapters["local-lua"] = {
+  type = "executable",
+  command = "node",
+  args = {
+    "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/local-lua-debugger-vscode/extension/debugAdapter.js"
+  },
+  enrich_config = function(config, on_config)
+    if not config["extensionPath"] then
+      local c = vim.deepcopy(config)
+      c.extensionPath = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/local-lua-debugger-vscode/"
+      on_config(c)
+    else
+      on_config(config)
+    end
+  end,
+}
+
+-- Setup configurations
+
 dap.configurations.cpp = {
   {
     name = "Launch file",
@@ -35,21 +70,27 @@ dap.configurations.cpp = {
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
+    args = function()
+      local args_str = vim.fn.input('Program arguments: ')
+      return vim.split(args_str, " +")
+    end,
   },
 }
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
-
--- Configure dap-python
-require('dap-python').setup('/opt/homebrew/bin/python3.10')
-
--- Configure dap bash
-dap.adapters.bashdb = {
-  type = 'executable';
-  command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
-  name = 'bashdb';
+dap.configurations.python = {
+  {
+    type = 'python';
+    request = 'launch'; -- Specifies the debug request type
+    name = "Launch File";
+    program = "${file}"; -- Specifies the file to debug
+    pythonPath = function()
+      return pythonPath
+    end;
+    justMyCode = false; -- Ensures that only user code is debugged
+  },
 }
 
 dap.configurations.sh = {
@@ -74,36 +115,27 @@ dap.configurations.sh = {
   }
 }
 
--- Configure dap lua
 dap.configurations.lua = {
   {
-    type = 'nlua',
-    request = 'attach',
-    name = "Attach to running Neovim instance",
-  }
+    name = 'Current file (local-lua-dbg, nlua)',
+    type = 'local-lua',
+    request = 'launch',
+    cwd = '${workspaceFolder}',
+    program = {
+      lua = 'nlua',
+      -- For base lua: lua = '/opt/homebrew/bin/lua',
+      file = '${file}',
+    },
+    verbose = true,
+    args = {},
+  },
 }
-
-dap.adapters.nlua = function(callback, config)
-  callback({ type = 'server',
-    host = config.host or "127.0.0.1",
-    port = config.port or 8086
-})
-end
-
-_G.MyDapContinue = function()
-  local ft = vim.bo.filetype  -- Get current file type
-  if ft == "lua" then
-    require"osv".run_this()
-  else
-    require"dap".continue()
-  end
-end
 
 -- Configure dapui
 require("dapui").setup({
+  expand_lines = false,
   icons = { expanded = "|", collapsed = ">", current_frame = "" },
   mappings = {
-    -- Use a table to apply multiple mappings
     expand = { "<C-j>" },
     open = "o",
     remove = "d",
@@ -111,50 +143,37 @@ require("dapui").setup({
     repl = "r",
     toggle = "t",
   },
-  -- Use this to override mappings for specific elements
-  element_mappings = {
-    -- Example:
-    -- stacks = {
-    --   open = "<CR>",
-    --   expand = "o",
-    -- }
-  },
-  -- Expand lines larger than the window
-  -- Requires >= 0.7
-  expand_lines = vim.fn.has("nvim-0.7") == 1,
-  -- Layouts define sections of the screen to place windows.
-  -- The position can be "left", "right", "top" or "bottom".
-  -- The size specifies the height/width depending on position. It can be an Int
-  -- or a Float. Integer specifies height/width directly (i.e. 20 lines/columns) while
-  -- Float value specifies percentage (i.e. 0.3 - 30% of available lines/columns)
-  -- Elements are the elements shown in the layout (in order).
-  -- Layouts are opened in order so that earlier layouts take priority in window sizing.
   layouts = {
-    {
-      elements = {
-        { id = "scopes", size = 0.4 },
-        "breakpoints",
-        "stacks",
-        "watches",
-      },
-      size = 40, -- 40 columns
-      position = "left",
+        {
+        elements = { {
+            id = "breakpoints",
+            size = 0.20
+          }, {
+            id = "scopes",
+            size = 0.50
+          }, {
+            id = "repl",
+            size = 0.30
+          } },
+          size = 0.25,
+          position = "bottom",
+        },
+    },
+controls = {
+    enabled = true,
+    element = "repl",
+    icons = {
+      pause = "||",
+      play = "▶",
+      step_into = "↓",
+      step_over = "→",
+      step_out = "↑",
+      step_back = "←",
+      run_last = "↻",
+      terminate = "✖",
+      disconnect = "✖",
     },
   },
-  -- controls = {
-  --   enabled = true,
-  --   element = "repl",
-  --   icons = {
-  --     pause = "",
-  --     play = "",
-  --     step_into = "",
-  --     step_over = "",
-  --     step_out = "",
-  --     step_back = "",
-  --     run_last = "",
-  --     terminate = "",
-  --   },
-  -- },
   floating = {
     max_height = nil,
     max_width = nil,
@@ -170,29 +189,30 @@ require("dapui").setup({
   }
 })
 
--- Save your custom status line
-local custom_statusline = vim.o.statusline
+-- Setup start and stop
 
--- Function to set the status line to only display the file type
-local function set_dap_statusline()
-    vim.o.statusline = '%y'
-end
-
--- Function to restore your custom status line
-local function restore_statusline()
-    vim.o.statusline = custom_statusline
+-- Startup
+_G.MyDapContinue = function()
+  local ft = vim.bo.filetype
+  if ft == "lua" then
+    -- require"osv".run_this()
+    require"dap".continue()
+  else
+    require"dap".continue()
+  end
 end
 
 -- Setup event listener to start dapui
 dap.listeners.after.event_initialized["dapui_config"] = function()
     require("dapui").open({})
-    set_dap_statusline()
+    vim.o.mouse = "a"
 end
 
 -- Setup close function for dapui
 _G.Dapui_terminate = function()
     require("dap").terminate()
     require("dapui").close()
-    restore_statusline()
+    require("dap").disconnect()
+    vim.o.mouse = ""
 end
 
