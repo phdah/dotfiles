@@ -37,6 +37,9 @@ vim.cmd('autocmd FileType make setlocal noexpandtab')
 vim.wo.foldmethod = 'indent'
 vim.wo.foldenable = false
 
+-- Set to only one status line
+vim.o.laststatus = 3
+
 -- Match command
 vim.cmd('match ExtraWhitespace /\\s\\+$/')
 

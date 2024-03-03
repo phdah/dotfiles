@@ -30,18 +30,3 @@ vim.diagnostic.config({
     signs = false,
 })
 
--- Custom LSPs
-local lspconfig = require('lspconfig')
-lspconfig.metals.setup{
-    root_dir = function (fname)
-        return vim.fn.getcwd()
-    end,
-    settings = {
-        metals = {
-          quietLogs = true
-        }
-      },
-      cmd = {"/usr/local/bin/metals-vim"},
-      on_attach = function(client, bufnr)
-end
-}
