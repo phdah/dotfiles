@@ -15,6 +15,8 @@ vim.api.nvim_set_keymap('n', '<leader>m', ':lua require("dap").step_over()<CR>',
 vim.api.nvim_set_keymap('n', '<leader>e', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>cb', ':lua require("dap").clear_breakpoints()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>r', ':lua require("dapui").open({reset = true})<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>B', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition (key==\'value\'): "))<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>dh', ':lua require("dap.ui.widgets").hover()<CR>', { noremap = true, silent = true })
 
 -- Execute vim line in shell
 vim.api.nvim_set_keymap('n', '<leader><Enter>', ':.!zsh<CR>', { noremap = true })
@@ -26,7 +28,13 @@ vim.api.nvim_set_keymap('n', '<C-n>', ':bn<CR>', { noremap = true, silent = true
 
 -- Close buffers
 vim.api.nvim_set_keymap('n', '<leader>q', ':bd<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>Q', ':bufdo bd!<CR>:q!<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>Q', ':bd!<CR>', { noremap = true })
+
+-- Window control
+vim.api.nvim_set_keymap('n', '<C-+>', ':vertical resize +20<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', '<C-->', ':vertical resize -20<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', '<leader><C-+>', ':resize +20<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', '<leader><C-->', ':resize -20<CR>', { noremap = true, silent = true  })
 
 -- Open vertical split
 vim.api.nvim_set_keymap('n', '<leader>v', ':vsplit<CR>', { noremap = true, silent = true })
@@ -40,7 +48,6 @@ vim.api.nvim_set_keymap('n', '<leader>ö', ':DBUIToggle<CR>', { noremap = true, 
 -- Browse files
 vim.api.nvim_set_keymap('n', '<leader>f', ':lua nvim_FilesGitRoot()<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>F', ':execute \'Files ~\'<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>B', ':Buffers<CR>', { noremap = true })
 
 -- Spell checking
 vim.api.nvim_set_keymap('n', '<leader>z', ':setlocal spell! spelllang=en_us<CR>', { noremap = true })
