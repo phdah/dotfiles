@@ -122,8 +122,8 @@ dap.configurations.lua = {
     request = 'launch',
     cwd = '${workspaceFolder}',
     program = {
-      lua = 'nlua',
-      -- For base lua: lua = '/opt/homebrew/bin/lua',
+      lua = 'nlua', -- To allow vim debug
+      -- lua = '/opt/homebrew/bin/lua', -- Basic lua debug
       file = '${file}',
     },
     verbose = true,
@@ -190,17 +190,6 @@ controls = {
 })
 
 -- Setup start and stop
-
--- Startup
-_G.MyDapContinue = function()
-  local ft = vim.bo.filetype
-  if ft == "lua" then
-    -- require"osv".run_this()
-    require"dap".continue()
-  else
-    require"dap".continue()
-  end
-end
 
 -- Setup event listener to start dapui
 dap.listeners.after.event_initialized["dapui_config"] = function()
