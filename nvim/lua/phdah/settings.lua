@@ -30,6 +30,9 @@ vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
 vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
 vim.o.expandtab = true -- use spaces instead of tab
 
+-- Turn of swap files
+vim.opt.swapfile = false
+
 -- Special setting for 'make' files
 vim.cmd('autocmd FileType make setlocal noexpandtab')
 
@@ -43,7 +46,6 @@ vim.o.laststatus = 3
 -- Match command
 vim.cmd('match ExtraWhitespace /\\s\\+$/')
 
-
 -- Highlighting for white space
 vim.cmd([[
 augroup MyCustomWhiteSpaceHighlights
@@ -51,6 +53,11 @@ augroup MyCustomWhiteSpaceHighlights
   autocmd ColorScheme * highlight ExtraWhitespace guibg=#BF616A
 augroup END
 ]])
+
+-- Clean out all trailing ExtraWhitespace
+vim.api.nvim_create_user_command('Clean', function()
+    vim.cmd("%s/ \\+$//")
+end, {})
 
 -- Set highlight groups for QuickScope
 vim.cmd([[

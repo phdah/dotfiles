@@ -114,3 +114,10 @@ vim.api.nvim_set_keymap('n', '<leader>n', ':set invrelativenumber invnumber<CR>:
 -- Toggle markdown preview
 vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
 
+-- Command line remaps
+vim.api.nvim_set_keymap('c', '<D-Left>', '<Home>', { noremap = true })
+vim.api.nvim_set_keymap('c', '<D-Right>', '<End>', { noremap = true })
+vim.api.nvim_set_keymap('c', '<M-Left>', '<S-Left>', { noremap = true })
+vim.api.nvim_set_keymap('c', '<M-Right>', '<S-Right>', { noremap = true })
+vim.api.nvim_set_keymap('c', '<C-k>', '<C-c>', { noremap = true })
+
