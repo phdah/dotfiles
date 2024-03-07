@@ -1,4 +1,7 @@
--- DAP setup
+---------------
+-- DAP setup --
+---------------
+
 local dap_ok, dap = pcall(require, "dap")
 if not (dap_ok) then
   print("nvim-dap not installed!")
@@ -14,7 +17,10 @@ require("mason-nvim-dap").setup({
     ensure_installed = { "codelldb", "bash-debug-adapter", "debugpy"}
 })
 
--- Setup adaptors
+--------------------
+-- Setup adaptors --
+--------------------
+
 dap.adapters.codelldb = {
   type = 'server',
   port = "${port}",
@@ -22,9 +28,6 @@ dap.adapters.codelldb = {
     -- CHANGE THIS to your path!
     command = vim.fn.stdpath("data") .. '/mason/bin/codelldb',
     args = {"--port", "${port}"},
-
-    -- On windows you may have to uncomment this:
-    -- detached = false,
   }
 }
 
@@ -58,7 +61,9 @@ dap.adapters["local-lua"] = {
   end,
 }
 
--- Setup configurations
+--------------------------
+-- Setup configurations --
+--------------------------
 
 dap.configurations.cpp = {
   {
@@ -106,7 +111,7 @@ dap.configurations.sh = {
     program = "${file}";
     cwd = '${workspaceFolder}';
     pathCat = "cat";
-    pathBash = "/bin/bash";
+    pathBash = "/opt/homebrew/bin/bash";
     pathMkfifo = "mkfifo";
     pathPkill = "pkill";
     args = {};
@@ -131,65 +136,43 @@ dap.configurations.lua = {
   },
 }
 
--- Configure dapui
+dap.configurations.vim = dap.configurations.lua
+
+---------------------
+-- Configure dapui --
+---------------------
+
 require("dapui").setup({
-  expand_lines = false,
-  icons = { expanded = "|", collapsed = ">", current_frame = "" },
-  mappings = {
-    expand = { "<C-j>" },
-    open = "o",
-    remove = "d",
-    edit = "e",
-    repl = "r",
-    toggle = "t",
-  },
-  layouts = {
+    expand_lines = false,
+    layouts = {
         {
-        elements = { {
-            id = "breakpoints",
-            size = 0.20
-          }, {
-            id = "scopes",
-            size = 0.50
-          }, {
-            id = "repl",
-            size = 0.30
-          } },
-          size = 0.25,
-          position = "bottom",
+            elements = {
+                {id ='breakpoints', size = 0.20}, {id = 'stacks', size = 0.40}, {id = 'watches', size = 0.40},
+            },
+            size = 0.25,
+            position = 'right',
         },
+        {
+            elements = {
+                'scopes', 'repl'
+            },
+            size = 0.25,
+            position = 'bottom',
+        }
     },
-controls = {
-    enabled = true,
-    element = "repl",
-    icons = {
-      pause = "||",
-      play = "▶",
-      step_into = "↓",
-      step_over = "→",
-      step_out = "↑",
-      step_back = "←",
-      run_last = "↻",
-      terminate = "✖",
-      disconnect = "✖",
-    },
-  },
-  floating = {
-    max_height = nil,
-    max_width = nil,
-    border = "single",
     mappings = {
-      close = { "q", "<Esc>" },
+        expand = { "<C-j>" },
+        open = "o",
+        remove = "d",
+        edit = "e",
+        repl = "r",
+        toggle = "t",
     },
-  },
-  windows = { indent = 1 },
-  render = {
-    max_type_length = nil,
-    max_value_lines = 100,
-  }
 })
 
--- Setup debugger for nvim lua
+---------------------------------
+-- Setup debugger for nvim lua --
+---------------------------------
 
 --[[
 Launch the server in the debuggee using `DapNvimDebugee`
@@ -216,10 +199,9 @@ vim.api.nvim_create_user_command('DapNvimSource', function()
     require("dap").continue()
 end, {})
 
-
-
-
--- Setup start and stop
+--------------------------
+-- Setup start and stop --
+--------------------------
 
 -- Setup event listener to start dapui
 dap.listeners.after.event_initialized["dapui_config"] = function()

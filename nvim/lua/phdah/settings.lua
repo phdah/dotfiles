@@ -86,7 +86,7 @@ vim.cmd[[colorscheme nord]]
 _G.Define_Make = function(args)
     local filetype = vim.bo.filetype
     if filetype == 'python' then
-        vim.cmd('!python3.10 % ' .. args)
+        vim.cmd('DBRun ' .. args) -- nvim-databricks run command
     elseif filetype == 'sh' then
         vim.cmd('!bash % ' .. args)
     elseif filetype == 'c' or filetype == 'cpp' then
@@ -101,7 +101,9 @@ _G.Define_Make = function(args)
 end
 
 -- Create the :Make command
-vim.cmd("command! -nargs=* Make lua _G.Define_Make(<q-args>)")
+vim.api.nvim_create_user_command('Make', function(opts)
+    _G.Define_Make(opts.args)
+end, {nargs = "*"})
 
 -- Global variable to hold the buffer ID
 local buffer_id = nil
