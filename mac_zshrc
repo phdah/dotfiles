@@ -19,7 +19,8 @@ alias python="/opt/homebrew/bin//python3.10"
 alias pip="/opt/homebrew/bin//pip3.10"
 alias bat='bat --theme=Nord'
 # Git alias
-alias gitl='git log --oneline'
+alias vimconflict='vim $(rg -l "<<<<<<< HEAD")'
+alias gitl='git log --graph --oneline'
 alias gits='git status'
 alias gitp='git pull'
 alias gitd='git diff'
