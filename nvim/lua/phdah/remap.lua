@@ -6,6 +6,19 @@ vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 -- LSP keymaps
 vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>', { noremap = true, silent = true })
 
+-- Quickfix list
+vim.api.nvim_set_keymap('n', 'cn', ':cnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'cp', ':cprev<CR>', { noremap = true, silent = true })
+
+-- Git conflict
+vim.api.nvim_set_keymap('n', 'cl', ':GitConflictListQf<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', 'co', ':GitConflictChooseOurs<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', 'ct', ':GitConflictChooseTheirs<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', 'c0', ':GitConflictChooseBoth<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', 'cb', ':GitConflictChooseNone<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', 'cj', ':GitConflictNextConflict<CR>', { silent = true })
+vim.api.nvim_set_keymap('n', 'ck', ':GitConflictPrevConflict<CR>', { silent = true })
+
 -- Dap keymaps
 vim.api.nvim_set_keymap('n', '<leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>c', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })

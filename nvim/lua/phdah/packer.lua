@@ -69,5 +69,6 @@ return require('packer').startup(function(use)
     use ({'phdah/nvim-statusline'})
     use ({'phdah/nvim-databricks'})
     use ({'nvim-lua/plenary.nvim'})
+    use ({'akinsho/git-conflict.nvim'})
 
 end)
