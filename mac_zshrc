@@ -20,6 +20,7 @@ alias pip="/opt/homebrew/bin//pip3.10"
 alias bat='bat --theme=Nord'
 # Git alias
 alias vimconflict='vim $(rg -l "<<<<<<< HEAD")'
+alias lg='lazygit'
 alias gitl='git log --graph --oneline'
 alias gits='git status'
 alias gitp='git pull'
