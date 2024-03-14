@@ -68,6 +68,19 @@ augroup MyCustomHighlights
 augroup END
 ]])
 
+-- Define custom highlight groups
+vim.cmd [[
+  highlight TodoHighlight ctermfg=Yellow ctermbg=NONE cterm=bold,underline gui=bold,underline guifg=#ffeb95 guibg=NONE
+  highlight NoteHighlight ctermfg=Cyan ctermbg=NONE cterm=bold,underline gui=bold,underline guifg=#8be9fd guibg=NONE
+]]
+
+-- Match and link the keywords to the custom highlight groups
+vim.api.nvim_exec([[
+  autocmd Syntax * syn match TodoHighlight "\<TODO\>"
+  autocmd Syntax * syn match NoteHighlight "\<NOTE\>"
+]], false)
+
+
 -- Set show number as default
 vim.wo.number = true
 vim.wo.relativenumber = true

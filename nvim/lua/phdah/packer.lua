@@ -66,6 +66,12 @@ return require('packer').startup(function(use)
         }
     })
     use ({
+        'folke/todo-comments.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim'
+        }
+    })
+    use ({
         "scalameta/nvim-metals",
         requires = {
             "nvim-lua/plenary.nvim",
