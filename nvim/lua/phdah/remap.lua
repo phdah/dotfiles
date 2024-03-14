@@ -3,6 +3,10 @@ vim.g.mapleader = " "
 -- Packer Sync
 vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 
+-- llama gen
+vim.api.nvim_set_keymap('n', '<C-g>', ':Gen Chat<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-g>', ':Gen Chat<CR>', { noremap = true, silent = true })
+
 -- LSP keymaps
 vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>', { noremap = true, silent = true })
 
