@@ -138,6 +138,26 @@ dap.configurations.lua = {
 
 dap.configurations.vim = dap.configurations.lua
 
+-- NOTE: The adapter is sourced in plugin/lsp.lua
+dap.configurations.scala = {
+  {
+    type = "scala",
+    request = "launch",
+    name = "Run or Test File",
+    metals = {
+      runType = "runOrTestFile",
+    },
+  },
+  {
+    type = "scala",
+    request = "launch",
+    name = "Test Target",
+    metals = {
+      runType = "testTarget",
+    },
+  },
+}
+
 ---------------------
 -- Configure dapui --
 ---------------------

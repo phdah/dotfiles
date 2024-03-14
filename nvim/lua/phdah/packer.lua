@@ -65,6 +65,13 @@ return require('packer').startup(function(use)
             'tomblind/local-lua-debugger-vscode',
         }
     })
+    use ({
+        "scalameta/nvim-metals",
+        requires = {
+            "nvim-lua/plenary.nvim",
+        }
+      })
+
     use ({'shaunsingh/nord.nvim'})
     use ({'phdah/nvim-statusline'})
     use ({'phdah/nvim-databricks'})
