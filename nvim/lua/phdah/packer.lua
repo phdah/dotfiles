@@ -78,5 +78,6 @@ return require('packer').startup(function(use)
     use ({'nvim-lua/plenary.nvim'})
     use ({'akinsho/git-conflict.nvim'})
     use ({'David-Kunz/gen.nvim'})
+    use ({'voldikss/vim-floaterm'})
 
 end)
