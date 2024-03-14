@@ -8,11 +8,11 @@ source /opt/homebrew/etc/bash_completion.d/az
 # Aliases
 # Aliases
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
-alias ls='ls -G'
-alias ll='ls -G -Al'
+alias ls='eza'
+alias ll='eza -alh --total-size'
 alias vim='nvim'
 alias nb='nvim ~/repos/privat/logbook/README.md'
-alias tree='tree -C'
+alias tree='eza --tree'
 alias act='act --container-architecture linux/amd64'
 alias dbsqlcli='dbsqlcli --table-format ascii'
 alias python="/opt/homebrew/bin//python3.10"
@@ -114,6 +114,17 @@ RPROMPT='${vcs_info_msg_0_}'
 # and ubuntu one are the same.
 #source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+source /opt/homebrew/opt/fzf/shell/completion.zsh
+export FZF_COMPLETION_DIR_COMMANDS="cd ls pushd rmdir tree"
+_fzf_compgen_path() {
+    rg --files --hidden . "$1"
+}
+# TODO: Fix a path search
+# _fzf_compgen_dir() {
+#     rg --files --hidden . "$1" | awk -F/ 'NF{NF-=1}1' | uniq
+# }
+
 
 # Set executable color to green
 export LS_COLORS="$LS_COLORS:ex=01;32"
