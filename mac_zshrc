@@ -140,7 +140,7 @@ export DEZ_CONFIG=$HOME/.config/dez
 # Lua(JIT) shared library path
 export LUA_CPATH="./?.dylib;./lib?.dylib;../lib/lib?.dylib;./lib/lib?.dylib;./build/lib?.dylib;./build/lib/lib?.dylib;/opt/homebrew/lib/lua/5.4/lib?.dylib;$DEZ_HOME/lib/lib?.dylib"
 # clang++ include path
-export CPLUS_INCLUDE_PATH=/usr/local/include/:/opt/homebrew/opt/nlohmann-json/include:/opt/homebrew/opt/postgresql@14/include/postgresql@14/:/opt/homebrew/include/luajit-2.1/:../../core/include:../include:../../include:$CPLUS_INCLUDE_PATH
+export CPLUS_INCLUDE_PATH=/usr/local/include/:/opt/homebrew/opt/*/include:/opt/homebrew/opt/postgresql@14/include/postgresql@14/:/opt/homebrew/include/luajit-2.1/:../../core/include:../include:../../include:$CPLUS_INCLUDE_PATH
 # Set lua path for luajit, lua and luarocks
 export LUA_PATH="./?.lua;/opt/homebrew/share/luajit-2.1/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/opt/homebrew/share/lua/5.1/?.lua;/opt/homebrew/share/lua/5.1/?/init.lua;/opt/homebrew/Cellar/luarocks/3.9.2/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?/init.lua;/opt/homebrew/lib/lua/5.4/?.lua;/opt/homebrew/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?/init.lua"
 
