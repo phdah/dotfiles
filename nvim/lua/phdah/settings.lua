@@ -112,7 +112,7 @@ _G.Define_Make = function(args)
     elseif filetype == 'c' or filetype == 'cpp' then
         vim.cmd('!make -C build && ./build/%< ' .. args)
     elseif filetype == 'scala' then
-        vim.cmd("!scalac % && scala %< " .. args)
+        vim.cmd("!scala % " .. args)
     elseif filetype == 'haskell' then
         vim.cmd("!ghc -no-keep-hi-files -no-keep-o-files -o %:r % && ./%:r " .. args)
     elseif filetype == 'lua' then
