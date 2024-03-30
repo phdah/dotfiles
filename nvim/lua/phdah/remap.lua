@@ -1,5 +1,3 @@
-vim.g.mapleader = " "
-
 -- Packer Sync
 vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 

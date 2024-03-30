@@ -1,24 +1,30 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
--- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
-return require('packer').startup(function(use)
-    -- Packer can manage itself
-    use ({
-        'wbthomason/packer.nvim'
-    })
-
-    use ({
+return require('lazy').setup({
+    {
         'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    })
-    use ({'p00f/nvim-ts-rainbow'})
+        build = ':TSUpdate'
+    },
+    {'p00f/nvim-ts-rainbow'},
 
-    use ({
+    {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
-        requires = {
+        dependencies = {
             -- LSP Support
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
@@ -26,38 +32,38 @@ return require('packer').startup(function(use)
             -- DAP support
             {'jay-babu/mason-nvim-dap.nvim'}
         }
-    })
+    },
 
-    use ({
+    {
         'junegunn/fzf',
-        run = ':call fzf#install()'
-    })
-    use ({
+        build = ':call fzf#install()'
+    },
+    {
         'junegunn/fzf.vim'
-    })
+    },
 
-    use ({
+    {
         'unblevable/quick-scope'
-    })
+    },
 
-    use ({
+    {
         'terrortylor/nvim-comment'
-    })
+    },
 
-    use ({
+    {
         'tpope/vim-dadbod'
-    })
-    use ({
+    },
+    {
         'kristijanhusak/vim-dadbod-ui'
-    })
+    },
     -- install without yarn or npm
-    use ({
+    {
         'iamcco/markdown-preview.nvim',
-        run = function() vim.fn['mkdp#util#install']() end,
-    })
-    use ({
+        build = function() vim.fn['mkdp#util#install']() end,
+    },
+    {
         'rcarriga/nvim-dap-ui',
-        requires = {
+        dependencies = {
             'mfussenegger/nvim-dap',
             'mfussenegger/nvim-dap-python',
             'jbyuki/one-small-step-for-vimkind',
@@ -65,26 +71,26 @@ return require('packer').startup(function(use)
             'tomblind/local-lua-debugger-vscode',
             'nvim-neotest/nvim-nio',
         }
-    })
-    use ({
+    },
+    {
         'folke/todo-comments.nvim',
-        requires = {
+        dependencies = {
             'nvim-lua/plenary.nvim'
         }
-    })
-    use ({
+    },
+    {
         "scalameta/nvim-metals",
-        requires = {
+        dependencies = {
             "nvim-lua/plenary.nvim",
         }
-      })
+      },
 
-    use ({'shaunsingh/nord.nvim'})
-    use ({'phdah/nvim-statusline'})
-    use ({'phdah/nvim-databricks'})
-    use ({'nvim-lua/plenary.nvim'})
-    use ({'akinsho/git-conflict.nvim'})
-    use ({'David-Kunz/gen.nvim'})
-    use ({'voldikss/vim-floaterm'})
+    {'shaunsingh/nord.nvim'},
+    {'phdah/nvim-statusline'},
+    {'phdah/nvim-databricks'},
+    {'nvim-lua/plenary.nvim'},
+    {'akinsho/git-conflict.nvim'},
+    {'David-Kunz/gen.nvim'},
+    {'voldikss/vim-floaterm'},
 
-end)
+})
