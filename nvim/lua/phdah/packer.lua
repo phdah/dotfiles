@@ -63,6 +63,7 @@ return require('packer').startup(function(use)
             'jbyuki/one-small-step-for-vimkind',
             'theHamsta/nvim-dap-virtual-text',
             'tomblind/local-lua-debugger-vscode',
+            'nvim-neotest/nvim-nio',
         }
     })
     use ({
