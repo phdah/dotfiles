@@ -26,6 +26,9 @@ vim.api.nvim_set_keymap('n', 'ck', ':GitConflictPrevConflict<CR>', { silent = tr
 -- lazygit
 vim.api.nvim_set_keymap('n', '<C-l>', ':FloatermNew --width=0.9 --height=0.9 lazygit<CR>', { noremap = true, silent = true })
 
+-- Other git commands
+vim.api.nvim_set_keymap('n', 'gp', ':w | FloatermNew --width=0.9 --height=0.9 git add -p %<CR>', { noremap = true, silent = true })
+
 -- Dap keymaps
 vim.api.nvim_set_keymap('n', '<leader>b', ':lua require("dap").toggle_breakpoint()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>c', ':lua require("dap").continue()<CR>', { noremap = true, silent = true })
