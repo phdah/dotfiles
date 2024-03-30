@@ -34,6 +34,23 @@ vim.diagnostic.config({
     signs = false,
 })
 
+-------------------
+-- Python config --
+-------------------
+
+require("lspconfig").pyright.setup{
+    settings = {
+        python = {
+            analysis = {
+                autoSearchPaths = true,
+                diagnosticMode = "workspace",
+                useLibraryCodeForTypes = true
+            },
+            pythonPath = "/opt/homebrew/bin/python3.10"
+        }
+    }
+}
+
 ----------------
 -- Metals lsp --
 ----------------
@@ -43,6 +60,7 @@ local metals_config = require("metals").bare_config()
 -- Build in automatic setup dap adapter
 metals_config.on_attach = function(client, bufnr)
     require("metals").setup_dap()
+    vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
 end
 
 
