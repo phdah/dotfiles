@@ -48,12 +48,12 @@ dap.adapters["local-lua"] = {
   type = "executable",
   command = "node",
   args = {
-    "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/local-lua-debugger-vscode/extension/debugAdapter.js"
+    "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/extension/debugAdapter.js"
   },
   enrich_config = function(config, on_config)
     if not config["extensionPath"] then
       local c = vim.deepcopy(config)
-      c.extensionPath = "/Users/Philip.Sjoberg/.local/share/nvim/site/pack/packer/start/local-lua-debugger-vscode/"
+      c.extensionPath = "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/"
       on_config(c)
     else
       on_config(config)
