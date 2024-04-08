@@ -20,6 +20,15 @@ return require('lazy').setup({
         build = ':TSUpdate'
     },
     {'p00f/nvim-ts-rainbow'},
+    {
+      'pwntester/octo.nvim',
+      dependencies = {
+        'nvim-lua/plenary.nvim',
+        'nvim-telescope/telescope.nvim',
+        -- OR 'ibhagwan/fzf-lua',
+        'nvim-tree/nvim-web-devicons',
+      },
+    },
 
     {
         'VonHeikemen/lsp-zero.nvim',

@@ -6,6 +6,7 @@ require("phdah.todo")
 require("phdah.gen")
 require("phdah.lsp")
 require("phdah.treesitter")
+require("phdah.octo")
 
 require("phdah.browser")
 require("phdah.defaultremap")
