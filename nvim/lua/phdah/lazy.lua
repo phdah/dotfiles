@@ -65,7 +65,6 @@ return require('lazy').setup({
         'rcarriga/nvim-dap-ui',
         dependencies = {
             'mfussenegger/nvim-dap',
-            'mfussenegger/nvim-dap-python',
             'jbyuki/one-small-step-for-vimkind',
             'theHamsta/nvim-dap-virtual-text',
             'tomblind/local-lua-debugger-vscode',
