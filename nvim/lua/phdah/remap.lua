@@ -7,6 +7,7 @@ vim.api.nvim_set_keymap('v', '<C-g>', ':Gen Ask<CR>', { noremap = true, silent =
 
 -- LSP keymaps
 vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
 
 -- Quickfix list
 vim.api.nvim_set_keymap('n', 'cn', ':cnext<CR>', { noremap = true, silent = true })
