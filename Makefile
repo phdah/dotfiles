@@ -169,28 +169,10 @@ nvim-install: ## Install neovim from source, unless CI mode, since it's like 10m
 		fi \
 	fi
 
-gitgutter-install: ## Install gitgutter
-	@printf '\nSetting up gitgutter\n\n'
-	@if [ ! -d $(BUILD_DIR)/nvim/pack/airblade/start/vim-gitgutter ]; then \
-		mkdir -p $(BUILD_DIR)/nvim/pack/airblade/start/vim-gitgutter; \
-		git clone https://github.com/airblade/vim-gitgutter.git $(BUILD_DIR)/nvim/pack/airblade/start/vim-gitgutter; \
-	fi
-	@if [ "$(USR)" != "CI" ]; then \
-		printf 'Installing gitgutter\n'; \
-		nvim -u NONE -c "helptags $(BUILD_DIR)/nvim/pack/airblade/start/vim-gitgutter/doc" -c q; \
-	fi
-
 zshhl-install: ## Set zsh syntax highlighting
 	@printf 'Setting up zsh highlighting\n'
 	@if [ ! -d $(SOURCE_DIR)/zsh-syntax-highlighting ]; then \
 		git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $(SOURCE_DIR)/zsh-syntax-highlighting; \
-	fi
-
-packer-install: ## Install nvim packer
-	@printf '\nSetting up nvim packer\n\n'
-	@if [ ! -d $(HOME)/.local/share/nvim/site/pack/packer/start/packer.nvim ]; then \
-		mkdir -p $(HOME)/.local/share/nvim/site/pack/packer/start/packer.nvim; \
-		git clone --depth 1 https://github.com/wbthomason/packer.nvim $(HOME)/.local/share/nvim/site/pack/packer/start/packer.nvim; \
 	fi
 
 gnome-nord: ## Install Nord colors for Gnome
@@ -244,14 +226,14 @@ finish: ## Finish the install
 	fi
 	@printf '\nDone!\n'
 
-wsl-install: args os-check base-dir base-apt-pkr zsh-shell nvim-install gitgutter-install zshhl-install packer-install base-symlink wsl-symlink copy-dirs finish
+wsl-install: args os-check base-dir base-apt-pkr zsh-shell nvim-install zshhl-install base-symlink wsl-symlink copy-dirs finish
 	@echo "WSL install done"
 
-arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install gitgutter-install packer-install base-symlink arch-symlink copy-dirs finish
+arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install base-symlink arch-symlink copy-dirs finish
 	@echo "Arch install done"
 
-ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr google-chrome zsh-shell nvim-install gitgutter-install zshhl-install packer-install gnome-nord base-symlink ubuntu-symlink copy-dirs finish
+ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr google-chrome zsh-shell nvim-install zshhl-install gnome-nord base-symlink ubuntu-symlink copy-dirs finish
 	@echo "Ubuntu install done"
 
-mac-install : args base-dir brew-install mac-pkr nvim-install gitgutter packer-install base-symlink mac-symlink copy-dirs finish
+mac-install : args base-dir brew-install mac-pkr nvim-install gitgutter base-symlink mac-symlink copy-dirs finish
 	@echo "Mac install done"

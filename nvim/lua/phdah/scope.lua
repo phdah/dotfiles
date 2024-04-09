@@ -1,5 +1,8 @@
 -- Highlight signs to jump to
-vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
+-- TODO: Disabled until https://github.com/unblevable/quick-scope/issues/98 is solved
+-- vim.g.qs_highlight_on_keys = {'f', 'F', 't', 'T'}
+
+vim.g.qs_buftype_blacklist = {'terminal', 'nofile'}
 vim.g.qs_accepted_chars = {
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
     'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',

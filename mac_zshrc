@@ -149,6 +149,8 @@ export MODULAR_HOME="$HOME/.modular"
 export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
 export MOJO_PYTHON_LIBRARY=/opt/homebrew/Cellar/python@3.10/3.10.13/Frameworks/Python.framework/Versions/3.10/lib/python3.10/config-3.10-darwin/libpython3.10.dylib
 
+# Python debuger
+export PYDEVD_WARN_SLOW_RESOLVE_TIMEOUT=2
 
 # Set default fzf stdout
 export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"

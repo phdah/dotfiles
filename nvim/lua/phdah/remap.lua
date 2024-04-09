@@ -1,5 +1,3 @@
-vim.g.mapleader = " "
-
 -- Packer Sync
 vim.api.nvim_set_keymap('n', '<leader>s', ':PackerSync<CR>', { noremap = true })
 
@@ -9,6 +7,7 @@ vim.api.nvim_set_keymap('v', '<C-g>', ':Gen Ask<CR>', { noremap = true, silent =
 
 -- LSP keymaps
 vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
 
 -- Quickfix list
 vim.api.nvim_set_keymap('n', 'cn', ':cnext<CR>', { noremap = true, silent = true })
@@ -25,6 +24,9 @@ vim.api.nvim_set_keymap('n', 'ck', ':GitConflictPrevConflict<CR>', { silent = tr
 
 -- lazygit
 vim.api.nvim_set_keymap('n', '<C-l>', ':FloatermNew --width=0.9 --height=0.9 lazygit<CR>', { noremap = true, silent = true })
+
+-- Octo GitHub pull requests
+vim.api.nvim_set_keymap('n', '<C-o>', ':Octo<CR>', { noremap = true, silent = true })
 
 -- Other git commands
 vim.api.nvim_set_keymap('n', 'gp', ':w | FloatermNew --width=0.9 --height=0.9 git add -p %<CR>', { noremap = true, silent = true })
