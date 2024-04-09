@@ -94,7 +94,7 @@ return require('lazy').setup({
       },
 
     {'shaunsingh/nord.nvim'},
-    {'airblade/vim-gitgutter'},
+    {'lewis6991/gitsigns.nvim'},
     {'phdah/nvim-statusline'},
     {'phdah/nvim-databricks'},
     {'nvim-lua/plenary.nvim'},

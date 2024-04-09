@@ -105,12 +105,14 @@ vim.api.nvim_set_keymap('n', '<leader>o', 'o<Esc>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>O', 'O<Esc>', { noremap = true })
 
 -- Git gutter commands
-vim.api.nvim_set_keymap('n', 'gj', ':GitGutterNextHunk<CR>zz', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gk', ':GitGutterPrevHunk<CR>zz', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gu', ':GitGutterUndoHunk<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gd', ':GitGutterDiffOrig<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gM', ':GitGutterFold<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gs', ':GitGutterStageHunk<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', 'gj', ':lua require("gitsigns").nav_hunk("next")<CR>zz', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gk', ':lua require("gitsigns").nav_hunk("prev")<CR>zz', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gu', ':lua require("gitsigns").reset_hunk()<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gU', ':lua require("gitsigns").undo_stage_hunk()<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gd', ':lua require("gitsigns").diffthis()<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gs', ':lua require("gitsigns").stage_hunk()<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gb', ':lua require("gitsigns").blame_line()<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('v', 'gs', [[:lua require("gitsigns").stage_hunk({vim.fn.line("'<"), vim.fn.line("'>")})<CR>]], { noremap = true, silent = true  })
 
 -- Repeat previous f, t, F or T movement
 vim.api.nvim_set_keymap('n', '<leader>h', ',', { noremap = true })
