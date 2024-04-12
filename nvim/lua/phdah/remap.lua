@@ -43,16 +43,15 @@ vim.api.nvim_set_keymap('n', '<leader>db', ':DapNvimDebugee<CR>', { noremap = tr
 vim.api.nvim_set_keymap('n', '<leader>ds', ':DapNvimSource<CR>', { noremap = true, silent = true })
 
 -- Execute vim line in shell
-vim.api.nvim_set_keymap('n', '<leader><Enter>', ':.!zsh<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader><Enter>', ':.!zsh<CR>', { noremap = true, silent = true })
 
 -- Buffer control
-vim.api.nvim_set_keymap('n', '<CR>', ':noh<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<C-m>', ':noh<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<C-m>', ':noh<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<C-n>', ':bn<CR>', { noremap = true, silent = true })
 
 -- Close buffers
-vim.api.nvim_set_keymap('n', '<leader>q', ':bd<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>Q', ':bd!<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>q', ':bd<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>Q', ':bd!<CR>', { noremap = true, silent = true })
 
 -- Window control
 vim.api.nvim_set_keymap('n', '<S-Right>', ':vertical resize +3<CR>', { noremap = true, silent = true  })
@@ -70,18 +69,18 @@ vim.api.nvim_set_keymap('n', '<leader>d', 'Vc<Esc>', { noremap = true, silent = 
 vim.api.nvim_set_keymap('n', '<leader>ö', ':DBUIToggle<CR>', { noremap = true, silent = true })
 
 -- Browse files
-vim.api.nvim_set_keymap('n', '<leader>f', ':lua nvim_FilesGitRoot()<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>F', ':execute \'Files ~\'<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>f', ':lua nvim_FilesGitRoot()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>F', ':execute \'Files ~\'<CR>', { noremap = true, silent = true })
 
 -- Spell checking
-vim.api.nvim_set_keymap('n', '<leader>z', ':setlocal spell! spelllang=en_us<CR>', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>Z', '1z=', { noremap = true })
-vim.api.nvim_set_keymap('n', 'zl', ']szz', { noremap = true })
-vim.api.nvim_set_keymap('n', 'zh', '[szz', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>z', ':setlocal spell! spelllang=en_us<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>Z', '1z=', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'zl', ']szz', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'zh', '[szz', { noremap = true, silent = true })
 
 -- Line toggle comment
-vim.api.nvim_set_keymap('n', '<leader>\'', ':CommentToggle<CR>', { noremap = true })
-vim.api.nvim_set_keymap('v', '<leader>\'', ':CommentToggle<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>\'', ':CommentToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<leader>\'', ':CommentToggle<CR>', { noremap = true, silent = true })
 
 -- Center search
 vim.api.nvim_set_keymap('n', 'gg', 'ggzz', { noremap = true })
@@ -122,7 +121,7 @@ vim.api.nvim_set_keymap('v', '<leader>j', '}zzk', { noremap = true })
 vim.api.nvim_set_keymap('v', '<leader>k', '{zzj', { noremap = true })
 
 -- Toggle number and sign column
-vim.api.nvim_set_keymap('n', '<leader>n', ':set invrelativenumber invnumber<CR>:GitGutterToggle<CR>', { noremap = true })
+vim.api.nvim_set_keymap('n', '<leader>n', ':set invrelativenumber invnumber<CR>:GitGutterToggle<CR>', { noremap = true, silent = true })
 
 -- Toggle markdown preview
 vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
