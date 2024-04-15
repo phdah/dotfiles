@@ -52,10 +52,6 @@ return require('lazy').setup({
     },
 
     {
-        'unblevable/quick-scope'
-    },
-
-    {
         'terrortylor/nvim-comment'
     },
 
@@ -92,6 +88,14 @@ return require('lazy').setup({
             "nvim-lua/plenary.nvim",
         }
       },
+    {
+      "folke/flash.nvim",
+      event = "VeryLazy",
+      keys = {
+        { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+        { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      },
+    },
 
     {'shaunsingh/nord.nvim'},
     {'lewis6991/gitsigns.nvim'},

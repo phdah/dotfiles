@@ -110,10 +110,6 @@ vim.api.nvim_set_keymap('n', 'gs', ':lua require("gitsigns").stage_hunk()<CR>', 
 vim.api.nvim_set_keymap('n', 'gb', ':lua require("gitsigns").blame_line()<CR>', { noremap = true, silent = true  })
 vim.api.nvim_set_keymap('v', 'gs', [[:lua require("gitsigns").stage_hunk({vim.fn.line("'<"), vim.fn.line("'>")})<CR>]], { noremap = true, silent = true  })
 
--- Repeat previous f, t, F or T movement
-vim.api.nvim_set_keymap('n', '<leader>h', ',', { noremap = true })
-vim.api.nvim_set_keymap('n', '<leader>l', ';', { noremap = true })
-
 -- Jump between code blocks
 vim.api.nvim_set_keymap('n', '<leader>j', '}zz', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>k', '{zz', { noremap = true })

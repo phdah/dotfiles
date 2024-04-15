@@ -59,15 +59,6 @@ vim.api.nvim_create_user_command('Clean', function()
     vim.cmd("%s/ \\+$//")
 end, {})
 
--- Set highlight groups for QuickScope
-vim.cmd([[
-augroup MyCustomHighlights
-  autocmd!
-  autocmd ColorScheme * highlight QuickScopePrimary guifg=#BF616A gui=underline
-  autocmd ColorScheme * highlight QuickScopeSecondary guifg=#D08770 gui=underline
-augroup END
-]])
-
 -- Define custom highlight groups
 vim.cmd [[
   highlight TodoHighlight ctermfg=Yellow ctermbg=NONE cterm=bold,underline gui=bold,underline guifg=#ffeb95 guibg=NONE
