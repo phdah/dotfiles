@@ -49,11 +49,16 @@ return require('lazy').setup({
     },
 
     {
-        'junegunn/fzf',
-        build = ':call fzf#install()'
-    },
-    {
-        'junegunn/fzf.vim'
+        'hrsh7th/nvim-cmp',
+        event = "VeryLazy",
+        dependencies = {
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-vsnip',
+            'quangnguyen30192/cmp-nvim-tags',
+            'lukas-reineke/cmp-rg',
+        },
     },
 
     {
@@ -61,10 +66,12 @@ return require('lazy').setup({
     },
 
     {
-        'tpope/vim-dadbod'
-    },
-    {
-        'kristijanhusak/vim-dadbod-ui'
+        'kristijanhusak/vim-dadbod-ui',
+        event = "VeryLazy",
+        dependencies = {
+            'kristijanhusak/vim-dadbod-completion',
+            'tpope/vim-dadbod'
+        }
     },
     -- install without yarn or npm
     {
