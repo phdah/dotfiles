@@ -21,11 +21,16 @@ return require('lazy').setup({
     },
     {'p00f/nvim-ts-rainbow'},
     {
+        'nvim-telescope/telescope.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim'
+        }
+    },
+    {
       'pwntester/octo.nvim',
       dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-telescope/telescope.nvim',
-        -- OR 'ibhagwan/fzf-lua',
         'nvim-tree/nvim-web-devicons',
       },
     },
@@ -35,11 +40,11 @@ return require('lazy').setup({
         branch = 'v1.x',
         dependencies = {
             -- LSP Support
-            {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim'},
-            {'williamboman/mason-lspconfig.nvim'},
+            'neovim/nvim-lspconfig',
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
             -- DAP support
-            {'jay-babu/mason-nvim-dap.nvim'}
+            'jay-babu/mason-nvim-dap.nvim',
         }
     },
 
