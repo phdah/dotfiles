@@ -69,11 +69,13 @@ vim.api.nvim_set_keymap('n', '<leader>d', 'Vc<Esc>', { noremap = true, silent = 
 vim.api.nvim_set_keymap('n', '<leader>ö', ':DBUIToggle<CR>', { noremap = true, silent = true })
 
 -- Browse files
-vim.api.nvim_set_keymap('n', '<leader>f', ':lua require("phdah/telescope").find_files_git()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>F', ":lua require('telescope.builtin').find_files({cwd='~'})<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("phdah/telescope").find_files_git()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fF', ":lua require('telescope.builtin').find_files({cwd='~'})<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>fr', ':lua require("phdah/telescope").live_grep_git()<CR>', { noremap = true, silent = true })
 
 -- Spell checking
 vim.api.nvim_set_keymap('n', '<leader>z', ':setlocal spell! spelllang=en_us<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', 'z=', ":lua require('telescope.builtin').spell_suggest()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>Z', '1z=', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'zl', ']szz', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'zh', '[szz', { noremap = true, silent = true })
