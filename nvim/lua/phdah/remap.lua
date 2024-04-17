@@ -35,7 +35,7 @@ vim.api.nvim_set_keymap('n', '<leader>t', ':lua _G.Dapui_terminate()<CR>', { nor
 vim.api.nvim_set_keymap('n', '<leader>i', ':lua require("dap").step_into()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>m', ':lua require("dap").step_over()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>e', ':lua require("dap").step_out()<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<leader>cb', ':lua require("dap").clear_breakpoints()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>CB', ':lua require("dap").clear_breakpoints()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>r', ':lua require("dapui").open({reset = true})<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>B', ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition (key==\'value\'): "))<CR>', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>dh', ':lua require("dap.ui.widgets").hover()<CR>', { noremap = true, silent = true })
@@ -120,7 +120,7 @@ vim.api.nvim_set_keymap('v', '<leader>k', '{zzj', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>n', ':set invrelativenumber invnumber<CR>:GitGutterToggle<CR>', { noremap = true, silent = true })
 
 -- Toggle markdown preview
-vim.api.nvim_set_keymap('n', '<leader>md', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>MD', ':MarkdownPreviewToggle<CR>', { noremap = true, silent = true })
 
 -- Command line remaps
 vim.api.nvim_set_keymap('c', '<D-Left>', '<Home>', { noremap = true })

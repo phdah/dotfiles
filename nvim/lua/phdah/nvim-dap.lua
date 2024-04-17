@@ -8,7 +8,7 @@ if not (dap_ok) then
   return
 end
 
-require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
+-- require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
 
 -- Mason setup
 require("nvim-dap-virtual-text").setup()
