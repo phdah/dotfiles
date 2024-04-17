@@ -8,7 +8,7 @@ require("phdah.lsp")
 require("phdah.treesitter")
 require("phdah.octo")
 
-require("phdah.browser")
+require("phdah.telescope")
 require("phdah.defaultremap")
 require("phdah.remap")
 require("phdah.function-remap")

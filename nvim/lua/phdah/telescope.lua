@@ -1,11 +1,13 @@
--- Open vim browser
-_G.nvim_FilesGitRoot = function()
+-- Setup dynamic git root file finder
+local M = {}
+M.find_files_git = function()
     -- If git repo, show all files in repo.
     local root = vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
     if root == 'fatal: not a git repository (or any of the parent directories): .git' then
-        vim.cmd('Files')
+        require('telescope.builtin').find_files()
     else
-        vim.cmd('Files ' .. root)
+        require('telescope.builtin').find_files({cwd=root})
     end
 end
 
+return M
