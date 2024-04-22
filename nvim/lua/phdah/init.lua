@@ -7,6 +7,7 @@ require("phdah.gen")
 require("phdah.lsp")
 require("phdah.treesitter")
 require("phdah.octo")
+require("phdah.flash")
 
 require("phdah.telescope")
 require("phdah.defaultremap")

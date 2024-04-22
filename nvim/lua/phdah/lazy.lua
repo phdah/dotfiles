@@ -100,16 +100,7 @@ return require('lazy').setup({
             "nvim-lua/plenary.nvim",
         }
       },
-    {
-        "folke/flash.nvim",
-        event = "VeryLazy",
-        opts = {},
-        keys = {
-            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-            { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
-        },
-    },
-
+    {"folke/flash.nvim"},
     {'shaunsingh/nord.nvim'},
     {'lewis6991/gitsigns.nvim'},
     {'phdah/nvim-statusline'},

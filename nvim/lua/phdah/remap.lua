@@ -10,6 +10,16 @@ vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>', { noremap = tr
 vim.api.nvim_set_keymap('n', 'cn', ':cnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'cp', ':cprev<CR>', { noremap = true, silent = true })
 
+-- Flash jump
+vim.api.nvim_set_keymap('n', 's', '<cmd>lua require("flash").jump()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', 's', '<cmd>lua require("flash").jump()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('o', 's', '<cmd>lua require("flash").jump()<CR>', { noremap = true, silent = true })
+
+-- Flash Treesitter
+vim.api.nvim_set_keymap('n', 'S', '<cmd>lua require("flash").treesitter()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', 'S', '<cmd>lua require("flash").treesitter()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('o', 'S', '<cmd>lua require("flash").treesitter()<CR>', { noremap = true, silent = true })
+
 -- Git conflict
 vim.api.nvim_set_keymap('n', 'cl', ':GitConflictListQf<CR>', { silent = true })
 vim.api.nvim_set_keymap('n', 'co', ':GitConflictChooseOurs<CR>', { silent = true })
