@@ -5,3 +5,6 @@ require('gen').setup({
     show_model = true,
     no_auto_close = true,
 })
+vim.api.nvim_create_user_command('ModelSelect', function()
+    require('gen').select_model()
+end, {})
