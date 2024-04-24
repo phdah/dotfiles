@@ -9,6 +9,7 @@ require("phdah.treesitter")
 require("phdah.octo")
 require("phdah.flash")
 
+require("phdah.nvim-cmp")
 require("phdah.telescope")
 require("phdah.defaultremap")
 require("phdah.remap")

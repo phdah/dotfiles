@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
-vim.g.kris.completion = {}
+-- vim.g.kris.completion = {}
 vim.g.completion_chain_complete_list = {
     sql = {{complete_items = {'vim-dadbod-completion'}}}
 }
