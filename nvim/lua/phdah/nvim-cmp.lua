@@ -1,6 +1,3 @@
--- NOTE: This should not be required in the init file,
--- it seems to be sourced automatically
-
 local cmp = require('cmp')
 cmp.setup({
     snippet = {
@@ -8,24 +5,58 @@ cmp.setup({
         vim.fn["vsnip#anonymous"](args.body)
         end,
     },
+    sources = cmp.config.sources(
+        {
+            { name = 'nvim_lsp' },
+            { name = 'vsnip' },
+        },
+        {
+            { name = 'buffer' },
+        }
+    ),
 })
+cmp.setup.buffer({ enabled = false })
+
+cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+            { name = 'buffer' }
+        }
+})
+
+cmp.setup.cmdline(':', {
+    sources = cmp.config.sources(
+        {
+            { name = 'path' }
+        },
+        {
+            { name = 'cmdline' }
+        }
+    ),
+    matching = { disallow_symbol_nonprefix_matching = false }
+})
+
+-----------------------------------------------
+-- Commands to start and stop autocompletion --
+-----------------------------------------------
+
+vim.api.nvim_create_user_command('CmpStart', function()
+    require('cmp').setup.buffer({ enabled = true })
+end, {})
+
+vim.api.nvim_create_user_command('CmpStop', function()
+    require('cmp').setup.buffer({ enabled = false })
+end, {})
 
 ----------------------------------
 -- Auto completion for Dadbod-ui --
 ----------------------------------
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"sql", "mysql", "plsql"},
-    callback = function()
-        require('cmp').setup.buffer({
-            sources = {
-                { name = 'vim-dadbod-completion' }
-            }
-        })
-    end
+cmp.setup.filetype({"sql", "mysql", "plsql"}, {
+    sources = cmp.config.sources{
+        { name = 'vim-dadbod-completion' }
+    }
 })
 
--- vim.g.kris.completion = {}
 vim.g.completion_chain_complete_list = {
     sql = {{complete_items = {'vim-dadbod-completion'}}}
 }
