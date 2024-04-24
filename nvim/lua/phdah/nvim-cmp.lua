@@ -14,6 +14,20 @@ cmp.setup({
             { name = 'buffer' },
         }
     ),
+    mapping = {
+        ['<Down>'] = cmp.mapping(
+            cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}
+        ),
+        ['<Up>'] = cmp.mapping(
+            cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}
+        ),
+        ['<C-e>'] = cmp.mapping(
+            { i = cmp.mapping.close(), c = cmp.mapping.close() }
+        ),
+        ['<CR>'] = cmp.mapping({
+            i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
+        }),
+    },
 })
 cmp.setup.buffer({ enabled = false })
 
