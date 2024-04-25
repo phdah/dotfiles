@@ -1,3 +1,8 @@
+-- Limit the height of comletions window
+vim.o.completeopt = "menuone,noselect"
+vim.o.pumheight = 5
+
+-- Setup cmp
 local cmp = require('cmp')
 cmp.setup({
     snippet = {
