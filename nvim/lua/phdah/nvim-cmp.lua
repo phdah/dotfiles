@@ -2,23 +2,30 @@
 vim.o.completeopt = "menuone,noselect"
 vim.o.pumheight = 5
 
--- Setup cmp
+-- Setup
+local luasnip = require('luasnip')
+require("luasnip.loaders.from_vscode").lazy_load()
+
 local cmp = require('cmp')
 cmp.setup({
     snippet = {
         expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
+            luasnip.lsp_expand(args.body)  -- Use LuaSnip's lsp_expand function
         end,
     },
     sources = cmp.config.sources(
         {
             { name = 'nvim_lsp' },
-            { name = 'vsnip' },
-        },
-        {
+            { name = 'luasnip' },
             { name = 'buffer' },
+            { name = 'path' },
+            { name = 'rg' },
         }
     ),
+    window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+    },
     mapping = {
         ['<Down>'] = cmp.mapping(
             cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}
@@ -32,9 +39,22 @@ cmp.setup({
         ['<CR>'] = cmp.mapping({
             i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
         }),
+        ['<Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end,
+        ['<S-Tab>'] = function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end,
     },
 })
-cmp.setup.buffer({ enabled = false })
 
 cmp.setup.cmdline({ '/', '?' }, {
     mapping = cmp.mapping.preset.cmdline(),
