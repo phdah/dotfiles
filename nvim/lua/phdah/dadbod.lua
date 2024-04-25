@@ -58,6 +58,7 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.commentstring = "-- %s"
         vim.api.nvim_buf_set_keymap(0, 'n', '<Leader>w', '<Plug>(DBUI_SaveQuery)', { noremap= true, silent = true })
         vim.api.nvim_buf_set_keymap(0, 'n', '<Leader>s', '<Plug>(DBUI_ExecuteQuery)', { noremap= true, silent = true })
+        vim.api.nvim_buf_set_keymap(0, 'v', '<Leader>s', '<Plug>(DBUI_ExecuteQuery)', { noremap= true, silent = true })
         vim.api.nvim_buf_set_keymap(0, 'n', '<Leader>r', '<Plug>(DBUI_ToggleResultLayout)', { noremap= true, silent = true })
     end
 })
