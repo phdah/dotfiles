@@ -1,1 +1,3 @@
-require('nvim-databricks').setup({})
+require('nvim-databricks').setup({
+    python = 'python3.10',
+})
