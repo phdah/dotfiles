@@ -5,31 +5,31 @@ vim.o.pumheight = 5
 -- Setup
 local kind_icons = {
     Text = "󰉿",
-	Method = "󰆧",
-	Function = "󰊕",
-	Constructor = "",
+    Method = "󰆧",
+    Function = "󰊕",
+    Constructor = "",
     Field = " ",
-	Variable = "󰀫",
-	Class = "󰠱",
-	Interface = "",
-	Module = "",
-	Property = "󰜢",
-	Unit = "󰑭",
-	Value = "󰎠",
-	Enum = "",
-	Keyword = "󰌋",
+    Variable = "󰀫",
+    Class = "󰠱",
+    Interface = "",
+    Module = "",
+    Property = "󰜢",
+    Unit = "󰑭",
+    Value = "󰎠",
+    Enum = "",
+    Keyword = "󰌋",
     Snippet = "",
-	Color = "󰏘",
-	File = "󰈙",
+    Color = "󰏘",
+    File = "󰈙",
     Reference = "",
-	Folder = "󰉋",
-	EnumMember = "",
-	Constant = "󰏿",
+    Folder = "󰉋",
+    EnumMember = "",
+    Constant = "󰏿",
     Struct = "",
-	Event = "",
-	Operator = "󰆕",
+    Event = "",
+    Operator = "󰆕",
     TypeParameter = " ",
-	Misc = " ",
+    Misc = " ",
 }
 
 local luasnip = require('luasnip')
@@ -44,8 +44,10 @@ cmp.setup({
     },
     sources = cmp.config.sources(
         {
+            -- List of possible sources https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
             { name = 'nvim_lsp' },
             { name = 'buffer' },
+            { name = 'treesitter' },
             { name = 'luasnip' },
             { name = 'path' },
             { name = 'rg' },
@@ -61,6 +63,8 @@ cmp.setup({
             nvim_lsp = "[LSP]",
             luasnip = "[Snippet]",
             buffer = "[Buffer]",
+            treesitter = "[TS]",
+            dap = "[DAP]",
             path = "[Path]",
             rg = "[rg]",
         }
@@ -93,9 +97,7 @@ cmp.setup({
         end),
 
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.locally_jumpable(1) then
+          if luasnip.locally_jumpable(1) then
             luasnip.jump(1)
           else
             fallback()
@@ -103,9 +105,7 @@ cmp.setup({
         end, { "i", "s" }),
 
         ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
+          if luasnip.locally_jumpable(-1) then
             luasnip.jump(-1)
           else
             fallback()
@@ -147,9 +147,26 @@ vim.api.nvim_create_user_command('CmpStop', function()
     require('cmp').setup.buffer({ enabled = false })
 end, {})
 
-----------------------------------
+-------------------------
+-- Auto completion DAP --
+-------------------------
+
+require("cmp").setup({
+    enabled = function()
+        return vim.api.nvim_buf_get_option(0, "buftype") ~= "prompt"
+        or require("cmp_dap").is_dap_buffer()
+    end
+})
+
+require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
+    sources = {
+        { name = "dap" },
+    },
+})
+
+-----------------------------------
 -- Auto completion for Dadbod-ui --
-----------------------------------
+-----------------------------------
 cmp.setup.filetype({"sql", "mysql", "plsql"}, {
     sources = cmp.config.sources{
         { name = 'vim-dadbod-completion' }

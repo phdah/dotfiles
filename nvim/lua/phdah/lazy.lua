@@ -51,11 +51,14 @@ return require('lazy').setup({
     {
         'hrsh7th/nvim-cmp',
         dependencies = {
+            -- Sources
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-path',
             'quangnguyen30192/cmp-nvim-tags',
             'lukas-reineke/cmp-rg',
+            'rcarriga/cmp-dap',
+            'ray-x/cmp-treesitter',
 	        -- Snippets
             'L3MON4D3/LuaSnip',
             'rafamadriz/friendly-snippets',
