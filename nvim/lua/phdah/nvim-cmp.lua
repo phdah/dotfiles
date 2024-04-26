@@ -3,6 +3,35 @@ vim.o.completeopt = "menuone,noselect"
 vim.o.pumheight = 5
 
 -- Setup
+local kind_icons = {
+    Text = "󰉿",
+	Method = "󰆧",
+	Function = "󰊕",
+	Constructor = "",
+    Field = " ",
+	Variable = "󰀫",
+	Class = "󰠱",
+	Interface = "",
+	Module = "",
+	Property = "󰜢",
+	Unit = "󰑭",
+	Value = "󰎠",
+	Enum = "",
+	Keyword = "󰌋",
+    Snippet = "",
+	Color = "󰏘",
+	File = "󰈙",
+    Reference = "",
+	Folder = "󰉋",
+	EnumMember = "",
+	Constant = "󰏿",
+    Struct = "",
+	Event = "",
+	Operator = "󰆕",
+    TypeParameter = " ",
+	Misc = " ",
+}
+
 local luasnip = require('luasnip')
 require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -16,44 +45,73 @@ cmp.setup({
     sources = cmp.config.sources(
         {
             { name = 'nvim_lsp' },
-            { name = 'luasnip' },
             { name = 'buffer' },
+            { name = 'luasnip' },
             { name = 'path' },
             { name = 'rg' },
         }
     ),
+    formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = function(entry, vim_item)
+    -- Kind icons
+    vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
+    vim_item.menu = (
+        {
+            nvim_lsp = "[LSP]",
+            luasnip = "[Snippet]",
+            buffer = "[Buffer]",
+            path = "[Path]",
+            rg = "[rg]",
+        }
+    )[entry.source.name]
+    return vim_item
+        end,
+    },
     window = {
       completion = cmp.config.window.bordered(),
       documentation = cmp.config.window.bordered(),
     },
     mapping = {
-        ['<Down>'] = cmp.mapping(
-            cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }), {'i'}
-        ),
-        ['<Up>'] = cmp.mapping(
-            cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }), {'i'}
-        ),
+        ["<Up>"] = cmp.mapping.select_prev_item(),
+        ["<Down>"] = cmp.mapping.select_next_item(),
         ['<C-e>'] = cmp.mapping(
-            { i = cmp.mapping.close(), c = cmp.mapping.close() }
-        ),
-        ['<CR>'] = cmp.mapping({
-            i = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false }),
-        }),
-        ['<Tab>'] = function(fallback)
+                { i = cmp.mapping.close(), c = cmp.mapping.close() }
+                ),
+        ['<CR>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
-                cmp.select_next_item()
+                if luasnip.expandable() then
+                    luasnip.expand()
+                else
+                    cmp.confirm({
+                        select = true,
+                    })
+                end
             else
                 fallback()
             end
-        end,
-        ['<S-Tab>'] = function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
-                fallback()
-            end
-        end,
-    },
+        end),
+
+        ["<Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          elseif luasnip.locally_jumpable(1) then
+            luasnip.jump(1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+
+        ["<S-Tab>"] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          elseif luasnip.locally_jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { "i", "s" }),
+    }
 })
 
 cmp.setup.cmdline({ '/', '?' }, {
@@ -66,10 +124,12 @@ cmp.setup.cmdline({ '/', '?' }, {
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources(
         {
-            { name = 'path' }
-        },
-        {
-            { name = 'cmdline' }
+            -- Apparently there is an issue with 'path',
+            -- see https://github.com/hrsh7th/nvim-cmp/issues/874#issuecomment-1090099590
+            -- I might be able to specify the order of priority
+            -- but will remove if still creating issue
+            { name = 'cmdline' },
+            { name = 'path' },
         }
     ),
     matching = { disallow_symbol_nonprefix_matching = false }
