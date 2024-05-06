@@ -23,7 +23,8 @@ return require('lazy').setup({
     {
         'nvim-telescope/telescope.nvim',
         dependencies = {
-            'nvim-lua/plenary.nvim'
+            'nvim-lua/plenary.nvim',
+            { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
         }
     },
     {
@@ -78,7 +79,6 @@ return require('lazy').setup({
             'tpope/vim-dadbod'
         }
     },
-    -- install without yarn or npm
     {
         'iamcco/markdown-preview.nvim',
         build = function() vim.fn['mkdp#util#install']() end,

@@ -1,3 +1,8 @@
+require("telescope").setup()
+
+-- Load fzf-native search
+require('telescope').load_extension('fzf')
+
 -- Setup dynamic git root file finder
 local M = {}
 M.find_files_git = function()
