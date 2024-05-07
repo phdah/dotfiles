@@ -44,7 +44,7 @@ os-check: ## Check what OS is installed
 
 base-dir: ## Setup base directories
 	@printf '\nSetting up base directories\n\n'
-	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd
+	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit
 
 brew-install: ## Install Homebrew on Mac
 	@printf '\nSetting up Homebrew\n\n'
@@ -184,6 +184,7 @@ base-symlink: ## Symlink dotfiles to repo
 	printf 'BUILD_DIR: $(BUILD_DIR)\n'
 	@printf 'Setting up symlinks\n'
 	@ln -sf $(BUILD_DIR)/gdbinit $(HOME)/.gdbinit
+	@ln -sf $(BUILD_DIR)/lazygit.yml $(CONFIG)/lazygit/config.yml
 	@ln -sf $(BUILD_DIR)/user-dirs.dirs $(CONFIG)/user-dirs.dirs
 	@ln -sf $(BUILD_DIR)/nvim $(CONFIG)
 
