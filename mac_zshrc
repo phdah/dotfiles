@@ -9,7 +9,7 @@ source /opt/homebrew/etc/bash_completion.d/az
 # Aliases
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
 alias ls='eza'
-alias ll='eza -alh --total-size'
+alias ll='eza -alh'
 alias vim='nvim'
 alias nb='nvim ~/repos/privat/logbook/README.md'
 alias tree='eza --tree'
@@ -60,6 +60,9 @@ function cat() {
 function rgf() {
     rg --files | rg $1
 }
+function vimrg() {
+    vim $(rg $1 -l)
+}
 function sedall() {
     sed -i "s/$1/$2/g" $(rg $1 -l)
 }
@@ -108,6 +111,9 @@ zstyle ':vcs_info:git:*' formats '%b'
 NEWLINE=$'\n'
 PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
 RPROMPT='${vcs_info_msg_0_}'
+
+# Export config dir
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # Syntax highligthing
 # TODO: use the fast-syntax-highlighting.plugin.zsh instead. Then the arch

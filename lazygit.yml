@@ -2,10 +2,10 @@ gui:
   showIcons: true
   theme:
     activeBorderColor:
-      - magenta
-      # - bold
-      # inactiveBorderColor:
-      #   - black
+      - blue
+      - bold
+    inactiveBorderColor:
+      - blue
   showFileTree: true
   os:
     editCommand: "nvim"

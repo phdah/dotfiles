@@ -213,6 +213,7 @@ mac-symlink: ## Symlink dotfiles to repo
 	@ln -sf $(BUILD_DIR)/mac_zshrc $(HOME)/.zshrc
 	@ln -sf $(BUILD_DIR)/yabairc $(CONFIG)/.yabairc
 	@ln -sf $(BUILD_DIR)/skhdrc $(CONFIG)/.skhdrc
+	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
 
 copy-dirs: ## Copy files and dirs
 	@printf 'Copying files\n'
