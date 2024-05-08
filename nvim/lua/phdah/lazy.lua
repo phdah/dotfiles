@@ -60,7 +60,8 @@ return require('lazy').setup({
             'lukas-reineke/cmp-rg',
             'rcarriga/cmp-dap',
             'ray-x/cmp-treesitter',
-	        -- Snippets
+            'MattiasMTS/cmp-dbee',
+            -- Snippets
             'L3MON4D3/LuaSnip',
             'rafamadriz/friendly-snippets',
             'saadparwaiz1/cmp_luasnip',
@@ -70,15 +71,26 @@ return require('lazy').setup({
     {
         'terrortylor/nvim-comment'
     },
-
     {
-        'kristijanhusak/vim-dadbod-ui',
+        "MattiasMTS/nvim-dbee",
+        -- "kndndrj/nvim-dbee",
         event = "VeryLazy",
+        branch = "mattias/databricks-adapter",
         dependencies = {
-            'kristijanhusak/vim-dadbod-completion',
-            'tpope/vim-dadbod'
-        }
+            "MunifTanjim/nui.nvim",
+        },
+        build = function()
+            require("dbee").install()
+        end,
     },
+    -- {
+    --     'kristijanhusak/vim-dadbod-ui',
+    --     event = "VeryLazy",
+    --     dependencies = {
+    --         'kristijanhusak/vim-dadbod-completion',
+    --         'tpope/vim-dadbod'
+    --     }
+    -- },
     {
         'iamcco/markdown-preview.nvim',
         build = function() vim.fn['mkdp#util#install']() end,
