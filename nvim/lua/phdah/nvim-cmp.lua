@@ -164,18 +164,14 @@ require("cmp").setup.filetype({ "dap-repl", "dapui_watches", "dapui_hover" }, {
     },
 })
 
------------------------------------
--- Auto completion for Dadbod-ui --
------------------------------------
-cmp.setup.filetype({"sql", "mysql", "plsql"}, {
-    sources = cmp.config.sources{
-        { name = 'vim-dadbod-completion' }
-    }
-})
-
-vim.g.completion_chain_complete_list = {
-    sql = {{complete_items = {'vim-dadbod-completion'}}}
-}
-vim.g.completion_matching_strategy_list = {'exact', 'substring'}
-vim.g.completion_matching_ignore_case = 1
+-- NOTE: Currently not working
+------------------------------
+-- Auto completion for DBee --
+------------------------------
+-- require("cmp-dbee").setup({})
+-- cmp.setup.filetype({"sql", "mysql", "plsql"}, {
+--     sources = cmp.config.sources{
+--         { name = 'cmp-dbee' }
+--     }
+-- })
 
