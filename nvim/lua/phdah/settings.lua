@@ -57,9 +57,12 @@ augroup MyCustomWhiteSpaceHighlights
 augroup END
 ]])
 
--- Clean out all trailing ExtraWhitespace
+-- Clean out all trailing ExtraWhitespace, and tabs
 vim.api.nvim_create_user_command('Clean', function()
-    vim.cmd("%s/ \\+$//")
+  local ok,_ = pcall(function() vim.cmd("%s/\\t\\+$\\| \\+$//") end)
+  if not ok then
+    print("No trailing whitespace found")
+  end
 end, {})
 
 -- Define custom highlight groups
