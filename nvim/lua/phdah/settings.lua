@@ -109,6 +109,25 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
+-- Set configs for floaterm
+local auGroupFloaterm = vim.api.nvim_create_augroup("nvim-floaterm-custom", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    group = auGroupFloaterm,
+    pattern = "floaterm",
+    callback = function()
+        -- What will happen on entry
+        vim.opt.mouse = "a"
+        -- What will happen on exit
+        vim.api.nvim_create_autocmd("BufLeave", {
+            buffer = 0,
+            once = true,
+            callback = function()
+                vim.o.mouse = ""
+            end,
+        })
+    end,
+})
+
 -- Function to set the executor based on file type
 _G.Define_Make = function(args)
     local filetype = vim.bo.filetype
