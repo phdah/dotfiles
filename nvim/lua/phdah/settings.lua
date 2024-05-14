@@ -99,6 +99,16 @@ vim.cmd[[autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatopt
 -- Set colorscheme to nord
 vim.cmd[[colorscheme nord]]
 
+-- Set spelling on for specific files
+local auGroupSpelling = vim.api.nvim_create_augroup("nvim-spelling-custom", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+    group = auGroupSpelling,
+    pattern = "markdown",
+    callback = function()
+        vim.cmd("setlocal spell! spelllang=en_us")
+    end
+})
+
 -- Function to set the executor based on file type
 _G.Define_Make = function(args)
     local filetype = vim.bo.filetype
