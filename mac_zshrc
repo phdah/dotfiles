@@ -15,8 +15,6 @@ alias nb='nvim ~/repos/privat/logbook/README.md'
 alias tree='eza --tree'
 alias act='act --container-architecture linux/amd64'
 alias dbsqlcli='dbsqlcli --table-format ascii'
-alias python="/opt/homebrew/bin//python3.10"
-alias pip="/opt/homebrew/bin//pip3.10"
 alias bat='bat --theme=Nord'
 # Git alias
 alias vimconflict='vim $(rg -l "<<<<<<< HEAD")'
@@ -151,8 +149,6 @@ export CPLUS_INCLUDE_PATH=/usr/local/include/:/opt/homebrew/opt/*/include:/opt/h
 export LUA_PATH="./?.lua;/opt/homebrew/share/luajit-2.1/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/opt/homebrew/share/lua/5.1/?.lua;/opt/homebrew/share/lua/5.1/?/init.lua;/opt/homebrew/Cellar/luarocks/3.9.2/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?/init.lua;/opt/homebrew/lib/lua/5.4/?.lua;/opt/homebrew/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?/init.lua"
 
 # Mojo paths
-export MODULAR_HOME="$HOME/.modular"
-export PATH="$MODULAR_HOME/pkg/packages.modular.com_mojo/bin:$PATH"
 export MOJO_PYTHON_LIBRARY=/opt/homebrew/Cellar/python@3.10/3.10.13/Frameworks/Python.framework/Versions/3.10/lib/python3.10/config-3.10-darwin/libpython3.10.dylib
 
 # Python debuger

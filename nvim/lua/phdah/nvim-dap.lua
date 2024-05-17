@@ -31,7 +31,7 @@ dap.adapters.codelldb = {
   }
 }
 
-local pythonPath = '/opt/homebrew/bin/python3.10'
+local pythonPath = 'python3.10'
 dap.adapters.python = {
   type = 'executable',
   command = pythonPath,

@@ -143,6 +143,8 @@ _G.Define_Make = function(args)
         vim.cmd("!ghc -no-keep-hi-files -no-keep-o-files -o %:r % && ./%:r " .. args)
     elseif filetype == 'lua' then
         vim.cmd("!luajit % " .. args)
+    elseif filetype == 'make' then
+        vim.cmd("!make " .. args)
     end
 end
 
