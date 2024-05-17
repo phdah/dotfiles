@@ -83,7 +83,7 @@ vim.wo.number = true
 vim.wo.relativenumber = true
 
 -- Disable mouse
-vim.o.mouse = ""
+require("nvim-utils").Mouse:new()
 
 -- Open help in its own buffer, use ':H <args>'
 vim.cmd[[command! -nargs=1 -complete=command -bar H help <args> | only]]

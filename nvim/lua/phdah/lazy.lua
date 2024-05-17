@@ -129,6 +129,11 @@ return require('lazy').setup({
         -- 'phdah/nvim-databricks',
         dir = '~/repos/privat/nvim-databricks/'
     },
+    {
+        -- 'phdah/nvim-utils',
+        dir = '~/repos/privat/nvim-utils/'
+    },
+
     {'nvim-lua/plenary.nvim'},
     {'akinsho/git-conflict.nvim'},
     {'David-Kunz/gen.nvim'},

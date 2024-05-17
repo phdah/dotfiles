@@ -76,7 +76,7 @@ vim.api.nvim_set_keymap('n', '<leader>v', ':vsplit<CR>', { noremap = true, silen
 vim.api.nvim_set_keymap('n', '<leader>d', 'Vc<Esc>', { noremap = true, silent = true })
 
 -- DBee database
-vim.api.nvim_set_keymap('n', '<leader>ö', ':lua require("dbee").toggle()<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>ö', ':lua require("dbee").toggle(); require("nvim-utils").Mouse:toggle()<CR>', { noremap = true, silent = true })
 
 -- Browse files
 vim.api.nvim_set_keymap('n', '<leader>ff', ':lua require("phdah/telescope").find_files_git()<CR>', { noremap = true, silent = true })
