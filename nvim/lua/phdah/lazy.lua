@@ -120,8 +120,15 @@ return require('lazy').setup({
     {"folke/flash.nvim"},
     {'shaunsingh/nord.nvim'},
     {'lewis6991/gitsigns.nvim'},
-    {'phdah/nvim-statusline'},
-    {'phdah/nvim-databricks'},
+    {
+        -- 'phdah/nvim-statusline',
+        dir = '~/repos/privat/nvim-statusline/'
+    },
+    -- {},
+    {
+        -- 'phdah/nvim-databricks',
+        dir = '~/repos/privat/nvim-databricks/'
+    },
     {'nvim-lua/plenary.nvim'},
     {'akinsho/git-conflict.nvim'},
     {'David-Kunz/gen.nvim'},
