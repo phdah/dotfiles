@@ -65,25 +65,12 @@ vim.api.nvim_create_user_command('Clean', function()
   end
 end, {})
 
--- Define custom highlight groups
-vim.cmd [[
-  highlight TodoHighlight ctermfg=Yellow ctermbg=NONE cterm=bold,underline gui=bold,underline guifg=#ffeb95 guibg=NONE
-  highlight NoteHighlight ctermfg=Cyan ctermbg=NONE cterm=bold,underline gui=bold,underline guifg=#8be9fd guibg=NONE
-]]
-
--- Match and link the keywords to the custom highlight groups
-vim.api.nvim_exec([[
-  autocmd Syntax * syn match TodoHighlight "\<TODO\>"
-  autocmd Syntax * syn match NoteHighlight "\<NOTE\>"
-]], false)
-
-
 -- Set show number as default
 vim.wo.number = true
 vim.wo.relativenumber = true
 
 -- Disable mouse
-require("nvim-utils").Mouse:new()
+require("nvim-utils").Mouse:new(false)
 
 -- Open help in its own buffer, use ':H <args>'
 vim.cmd[[command! -nargs=1 -complete=command -bar H help <args> | only]]
