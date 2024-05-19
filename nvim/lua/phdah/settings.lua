@@ -132,6 +132,8 @@ _G.Define_Make = function(args)
         vim.cmd("!luajit % " .. args)
     elseif filetype == 'make' then
         vim.cmd("!make " .. args)
+    elseif filetype == 'go' then
+        vim.cmd("!go run % " .. args)
     end
 end
 

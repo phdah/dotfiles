@@ -14,7 +14,7 @@ end
 require("nvim-dap-virtual-text").setup()
 require("mason").setup()
 require("mason-nvim-dap").setup({
-    ensure_installed = { "codelldb", "bash-debug-adapter", "debugpy"}
+    ensure_installed = { "codelldb", "bash-debug-adapter", "debugpy", "delve"}
 })
 
 --------------------
@@ -59,6 +59,21 @@ dap.adapters["local-lua"] = {
       on_config(config)
     end
   end,
+}
+
+dap.adapters.go = {
+    type = "server",
+    host = "127.0.0.1",
+    port = "${port}",
+    cwd = '${workspaceFolder}',
+    executable = {
+        command = "/Users/Philip.Sjoberg/.local/share/nvim/mason/bin/dlv",
+        args = { "dap", "-l", "127.0.0.1:${port}" },
+        detached = true,
+    },
+    options = {
+        initialize_timeout_sec = 20,
+    },
 }
 
 --------------------------
@@ -156,6 +171,16 @@ dap.configurations.scala = {
       runType = "testTarget",
     },
   },
+}
+
+dap.configurations.go = {
+    {
+      type = "go",
+      name = "Debug",
+      request = "launch",
+      program = "${file}",
+      buildFlags = "",
+    },
 }
 
 ---------------------
