@@ -31,18 +31,6 @@ alias gitc='git checkout'
 setenv() {
   export "$1=$2"
 }
-function vfzf() {
-    if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
-        then FZF_FILE_VIM=$(rg -l --hidden "" $(git rev-parse --show-toplevel) -g '!.git/' | fzf)
-        else FZF_FILE_VIM=$(rg -l --hidden "" . -g '!.git/' | fzf)
-    fi
-    if [ -e "$FZF_FILE_VIM" ]
-        then nvim $FZF_FILE_VIM;
-    fi
-}
-function Vfzf() {
-    FZF_FILE_VIM=$(rg -l --hidden "" ~ | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
-}
 function gitall() {
     git status && git add --all && git commit -m "$1" && git push
 }
@@ -89,9 +77,9 @@ bindkey  "^[[1;9C" end-of-line
 bindkey "^[[5~" history-beginning-search-backward
 bindkey "^[[6~" history-beginning-search-forward
 
-bindkey -s "^ff" "vim + \":lua require('phdah/telescope').find_files_git()\"^j"
-bindkey -s "^fF" "vim + \":lua require('telescope.builtin').find_files({cwd='~'})\"^j"
-bindkey -s "^fr" "vim + \":lua require('phdah/telescope').live_grep_git()\"^j"
+bindkey -s "^ff" "vim +\":lua require('phdah/telescope').find_files_git()\"^j"
+bindkey -s "^fF" "vim +\":lua require('telescope.builtin').find_files({cwd='~'})\"^j"
+bindkey -s "^fr" "vim +\":lua require('phdah/telescope').live_grep_git()\"^j"
 
 ### Set up prompt ###
 
