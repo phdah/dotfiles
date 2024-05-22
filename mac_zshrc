@@ -17,6 +17,7 @@ alias act='act --container-architecture linux/amd64'
 alias dbsqlcli='dbsqlcli --table-format ascii'
 alias bat='bat --theme=Nord'
 # Git alias
+alias pgp='source ~/repos/linux_set_up/scripts/set_python_path_to_git_root.sh'
 alias vimconflict='vim $(rg -l "<<<<<<< HEAD")'
 alias lg='lazygit'
 alias gitl='git log --graph --oneline'
