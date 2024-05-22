@@ -51,6 +51,7 @@ cmp.setup({
             { name = 'luasnip' },
             { name = 'path' },
             { name = 'rg' },
+            -- { name = 'cmp-dbee' },
         }
     ),
     formatting = {
@@ -128,8 +129,9 @@ cmp.setup.cmdline(':', {
             -- see https://github.com/hrsh7th/nvim-cmp/issues/874#issuecomment-1090099590
             -- I might be able to specify the order of priority
             -- but will remove if still creating issue
+            -- Still being an issue. Comment out for now
             { name = 'cmdline' },
-            { name = 'path' },
+            -- { name = 'path' },
         }
     ),
     matching = { disallow_symbol_nonprefix_matching = false }
