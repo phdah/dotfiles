@@ -97,6 +97,7 @@ return require('lazy').setup({
     },
     {
         'rcarriga/nvim-dap-ui',
+        commit = "5934302",
         dependencies = {
             'mfussenegger/nvim-dap',
             'jbyuki/one-small-step-for-vimkind',
