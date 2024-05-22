@@ -35,11 +35,8 @@ vim.diagnostic.config({
     signs = false,
 })
 
--------------------
--- Python config --
--------------------
-
-require("lspconfig").pyright.setup{
+local lspconfig = require("lspconfig")
+lspconfig.pyright.setup{
     settings = {
         python = {
             analysis = {
@@ -51,6 +48,11 @@ require("lspconfig").pyright.setup{
         }
     }
 }
+
+-- lspconfig.gopls.setup({
+--     root_dir = util.root_pattern("go.work", "go.mod", ".git"),
+-- })
+
 
 ----------------
 -- Metals lsp --
