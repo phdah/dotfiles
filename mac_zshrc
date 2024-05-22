@@ -89,8 +89,9 @@ bindkey  "^[[1;9C" end-of-line
 bindkey "^[[5~" history-beginning-search-backward
 bindkey "^[[6~" history-beginning-search-forward
 
-bindkey -s "^f" "Vfzf^j"
-bindkey -s "^g" "vfzf^j"
+bindkey -s "^ff" "vim + \":lua require('phdah/telescope').find_files_git()\"^j"
+bindkey -s "^fF" "vim + \":lua require('telescope.builtin').find_files({cwd='~'})\"^j"
+bindkey -s "^fr" "vim + \":lua require('phdah/telescope').live_grep_git()\"^j"
 
 ### Set up prompt ###
 
