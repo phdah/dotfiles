@@ -15,6 +15,9 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 return require('lazy').setup({
+    ----------------------------
+    -- Can not be Lazy Loaded --
+    ----------------------------
     {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate'
@@ -28,6 +31,23 @@ return require('lazy').setup({
         }
     },
     {
+        'voldikss/vim-floaterm',
+    },
+    {
+        'folke/todo-comments.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim'
+        }
+    },
+    {
+        'akinsho/git-conflict.nvim',
+    },
+    {'shaunsingh/nord.nvim'},
+    {'lewis6991/gitsigns.nvim'},
+    ------------------------
+    -- Can be Lazy Loaded --
+    ------------------------
+    {
       'pwntester/octo.nvim',
       event = "VeryLazy",
       dependencies = {
@@ -39,6 +59,7 @@ return require('lazy').setup({
 
     {
         'VonHeikemen/lsp-zero.nvim',
+        event = "VeryLazy",
         branch = 'v1.x',
         dependencies = {
             -- LSP Support
@@ -112,29 +133,21 @@ return require('lazy').setup({
         }
     },
     {
-        'folke/todo-comments.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim'
-        }
-    },
-    {
         "scalameta/nvim-metals",
-        -- event = "VeryLazy",
+        event = "VeryLazy",
         dependencies = {
             "nvim-lua/plenary.nvim",
         }
       },
     {
         "folke/flash.nvim",
-        -- event = "VeryLazy",
+        event = "VeryLazy",
     },
-    {'shaunsingh/nord.nvim'},
-    {'lewis6991/gitsigns.nvim'},
     {
         -- 'phdah/nvim-statusline',
-        dir = '~/repos/privat/nvim-statusline/'
+        dir = '~/repos/privat/nvim-statusline/',
+        event = "VeryLazy",
     },
-    -- {},
     {
         -- 'phdah/nvim-databricks',
         dir = '~/repos/privat/nvim-databricks/',
@@ -142,18 +155,16 @@ return require('lazy').setup({
     },
     {
         -- 'phdah/nvim-utils',
-        dir = '~/repos/privat/nvim-utils/'
+        dir = '~/repos/privat/nvim-utils/',
+        event = "VeryLazy",
     },
 
-    {'nvim-lua/plenary.nvim'},
-    {'akinsho/git-conflict.nvim'},
+    {
+        'nvim-lua/plenary.nvim',
+        event = "VeryLazy",
+    },
     {
         'David-Kunz/gen.nvim',
         event = "VeryLazy",
     },
-    {
-        'voldikss/vim-floaterm',
-        -- event = "VeryLazy",
-    },
-
 })
