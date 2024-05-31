@@ -29,6 +29,7 @@ return require('lazy').setup({
     },
     {
       'pwntester/octo.nvim',
+      event = "VeryLazy",
       dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-telescope/telescope.nvim',
@@ -51,6 +52,7 @@ return require('lazy').setup({
 
     {
         'hrsh7th/nvim-cmp',
+        event = "VeryLazy",
         dependencies = {
             -- Sources
             'hrsh7th/cmp-buffer',
@@ -69,7 +71,8 @@ return require('lazy').setup({
     },
 
     {
-        'terrortylor/nvim-comment'
+        'terrortylor/nvim-comment',
+        event = "VeryLazy",
     },
     {
         "MattiasMTS/nvim-dbee",
@@ -83,20 +86,22 @@ return require('lazy').setup({
             require("dbee").install()
         end,
     },
-    -- {
-    --     'kristijanhusak/vim-dadbod-ui',
-    --     event = "VeryLazy",
-    --     dependencies = {
-    --         'kristijanhusak/vim-dadbod-completion',
-    --         'tpope/vim-dadbod'
-    --     }
-    -- },
+    {
+        "Febri-i/snake.nvim",
+        cmd = "SnakeStart",
+        dependencies = {
+            "Febri-i/fscreen.nvim"
+        },
+        opts = {}
+    },
     {
         'iamcco/markdown-preview.nvim',
+        event = "VeryLazy",
         build = function() vim.fn['mkdp#util#install']() end,
     },
     {
         'rcarriga/nvim-dap-ui',
+        event = "VeryLazy",
         commit = "5934302",
         dependencies = {
             'mfussenegger/nvim-dap',
@@ -114,11 +119,15 @@ return require('lazy').setup({
     },
     {
         "scalameta/nvim-metals",
+        -- event = "VeryLazy",
         dependencies = {
             "nvim-lua/plenary.nvim",
         }
       },
-    {"folke/flash.nvim"},
+    {
+        "folke/flash.nvim",
+        -- event = "VeryLazy",
+    },
     {'shaunsingh/nord.nvim'},
     {'lewis6991/gitsigns.nvim'},
     {
@@ -128,7 +137,8 @@ return require('lazy').setup({
     -- {},
     {
         -- 'phdah/nvim-databricks',
-        dir = '~/repos/privat/nvim-databricks/'
+        dir = '~/repos/privat/nvim-databricks/',
+        event = "VeryLazy",
     },
     {
         -- 'phdah/nvim-utils',
@@ -137,7 +147,13 @@ return require('lazy').setup({
 
     {'nvim-lua/plenary.nvim'},
     {'akinsho/git-conflict.nvim'},
-    {'David-Kunz/gen.nvim'},
-    {'voldikss/vim-floaterm'},
+    {
+        'David-Kunz/gen.nvim',
+        event = "VeryLazy",
+    },
+    {
+        'voldikss/vim-floaterm',
+        -- event = "VeryLazy",
+    },
 
 })

@@ -256,9 +256,14 @@ end
 
 -- Setup close function for dapui
 _G.Dapui_terminate = function()
-    require("dap").terminate()
-    require("dapui").close()
-    require("dap").disconnect()
+    local dap = require("dap")
+    local dapui = require("dapui")
+
+    if dap.session() then
+        dap.terminate()
+        dap.disconnect()
+    end
+    dapui.close()
     vim.o.mouse = ""
 end
 

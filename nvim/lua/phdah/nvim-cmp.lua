@@ -103,7 +103,7 @@ cmp.setup({
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end, { "i"}),--, "s" }),
 
         ["<S-Tab>"] = cmp.mapping(function(fallback)
           if luasnip.locally_jumpable(-1) then
@@ -111,7 +111,7 @@ cmp.setup({
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end, { "i"}),--, "s" }),
     }
 })
 
@@ -131,7 +131,7 @@ cmp.setup.cmdline(':', {
             -- but will remove if still creating issue
             -- Still being an issue. Comment out for now
             { name = 'cmdline' },
-            -- { name = 'path' },
+            { name = 'path' },
         }
     ),
     matching = { disallow_symbol_nonprefix_matching = false }

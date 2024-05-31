@@ -6,6 +6,9 @@ vim.api.nvim_set_keymap('v', '<C-g>', ':Gen Ask<CR>', { noremap = true, silent =
 vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
 
+-- Vim Explorer
+vim.api.nvim_set_keymap('n', '<leader>-', ':Lexplore<CR>', { noremap = true, silent = true })
+
 -- Quickfix list
 vim.api.nvim_set_keymap('n', 'cn', ':cnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'cp', ':cprev<CR>', { noremap = true, silent = true })
@@ -117,7 +120,8 @@ vim.api.nvim_set_keymap('n', 'gj', ':lua require("gitsigns").nav_hunk("next")<CR
 vim.api.nvim_set_keymap('n', 'gk', ':lua require("gitsigns").nav_hunk("prev")<CR>zz', { noremap = true, silent = true  })
 vim.api.nvim_set_keymap('n', 'gu', ':lua require("gitsigns").reset_hunk()<CR>', { noremap = true, silent = true  })
 vim.api.nvim_set_keymap('n', 'gU', ':lua require("gitsigns").undo_stage_hunk()<CR>', { noremap = true, silent = true  })
-vim.api.nvim_set_keymap('n', 'gd', ':lua require("gitsigns").diffthis()<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gd', ':lua require("gitsigns").preview_hunk()<CR>', { noremap = true, silent = true  })
+vim.api.nvim_set_keymap('n', 'gD', ':lua require("gitsigns").diffthis()<CR>', { noremap = true, silent = true  })
 vim.api.nvim_set_keymap('n', 'gs', ':lua require("gitsigns").stage_hunk()<CR>', { noremap = true, silent = true  })
 vim.api.nvim_set_keymap('n', 'gb', ':lua require("gitsigns").blame_line()<CR>', { noremap = true, silent = true  })
 vim.api.nvim_set_keymap('v', 'gs', [[:lua require("gitsigns").stage_hunk({vim.fn.line("'<"), vim.fn.line("'>")})<CR>]], { noremap = true, silent = true  })
