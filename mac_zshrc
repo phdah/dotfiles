@@ -142,6 +142,9 @@ export LUA_PATH="./?.lua;/opt/homebrew/share/luajit-2.1/?.lua;/usr/local/share/l
 # Mojo paths
 export MOJO_PYTHON_LIBRARY=/opt/homebrew/Cellar/python@3.10/3.10.13/Frameworks/Python.framework/Versions/3.10/lib/python3.10/config-3.10-darwin/libpython3.10.dylib
 
+# Java path
+export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
+
 # Python debuger
 export PYDEVD_WARN_SLOW_RESOLVE_TIMEOUT=2
 
