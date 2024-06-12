@@ -1,7 +1,6 @@
 -- TODO: Move all coloring to it's own file.
 -- It's importatnt that the nord theme coloring is
 -- caled last.
-
 -- Enable True color support
 vim.opt.termguicolors = true
 
@@ -9,14 +8,8 @@ vim.opt.termguicolors = true
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 vim.g.clipboard = {
     name = 'pbcopy/paste',
-    copy = {
-        ['+'] = 'pbcopy',
-        ['*'] = 'pbcopy',
-    },
-    paste = {
-        ['+'] = 'pbpaste',
-        ['*'] = 'pbpaste',
-    },
+    copy = {['+'] = 'pbcopy', ['*'] = 'pbcopy'},
+    paste = {['+'] = 'pbpaste', ['*'] = 'pbpaste'},
     cache_enabled = 0
 }
 
@@ -59,10 +52,8 @@ augroup END
 
 -- Clean out all trailing ExtraWhitespace, and tabs
 vim.api.nvim_create_user_command('Clean', function()
-  local ok,_ = pcall(function() vim.cmd("%s/\\t\\+$\\| \\+$//") end)
-  if not ok then
-    print("No trailing whitespace found")
-  end
+    local ok, _ = pcall(function() vim.cmd("%s/\\t\\+$\\| \\+$//") end)
+    if not ok then print("No trailing whitespace found") end
 end, {})
 
 -- Set show number as default
@@ -73,31 +64,31 @@ vim.wo.relativenumber = true
 require("nvim-utils").Mouse:new(false)
 
 -- Open help in its own buffer, use ':H <args>'
-vim.cmd[[command! -nargs=1 -complete=command -bar H help <args> | only]]
+vim.cmd [[command! -nargs=1 -complete=command -bar H help <args> | only]]
 
 -- Center search
 vim.o.scrolloff = 0
 
 -- Auto indent configurations
 vim.opt.autoindent = false
-vim.cmd[[filetype indent off]]
-vim.cmd[[autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
+vim.cmd [[filetype indent off]]
+vim.cmd [[autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
 
 -- Set colorscheme to nord
-vim.cmd[[colorscheme nord]]
+vim.cmd [[colorscheme nord]]
 
 -- Set spelling on for specific files
-local auGroupSpelling = vim.api.nvim_create_augroup("nvim-spelling-custom", { clear = true })
+local auGroupSpelling = vim.api.nvim_create_augroup("nvim-spelling-custom",
+                                                    {clear = true})
 vim.api.nvim_create_autocmd("FileType", {
     group = auGroupSpelling,
     pattern = "markdown",
-    callback = function()
-        vim.cmd("setlocal spell! spelllang=en_us")
-    end
+    callback = function() vim.cmd("setlocal spell! spelllang=en_us") end
 })
 
 -- Set configs for floaterm
-local auGroupFloaterm = vim.api.nvim_create_augroup("nvim-floaterm-custom", { clear = true })
+local auGroupFloaterm = vim.api.nvim_create_augroup("nvim-floaterm-custom",
+                                                    {clear = true})
 vim.api.nvim_create_autocmd("FileType", {
     group = auGroupFloaterm,
     pattern = "floaterm",
@@ -108,15 +99,13 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_create_autocmd("BufLeave", {
             buffer = 0,
             once = true,
-            callback = function()
-                vim.o.mouse = ""
-            end,
+            callback = function() vim.o.mouse = "" end
         })
-    end,
+    end
 })
 
 -- Function to set the executor based on file type
-_G.Define_Make = function(args)
+local function defineMake(args)
     local filetype = vim.bo.filetype
     if filetype == 'python' then
         vim.cmd('DBRun ' .. args) -- nvim-databricks run command
@@ -127,7 +116,8 @@ _G.Define_Make = function(args)
     elseif filetype == 'scala' then
         vim.cmd("!scala % " .. args)
     elseif filetype == 'haskell' then
-        vim.cmd("!ghc -no-keep-hi-files -no-keep-o-files -o %:r % && ./%:r " .. args)
+        vim.cmd("!ghc -no-keep-hi-files -no-keep-o-files -o %:r % && ./%:r " ..
+                    args)
     elseif filetype == 'lua' then
         vim.cmd("!luajit % " .. args)
     elseif filetype == 'make' then
@@ -138,7 +128,7 @@ _G.Define_Make = function(args)
 end
 
 -- Create the :Make command
-vim.api.nvim_create_user_command('Make', function(opts)
-    _G.Define_Make(opts.args)
-end, {nargs = "*"})
+vim.api.nvim_create_user_command('Make',
+                                 function(opts) defineMake(opts.args) end,
+                                 {nargs = "*"})
 
