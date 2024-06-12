@@ -16,10 +16,10 @@ _G.nvim_quickfix_navigation = function()
             vim.api.nvim_command('cnext')
         end
 
-	local keyword = vim.fn.expand('<cword>')
+        local keyword = vim.fn.expand('<cword>')
         -- Set the keyword as the search term (this will highlight it in the code buffer)
-        vim.api.nvim_set_option('hlsearch', true)  -- Ensure hlsearch is enabled
-        vim.api.nvim_command('let @/ = "' .. keyword .. '"')  -- Set the search register
+        vim.api.nvim_set_option('hlsearch', true) -- Ensure hlsearch is enabled
+        vim.api.nvim_command('let @/ = "' .. keyword .. '"') -- Set the search register
 
         -- Set the cursor to the respective location in the code buffer and center it
         vim.cmd('normal! zz')

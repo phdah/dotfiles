@@ -1,11 +1,10 @@
 ---------------
 -- DAP setup --
 ---------------
-
 local dap_ok, dap = pcall(require, "dap")
 if not (dap_ok) then
-  print("nvim-dap not installed!")
-  return
+    print("nvim-dap not installed!")
+    return
 end
 
 -- require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
@@ -14,7 +13,7 @@ end
 require("nvim-dap-virtual-text").setup()
 require("mason").setup()
 require("mason-nvim-dap").setup({
-    ensure_installed = { "codelldb", "bash-debug-adapter", "debugpy", "delve"}
+    ensure_installed = {"codelldb", "bash-debug-adapter", "debugpy", "delve"}
 })
 
 --------------------
@@ -22,43 +21,45 @@ require("mason-nvim-dap").setup({
 --------------------
 
 dap.adapters.codelldb = {
-  type = 'server',
-  port = "${port}",
-  executable = {
-    -- CHANGE THIS to your path!
-    command = vim.fn.stdpath("data") .. '/mason/bin/codelldb',
-    args = {"--port", "${port}"},
-  }
+    type = 'server',
+    port = "${port}",
+    executable = {
+        -- CHANGE THIS to your path!
+        command = vim.fn.stdpath("data") .. '/mason/bin/codelldb',
+        args = {"--port", "${port}"}
+    }
 }
 
 local pythonPath = 'python3.10'
 dap.adapters.python = {
-  type = 'executable',
-  command = pythonPath,
-  args = { '-m', 'debugpy.adapter' },
+    type = 'executable',
+    command = pythonPath,
+    args = {'-m', 'debugpy.adapter'}
 }
 
 dap.adapters.bashdb = {
-  type = 'executable';
-  command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
-  name = 'bashdb';
+    type = 'executable',
+    command = vim.fn.stdpath("data") ..
+        '/mason/packages/bash-debug-adapter/bash-debug-adapter',
+    name = 'bashdb'
 }
 
 dap.adapters["local-lua"] = {
-  type = "executable",
-  command = "node",
-  args = {
-    "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/extension/debugAdapter.js"
-  },
-  enrich_config = function(config, on_config)
-    if not config["extensionPath"] then
-      local c = vim.deepcopy(config)
-      c.extensionPath = "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/"
-      on_config(c)
-    else
-      on_config(config)
+    type = "executable",
+    command = "node",
+    args = {
+        "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/extension/debugAdapter.js"
+    },
+    enrich_config = function(config, on_config)
+        if not config["extensionPath"] then
+            local c = vim.deepcopy(config)
+            c.extensionPath =
+                "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/"
+            on_config(c)
+        else
+            on_config(config)
+        end
     end
-  end,
 }
 
 dap.adapters.go = {
@@ -68,12 +69,10 @@ dap.adapters.go = {
     cwd = '${workspaceFolder}',
     executable = {
         command = "/Users/Philip.Sjoberg/.local/share/nvim/mason/bin/dlv",
-        args = { "dap", "-l", "127.0.0.1:${port}" },
-        detached = true,
+        args = {"dap", "-l", "127.0.0.1:${port}"},
+        detached = true
     },
-    options = {
-        initialize_timeout_sec = 20,
-    },
+    options = {initialize_timeout_sec = 20}
 }
 
 --------------------------
@@ -81,106 +80,102 @@ dap.adapters.go = {
 --------------------------
 
 dap.configurations.cpp = {
-  {
-    name = "Launch file",
-    type = "codelldb",
-    request = "launch",
-    program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    cwd = '${workspaceFolder}',
-    stopOnEntry = false,
-    args = function()
-      local args_str = vim.fn.input('Program arguments: ')
-      return vim.split(args_str, " +")
-    end,
-  },
+    {
+        name = "Launch file",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/',
+                                'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        args = function()
+            local args_str = vim.fn.input('Program arguments: ')
+            return vim.split(args_str, " +")
+        end
+    }
 }
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
 dap.configurations.python = {
-  {
-    type = 'python';
-    request = 'launch'; -- Specifies the debug request type
-    name = "Launch File";
-    program = "${file}"; -- Specifies the file to debug
-    pythonPath = function()
-      return pythonPath
-    end;
-    justMyCode = false; -- Ensures that only user code is debugged
-  },
+    {
+        type = 'python',
+        request = 'launch', -- Specifies the debug request type
+        name = "Launch File",
+        program = "${file}", -- Specifies the file to debug
+        pythonPath = function() return pythonPath end,
+        justMyCode = false -- Ensures that only user code is debugged
+    }
 }
 
 dap.configurations.sh = {
-  {
-    type = 'bashdb';
-    request = 'launch';
-    name = "Launch file";
-    showDebugOutput = true;
-    pathBashdb = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb';
-    pathBashdbLib = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir';
-    trace = true;
-    file = "${file}";
-    program = "${file}";
-    cwd = '${workspaceFolder}';
-    pathCat = "cat";
-    pathBash = "/opt/homebrew/bin/bash";
-    pathMkfifo = "mkfifo";
-    pathPkill = "pkill";
-    args = {};
-    env = {};
-    terminalKind = "integrated";
-  }
+    {
+        type = 'bashdb',
+        request = 'launch',
+        name = "Launch file",
+        showDebugOutput = true,
+        pathBashdb = vim.fn.stdpath("data") ..
+            '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
+        pathBashdbLib = vim.fn.stdpath("data") ..
+            '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
+        trace = true,
+        file = "${file}",
+        program = "${file}",
+        cwd = '${workspaceFolder}',
+        pathCat = "cat",
+        pathBash = "/opt/homebrew/bin/bash",
+        pathMkfifo = "mkfifo",
+        pathPkill = "pkill",
+        args = {},
+        env = {},
+        terminalKind = "integrated"
+    }
 }
 
 dap.configurations.lua = {
-  {
-    name = 'Current file (local-lua-dbg, nlua)',
-    type = 'local-lua',
-    request = 'launch',
-    cwd = '${workspaceFolder}',
-    program = {
-      lua = 'nlua', -- To allow vim debug
-      -- lua = '/opt/homebrew/bin/lua', -- Basic lua debug
-      file = '${file}',
-    },
-    verbose = true,
-    args = {},
-  },
+    {
+        name = 'Current file (local-lua-dbg, nlua)',
+        type = 'local-lua',
+        request = 'launch',
+        cwd = '${workspaceFolder}',
+        program = {
+            lua = 'nlua', -- To allow vim debug
+            -- lua = '/opt/homebrew/bin/lua', -- Basic lua debug
+            file = '${file}'
+        },
+        verbose = true,
+        args = {}
+    }
 }
 
 dap.configurations.vim = dap.configurations.lua
 
 -- NOTE: The adapter is sourced in plugin/lsp.lua
 dap.configurations.scala = {
-  {
-    type = "scala",
-    request = "launch",
-    name = "Run or Test File",
-    metals = {
-      runType = "runOrTestFile",
-    },
-  },
-  {
-    type = "scala",
-    request = "launch",
-    name = "Test Target",
-    metals = {
-      runType = "testTarget",
-    },
-  },
+    {
+        type = "scala",
+        request = "launch",
+        name = "Run or Test File",
+        metals = {runType = "runOrTestFile"}
+    }, {
+        type = "scala",
+        request = "launch",
+        name = "Test Target",
+        metals = {runType = "testTarget"}
+    }
 }
 
 dap.configurations.go = {
     {
-      type = "go",
-      name = "Debug",
-      request = "launch",
-      program = "${file}",
-      buildFlags = "",
-    },
+        type = "go",
+        name = "Debug",
+        request = "launch",
+        program = "${file}",
+        buildFlags = ""
+    }
 }
 
 ---------------------
@@ -192,27 +187,21 @@ require("dapui").setup({
     layouts = {
         {
             elements = {
-                {id ='breakpoints', size = 0.20}, {id = 'stacks', size = 0.40}, {id = 'watches', size = 0.40},
+                {id = 'breakpoints', size = 0.20}, {id = 'stacks', size = 0.40},
+                {id = 'watches', size = 0.40}
             },
             size = 0.25,
-            position = 'right',
-        },
-        {
-            elements = {
-                'scopes', 'repl'
-            },
-            size = 0.25,
-            position = 'bottom',
-        }
+            position = 'right'
+        }, {elements = {'scopes', 'repl'}, size = 0.25, position = 'bottom'}
     },
     mappings = {
-        expand = { "<C-j>" },
+        expand = {"<C-j>"},
         open = "o",
         remove = "d",
         edit = "e",
         repl = "r",
-        toggle = "t",
-    },
+        toggle = "t"
+    }
 })
 
 ---------------------------------
@@ -231,15 +220,19 @@ end, {})
 
 vim.api.nvim_create_user_command('DapNvimSource', function()
     dap.configurations.lua = {
-      {
-        type = 'nlua',
-        request = 'attach',
-        name = "Attach to running Neovim instance",
-      }
+        {
+            type = 'nlua',
+            request = 'attach',
+            name = "Attach to running Neovim instance"
+        }
     }
 
     dap.adapters.nlua = function(callback, config)
-      callback({ type = 'server', host = config.host or "127.0.0.1", port = config.port or 8086 })
+        callback({
+            type = 'server',
+            host = config.host or "127.0.0.1",
+            port = config.port or 8086
+        })
     end
     require("dap").continue()
 end, {})

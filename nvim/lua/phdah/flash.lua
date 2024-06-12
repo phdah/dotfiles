@@ -1,7 +1,1 @@
-require("flash").setup({
-    modes = {
-        search = {
-            enabled = false
-        }
-    }
-})
+require("flash").setup({modes = {search = {enabled = false}}})

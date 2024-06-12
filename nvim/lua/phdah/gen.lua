@@ -3,8 +3,8 @@ require('gen').setup({
     display_mode = "float",
     persistent_window = true,
     show_model = true,
-    no_auto_close = true,
+    no_auto_close = true
 })
-vim.api.nvim_create_user_command('ModelSelect', function()
-    require('gen').select_model()
-end, {})
+vim.api.nvim_create_user_command('ModelSelect',
+                                 function() require('gen').select_model() end,
+                                 {})
