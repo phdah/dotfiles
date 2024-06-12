@@ -21,6 +21,5 @@ if [ -z "$GIT_ROOT" ]; then
 else
     # Export PYTHONPATH to include the Git root
     export PYTHONPATH="$GIT_ROOT:$PYTHONPATH"
-    echo "PYTHONPATH set to $PYTHONPATH"
+    echo "PYTHONPATH updated with $GIT_ROOT"
 fi
-
