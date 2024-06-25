@@ -130,18 +130,7 @@ arch-pkr: ## Install packges for arch
 		@paru
 
 mac-pkr: ## Install Mac packages using Homebrew
-	@brew install \
-		curl \
-		bat \
-		ripgrep \
-		fzf \
-		# gdb \ TODO: Sort out how to get this
-		neofetch \
-		xsel \
-		zsh-fast-syntax-highlighting \ # zsh cli highlighting TODO: fix source and envarr
-		npm \ # For lsp in neovim
-		cmake automake autoconf libtool pkg-config gettext \ # Needed to install Neovim from source
-		tree-sitter # This is needed to install all languages
+	@brew bundle --file=./Brewfile
 
 
 google-chrome: ## Install Google Chrome from source
