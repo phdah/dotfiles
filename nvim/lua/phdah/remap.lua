@@ -5,9 +5,17 @@ vim.api.nvim_set_keymap('v', '<C-g>', ':Gen Ask<CR>',
                         {noremap = true, silent = true})
 
 -- LSP keymaps
-vim.api.nvim_set_keymap('n', '<leader>g', ':lua nvim_quickfix_navigation()<CR>',
+vim.api.nvim_set_keymap('n', '<leader>gg',
+                        ":lua vim.lsp.buf.definition(); vim.cmd('normal! zz')<CR>",
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gv',
+                        ":lua vim.cmd('vsplit'); vim.cmd('wincmd l'); vim.lsp.buf.definition(); vim.cmd('normal! zz')<CR>",
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>',
+                        {noremap = true, silent = true})
+
+-- Terminal keymaps
+vim.api.nvim_set_keymap('n', '<leader>vt', ":belowright sp | term<CR>",
                         {noremap = true, silent = true})
 
 -- Vim Explorer
@@ -46,6 +54,7 @@ vim.api
     .nvim_set_keymap('n', 'c0', ':GitConflictChooseBoth<CR>', {silent = true})
 vim.api
     .nvim_set_keymap('n', 'cb', ':GitConflictChooseNone<CR>', {silent = true})
+-- TODO: Add 'zz' after next and prev
 vim.api.nvim_set_keymap('n', 'cj', ':GitConflictNextConflict<CR>',
                         {silent = true})
 vim.api.nvim_set_keymap('n', 'ck', ':GitConflictPrevConflict<CR>',
@@ -123,7 +132,9 @@ vim.api.nvim_set_keymap('n', '<S-Down>', ':resize -1<CR>',
                         {noremap = true, silent = true})
 
 -- Open vertical split
-vim.api.nvim_set_keymap('n', '<leader>v', ':vsplit<CR>',
+vim.api.nvim_set_keymap('n', '<leader>vv', ':vsplit<CR>',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>vh', ':split<CR>',
                         {noremap = true, silent = true})
 
 -- Delete line and insert empty line

@@ -108,6 +108,17 @@ dap.configurations.python = {
         program = "${file}", -- Specifies the file to debug
         pythonPath = function() return pythonPath end,
         justMyCode = false -- Ensures that only user code is debugged
+    }, {
+        type = 'python',
+        request = 'launch', -- Specifies the debug request type
+        name = "Launch File With args",
+        args = function()
+            local args_string = vim.fn.input('Arguments: ')
+            return vim.split(args_string, " +")
+        end,
+        program = "${file}", -- Specifies the file to debug
+        pythonPath = function() return pythonPath end,
+        justMyCode = false -- Ensures that only user code is debugged
     }
 }
 

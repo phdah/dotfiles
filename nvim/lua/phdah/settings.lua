@@ -132,3 +132,20 @@ vim.api.nvim_create_user_command('Make',
                                  function(opts) defineMake(opts.args) end,
                                  {nargs = "*"})
 
+local function resizeSplitsEqually()
+    local total_width = 0
+    local num_splits = vim.fn.winnr('$')
+    -- Iterate over all windows to get the total width
+    for i = 1, num_splits do
+        total_width = total_width +
+                          vim.api.nvim_win_get_width(vim.fn.win_getid(i))
+    end
+    local new_width = math.floor(total_width / num_splits)
+    for i = 1, num_splits do
+        vim.cmd(i .. "wincmd w")
+        vim.cmd("vertical resize " .. new_width)
+    end
+end
+
+vim.api.nvim_create_user_command('EqualizeSplits',
+                                 function() resizeSplitsEqually() end, {})
