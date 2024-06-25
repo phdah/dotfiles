@@ -46,12 +46,6 @@ base-dir: ## Setup base directories
 	@printf '\nSetting up base directories\n\n'
 	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit
 
-brew-install: ## Install Homebrew on Mac
-	@printf '\nSetting up Homebrew\n\n'
-	@printf 'Follow this guide: https://setapp.com/how-to/install-homebrew-on-mac\n\n'
-	@/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-	@brew analytics off
-
 base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 	@printf '\nApt installs\n\n'
 	@if [ "$(USR)" != "CI" ]; then \
@@ -130,7 +124,8 @@ arch-pkr: ## Install packges for arch
 		@paru
 
 mac-pkr: ## Install Mac packages using Homebrew
-	@brew bundle --file=./Brewfile
+	@brew analytics off
+	@HOMEBREW_ACCEPT_EULA=Y brew bundle --file=./Brewfile
 
 
 google-chrome: ## Install Google Chrome from source
@@ -200,8 +195,8 @@ arch-symlink: ## Symlink for arch
 mac-symlink: ## Symlink dotfiles to repo
 	@printf 'Setting up symlinks for Mac\n'
 	@ln -sf $(BUILD_DIR)/mac_zshrc $(HOME)/.zshrc
-	@ln -sf $(BUILD_DIR)/yabairc $(CONFIG)/.yabairc
-	@ln -sf $(BUILD_DIR)/skhdrc $(CONFIG)/.skhdrc
+	@ln -sf $(BUILD_DIR)/yabairc $(HOME)/.yabairc
+	@ln -sf $(BUILD_DIR)/skhdrc $(HOME)/.skhdrc
 	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
 
 copy-dirs: ## Copy files and dirs
@@ -213,7 +208,7 @@ copy-dirs: ## Copy files and dirs
 
 finish: ## Finish the install
 	@if [ "$(USR)" != "CI" ]; then \
-		clear && neofetch; \
+		neofetch; \
 	fi
 	@printf '\nDone!\n'
 
@@ -226,5 +221,5 @@ arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install bas
 ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr google-chrome zsh-shell nvim-install zshhl-install gnome-nord base-symlink ubuntu-symlink copy-dirs finish
 	@echo "Ubuntu install done"
 
-mac-install : args base-dir brew-install mac-pkr nvim-install gitgutter base-symlink mac-symlink copy-dirs finish
+mac-install: args base-dir mac-pkr nvim-install base-symlink mac-symlink copy-dirs finish
 	@echo "Mac install done"
