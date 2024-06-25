@@ -85,9 +85,17 @@ bindkey -s "^fo" "vim +\":Octo pr list\"^j"
 ### Set up prompt ###
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_ALL_DUPS
+setopt EXTENDED_HISTORY
 
 # Show current git branch right of prompt
 autoload -Uz vcs_info
