@@ -1,0 +1,166 @@
+# Autocomplete in cli
+autoload bashcompinit
+bashcompinit
+autoload -Uz compinit
+compinit
+source /opt/homebrew/etc/bash_completion.d/az
+
+# Aliases
+# Aliases
+alias sudo='sudo ' # Allow to append users alias etc to sudo commands
+alias ls='eza'
+alias ll='eza -alh'
+alias vim='nvim'
+alias nb='nvim ~/repos/privat/logbook/README.md'
+alias tree='eza --tree'
+alias act='act --container-architecture linux/amd64'
+alias dbsqlcli='dbsqlcli --table-format ascii'
+alias bat='bat --theme=Nord'
+# Git alias
+alias pgp='source ~/repos/linux_set_up/scripts/set_python_path_to_git_root.sh'
+alias vimconflict='vim $(rg -l "<<<<<<< HEAD")'
+alias lg='lazygit'
+alias gitl='git log --graph --oneline'
+alias gits='git status'
+alias gitp='git pull'
+alias gitd='git diff'
+alias gitb='git branch'
+alias gitc='git checkout'
+
+# Functions
+setenv() {
+  export "$1=$2"
+}
+function gitall() {
+    git status && git add --all && git commit -m "$1" && git push
+}
+function gitallremote() {
+    git -C "$1" status && git -C "$1" add --all && git -C $1 commit -m $2 && git -C "$1" push
+}
+function gitr() {
+    git rebase -i HEAD~$1
+    echo 'now run: git push -f origin YOUR_BRANCH'
+}
+function cat() {
+    bat $1 --style=plain --paging=never --theme=Nord
+}
+function rgf() {
+    rg --files | rg $1
+}
+function vimrg() {
+    vim $(rg $1 -l)
+}
+function sedall() {
+    sed -i "s/$1/$2/g" $(rg $1 -l)
+}
+function sedtrailingspace() {
+    sed -i 's/\s\+$//g' $(rg '' -l)
+}
+
+# Default to emacs keybindings
+bindkey -e
+
+# Word skipping
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+bindkey ";5C" forward-word
+bindkey ";5D" backward-word
+
+# Home/End/Del
+bindkey  "^[[H"    beginning-of-line
+bindkey  "^[[F"    end-of-line
+bindkey  "^[[3~"   delete-char
+bindkey  "^[[1;9D" beginning-of-line
+bindkey  "^[[1;9C" end-of-line
+
+# PgUp/Down
+bindkey "^[[5~" history-beginning-search-backward
+bindkey "^[[6~" history-beginning-search-forward
+
+bindkey -s "^ff" "vim +\":lua require('phdah/telescope').find_files_git()\"^j"
+bindkey -s "^fF" "vim +\":lua require('telescope.builtin').find_files({cwd='~'})\"^j"
+bindkey -s "^fr" "vim +\":lua require('phdah/telescope').live_grep_git()\"^j"
+bindkey -s "^fo" "vim +\":Octo pr list\"^j"
+
+### Set up prompt ###
+
+# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+HISTSIZE=10000
+SAVEHIST=10000
+HISTFILE=$HOME/.zsh_history
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_ALL_DUPS
+setopt EXTENDED_HISTORY
+
+# Show current git branch right of prompt
+autoload -Uz vcs_info
+precmd_vcs_info() { vcs_info }
+precmd_functions+=( precmd_vcs_info )
+setopt prompt_subst
+zstyle ':vcs_info:git:*' formats '%b'
+
+# Prompt definition
+NEWLINE=$'\n'
+PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
+RPROMPT='${vcs_info_msg_0_}'
+
+# Export config dir
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# Syntax highligthing
+# TODO: use the fast-syntax-highlighting.plugin.zsh instead. Then the arch
+# and ubuntu one are the same.
+#source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/opt/zsh-fast-syntax-highlighting/share/zsh-fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+source /opt/homebrew/opt/fzf/shell/key-bindings.zsh
+source /opt/homebrew/opt/fzf/shell/completion.zsh
+export FZF_COMPLETION_DIR_COMMANDS="cd ls pushd rmdir tree"
+_fzf_compgen_path() {
+    rg --files --hidden . "$1"
+}
+# TODO: Fix a path search
+# _fzf_compgen_dir() {
+#     rg --files --hidden . "$1" | awk -F/ 'NF{NF-=1}1' | uniq
+# }
+
+
+# Set executable color to green
+export LS_COLORS="$LS_COLORS:ex=01;32"
+
+export EDITOR=$(which nvim)
+
+# Dez
+export DEZ_LIB=$HOME/repos/privat/dez
+export DEZ_HOME=/usr/local/etc/dez
+export DEZ_CONFIG=$HOME/.config/dez
+
+# Lua stuff
+# Lua(JIT) shared library path
+export LUA_CPATH="./?.dylib;./lib?.dylib;../lib/lib?.dylib;./lib/lib?.dylib;./build/lib?.dylib;./build/lib/lib?.dylib;/opt/homebrew/lib/lua/5.4/lib?.dylib;$DEZ_HOME/lib/lib?.dylib"
+# clang++ include path
+export CPLUS_INCLUDE_PATH=/usr/local/include/:/opt/homebrew/opt/*/include:/opt/homebrew/opt/postgresql@14/include/postgresql@14/:/opt/homebrew/include/luajit-2.1/:../../core/include:../include:../../include:$CPLUS_INCLUDE_PATH
+# Set lua path for luajit, lua and luarocks
+export LUA_PATH="./?.lua;/opt/homebrew/share/luajit-2.1/?.lua;/usr/local/share/lua/5.1/?.lua;/usr/local/share/lua/5.1/?/init.lua;/opt/homebrew/share/lua/5.1/?.lua;/opt/homebrew/share/lua/5.1/?/init.lua;/opt/homebrew/Cellar/luarocks/3.9.2/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?.lua;/opt/homebrew/share/lua/5.4/?/init.lua;/opt/homebrew/lib/lua/5.4/?.lua;/opt/homebrew/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?.lua;/Users/Philip.Sjoberg/.luarocks/share/lua/5.4/?/init.lua"
+
+# Mojo paths
+export MOJO_PYTHON_LIBRARY=/opt/homebrew/Cellar/python@3.10/3.10.13/Frameworks/Python.framework/Versions/3.10/lib/python3.10/config-3.10-darwin/libpython3.10.dylib
+
+# Java path
+export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
+
+# Python debuger
+export PYDEVD_WARN_SLOW_RESOLVE_TIMEOUT=2
+
+# Set default fzf stdout
+export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"
+
+# Path
+source $HOME/.paths
+# Envs
+source $HOME/.envvar
+
