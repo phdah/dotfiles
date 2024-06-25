@@ -3,14 +3,18 @@ autoload -Uz compinit
 compinit
 
 # Aliases
+# Aliases
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color --sort=extension'
 alias ll='ls --color -Al'
 alias vim='nvim'
 alias nb='nvim ~/repos/privat/logbook/README.md'
 alias open='xdg-open'
+alias fzfc="fzf --preview='bat {} --color always' --bind shift-up:preview-page-up,shift-down:preview-page-down"
+alias venv="rm -r /tmp/python_venv > /dev/null 2>&1; python3 -m venv /tmp/python_venv && source /tmp/python_venv/bin/activate"
+alias updatedb="updatedb --prunepaths='/mnt'"
+alias gdb='gdb -ex "b main" -ex "run" -ex "layoutc"'
+alias make='make -j8'
 # Git alias
 alias gitl='git log --oneline'
 alias gits='git status'
@@ -18,25 +22,56 @@ alias gitp='git pull'
 alias gitd='git diff'
 alias gitb='git branch'
 alias gitc='git checkout'
+# Specific alias
+source $HOME/.alias
 
 # Functions
 function vfzf() {
     if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
-        then FZF_FILE_VIM=$(rg -l --hidden "" $(git rev-parse --show-toplevel) -g '!.git/' | fzf)
-        else FZF_FILE_VIM=$(rg -l --hidden "" . -g '!.git/' | fzf)
+        then FZF_FILE_VIM=$(rg -l --hidden "" $(git rev-parse --show-toplevel) -g '!.git/' 2>/dev/null | fzfc)
+        else FZF_FILE_VIM=$(rg -l --hidden "" . -g '!.git/' 2>/dev/null | fzfc)
+    fi
+    if [ -e "$FZF_FILE_VIM" ]
+        then nvim $FZF_FILE_VIM;
+    fi
+}
+function vrg() {
+    if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
+        then FZF_FILE_VIM=$(rg -l --hidden "$1" $(git rev-parse --show-toplevel) -g '!.git/' 2>/dev/null | fzfc)
+        else FZF_FILE_VIM=$(rg -l --hidden "$1" . -g '!.git/' 2>/dev/null | fzfc)
     fi
     if [ -e "$FZF_FILE_VIM" ]
         then nvim $FZF_FILE_VIM;
     fi
 }
 function Vfzf() {
-    FZF_FILE_VIM=$(rg -l --hidden "" ~ | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
+    FZF_FILE_VIM=$(rg -l --hidden "" ~ 2>/dev/null | fzfc) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
+}
+function Vrg() {
+    FZF_FILE_VIM=$(rg -l --hidden "$1" ~ 2>/dev/null | fzfc) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
+}
+function gc() {
+    msg="$(git rev-parse --abbrev-ref HEAD | sed 's/^\([A-Z-]*[0-9]*\).*/\1/') $1"
+    git commit -m "$msg"
+}
+function gitr() {
+    git rebase -i HEAD~$1
+    echo 'now run: git push -f origin YOUR_BRANCH'
 }
 function gitall() {
-    git status && git add . && git commit -m "$1" && git push
+    msg="$(git rev-parse --abbrev-ref HEAD | sed 's/^\([A-Z-]*[0-9]*\).*/\1/') $1"
+    git status && git add . && git commit -m "$msg" && git push || git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
 }
 function gitallremote() {
     git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+}
+fzfd() {
+    preview="git diff $@ --color=always -- {-1}"
+    git diff $@ --name-only | fzf -m --ansi --preview $preview
+}
+fzfbd() {
+    preview="git diff {-1}.. --color=always"
+    gitb -a | fzf -m --ansi --preview $preview
 }
 function cat() {
     bat $1 --style=plain --paging=never
@@ -80,8 +115,8 @@ source $HOME/.envvar
 ### Set up prompt ###
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
 
 # Show current git branch right of prompt

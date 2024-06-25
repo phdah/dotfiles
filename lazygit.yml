@@ -1,0 +1,19 @@
+gui:
+  showIcons: true
+  theme:
+    activeBorderColor:
+      - blue
+      - bold
+    inactiveBorderColor:
+      - blue
+  showFileTree: true
+  os:
+    editCommand: "nvim"
+    editCommandTemplate: "{{editor}} {{filename}}"
+  keybinding:
+    universal:
+      quit: "q"
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
