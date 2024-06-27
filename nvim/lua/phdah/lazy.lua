@@ -43,7 +43,7 @@ return require('lazy').setup({
     }, {
         'VonHeikemen/lsp-zero.nvim',
         event = "VeryLazy",
-        branch = 'v1.x',
+        branch = 'v3.x',
         dependencies = {
             -- LSP Support
             'neovim/nvim-lspconfig', 'williamboman/mason.nvim',
@@ -81,7 +81,6 @@ return require('lazy').setup({
     }, {
         'rcarriga/nvim-dap-ui',
         event = "VeryLazy",
-        commit = "5934302",
         dependencies = {
             'mfussenegger/nvim-dap', 'jbyuki/one-small-step-for-vimkind',
             'theHamsta/nvim-dap-virtual-text',
