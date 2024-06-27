@@ -15,6 +15,7 @@ return require('lazy').setup({
     ----------------------------
     -- Can not be Lazy Loaded --
     ----------------------------
+
     {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
     {'p00f/nvim-ts-rainbow'}, {
         'nvim-telescope/telescope.nvim',
@@ -24,10 +25,14 @@ return require('lazy').setup({
         }
     }, {'voldikss/vim-floaterm'},
     {'folke/todo-comments.nvim', dependencies = {'nvim-lua/plenary.nvim'}},
-    {'akinsho/git-conflict.nvim'}, {'shaunsingh/nord.nvim'},
-    {'lewis6991/gitsigns.nvim'}, ------------------------
+    {'akinsho/git-conflict.nvim'},
+    {'shaunsingh/nord.nvim'},
+    {'lewis6991/gitsigns.nvim'},
+
+    ------------------------
     -- Can be Lazy Loaded --
     ------------------------
+
     {
         'pwntester/octo.nvim',
         event = "VeryLazy",

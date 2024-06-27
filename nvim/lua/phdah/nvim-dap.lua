@@ -30,7 +30,7 @@ dap.adapters.codelldb = {
     }
 }
 
-local pythonPath = 'python3.10'
+local pythonPath = 'python3'
 dap.adapters.python = {
     type = 'executable',
     command = pythonPath,
