@@ -13,6 +13,8 @@ vim.api.nvim_set_keymap('n', '<leader>gv',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'K', ':lua vim.lsp.buf.hover()<CR>',
                         {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>gr', ':lua vim.lsp.buf.rename()<CR>',
+                        {noremap = true, silent = true})
 
 -- Terminal keymaps
 vim.api.nvim_set_keymap('n', '<leader>vt', ":belowright sp | term<CR>",

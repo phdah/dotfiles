@@ -15,6 +15,7 @@ return require('lazy').setup({
     ----------------------------
     -- Can not be Lazy Loaded --
     ----------------------------
+
     {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
     {'p00f/nvim-ts-rainbow'}, {
         'nvim-telescope/telescope.nvim',
@@ -24,10 +25,14 @@ return require('lazy').setup({
         }
     }, {'voldikss/vim-floaterm'},
     {'folke/todo-comments.nvim', dependencies = {'nvim-lua/plenary.nvim'}},
-    {'akinsho/git-conflict.nvim'}, {'shaunsingh/nord.nvim'},
-    {'lewis6991/gitsigns.nvim'}, ------------------------
+    {'akinsho/git-conflict.nvim'},
+    {'shaunsingh/nord.nvim'},
+    {'lewis6991/gitsigns.nvim'},
+
+    ------------------------
     -- Can be Lazy Loaded --
     ------------------------
+
     {
         'pwntester/octo.nvim',
         event = "VeryLazy",
@@ -38,7 +43,7 @@ return require('lazy').setup({
     }, {
         'VonHeikemen/lsp-zero.nvim',
         event = "VeryLazy",
-        branch = 'v1.x',
+        branch = 'v3.x',
         dependencies = {
             -- LSP Support
             'neovim/nvim-lspconfig', 'williamboman/mason.nvim',
@@ -76,7 +81,6 @@ return require('lazy').setup({
     }, {
         'rcarriga/nvim-dap-ui',
         event = "VeryLazy",
-        commit = "5934302",
         dependencies = {
             'mfussenegger/nvim-dap', 'jbyuki/one-small-step-for-vimkind',
             'theHamsta/nvim-dap-virtual-text',
