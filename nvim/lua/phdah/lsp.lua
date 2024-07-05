@@ -1,23 +1,23 @@
 ---------------
 -- Mason lsp --
 ---------------
-local lsp = require("lsp-zero")
+local lsp_zero = require('lsp-zero')
 
-lsp.preset("recommended")
+lsp_zero.on_attach(function(client, bufnr)
+    -- see :help lsp-zero-keybindings
+    -- to learn the available actions
+    lsp_zero.default_keymaps({buffer = bufnr})
+end)
 
-lsp.ensure_installed({
-    'pyright', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls'
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = {
+        'pyright', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls'
+    },
+    handlers = {
+        function(server_name) require('lspconfig')[server_name].setup({}) end
+    }
 })
-
--- Fix Undefined global 'vim'
-lsp.nvim_workspace()
-
-lsp.set_preferences({suggest_lsp_servers = true})
-
--- Disable dependencies for autocomplete
-lsp.set_preferences({manage_nvim_cmp = false, cmp_capabilities = false})
-
-lsp.setup()
 
 vim.diagnostic.config({virtual_text = true, signs = false})
 
@@ -34,10 +34,6 @@ lspconfig.pyright.setup {
         }
     }
 }
-
--- lspconfig.gopls.setup({
---     root_dir = util.root_pattern("go.work", "go.mod", ".git"),
--- })
 
 ----------------
 -- Metals lsp --
