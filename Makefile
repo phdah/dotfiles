@@ -198,6 +198,7 @@ mac-symlink: ## Symlink dotfiles to repo
 	@ln -sf $(BUILD_DIR)/yabairc $(HOME)/.yabairc
 	@ln -sf $(BUILD_DIR)/skhdrc $(HOME)/.skhdrc
 	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
+	@ln -sf $(BUILD_DIR)/sketchybar $(CONFIG)/sketchybar
 
 copy-dirs: ## Copy files and dirs
 	@printf 'Copying files\n'
