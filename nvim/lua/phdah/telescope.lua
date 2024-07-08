@@ -1,4 +1,6 @@
-require("telescope").setup()
+require("telescope").setup({
+    path_display = {filename_first = {reverse_directories = false}}
+})
 
 -- Load fzf-native search
 require('telescope').load_extension('fzf')
@@ -10,9 +12,11 @@ M.find_files_git = function()
     local root = vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
     if root ==
         'fatal: not a git repository (or any of the parent directories): .git' then
-        require('telescope.builtin').find_files()
+        require("telescope").extensions.smart_open.smart_open()
+        -- require('telescope.builtin').find_files()
     else
-        require('telescope.builtin').find_files({cwd = root})
+        require("telescope").extensions.smart_open.smart_open({cwd = root})
+        -- require('telescope.builtin').find_files({cwd = root})
     end
 end
 
@@ -24,6 +28,17 @@ M.live_grep_git = function()
         require('telescope.builtin').live_grep()
     else
         require('telescope.builtin').live_grep({cwd = root})
+    end
+end
+
+M.grep_string_git = function()
+    -- If git repo, show all files in repo.
+    local root = vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
+    if root ==
+        'fatal: not a git repository (or any of the parent directories): .git' then
+        require('telescope.builtin').grep_string()
+    else
+        require('telescope.builtin').grep_string({cwd = root})
     end
 end
 

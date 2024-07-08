@@ -17,23 +17,35 @@ return require('lazy').setup({
     ----------------------------
 
     {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
-    {'p00f/nvim-ts-rainbow'}, {
-        'nvim-telescope/telescope.nvim',
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}
-        }
-    }, {'voldikss/vim-floaterm'},
+    {'p00f/nvim-ts-rainbow'}, {'voldikss/vim-floaterm'},
     {'folke/todo-comments.nvim', dependencies = {'nvim-lua/plenary.nvim'}},
-    {'akinsho/git-conflict.nvim'},
-    {'shaunsingh/nord.nvim'},
-    {'lewis6991/gitsigns.nvim'},
-
-    ------------------------
+    {'akinsho/git-conflict.nvim'}, {'shaunsingh/nord.nvim'},
+    {'lewis6991/gitsigns.nvim'}, ------------------------
     -- Can be Lazy Loaded --
     ------------------------
-
     {
+        "OXY2DEV/markview.nvim",
+        ft = "markdown",
+        dependencies = {
+            -- You may not need this if you don't lazy load
+            -- Or if the parsers are in your $RUNTIMEPATH
+            "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons"
+        }
+    }, {
+        'nvim-telescope/telescope.nvim',
+        event = "VeryLazy",
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}, {
+                "danielfalk/smart-open.nvim",
+                branch = "0.2.x",
+                config = function()
+                    require("telescope").load_extension("smart_open")
+                end,
+                dependencies = {"kkharji/sqlite.lua"}
+            }
+        }
+    }, {
         'pwntester/octo.nvim',
         event = "VeryLazy",
         dependencies = {
@@ -57,8 +69,8 @@ return require('lazy').setup({
             -- Sources
             'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-path',
             'quangnguyen30192/cmp-nvim-tags', 'lukas-reineke/cmp-rg',
-            'rcarriga/cmp-dap', 'ray-x/cmp-treesitter', 'MattiasMTS/cmp-dbee',
-            -- Snippets
+            'rcarriga/cmp-dap', 'ray-x/cmp-treesitter',
+            {"MattiasMTS/cmp-dbee", opts = {}}, -- Snippets
             'L3MON4D3/LuaSnip', 'rafamadriz/friendly-snippets',
             'saadparwaiz1/cmp_luasnip'
         }
