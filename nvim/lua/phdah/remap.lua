@@ -153,10 +153,16 @@ vim.api.nvim_set_keymap('n', '<leader>ff',
                         ':lua require("phdah/telescope").find_files_git()<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fF',
-                        ":lua require('telescope.builtin').find_files({cwd='~'})<CR>",
+                        ":lua require('telescope').extensions.smart_open.smart_open({cwd='~'})<CR>",
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>fr',
                         ':lua require("phdah/telescope").live_grep_git()<CR>',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>f*',
+                        ':lua require("phdah/telescope").grep_string_git()<CR>',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fh',
+                        ':lua require("telescope.builtin").help_tags()<CR>',
                         {noremap = true, silent = true})
 
 -- Spell checking
