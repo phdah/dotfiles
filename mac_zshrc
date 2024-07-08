@@ -79,7 +79,7 @@ bindkey "^[[5~" history-beginning-search-backward
 bindkey "^[[6~" history-beginning-search-forward
 
 bindkey -s "^ff" "vim +\":lua require('phdah/telescope').find_files_git()\"^j"
-bindkey -s "^fF" "vim +\":lua require('telescope.builtin').find_files({cwd='~'})\"^j"
+bindkey -s "^fF" "vim +\":lua require('telescope').extensions.smart_open.smart_open({cwd='~'})\"^j"
 bindkey -s "^fr" "vim +\":lua require('phdah/telescope').live_grep_git()\"^j"
 bindkey -s "^fo" "vim +\":Octo pr list\"^j"
 

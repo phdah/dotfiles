@@ -58,6 +58,7 @@ cmp.setup({
                 luasnip = "[Snippet]",
                 buffer = "[Buffer]",
                 treesitter = "[TS]",
+                ["cmp-dbee"] = "[DB]",
                 dap = "[DAP]",
                 path = "[Path]",
                 rg = "[rg]"
@@ -106,10 +107,12 @@ cmp.setup({
     }
 })
 
-cmp.setup.cmdline({'/', '?'}, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {{name = 'buffer'}}
-})
+-- TODO: Find out if there is a replacement for this
+-- it seems that this was the issue with the below error?
+-- cmp.setup.cmdline({'/', '?'}, {
+--     mapping = cmp.mapping.preset.cmdline(),
+--     sources = {{name = 'buffer'}}
+-- })
 
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
@@ -149,14 +152,20 @@ require("cmp").setup({
 require("cmp").setup.filetype({"dap-repl", "dapui_watches", "dapui_hover"},
                               {sources = {{name = "dap"}}})
 
--- NOTE: Currently not working
 ------------------------------
 -- Auto completion for DBee --
 ------------------------------
--- require("cmp-dbee").setup({})
--- cmp.setup.filetype({"sql", "mysql", "plsql"}, {
---     sources = cmp.config.sources{
---         { name = 'cmp-dbee' }
---     }
--- })
-
+local auGroup = vim.api.nvim_create_augroup("nvim-dbee-custom", {clear = true})
+vim.api.nvim_create_autocmd("FileType", {
+    group = auGroup,
+    pattern = "sql",
+    callback = function()
+        vim.opt_local.commentstring = "-- %s"
+        require('cmp').setup.filetype({"sql", "mysql", "plsql"}, {
+            sources = require('cmp').config.sources{
+                { name = 'cmp-dbee' }
+            }
+        })
+        require("cmp-dbee").setup({})
+    end
+})
