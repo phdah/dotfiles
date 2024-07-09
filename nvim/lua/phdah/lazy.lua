@@ -32,10 +32,13 @@ return require('lazy').setup({
         "OXY2DEV/markview.nvim",
         ft = "markdown",
         dependencies = {
-            -- You may not need this if you don't lazy load
-            -- Or if the parsers are in your $RUNTIMEPATH
             "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons"
         }
+    }, {
+        'stevearc/oil.nvim',
+        event = "VeryLazy",
+        opts = {keymaps = {["<leader>-"] = "actions.close",}},
+        dependencies = {"nvim-tree/nvim-web-devicons"}
     }, {
         'nvim-telescope/telescope.nvim',
         event = "VeryLazy",
