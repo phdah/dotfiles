@@ -21,7 +21,7 @@ vim.api.nvim_set_keymap('n', '<leader>vt', ":belowright sp | term<CR>",
                         {noremap = true, silent = true})
 
 -- Vim Explorer
-vim.api.nvim_set_keymap('n', '<leader>-', ':Lexplore<CR>',
+vim.api.nvim_set_keymap('n', '<leader>-', ':Oil --float<CR>',
                         {noremap = true, silent = true})
 
 -- Quickfix list
