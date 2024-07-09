@@ -140,7 +140,7 @@ vim.api.nvim_set_keymap('n', '<leader>vh', ':split<CR>',
                         {noremap = true, silent = true})
 
 -- Delete line and insert empty line
-vim.api.nvim_set_keymap('n', '<leader>d', 'Vc<Esc>',
+vim.api.nvim_set_keymap('n', '<leader>dd', 'Vc<Esc>',
                         {noremap = true, silent = true})
 
 -- DBee database
