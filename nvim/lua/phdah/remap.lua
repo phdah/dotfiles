@@ -31,19 +31,19 @@ vim.api
     .nvim_set_keymap('n', 'cp', ':cprev<CR>', {noremap = true, silent = true})
 
 -- Flash jump
-vim.api.nvim_set_keymap('n', 's', '<cmd>lua require("flash").jump()<CR>',
+vim.api.nvim_set_keymap('n', 'ss', '<cmd>lua require("flash").jump()<CR>',
                         {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', 's', '<cmd>lua require("flash").jump()<CR>',
+vim.api.nvim_set_keymap('x', 'ss', '<cmd>lua require("flash").jump()<CR>',
                         {noremap = true, silent = true})
-vim.api.nvim_set_keymap('o', 's', '<cmd>lua require("flash").jump()<CR>',
+vim.api.nvim_set_keymap('o', 'ss', '<cmd>lua require("flash").jump()<CR>',
                         {noremap = true, silent = true})
 
 -- Flash Treesitter
-vim.api.nvim_set_keymap('n', 'S', '<cmd>lua require("flash").treesitter()<CR>',
+vim.api.nvim_set_keymap('n', 'sS', '<cmd>lua require("flash").treesitter()<CR>',
                         {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', 'S', '<cmd>lua require("flash").treesitter()<CR>',
+vim.api.nvim_set_keymap('x', 'sS', '<cmd>lua require("flash").treesitter()<CR>',
                         {noremap = true, silent = true})
-vim.api.nvim_set_keymap('o', 'S', '<cmd>lua require("flash").treesitter()<CR>',
+vim.api.nvim_set_keymap('o', 'sS', '<cmd>lua require("flash").treesitter()<CR>',
                         {noremap = true, silent = true})
 
 -- Git conflict

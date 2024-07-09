@@ -24,6 +24,11 @@ return require('lazy').setup({
     -- Can be Lazy Loaded --
     ------------------------
     {
+        'echasnovski/mini.surround',
+        event = "VeryLazy",
+        version = false,
+        opts = {}
+    }, {
         "OXY2DEV/markview.nvim",
         ft = "markdown",
         dependencies = {
