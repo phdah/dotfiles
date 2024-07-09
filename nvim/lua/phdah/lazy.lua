@@ -37,7 +37,7 @@ return require('lazy').setup({
     }, {
         'stevearc/oil.nvim',
         event = "VeryLazy",
-        opts = {keymaps = {["<leader>-"] = "actions.close",}},
+        opts = {keymaps = {["<leader>-"] = "actions.close"}},
         dependencies = {"nvim-tree/nvim-web-devicons"}
     }, {
         'nvim-telescope/telescope.nvim',
