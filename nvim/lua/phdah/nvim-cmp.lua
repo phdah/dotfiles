@@ -155,17 +155,11 @@ require("cmp").setup.filetype({"dap-repl", "dapui_watches", "dapui_hover"},
 ------------------------------
 -- Auto completion for DBee --
 ------------------------------
-local auGroup = vim.api.nvim_create_augroup("nvim-dbee-custom", {clear = true})
-vim.api.nvim_create_autocmd("FileType", {
-    group = auGroup,
-    pattern = "sql",
-    callback = function()
-        vim.opt_local.commentstring = "-- %s"
-        require('cmp').setup.filetype({"sql", "mysql", "plsql"}, {
-            sources = require('cmp').config.sources{
-                { name = 'cmp-dbee' }
-            }
-        })
-        require("cmp-dbee").setup({})
-    end
+require('cmp').setup.filetype({"sql", "mysql", "plsql"}, {
+    sources = require('cmp').config.sources {
+        {name = 'cmp-dbee'}, {name = 'nvim_lsp'}, {name = 'buffer'},
+        {name = 'treesitter'}, {name = 'luasnip'}, {name = 'path'},
+        {name = 'rg'}
+    }
 })
+

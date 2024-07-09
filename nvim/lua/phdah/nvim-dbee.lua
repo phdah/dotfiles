@@ -17,3 +17,10 @@ require("dbee").setup({
     }
 })
 
+local auGroup = vim.api.nvim_create_augroup("nvim-dbee-custom", {clear = true})
+vim.api.nvim_create_autocmd("FileType", {
+    group = auGroup,
+    pattern = "sql",
+    callback = function() vim.opt_local.commentstring = "-- %s" end
+})
+
