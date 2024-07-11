@@ -1,5 +1,31 @@
+local actions = require("telescope.actions")
 require("telescope").setup({
-    path_display = {filename_first = {reverse_directories = false}}
+    path_display = {filename_first = {reverse_directories = false}},
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-h>"] = actions.preview_scrolling_left,
+                ["<C-l>"] = actions.preview_scrolling_right,
+                ["<C-k>"] = {"<esc>", type = "command"},
+                ["<C-j>"] = actions.select_default
+            },
+            n = {
+                ["q"] = actions.close,
+                ["<C-h>"] = actions.preview_scrolling_left,
+                ["<C-l>"] = actions.preview_scrolling_right,
+                ["<C-j>"] = actions.select_default
+            }
+        }
+    },
+    extensions = {
+        fzf = {
+            fuzzy = true, -- false will only do exact matching
+            override_generic_sorter = true, -- override the generic sorter
+            override_file_sorter = true, -- override the file sorter
+            case_mode = "smart_case" -- or "ignore_case" or "respect_case"
+            -- the default case_mode is "smart_case"
+        }
+    }
 })
 
 -- Load fzf-native search
