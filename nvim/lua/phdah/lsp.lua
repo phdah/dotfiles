@@ -12,7 +12,7 @@ end)
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
-        'pyright', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls'
+        'pyright', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls',
     },
     handlers = {
         function(server_name) require('lspconfig')[server_name].setup({}) end
@@ -34,6 +34,27 @@ lspconfig.pyright.setup {
         }
     }
 }
+
+-- Set up the lua-language-server
+lspconfig.lua_ls.setup({
+    settings = {
+        Lua = {
+            runtime = {
+                -- LuaJIT in the case of Neovim
+                version = 'LuaJIT',
+                path = vim.split(package.path, ';')
+            },
+            diagnostics = {globals = {'vim'}},
+            workspace = {
+                library = {
+                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                    [vim.fn.stdpath('config') .. '/lua'] = true
+                }
+            },
+            telemetry = {enable = false}
+        }
+    }
+})
 
 ----------------
 -- Metals lsp --
