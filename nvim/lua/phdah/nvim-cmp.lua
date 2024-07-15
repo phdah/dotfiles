@@ -73,6 +73,8 @@ cmp.setup({
     mapping = {
         ["<Up>"] = cmp.mapping.select_prev_item(),
         ["<Down>"] = cmp.mapping.select_next_item(),
+        ["<S-Up>"] = cmp.mapping.scroll_docs(-4),
+        ["<S-Down>"] = cmp.mapping.scroll_docs(4),
         ['<C-e>'] = cmp.mapping({
             i = cmp.mapping.close(),
             c = cmp.mapping.close()
