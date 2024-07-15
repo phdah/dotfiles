@@ -63,6 +63,8 @@ local function lintFile(args)
     local filetype = vim.bo.filetype
     if filetype == 'python' then
         vim.cmd('!autopep8 --in-place --aggressive --aggressive % ' .. args)
+    elseif filetype == "go" then
+        vim.cmd('!gofmt -w % ' .. args)
     elseif filetype == 'sh' then
         vim.cmd('!shfmt -w -i 4 -ci % ' .. args)
     elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or
