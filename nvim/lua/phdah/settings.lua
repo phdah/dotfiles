@@ -22,6 +22,13 @@ vim.o.tabstop = 4
 vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
 vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
 vim.o.expandtab = true -- use spaces instead of tab
+local auGroupSettings = vim.api.nvim_create_augroup("custom-base-settings",
+                                                    {clear = true})
+vim.api.nvim_create_autocmd("FileType", {
+    group = auGroupSettings,
+    pattern = "go",
+    callback = function() vim.o.expandtab = false end
+})
 
 -- Set automatic pwd to the current buffer's pwd
 vim.o.autochdir = true

@@ -16,6 +16,17 @@ require("mason-nvim-dap").setup({
     ensure_installed = {"codelldb", "bash-debug-adapter", "debugpy", "delve"}
 })
 
+local function filtered_pick_process()
+  local opts = {}
+  vim.ui.input(
+    { prompt = "Search by process name (lua pattern), or hit enter to select from the process list: " },
+    function(input)
+      opts["filter"] = input or ""
+    end
+  )
+  return require("dap.utils").pick_process(opts)
+end
+
 --------------------
 -- Setup adaptors --
 --------------------
@@ -186,6 +197,21 @@ dap.configurations.go = {
         request = "launch",
         program = "${file}",
         buildFlags = ""
+    }, {
+        type = "go",
+        name = "Debug with Args",
+        request = "launch",
+        program = "${file}",
+        args = function()
+            local args_string = vim.fn.input('Arguments: ')
+            return vim.split(args_string, " +")
+        end
+    }, {
+        type = "go",
+        name = "Attach",
+        mode = "local",
+        request = "attach",
+        processId = filtered_pick_process
     }
 }
 
