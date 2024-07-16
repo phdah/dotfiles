@@ -14,6 +14,15 @@ require("dbee").setup({
             -- run the whole file on the active connection
             {key = "<C-s>", mode = "n", action = "run_file"}
         }
+    },
+    result = {
+        mappings = {
+            {key = "L", mode = "", action = "page_next"},
+            {key = "H", mode = "", action = "page_prev"},
+            {key = "J", mode = "", action = "page_last"},
+            {key = "K", mode = "", action = "page_first"},
+            {key = "<C-c>", mode = "", action = "cancel_call"}
+        }
     }
 })
 
