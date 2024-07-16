@@ -94,10 +94,6 @@ return require('lazy').setup({
         dependencies = {"Febri-i/fscreen.nvim"},
         opts = {}
     }, {
-        'iamcco/markdown-preview.nvim',
-        event = "VeryLazy",
-        build = function() vim.fn['mkdp#util#install']() end
-    }, {
         'rcarriga/nvim-dap-ui',
         event = "VeryLazy",
         dependencies = {
