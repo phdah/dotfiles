@@ -28,3 +28,5 @@ imo
 sql
 mutex
 goroutine
+bool
+struct
