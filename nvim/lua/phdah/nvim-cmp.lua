@@ -45,8 +45,7 @@ cmp.setup({
     sources = cmp.config.sources({
         -- List of possible sources https://github.com/hrsh7th/nvim-cmp/wiki/List-of-sources
         {name = 'nvim_lsp'}, {name = 'buffer'}, {name = 'treesitter'},
-        {name = 'luasnip'}, {name = 'path'}, {name = 'rg'}
-        -- { name = 'cmp-dbee' },
+        {name = 'luasnip'}, {name = 'path'}, {name = 'rg'}, {name = 'emoji'}
     }),
     formatting = {
         fields = {"kind", "abbr", "menu"},
