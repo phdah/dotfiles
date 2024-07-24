@@ -10,9 +10,7 @@ end
 -- require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
 
 -- Mason setup
-require("nvim-dap-virtual-text").setup({
-    virt_text_pos = 'eol'
-})
+require("nvim-dap-virtual-text").setup({virt_text_pos = 'eol'})
 require("mason").setup()
 require("mason-nvim-dap").setup({
     ensure_installed = {"codelldb", "bash-debug-adapter", "debugpy", "delve"}
