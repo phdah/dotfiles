@@ -95,6 +95,8 @@ local function lintFile(args)
                 args)
     elseif filetype == 'lua' then
         vim.cmd("!lua-format -i % " .. args)
+    elseif filetype == 'sql' then
+        vim.cmd("!sql-formatter --fix --config '{\"tabWidth\": 4, \"linesBetweenQueries\": 2}' % " .. args)
     end
 end
 
