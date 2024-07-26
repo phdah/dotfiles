@@ -17,14 +17,11 @@ require("mason-nvim-dap").setup({
 })
 
 local function filtered_pick_process()
-  local opts = {}
-  vim.ui.input(
-    { prompt = "Search by process name (lua pattern), or hit enter to select from the process list: " },
-    function(input)
-      opts["filter"] = input or ""
-    end
-  )
-  return require("dap.utils").pick_process(opts)
+    local opts = {}
+    vim.ui.input({
+        prompt = "Search by process name (lua pattern), or hit enter to select from the process list: "
+    }, function(input) opts["filter"] = input or "" end)
+    return require("dap.utils").pick_process(opts)
 end
 
 --------------------
@@ -212,6 +209,13 @@ dap.configurations.go = {
         mode = "local",
         request = "attach",
         processId = filtered_pick_process
+    }, {
+        name = "Attach to Name (wait)",
+        type = "go",
+        mode = "local",
+        request = "attach",
+        waitFor = function() return vim.fn.input('Name of program: ') end,
+        stopOnEntry = true
     }
 }
 
