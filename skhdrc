@@ -76,10 +76,10 @@ end : skhd --key "cmd - right"
 
 # -- Starting/Stopping/Restarting Yabai --
 
-# stop/start/restart yabai
-# ctrl + alt - q : brew services stop yabai
-# ctrl + alt - s : brew services start yabai
+# restart yabai
 ctrl + alt - r : yabai --restart-service
+# restart sketchybar
+ctrl + alt - r : brew services restart sketchybar
 
 # Open new Chrome
 ctrl + alt - c : open -na Google\ Chrome.app
