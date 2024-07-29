@@ -38,6 +38,15 @@ dap.adapters.codelldb = {
     }
 }
 
+dap.adapters["lldb-dap"] = {
+    type = 'server',
+    port = "${port}",
+    executable = {
+        command = '/opt/homebrew/opt/llvm/bin/lldb-dap',
+        args = {'--port', "${port}"}
+    }
+}
+
 local pythonPath = 'python3'
 dap.adapters.python = {
     type = 'executable',
@@ -87,14 +96,39 @@ dap.adapters.go = {
 -- Setup configurations --
 --------------------------
 
+-- Function to run dsymutil
+local program
+local function runDsymutil(executable)
+    local handle = io.popen('dsymutil ' .. executable)
+    if handle ~= nil then
+        local result = handle:read("*a")
+        print(result)
+        handle:close()
+    end
+end
+
 dap.configurations.cpp = {
     {
         name = "Launch file",
-        type = "codelldb",
+        type = "lldb-dap",
         request = "launch",
         program = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/',
-                                'file')
+            program = vim.fn.input('Path to executable: ',
+                                   vim.fn.getcwd() .. '/', 'file')
+            runDsymutil(program)
+            return program
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false
+    }, {
+        name = "Debug with Args",
+        type = "lldb-dap",
+        request = "launch",
+        program = function()
+            program = vim.fn.input('Path to executable: ',
+                                   vim.fn.getcwd() .. '/', 'file')
+            runDsymutil(program)
+            return program
         end,
         cwd = '${workspaceFolder}',
         stopOnEntry = false,
@@ -102,6 +136,24 @@ dap.configurations.cpp = {
             local args_str = vim.fn.input('Program arguments: ')
             return vim.split(args_str, " +")
         end
+    }, {
+        name = "Attach",
+        type = "lldb-dap",
+        request = "attach",
+        pid = filtered_pick_process,
+        stopOnEntry = false
+    }, {
+        name = "Attach to Name (wait)",
+        type = "lldb-dap",
+        stopOnEntry = false,
+        request = "attach",
+        program = function()
+            program = vim.fn.input('Path to executable: ',
+                                   vim.fn.getcwd() .. '/', 'file')
+            runDsymutil(program)
+            return program
+        end,
+        waitFor = true
     }
 }
 
@@ -214,7 +266,10 @@ dap.configurations.go = {
         type = "go",
         mode = "local",
         request = "attach",
-        waitFor = function() return vim.fn.input('Name of program: ') end,
+        waitFor = function()
+            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/',
+                                'file')
+        end,
         stopOnEntry = true
     }
 }
