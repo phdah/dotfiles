@@ -21,7 +21,14 @@ require("dbee").setup({
             {key = "H", mode = "", action = "page_prev"},
             {key = "J", mode = "", action = "page_last"},
             {key = "K", mode = "", action = "page_first"},
-            {key = "<C-c>", mode = "", action = "cancel_call"}
+            {key = "<C-c>", mode = "", action = "cancel_call"},
+            -- yank rows as csv/json
+            {key = "yaj", mode = "n", action = "yank_current_json"},
+            {key = "yaj", mode = "v", action = "yank_selection_json"},
+            {key = "yaJ", mode = "", action = "yank_all_json"},
+            {key = "yac", mode = "n", action = "yank_current_csv"},
+            {key = "yac", mode = "v", action = "yank_selection_csv"},
+            {key = "yaC", mode = "", action = "yank_all_csv"}
         }
     }
 })
