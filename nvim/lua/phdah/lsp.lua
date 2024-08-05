@@ -30,7 +30,7 @@ lspconfig.pyright.setup {
                 diagnosticMode = "workspace",
                 useLibraryCodeForTypes = true
             },
-            pythonPath = "/opt/homebrew/bin/python3.10"
+            pythonPath = "python3"
         }
     }
 }
