@@ -68,6 +68,7 @@ vim.api.nvim_set_keymap('v', '<C-k>', '<Esc>', {noremap = true})
 -- Keybind command
 vim.api.nvim_set_keymap('c', '<C-j>', '<Enter>', {noremap = true})
 vim.api.nvim_set_keymap('c', '<C-h>', '<BS>', {noremap = true})
+vim.api.nvim_set_keymap('c', '<C-f>', '<NOP>', {noremap = true})
 
 -- Keybind terminal
 vim.api.nvim_set_keymap('t', '<C-k>', [[<C-\><C-n>]], { noremap = true, silent = true })
