@@ -71,11 +71,6 @@ vim.api.nvim_set_keymap('n', '<C-l>',
 vim.api.nvim_set_keymap('n', '<C-o>', ':Octo<CR>',
                         {noremap = true, silent = true})
 
--- Other git commands
-vim.api.nvim_set_keymap('n', 'gp',
-                        ':w | FloatermNew --width=0.9 --height=0.9 git add -p %<CR>',
-                        {noremap = true, silent = true})
-
 -- Dap keymaps
 vim.api.nvim_set_keymap('n', '<leader>b',
                         ':lua require("dap").toggle_breakpoint()<CR>',
