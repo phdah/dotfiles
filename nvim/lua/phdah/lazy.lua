@@ -12,22 +12,36 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 return require('lazy').setup({
-    ----------------------------
-    -- Can not be Lazy Loaded --
-    ----------------------------
+    ------------------
+    -- Code visuals --
+    ------------------
 
-    {'nvim-treesitter/nvim-treesitter', build = ':TSUpdate'},
-    {'p00f/nvim-ts-rainbow'}, {'voldikss/vim-floaterm'},
-    {'akinsho/git-conflict.nvim'}, {'shaunsingh/nord.nvim'},
-    {'lewis6991/gitsigns.nvim'}, ------------------------
-    -- Can be Lazy Loaded --
-    ------------------------
+    {
+        'nvim-treesitter/nvim-treesitter',
+        event = {"BufReadPre", "BufNewFile"},
+        build = ':TSUpdate',
+        config = function() require("phdah.treesitter") end,
+        dependencies = {
+            'p00f/nvim-ts-rainbow', 'shaunsingh/nord.nvim', {
+                'akinsho/git-conflict.nvim',
+                config = function() require("phdah.git-conflict") end
+            }, {
+                'lewis6991/gitsigns.nvim',
+                config = function() require("phdah.gitsigns") end
+            }
+        }
+    },
     {
         'echasnovski/mini.surround',
-        event = "VeryLazy",
+        event = {"BufReadPre", "BufNewFile"},
         version = false,
         opts = {}
     }, {
+        dir = '~/repos/privat/nvim-utils/' -- 'phdah/nvim-utils',
+    }, ------------------------
+    -- Can be Lazy Loaded --
+    ------------------------
+    {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
         "OXY2DEV/markview.nvim",
         ft = "markdown",
         dependencies = {
@@ -35,7 +49,7 @@ return require('lazy').setup({
         }
     }, {
         'stevearc/oil.nvim',
-        event = "VeryLazy",
+        cmd = "Oil",
         opts = {keymaps = {["<leader>-"] = "actions.close"}},
         dependencies = {"nvim-tree/nvim-web-devicons"}
     }, {
@@ -54,15 +68,17 @@ return require('lazy').setup({
         }
     }, {
         'pwntester/octo.nvim',
-        event = "VeryLazy",
+        cmd = "Octo",
+        config = function() require("phdah.octo") end,
         dependencies = {
             'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim',
             'nvim-tree/nvim-web-devicons'
         }
     }, {
         'VonHeikemen/lsp-zero.nvim',
-        event = "VeryLazy",
+        event = {"BufReadPre", "BufNewFile"},
         branch = 'v3.x',
+        config = function() require("phdah.lsp") end,
         dependencies = {
             -- LSP Support
             'neovim/nvim-lspconfig', 'williamboman/mason.nvim',
@@ -71,7 +87,8 @@ return require('lazy').setup({
         }
     }, {
         'hrsh7th/nvim-cmp',
-        event = "VeryLazy",
+        event = {"BufReadPre", "BufNewFile"},
+        config = function() require("phdah.nvim-cmp") end,
         dependencies = {
             -- Sources
             'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-path',
@@ -81,11 +98,16 @@ return require('lazy').setup({
             'L3MON4D3/LuaSnip', 'rafamadriz/friendly-snippets',
             'saadparwaiz1/cmp_luasnip'
         }
-    }, {'terrortylor/nvim-comment', event = "VeryLazy"}, {
+    }, {
+        'terrortylor/nvim-comment',
+        cmd = "CommentToggle",
+        config = function() require("phdah.codecomment") end
+    }, {
         "MattiasMTS/nvim-dbee",
         -- "kndndrj/nvim-dbee",
         event = "VeryLazy",
         branch = "mattias/databricks-adapter",
+        config = function() require("phdah.nvim-dbee") end,
         dependencies = {"MunifTanjim/nui.nvim"},
         build = function() require("dbee").install() end
     }, {
@@ -96,6 +118,7 @@ return require('lazy').setup({
     }, {
         'rcarriga/nvim-dap-ui',
         event = "VeryLazy",
+        config = function() require("phdah.nvim-dap") end,
         dependencies = {
             'mfussenegger/nvim-dap', 'jbyuki/one-small-step-for-vimkind',
             'theHamsta/nvim-dap-virtual-text',
@@ -105,18 +128,25 @@ return require('lazy').setup({
         "scalameta/nvim-metals",
         event = "VeryLazy",
         dependencies = {"nvim-lua/plenary.nvim"}
-    }, {"folke/flash.nvim", event = "VeryLazy"}, {
+    }, {
+        "folke/flash.nvim",
+        event = "VeryLazy",
+        config = function() require("phdah.flash") end
+    }, {
         -- 'phdah/nvim-statusline',
         dir = '~/repos/privat/nvim-statusline/',
+        config = function() require("phdah.nvim-statusline") end,
         event = "VeryLazy"
     }, {
         -- 'phdah/nvim-databricks',
         dir = '~/repos/privat/nvim-databricks/',
-        event = "VeryLazy"
-    }, {
-        -- 'phdah/nvim-utils',
-        dir = '~/repos/privat/nvim-utils/',
-        event = "VeryLazy"
-    }, {'nvim-lua/plenary.nvim', event = "VeryLazy"},
-    {'David-Kunz/gen.nvim', event = "VeryLazy"}
+        cmd = {"DBOpen", "DBRun", "DBRunOpen", "DBPrintState"},
+        ft = "python",
+        config = function() require("phdah.nvim-databricks") end
+    }, -- {'nvim-lua/plenary.nvim', event = "VeryLazy"},
+    {
+        'David-Kunz/gen.nvim',
+        cmd = "Gen",
+        config = function() require("phdah.gen") end
+    }
 })
