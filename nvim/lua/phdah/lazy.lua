@@ -44,6 +44,7 @@ return require('lazy').setup({
     {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
         "OXY2DEV/markview.nvim",
         ft = "markdown",
+        config = function() require("phdah.markview") end,
         dependencies = {
             "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons"
         }
