@@ -12,11 +12,22 @@ end)
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
-        'pyright', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls',
-    },
-    handlers = {
-        function(server_name) require('lspconfig')[server_name].setup({}) end
+        'pyright', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls', 'jdtls'
     }
+})
+
+-- Setup all lsp with defaults
+local lspconfig = require('lspconfig')
+local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('mason-lspconfig').setup_handlers({
+    function(server_name)
+        -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
+        if server_name ~= 'jdtls' then
+            lspconfig[server_name].setup({
+                capabilities = lsp_capabilities
+            })
+        end
+    end
 })
 
 vim.diagnostic.config({virtual_text = true, signs = false})
@@ -96,7 +107,9 @@ local function lintFile(args)
     elseif filetype == 'lua' then
         vim.cmd("!lua-format -i % " .. args)
     elseif filetype == 'sql' then
-        vim.cmd("!sql-formatter --fix --config '{\"tabWidth\": 4, \"linesBetweenQueries\": 2}' % " .. args)
+        vim.cmd(
+            "!sql-formatter --fix --config '{\"tabWidth\": 4, \"linesBetweenQueries\": 2}' % " ..
+                args)
     end
 end
 

@@ -30,8 +30,7 @@ return require('lazy').setup({
                 config = function() require("phdah.gitsigns") end
             }
         }
-    },
-    {
+    }, {
         'echasnovski/mini.surround',
         event = {"BufReadPre", "BufNewFile"},
         version = false,
@@ -87,6 +86,10 @@ return require('lazy').setup({
             'jay-babu/mason-nvim-dap.nvim',
             {"smjonas/inc-rename.nvim", opts = {}}
         }
+    }, {
+        'mfussenegger/nvim-jdtls',
+        ft = 'java',
+        config = function() require("phdah.nvim-java") end
     }, {
         'hrsh7th/nvim-cmp',
         event = {"BufReadPre", "BufNewFile"},
