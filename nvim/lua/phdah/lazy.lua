@@ -84,7 +84,8 @@ return require('lazy').setup({
             -- LSP Support
             'neovim/nvim-lspconfig', 'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim', -- DAP support
-            'jay-babu/mason-nvim-dap.nvim'
+            'jay-babu/mason-nvim-dap.nvim',
+            {"smjonas/inc-rename.nvim", opts = {}}
         }
     }, {
         'hrsh7th/nvim-cmp',
