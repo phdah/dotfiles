@@ -1,5 +1,5 @@
 require('gen').setup({
-    model = "llama3:8b",
+    model = "llama3.1",
     display_mode = "horizontal-split", -- "float" or "split" or "horizontal-split"
     persistent_window = true,
     show_model = true,
