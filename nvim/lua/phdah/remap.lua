@@ -163,6 +163,9 @@ vim.api.nvim_set_keymap('n', '<leader>fh',
 vim.api.nvim_set_keymap('n', '<leader>fc',
                         ':lua require("phdah.telescope").telescope_diff_from_history()<CR>',
                         {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>fe',
+                        ':Telescope diagnostics<CR>',
+                        {noremap = true, silent = true})
 
 -- Spell checking
 vim.api.nvim_set_keymap('n', '<leader>z',
