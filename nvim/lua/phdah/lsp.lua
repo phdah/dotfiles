@@ -97,6 +97,8 @@ local function lintFile(args)
         vim.cmd('!autopep8 --in-place --aggressive --aggressive % ' .. args)
     elseif filetype == "go" then
         vim.cmd('!gofmt -w % ' .. args)
+        -- For now, tab is broken in Go Treesitter
+        vim.cmd("%s/\\t/    /g")
     elseif filetype == 'sh' then
         vim.cmd('!shfmt -w -i 4 -ci % ' .. args)
     elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or
