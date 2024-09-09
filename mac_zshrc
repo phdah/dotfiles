@@ -17,6 +17,7 @@ alias act='act --container-architecture linux/amd64'
 alias dbsqlcli='dbsqlcli --table-format ascii'
 alias bat='bat --theme=Nord'
 alias insta=$HOME/repos/privat/insta-infra/run.sh
+alias ns='vim ~/repos/linux_set_up/nvim/lua/phdah/lazy.lua'
 # Git alias
 alias pgp='source ~/repos/linux_set_up/scripts/set_python_path_to_git_root.sh'
 alias pcpp='source ~/repos/linux_set_up/scripts/set_cpp_include_path.sh'

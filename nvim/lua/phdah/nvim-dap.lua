@@ -99,6 +99,7 @@ dap.adapters.go = {
 -- Function to run dsymutil
 local program
 local function runDsymutil(executable)
+    -- TODO: only run this if it's missing
     local handle = io.popen('dsymutil ' .. executable)
     if handle ~= nil then
         local result = handle:read("*a")
@@ -115,7 +116,7 @@ dap.configurations.cpp = {
         program = function()
             program = vim.fn.input('Path to executable: ',
                                    vim.fn.getcwd() .. '/', 'file')
-            runDsymutil(program)
+            -- runDsymutil(program)
             return program
         end,
         cwd = '${workspaceFolder}',
@@ -353,6 +354,14 @@ vim.api.nvim_create_user_command('DapNvimSource', function()
     require("dap").continue()
 end, {})
 
+local M = {}
+
+M.send_to_repl = function()
+  local lines = vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
+  dap.repl.open()
+  dap.repl.execute(table.concat(lines, "\n"))
+end
+
 --------------------------
 -- Setup start and stop --
 --------------------------
@@ -361,6 +370,9 @@ end, {})
 dap.listeners.after.event_initialized["dapui_config"] = function()
     require("dapui").open({})
     vim.o.mouse = "a"
+    vim.api.nvim_set_keymap('n', '<leader>dh',
+                            ':lua require("dap.ui.widgets").hover()<CR>',
+                            {noremap = true, silent = true})
 end
 
 -- Setup close function for dapui
@@ -374,5 +386,9 @@ _G.Dapui_terminate = function()
     end
     dapui.close()
     vim.o.mouse = ""
+    vim.api.nvim_set_keymap('n', '<leader>dh',
+                            ':lua vim.diagnostic.open_float()<CR>',
+                            {noremap = true, silent = true})
 end
 
+return M

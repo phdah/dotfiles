@@ -153,5 +153,11 @@ return require('lazy').setup({
         'David-Kunz/gen.nvim',
         cmd = "Gen",
         config = function() require("phdah.gen") end
+    }, {
+        "danymat/neogen",
+        cmd = "Neogen",
+        config = true
+        -- Uncomment next line if you want to follow only stable versions
+        -- version = "*"
     }
 })
