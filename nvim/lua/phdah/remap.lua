@@ -17,6 +17,21 @@ vim.keymap.set("n", "<leader>gr",
                function() return ":IncRename " .. vim.fn.expand("<cword>") end,
                {expr = true, noremap = true, silent = true})
 
+-- Diagnostic / Error
+vim.api.nvim_set_keymap('n', '<leader>dh',
+                        ':lua vim.diagnostic.open_float()<CR>',
+                        {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>en", ":lua vim.diagnostic.goto_next()<CR>",
+               {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>eN", ":lua vim.diagnostic.goto_prev()<CR>",
+               {noremap = true, silent = true})
+vim.keymap.set("n", "<leader>ef", ":lua vim.lsp.buf.code_action()<CR>",
+               {noremap = true, silent = true})
+
+-- Lint
+vim.api.nvim_set_keymap('n', '<C-CR>', ':Lint<CR>',
+                        {noremap = true, silent = true})
+
 -- Terminal keymaps
 vim.api.nvim_set_keymap('n', '<leader>vt', ":belowright sp | term<CR>",
                         {noremap = true, silent = true})
@@ -95,12 +110,13 @@ vim.api.nvim_set_keymap('n', '<Leader>r',
 vim.api.nvim_set_keymap('n', '<leader>B',
                         ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition (key==\'value\'): "))<CR>',
                         {noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>dh',
-                        ':lua require("dap.ui.widgets").hover()<CR>',
-                        {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>db', ':DapNvimDebugee<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>ds', ':DapNvimSource<CR>',
+                        {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<leader>dr',
+                        ':lua require("phdah.nvim-dap").send_to_repl()<CR>',
                         {noremap = true, silent = true})
 
 -- Execute vim line in shell
@@ -163,8 +179,7 @@ vim.api.nvim_set_keymap('n', '<leader>fh',
 vim.api.nvim_set_keymap('n', '<leader>fc',
                         ':lua require("phdah.telescope").telescope_diff_from_history()<CR>',
                         {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>fe',
-                        ':Telescope diagnostics<CR>',
+vim.api.nvim_set_keymap('n', '<leader>fe', ':Telescope diagnostics<CR>',
                         {noremap = true, silent = true})
 
 -- Spell checking

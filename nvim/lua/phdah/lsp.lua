@@ -23,9 +23,7 @@ require('mason-lspconfig').setup_handlers({
     function(server_name)
         -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
         if server_name ~= 'jdtls' then
-            lspconfig[server_name].setup({
-                capabilities = lsp_capabilities
-            })
+            lspconfig[server_name].setup({capabilities = lsp_capabilities})
         end
     end
 })
@@ -92,26 +90,28 @@ vim.api.nvim_create_autocmd("FileType", {
 ----------------
 -- Function to set the lint command for filetype
 local function lintFile(args)
+    -- Save the file first
+    vim.cmd('silent! w')
+
     local filetype = vim.bo.filetype
+
+    -- Run the corresponding formatter based on the filetype
     if filetype == 'python' then
-        vim.cmd('!autopep8 --in-place --aggressive --aggressive % ' .. args)
+        vim.cmd('silent! !autopep8 --in-place --aggressive --aggressive % ' .. args)
     elseif filetype == "go" then
-        vim.cmd('!gofmt -w % ' .. args)
-        -- For now, tab is broken in Go Treesitter
-        vim.cmd("%s/\\t/    /g")
+        vim.cmd('silent! !gofmt -w % ' .. args)
+        -- Replace tabs with spaces (treesitter issue)
+        vim.cmd('silent! %s/\\t/    /g')
     elseif filetype == 'sh' then
-        vim.cmd('!shfmt -w -i 4 -ci % ' .. args)
-    elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or
-        filetype == 'java' then
-        vim.cmd(
-            '!clang-format -i % -style="{BasedOnStyle: Google, IndentWidth: 4, UseTab: Never}" ' ..
-                args)
+        vim.cmd('silent! !shfmt -w -i 4 -ci % ' .. args)
+    elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or filetype == 'java' then
+        vim.cmd('silent! !clang-format -i % ' .. args)
     elseif filetype == 'lua' then
-        vim.cmd("!lua-format -i % " .. args)
+        vim.cmd('silent! !lua-format -i % ' .. args)
     elseif filetype == 'sql' then
-        vim.cmd(
-            "!sql-formatter --fix --config '{\"tabWidth\": 4, \"linesBetweenQueries\": 2}' % " ..
-                args)
+        vim.cmd('silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' % ' .. args)
+    elseif filetype == 'markdown' then
+        vim.cmd('silent! !prettier --print-width 80 --prose-wrap always --write % ' .. args)
     end
 end
 
