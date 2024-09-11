@@ -1,3 +1,5 @@
+local M = {}
+
 ---------------
 -- DAP setup --
 ---------------
@@ -6,6 +8,7 @@ if not (dap_ok) then
     print("nvim-dap not installed!")
     return
 end
+local dapui = require("dapui")
 
 -- require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
 
@@ -52,6 +55,12 @@ dap.adapters.python = {
     type = 'executable',
     command = pythonPath,
     args = {'-m', 'debugpy.adapter'}
+}
+
+dap.adapters.python_repl = {
+    type = 'server',
+    host = '127.0.0.1',
+    port = 5678 -- Port where the debugpy server is listening
 }
 
 dap.adapters.bashdb = {
@@ -169,7 +178,8 @@ dap.configurations.python = {
         program = "${file}", -- Specifies the file to debug
         pythonPath = function() return pythonPath end,
         justMyCode = false -- Ensures that only user code is debugged
-    }, {
+    },
+    {
         type = 'python',
         request = 'launch', -- Specifies the debug request type
         name = "Launch File With args",
@@ -180,7 +190,21 @@ dap.configurations.python = {
         program = "${file}", -- Specifies the file to debug
         pythonPath = function() return pythonPath end,
         justMyCode = false -- Ensures that only user code is debugged
+    },
+    ["repl"] = {
+        type = 'python_repl',
+        request = 'attach', -- Attach to a running session
+        name = "Attach to running process",
+        connect = {
+            host = "127.0.0.1",
+            port = 5678 -- Port where debugpy is running, for example
+        },
+        pythonPath = function()
+            M.repl_run = true
+            return pythonPath
+        end
     }
+
 }
 
 dap.configurations.sh = {
@@ -299,7 +323,7 @@ dap.configurations.java = {
 -- Configure dapui --
 ---------------------
 
-require("dapui").setup({
+dapui.setup({
     expand_lines = false,
     layouts = {
         {
@@ -354,12 +378,40 @@ vim.api.nvim_create_user_command('DapNvimSource', function()
     require("dap").continue()
 end, {})
 
-local M = {}
-
 M.send_to_repl = function()
-  local lines = vim.fn.getregion(vim.fn.getpos("."), vim.fn.getpos("v"))
-  dap.repl.open()
-  dap.repl.execute(table.concat(lines, "\n"))
+    local code = vim.fn.getregion(vim.fn.getpos("'<"), vim.fn.getpos("'>"))
+    dap.repl.execute(table.concat(code, "\n"))
+end
+
+local start_repl_session = function()
+    print("Starting REPL session")
+    local filetype = vim.bo.filetype
+
+    -- Start debugpy server in the background for the given filetype
+    if filetype == 'python' then
+        vim.fn.jobstart("PYDEVD_DISABLE_FILE_VALIDATION=1 " .. pythonPath ..
+                            " -Xfrozen_modules=off -m debugpy --listen 5678 -c 'import code; code.interact()'",
+                        {
+            on_exit = function() print("debugpy exited") end,
+            on_stdout = function() print("debugpy started") end,
+            on_stderr = function(_, data)
+                print("Error: ", vim.inspect(data))
+            end
+        })
+        return true
+    end
+    print("Error: No setup for " .. filetype .. " repl start")
+    return false
+end
+
+M.start_repl = function()
+    local filetype = vim.bo.filetype
+    local session_started = start_repl_session()
+    if session_started then
+        require('dap').run(dap.configurations[filetype]["repl"])
+    else
+        print("REPL session not started")
+    end
 end
 
 --------------------------
@@ -368,22 +420,24 @@ end
 
 -- Setup event listener to start dapui
 dap.listeners.after.event_initialized["dapui_config"] = function()
-    require("dapui").open({})
-    vim.o.mouse = "a"
-    vim.api.nvim_set_keymap('n', '<leader>dh',
-                            ':lua require("dap.ui.widgets").hover()<CR>',
-                            {noremap = true, silent = true})
+    if not M.repl_run then
+        dapui.open({})
+        vim.o.mouse = "a"
+        vim.api.nvim_set_keymap('n', '<leader>dh',
+                                ':lua require("dap.ui.widgets").hover()<CR>',
+                                {noremap = true, silent = true})
+    else
+        dap.repl.open({height = 10})
+    end
 end
 
 -- Setup close function for dapui
-_G.Dapui_terminate = function()
-    local dap = require("dap")
-    local dapui = require("dapui")
-
+M.dapui_terminate = function()
     if dap.session() then
         dap.terminate()
         dap.disconnect()
     end
+    dap.repl.close()
     dapui.close()
     vim.o.mouse = ""
     vim.api.nvim_set_keymap('n', '<leader>dh',
