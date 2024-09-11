@@ -109,7 +109,7 @@ local function lintFile(args)
     elseif filetype == 'lua' then
         vim.cmd('silent! !lua-format -i % ' .. args)
     elseif filetype == 'sql' then
-        vim.cmd('silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' % ' .. args)
+        vim.cmd('silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' --language postgresql % ' .. args)
     elseif filetype == 'markdown' then
         vim.cmd('silent! !prettier --print-width 80 --prose-wrap always --write % ' .. args)
     end
