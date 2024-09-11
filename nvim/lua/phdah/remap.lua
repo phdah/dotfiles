@@ -118,7 +118,10 @@ vim.api.nvim_set_keymap('n', '<leader>dy',
                         ':lua require("phdah.nvim-dap").start_repl()<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<leader>dr',
-                        ':lua require("phdah.nvim-dap").send_to_repl()<CR>',
+                        ':lua require("phdah.nvim-dap").send_code_to_repl()<CR>',
+                        {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>dR',
+                        ':lua require("phdah.nvim-dap").send_file_to_repl()<CR>',
                         {noremap = true, silent = true})
 
 -- Execute vim line in shell
