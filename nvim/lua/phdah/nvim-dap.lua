@@ -378,8 +378,14 @@ vim.api.nvim_create_user_command('DapNvimSource', function()
     require("dap").continue()
 end, {})
 
-M.send_to_repl = function()
+M.send_code_to_repl = function()
     local code = vim.fn.getregion(vim.fn.getpos("'<"), vim.fn.getpos("'>"))
+    dap.repl.execute(table.concat(code, "\n"))
+end
+
+M.send_file_to_repl = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local code = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
     dap.repl.execute(table.concat(code, "\n"))
 end
 
