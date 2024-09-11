@@ -57,12 +57,6 @@ dap.adapters.python = {
     args = {'-m', 'debugpy.adapter'}
 }
 
-dap.adapters.python_repl = {
-    type = 'server',
-    host = '127.0.0.1',
-    port = 5678 -- Port where the debugpy server is listening
-}
-
 dap.adapters.bashdb = {
     type = 'executable',
     command = vim.fn.stdpath("data") ..
@@ -178,8 +172,7 @@ dap.configurations.python = {
         program = "${file}", -- Specifies the file to debug
         pythonPath = function() return pythonPath end,
         justMyCode = false -- Ensures that only user code is debugged
-    },
-    {
+    }, {
         type = 'python',
         request = 'launch', -- Specifies the debug request type
         name = "Launch File With args",
@@ -190,21 +183,7 @@ dap.configurations.python = {
         program = "${file}", -- Specifies the file to debug
         pythonPath = function() return pythonPath end,
         justMyCode = false -- Ensures that only user code is debugged
-    },
-    ["repl"] = {
-        type = 'python_repl',
-        request = 'attach', -- Attach to a running session
-        name = "Attach to running process",
-        connect = {
-            host = "127.0.0.1",
-            port = 5678 -- Port where debugpy is running, for example
-        },
-        pythonPath = function()
-            M.repl_run = true
-            return pythonPath
-        end
     }
-
 }
 
 dap.configurations.sh = {
@@ -410,11 +389,32 @@ local start_repl_session = function()
     return false
 end
 
+-------------------------------
+-- Setup REPL configurations --
+-------------------------------
+
+dap.adapters.python_repl = {type = 'server', host = '127.0.0.1', port = 5678}
+
+local repl = {
+    configurations = {
+        ["python"] = {
+            type = 'python_repl',
+            request = 'attach',
+            name = "Attach to running process",
+            connect = {host = "127.0.0.1", port = dap.adapters.python_repl.port},
+            pythonPath = function()
+                M.repl_run = true
+                return pythonPath
+            end
+        }
+    }
+}
+
 M.start_repl = function()
     local filetype = vim.bo.filetype
     local session_started = start_repl_session()
     if session_started then
-        require('dap').run(dap.configurations[filetype]["repl"])
+        require('dap').run(repl.configurations[filetype])
     else
         print("REPL session not started")
     end
@@ -444,6 +444,7 @@ M.dapui_terminate = function()
         dap.disconnect()
     end
     dap.repl.close()
+    M.repl_run = false
     dapui.close()
     vim.o.mouse = ""
     vim.api.nvim_set_keymap('n', '<leader>dh',
