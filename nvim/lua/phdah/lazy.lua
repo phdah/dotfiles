@@ -49,8 +49,7 @@ return require('lazy').setup({
         }
     }, {
         'stevearc/oil.nvim',
-        cmd = "Oil",
-        opts = {keymaps = {["<leader>-"] = "actions.close"}},
+        config = function() require('phdah.oil') end,
         dependencies = {"nvim-tree/nvim-web-devicons"}
     }, {
         'nvim-telescope/telescope.nvim',
