@@ -112,6 +112,8 @@ local function lintFile(args)
         vim.cmd('silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' --language postgresql % ' .. args)
     elseif filetype == 'markdown' then
         vim.cmd('silent! !prettier --print-width 80 --prose-wrap always --write % ' .. args)
+    elseif filetype == 'terraform' then
+        vim.cmd('silent! !terraform fmt % ' .. args)
     end
 end
 
