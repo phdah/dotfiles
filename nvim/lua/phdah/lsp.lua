@@ -12,7 +12,7 @@ end)
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
-        'pyright', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls', 'jdtls'
+        'ruff', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls', 'jdtls'
     }
 })
 
@@ -97,7 +97,7 @@ local function lintFile(args)
 
     -- Run the corresponding formatter based on the filetype
     if filetype == 'python' then
-        vim.cmd('silent! !autopep8 --in-place --aggressive --aggressive % ' .. args)
+        vim.cmd('silent! !ruff format % ' .. args)
     elseif filetype == "go" then
         vim.cmd('silent! !gofmt -w % ' .. args)
         -- Replace tabs with spaces (treesitter issue)
