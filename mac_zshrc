@@ -67,7 +67,7 @@ function sedall() {
     sed -i "s/$1/$2/g" $(rg $1 -l)
 }
 function sedtrailingspace() {
-    sed -i 's/\s\+$//g' $(rg '' -l)
+    sed -i 's/\s\+$//g' $(rg --files)
 }
 
 # Default to emacs keybindings

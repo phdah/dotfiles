@@ -149,7 +149,7 @@ nvim-install: ## Install neovim from source, unless CI mode, since it's like 10m
 		printf '\nBuilding (stable) neovim from source\n\n'; \
 		if [ ! -d $(SOURCE_DIR)/neovim ]; then \
 			git clone https://github.com/neovim/neovim.git $(SOURCE_DIR)/neovim; \
-			cd $(SOURCE_DIR)/neovim && git checkout stable && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install && cd $(BUILD_DIR); \
+			cd $(SOURCE_DIR)/neovim && git checkout stable && make clean && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install && cd $(BUILD_DIR); \
 		fi \
 	fi
 
