@@ -12,7 +12,8 @@ end)
 require('mason').setup({})
 require('mason-lspconfig').setup({
     ensure_installed = {
-        'ruff', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls', 'jdtls'
+        'pyright', 'ruff', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls',
+        'jdtls'
     }
 })
 
@@ -30,7 +31,7 @@ require('mason-lspconfig').setup_handlers({
 
 vim.diagnostic.config({virtual_text = true, signs = false})
 
-local lspconfig = require("lspconfig")
+-- TODO: Figure out how to use ruff as the LSP instead
 lspconfig.pyright.setup {
     settings = {
         python = {
@@ -104,14 +105,19 @@ local function lintFile(args)
         vim.cmd('silent! %s/\\t/    /g')
     elseif filetype == 'sh' then
         vim.cmd('silent! !shfmt -w -i 4 -ci % ' .. args)
-    elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or filetype == 'java' then
+    elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or
+        filetype == 'java' then
         vim.cmd('silent! !clang-format -i % ' .. args)
     elseif filetype == 'lua' then
         vim.cmd('silent! !lua-format -i % ' .. args)
     elseif filetype == 'sql' then
-        vim.cmd('silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' --language postgresql % ' .. args)
+        vim.cmd(
+            'silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' --language postgresql % ' ..
+                args)
     elseif filetype == 'markdown' then
-        vim.cmd('silent! !prettier --print-width 80 --prose-wrap always --write % ' .. args)
+        vim.cmd(
+            'silent! !prettier --print-width 80 --prose-wrap always --write % ' ..
+                args)
     elseif filetype == 'terraform' then
         vim.cmd('silent! !terraform fmt % ' .. args)
     end
