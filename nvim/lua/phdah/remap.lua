@@ -135,9 +135,10 @@ vim.api
     .nvim_set_keymap('n', '<C-n>', ':bn<CR>', {noremap = true, silent = true})
 
 -- Close buffers
-vim.api.nvim_set_keymap('n', '<leader>q', ':bd<CR>',
+vim.api.nvim_set_keymap('n', '<leader>q', ':lua Snacks.bufdelete()<CR>',
                         {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>Q', ':bd!<CR>',
+vim.api.nvim_set_keymap('n', '<leader>Q',
+                        ':lua Snacks.bufdelete({force=true})<CR>',
                         {noremap = true, silent = true})
 
 -- Window control
@@ -246,6 +247,10 @@ vim.api.nvim_set_keymap('n', 'gb', ':lua require("gitsigns").blame_line()<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', 'gs',
                         [[:lua require("gitsigns").stage_hunk({vim.fn.line("'<"), vim.fn.line("'>")})<CR>]],
+                        {noremap = true, silent = true})
+
+-- Git repo url
+vim.api.nvim_set_keymap('n', 'go', ':lua Snacks.gitbrowse.open()<CR>',
                         {noremap = true, silent = true})
 
 -- Jump between code blocks
