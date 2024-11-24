@@ -93,7 +93,8 @@ vim.api.nvim_set_keymap('n', '<leader>b',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>c', ':lua require("dap").continue()<CR>',
                         {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>t', ':lua require("phdah.nvim-dap").dapui_terminate()<CR>',
+vim.api.nvim_set_keymap('n', '<leader>t',
+                        ':lua require("phdah.nvim-dap").dapui_terminate()<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>i', ':lua require("dap").step_into()<CR>',
                         {noremap = true, silent = true})
