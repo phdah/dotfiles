@@ -24,11 +24,15 @@ vim.api.nvim_create_autocmd({"BufEnter"}, {
     group = defaultGroup,
     pattern = "*",
     callback = function()
-        -- Tab settings
-        vim.o.tabstop = 4
-        vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
-        vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
-        vim.o.expandtab = true -- use spaces instead of tab
+        if vim.bo.filetype == "make" then
+            vim.o.expandtab = false -- use tab instead of space
+        else
+            -- Tab settings
+            vim.o.tabstop = 4
+            vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
+            vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
+            vim.o.expandtab = true -- use spaces instead of tab
+        end
 
         -- Auto-indent configurations
         vim.o.autoindent = false -- Disable auto-indentation
@@ -44,9 +48,6 @@ vim.o.autochdir = true
 
 -- Turn of swap files
 vim.opt.swapfile = false
-
--- Special setting for 'make' files
-vim.cmd('autocmd FileType make setlocal noexpandtab')
 
 -- Folding
 vim.wo.foldmethod = 'indent'
