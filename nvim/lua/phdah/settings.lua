@@ -48,15 +48,18 @@ vim.wo.foldenable = false
 vim.o.laststatus = 3
 
 -- Match command
-vim.cmd('match ExtraWhitespace /\\s\\+$/')
+vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
 
 -- Highlighting for white space
-vim.cmd([[
-augroup MyCustomWhiteSpaceHighlights
-  autocmd!
-  autocmd ColorScheme * highlight ExtraWhitespace guibg=#BF616A
-augroup END
-]])
+local group = vim.api.nvim_create_augroup("MyCustomWhiteSpaceHighlights",
+                                          {clear = true})
+vim.api.nvim_create_autocmd("ColorScheme", {
+    group = group,
+    pattern = "*",
+    callback = function()
+        vim.api.nvim_set_hl(0, "ExtraWhitespace", {bg = "#BF616A"})
+    end
+})
 
 -- Clean out all trailing ExtraWhitespace, and tabs
 vim.api.nvim_create_user_command('Clean', function()
