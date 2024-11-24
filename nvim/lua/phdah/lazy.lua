@@ -37,6 +37,17 @@ return require('lazy').setup({
         opts = {}
     }, {
         dir = '~/repos/privat/nvim-utils/' -- 'phdah/nvim-utils',
+    }, {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        opts = {
+            bigfile = {enabled = true},
+            bufdelete = {enabled = true},
+            dashboard = {enabled = true},
+            notifier = {enabled = true},
+            gitbrowse = {enabled = true}
+        }
     }, ------------------------
     -- Can be Lazy Loaded --
     ------------------------
