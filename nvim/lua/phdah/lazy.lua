@@ -106,7 +106,8 @@ return require('lazy').setup({
         config = function() require("phdah.nvim-cmp") end,
         dependencies = {
             -- Sources
-            'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-path',
+            'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-path',
             'hrsh7th/cmp-emoji', 'quangnguyen30192/cmp-nvim-tags',
             'lukas-reineke/cmp-rg', 'rcarriga/cmp-dap', 'ray-x/cmp-treesitter',
             {"MattiasMTS/cmp-dbee", opts = {}}, -- Snippets
