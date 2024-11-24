@@ -18,18 +18,26 @@ vim.wo.colorcolumn = "80"
 vim.cmd('highlight ColorColumn guifg=#4C566A')
 
 -- Set up default tabs
-vim.o.tabstop = 4
-vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
-vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
-vim.o.expandtab = true -- use spaces instead of tab
-local auGroupSettings = vim.api.nvim_create_augroup("custom-base-settings",
-                                                    {clear = true})
--- For now, tab is broken in Go Treesitter
--- vim.api.nvim_create_autocmd("FileType", {
---     group = auGroupSettings,
---     pattern = "go",
---     callback = function() vim.o.expandtab = false end
--- })
+local defaultGroup = vim.api.nvim_create_augroup("DefaultTabSettings",
+                                          {clear = true})
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+    group = defaultGroup,
+    pattern = "*",
+    callback = function()
+        -- Tab settings
+        vim.o.tabstop = 4
+        vim.o.softtabstop = 4 -- set number of spaces, but treat as one object
+        vim.o.shiftwidth = 4 -- set width for 'enter' after tabbed line
+        vim.o.expandtab = true -- use spaces instead of tab
+
+        -- Auto-indent configurations
+        vim.o.autoindent = false -- Disable auto-indentation
+        vim.bo.autoindent = false -- Ensure local buffer autoindent is off
+        vim.cmd("filetype indent off") -- Disable filetype-specific indentation
+        -- Adjust formatoptions
+        vim.opt.formatoptions:remove({ "c", "r", "o" }) -- Remove auto-commenting and auto-wrapping
+    end,
+})
 
 -- Set automatic pwd to the current buffer's pwd
 vim.o.autochdir = true
@@ -80,11 +88,6 @@ vim.cmd [[command! -nargs=1 -complete=command -bar H help <args> | only]]
 
 -- Center search
 vim.o.scrolloff = 0
-
--- Auto indent configurations
-vim.opt.autoindent = false
-vim.cmd [[filetype indent off]]
-vim.cmd [[autocmd VimEnter * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
 
 -- Set colorscheme to nord
 vim.cmd [[colorscheme nord]]
