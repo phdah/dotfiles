@@ -19,8 +19,8 @@ vim.cmd('highlight ColorColumn guifg=#4C566A')
 
 -- Set up default tabs
 local defaultGroup = vim.api.nvim_create_augroup("DefaultTabSettings",
-                                          {clear = true})
-vim.api.nvim_create_autocmd({ "BufEnter" }, {
+                                                 {clear = true})
+vim.api.nvim_create_autocmd({"BufEnter"}, {
     group = defaultGroup,
     pattern = "*",
     callback = function()
@@ -35,8 +35,8 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
         vim.bo.autoindent = false -- Ensure local buffer autoindent is off
         vim.cmd("filetype indent off") -- Disable filetype-specific indentation
         -- Adjust formatoptions
-        vim.opt.formatoptions:remove({ "c", "r", "o" }) -- Remove auto-commenting and auto-wrapping
-    end,
+        vim.opt.formatoptions:remove({"c", "r", "o"}) -- Remove auto-commenting and auto-wrapping
+    end
 })
 
 -- Set automatic pwd to the current buffer's pwd
@@ -57,7 +57,7 @@ vim.o.laststatus = 3
 
 -- Highlighting for white space
 local whiteGroup = vim.api.nvim_create_augroup("MyCustomWhiteSpaceHighlights",
-                                          {clear = true})
+                                               {clear = true})
 vim.api.nvim_create_autocmd({"BufEnter", "ColorScheme"}, {
     group = whiteGroup,
     pattern = "*",
@@ -72,8 +72,12 @@ vim.api.nvim_create_autocmd({"BufEnter", "ColorScheme"}, {
 
 -- Clean out all trailing ExtraWhitespace, and tabs
 vim.api.nvim_create_user_command('Clean', function()
+    local snacks = require("snacks")
+    -- Clean out all trailing ExtraWhitespace, and tabs
     local ok, _ = pcall(function() vim.cmd("%s/\\t\\+$\\| \\+$//") end)
-    if not ok then print("No trailing whitespace found") end
+    if ok then
+        snacks.notify.info("Found and removed all trailing whitespace")
+    end
 end, {})
 
 -- Set show number as default
