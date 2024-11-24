@@ -47,17 +47,18 @@ vim.wo.foldenable = false
 -- Set to only one status line
 vim.o.laststatus = 3
 
--- Match command
-vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
-
 -- Highlighting for white space
-local group = vim.api.nvim_create_augroup("MyCustomWhiteSpaceHighlights",
+local whiteGroup = vim.api.nvim_create_augroup("MyCustomWhiteSpaceHighlights",
                                           {clear = true})
-vim.api.nvim_create_autocmd("ColorScheme", {
-    group = group,
+vim.api.nvim_create_autocmd({"BufEnter", "ColorScheme"}, {
+    group = whiteGroup,
     pattern = "*",
     callback = function()
-        vim.api.nvim_set_hl(0, "ExtraWhitespace", {bg = "#BF616A"})
+        if vim.bo.filetype ~= "" then
+            -- Only apply the highlight if the buffer has a filetype
+            vim.api.nvim_set_hl(0, "ExtraWhitespace", {bg = "#BF616A"})
+            vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
+        end
     end
 })
 
