@@ -105,6 +105,10 @@ vim.api.nvim_create_autocmd("FileType", {
 ----------------
 -- Function to set the lint command for filetype
 local function lintFile(args)
+    -- Clean out all trailing ExtraWhitespace, and tabs
+    local ok, _ = pcall(function() vim.cmd("%s/\\t\\+$\\| \\+$//") end)
+    if not ok then print("No trailing whitespace found") end
+
     -- Save the file first
     vim.cmd('silent! w')
 
