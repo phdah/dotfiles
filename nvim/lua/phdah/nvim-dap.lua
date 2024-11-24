@@ -1,3 +1,5 @@
+local snacks = require("snacks")
+
 local M = {}
 
 ---------------
@@ -5,7 +7,7 @@ local M = {}
 ---------------
 local dap_ok, dap = pcall(require, "dap")
 if not (dap_ok) then
-    print("nvim-dap not installed!")
+    snacks.notify.info("nvim-dap not installed!")
     return
 end
 local dapui = require("dapui")
@@ -106,7 +108,7 @@ local function runDsymutil(executable)
     local handle = io.popen('dsymutil ' .. executable)
     if handle ~= nil then
         local result = handle:read("*a")
-        print(result)
+        snacks.notify.info(result)
         handle:close()
     end
 end
@@ -369,7 +371,7 @@ M.send_file_to_repl = function()
 end
 
 local start_repl_session = function()
-    print("Starting REPL session")
+    snacks.notify.info("Starting REPL session")
     local filetype = vim.bo.filetype
 
     -- Start debugpy server in the background for the given filetype
@@ -377,15 +379,17 @@ local start_repl_session = function()
         vim.fn.jobstart("PYDEVD_DISABLE_FILE_VALIDATION=1 " .. pythonPath ..
                             " -Xfrozen_modules=off -m debugpy --listen 5678 -c 'import code; code.interact()'",
                         {
-            on_exit = function() print("debugpy exited") end,
-            on_stdout = function() print("debugpy started") end,
+            on_exit = function() snacks.notify.info("debugpy exited") end,
+            on_stdout = function()
+                snacks.notify.info("debugpy started")
+            end,
             on_stderr = function(_, data)
-                print("Error: ", vim.inspect(data))
+                snacks.notify.error("Error: ", vim.inspect(data))
             end
         })
         return true
     end
-    print("Error: No setup for " .. filetype .. " repl start")
+    snacks.notify.error("Error: No setup for " .. filetype .. " repl start")
     return false
 end
 
@@ -416,7 +420,7 @@ M.start_repl = function()
     if session_started then
         require('dap').run(repl.configurations[filetype])
     else
-        print("REPL session not started")
+        snacks.notify.error("REPL session not started")
     end
 end
 

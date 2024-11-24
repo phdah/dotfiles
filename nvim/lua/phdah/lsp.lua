@@ -105,9 +105,12 @@ vim.api.nvim_create_autocmd("FileType", {
 ----------------
 -- Function to set the lint command for filetype
 local function lintFile(args)
+    local snacks = require("snacks")
     -- Clean out all trailing ExtraWhitespace, and tabs
     local ok, _ = pcall(function() vim.cmd("%s/\\t\\+$\\| \\+$//") end)
-    if not ok then print("No trailing whitespace found") end
+    if ok then
+        snacks.notify.info("Found and removed all trailing whitespace")
+    end
 
     -- Save the file first
     vim.cmd('silent! w')
@@ -139,6 +142,9 @@ local function lintFile(args)
     elseif filetype == 'terraform' then
         vim.cmd('silent! !terraform fmt % ' .. args)
     end
+    snacks.notify.info("Formatted file: " ..
+                           vim.fn
+                               .fnamemodify(vim.api.nvim_buf_get_name(0), ":t"))
 end
 
 -- Create the :Lint command
