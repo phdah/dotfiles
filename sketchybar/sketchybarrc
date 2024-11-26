@@ -54,7 +54,7 @@ do
     script="$PLUGIN_DIR/space.sh"
     click_script="yabai -m space --focus $sid"
   )
-  sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
+  sketchybar --add space space."$sid" center --set space."$sid" "${space[@]}"
 done
 
 ##### Adding Left Items #####
@@ -83,13 +83,15 @@ sketchybar --add item clock right \
            --add item volume right \
            --set volume script="$PLUGIN_DIR/volume.sh" \
            --subscribe volume volume_change \
+           --add item wifi right \
+           --set wifi update_freq=120 icon= script="$PLUGIN_DIR/wifi.sh" \
            --add item battery right \
            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
            --subscribe battery system_woke power_source_change \
            --add item cpu right \
            --set cpu update_freq=10 script="$PLUGIN_DIR/cpu.sh" \
-           --add item gpu right \
-           --set gpu update_freq=10 script="$PLUGIN_DIR/gpu.sh"
+           # --add item gpu right \
+           # --set gpu update_freq=10 script="$PLUGIN_DIR/gpu.sh"
 
 ##### Force all scripts to run the first time (never do this in a script) #####
 sketchybar --update
