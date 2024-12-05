@@ -32,9 +32,12 @@ return require('lazy').setup({
         }
     }, {
         'echasnovski/mini.surround',
-        event = {"BufReadPre", "BufNewFile"},
+        keys = {
+            {'sa', mode = {'v'}}, {'sd', mode = {'n'}}, {'sh', mode = {'n'}},
+            {'sr', mode = {'n'}}
+        },
         version = false,
-        opts = {}
+        config = function() require("phdah.surround") end
     }, {
         dir = '~/repos/privat/nvim-utils/' -- 'phdah/nvim-utils',
     }, {
@@ -61,10 +64,38 @@ return require('lazy').setup({
     }, {
         'stevearc/oil.nvim',
         config = function() require('phdah.oil') end,
-        dependencies = {"nvim-tree/nvim-web-devicons"}
+        dependencies = {"nvim-tree/nvim-web-devicons"},
+        keys = {{'<leader>-', ':Oil --float<CR>', mode = 'n'}}
     }, {
         'nvim-telescope/telescope.nvim',
-        event = "VeryLazy",
+        keys = {
+            {
+                '<leader>ff',
+                ':lua require("phdah.telescope").find_files_git()<CR>',
+                mode = 'n'
+            }, {
+                '<leader>fF',
+                ":lua require('telescope').extensions.smart_open.smart_open({cwd='~'})<CR>",
+                mode = 'n'
+            }, {
+                '<leader>fr',
+                ':lua require("phdah.telescope").live_grep_git()<CR>',
+                mode = 'n'
+            }, {
+                '<leader>f*',
+                ':lua require("phdah/telescope").grep_string_git()<CR>',
+                mode = 'n'
+            },
+            {
+                '<leader>fh',
+                ':lua require("telescope.builtin").help_tags()<CR>',
+                mode = 'n'
+            }, {
+                '<leader>fc',
+                ':lua require("phdah.telescope").telescope_diff_from_history()<CR>',
+                mode = 'n'
+            }, {'<leader>fe', ':Telescope diagnostics<CR>', mode = 'n'}
+        },
         dependencies = {
             'nvim-lua/plenary.nvim',
             {'nvim-telescope/telescope-fzf-native.nvim', build = 'make'}, {
@@ -92,8 +123,7 @@ return require('lazy').setup({
         dependencies = {
             -- LSP Support
             'neovim/nvim-lspconfig', 'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim', -- DAP support
-            'jay-babu/mason-nvim-dap.nvim',
+            'williamboman/mason-lspconfig.nvim',
             {"smjonas/inc-rename.nvim", opts = {}}
         }
     }, {
@@ -102,17 +132,15 @@ return require('lazy').setup({
         config = function() require("phdah.nvim-java") end
     }, {
         'hrsh7th/nvim-cmp',
-        event = {"BufReadPre", "BufNewFile"},
+        event = {"InsertEnter"},
         config = function() require("phdah.nvim-cmp") end,
         dependencies = {
             -- Sources
             'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-path',
             'hrsh7th/cmp-emoji', 'quangnguyen30192/cmp-nvim-tags',
-            'lukas-reineke/cmp-rg', 'rcarriga/cmp-dap', 'ray-x/cmp-treesitter',
-            {"MattiasMTS/cmp-dbee", opts = {}}, -- Snippets
-            'L3MON4D3/LuaSnip', 'rafamadriz/friendly-snippets',
-            'saadparwaiz1/cmp_luasnip'
+            'lukas-reineke/cmp-rg', 'ray-x/cmp-treesitter', 'L3MON4D3/LuaSnip',
+            'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip'
         }
     }, {
         'terrortylor/nvim-comment',
@@ -121,10 +149,18 @@ return require('lazy').setup({
     }, {
         "MattiasMTS/nvim-dbee",
         -- "kndndrj/nvim-dbee",
-        event = "VeryLazy",
+        keys = {
+            {
+                '<leader>ö',
+                ':lua require("dbee").toggle(); require("nvim-utils").Mouse:toggle()<CR>',
+                mode = 'n'
+            }
+        },
         branch = "mattias/databricks-adapter",
         config = function() require("phdah.nvim-dbee") end,
-        dependencies = {"MunifTanjim/nui.nvim"},
+        dependencies = {
+            "MunifTanjim/nui.nvim", {"MattiasMTS/cmp-dbee", opts = {}}
+        },
         build = function() require("dbee").install() end
     }, {
         "Febri-i/snake.nvim",
@@ -133,34 +169,57 @@ return require('lazy').setup({
         opts = {}
     }, {
         'rcarriga/nvim-dap-ui',
-        event = "VeryLazy",
+        keys = {
+            {
+                '<leader>b',
+                ':lua require("dap").toggle_breakpoint()<CR>',
+                mode = 'n'
+            }, {
+                '<leader>B',
+                ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition (key==\'value\'): "))<CR>',
+                mode = 'n'
+            }, {'<leader>db', ':DapNvimDebugee<CR>', mode = 'n'},
+            {'<leader>ds', ':DapNvimSource<CR>', mode = 'n'},
+            {
+                '<leader>dy',
+                ':lua require("phdah.nvim-dap").start_repl()<CR>',
+                mode = 'n'
+            }
+        },
         config = function() require("phdah.nvim-dap") end,
         dependencies = {
             'mfussenegger/nvim-dap', 'jbyuki/one-small-step-for-vimkind',
             'theHamsta/nvim-dap-virtual-text',
-            'tomblind/local-lua-debugger-vscode', 'nvim-neotest/nvim-nio'
+            'tomblind/local-lua-debugger-vscode', 'nvim-neotest/nvim-nio',
+            'jay-babu/mason-nvim-dap.nvim', 'rcarriga/cmp-dap'
         }
     }, {
         "scalameta/nvim-metals",
-        event = "VeryLazy",
+        ft = "scala",
         dependencies = {"nvim-lua/plenary.nvim"}
     }, {
         "folke/flash.nvim",
-        event = "VeryLazy",
-        config = function() require("phdah.flash") end
+        config = function() require("phdah.flash") end,
+        keys = {
+            {'ss', '<cmd>lua require("flash").jump()<CR>', mode = 'n'},
+            {'ss', '<cmd>lua require("flash").jump()<CR>', mode = 'x'},
+            {'ss', '<cmd>lua require("flash").jump()<CR>', mode = 'o'},
+            {'sS', '<cmd>lua require("flash").treesitter()<CR>', mode = 'n'},
+            {'sS', '<cmd>lua require("flash").treesitter()<CR>', mode = 'x'},
+            {'sS', '<cmd>lua require("flash").treesitter()<CR>', mode = 'o'}
+        }
     }, {
         -- 'phdah/nvim-statusline',
         dir = '~/repos/privat/nvim-statusline/',
         config = function() require("phdah.nvim-statusline") end,
-        event = "VeryLazy"
+        event = {"BufReadPre", "BufNewFile"}
     }, {
         -- 'phdah/nvim-databricks',
         dir = '~/repos/privat/nvim-databricks/',
         cmd = {"DBOpen", "DBRun", "DBRunOpen", "DBPrintState"},
         ft = "python",
         config = function() require("phdah.nvim-databricks") end
-    }, -- {'nvim-lua/plenary.nvim', event = "VeryLazy"},
-    {
+    }, {
         'David-Kunz/gen.nvim',
         cmd = "Gen",
         config = function() require("phdah.gen") end
@@ -170,5 +229,12 @@ return require('lazy').setup({
         config = true
         -- Uncomment next line if you want to follow only stable versions
         -- version = "*"
+    }, {
+        "kelvinauta/focushere.nvim",
+        opts = {},
+        keys = {
+            {"zf", ":FocusHere<CR>", mode = "v"},
+            {"zf", ":FocusClear<CR>", mode = "n"}
+        }
     }
 })

@@ -36,31 +36,11 @@ vim.api.nvim_set_keymap('n', '<C-CR>', ':Lint<CR>',
 vim.api.nvim_set_keymap('n', '<leader>vt', ":belowright sp | term<CR>",
                         {noremap = true, silent = true})
 
--- Vim Explorer
-vim.api.nvim_set_keymap('n', '<leader>-', ':Oil --float<CR>',
-                        {noremap = true, silent = true})
-
 -- Quickfix list
 vim.api
     .nvim_set_keymap('n', 'cn', ':cnext<CR>', {noremap = true, silent = true})
 vim.api
     .nvim_set_keymap('n', 'cp', ':cprev<CR>', {noremap = true, silent = true})
-
--- Flash jump
-vim.api.nvim_set_keymap('n', 'ss', '<cmd>lua require("flash").jump()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', 'ss', '<cmd>lua require("flash").jump()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('o', 'ss', '<cmd>lua require("flash").jump()<CR>',
-                        {noremap = true, silent = true})
-
--- Flash Treesitter
-vim.api.nvim_set_keymap('n', 'sS', '<cmd>lua require("flash").treesitter()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('x', 'sS', '<cmd>lua require("flash").treesitter()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('o', 'sS', '<cmd>lua require("flash").treesitter()<CR>',
-                        {noremap = true, silent = true})
 
 -- Git conflict
 vim.api.nvim_set_keymap('n', 'cl', ':GitConflictListQf<CR>', {silent = true})
@@ -88,9 +68,6 @@ vim.api.nvim_set_keymap('n', '<C-o>', ':Octo<CR>',
                         {noremap = true, silent = true})
 
 -- Dap keymaps
-vim.api.nvim_set_keymap('n', '<leader>b',
-                        ':lua require("dap").toggle_breakpoint()<CR>',
-                        {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>c', ':lua require("dap").continue()<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>t',
@@ -107,16 +84,6 @@ vim.api.nvim_set_keymap('n', '<leader>CB',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>r',
                         ':lua require("dapui").open({reset = true})<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>B',
-                        ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition (key==\'value\'): "))<CR>',
-                        {noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>db', ':DapNvimDebugee<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>ds', ':DapNvimSource<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>dy',
-                        ':lua require("phdah.nvim-dap").start_repl()<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<leader>dr',
                         ':lua require("phdah.nvim-dap").send_code_to_repl()<CR>',
@@ -160,33 +127,6 @@ vim.api.nvim_set_keymap('n', '<leader>vh', ':split<CR>',
 
 -- Delete line and insert empty line
 vim.api.nvim_set_keymap('n', '<leader>dd', 'Vc<Esc>',
-                        {noremap = true, silent = true})
-
--- DBee database
-vim.api.nvim_set_keymap('n', '<leader>ö',
-                        ':lua require("dbee").toggle(); require("nvim-utils").Mouse:toggle()<CR>',
-                        {noremap = true, silent = true})
-
--- Browse files
-vim.api.nvim_set_keymap('n', '<leader>ff',
-                        ':lua require("phdah.telescope").find_files_git()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>fF',
-                        ":lua require('telescope').extensions.smart_open.smart_open({cwd='~'})<CR>",
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>fr',
-                        ':lua require("phdah.telescope").live_grep_git()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>f*',
-                        ':lua require("phdah/telescope").grep_string_git()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>fh',
-                        ':lua require("telescope.builtin").help_tags()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>fc',
-                        ':lua require("phdah.telescope").telescope_diff_from_history()<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<leader>fe', ':Telescope diagnostics<CR>',
                         {noremap = true, silent = true})
 
 -- Spell checking
