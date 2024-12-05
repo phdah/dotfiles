@@ -68,8 +68,6 @@ vim.api.nvim_set_keymap('n', '<C-o>', ':Octo<CR>',
                         {noremap = true, silent = true})
 
 -- Dap keymaps
-vim.api.nvim_set_keymap('n', '<leader>c', ':lua require("dap").continue()<CR>',
-                        {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>t',
                         ':lua require("phdah.nvim-dap").dapui_terminate()<CR>',
                         {noremap = true, silent = true})
