@@ -30,3 +30,5 @@ mutex
 goroutine
 bool
 struct
+pydantic
+docstring
