@@ -104,12 +104,24 @@ dap.adapters.go = {
 -- Function to run dsymutil
 local program
 local function runDsymutil(executable)
-    -- TODO: only run this if it's missing
-    local handle = io.popen('dsymutil ' .. executable)
-    if handle ~= nil then
-        local result = handle:read("*a")
-        snacks.notify.info(result)
-        handle:close()
+    -- Determine the .dSYM path based on the executable name
+    local dsymPath = executable .. ".dSYM"
+
+    -- Check if the .dSYM directory exists
+    local function dsymExists(path)
+        local attr = vim.loop.fs_stat(path) -- Use luv (libuv) for file system checks
+        return attr and attr.type == "directory"
+    end
+
+    if not dsymExists(dsymPath) then
+        snacks.notify.info("No .dSYM exists on: " .. dsymPath)
+        -- Run dsymutil if the .dSYM is missing
+        local handle = io.popen('dsymutil ' .. executable)
+        if handle ~= nil then
+            local result = handle:read("*a")
+            handle:close()
+        end
+    else
     end
 end
 
@@ -121,7 +133,7 @@ dap.configurations.cpp = {
         program = function()
             program = vim.fn.input('Path to executable: ',
                                    vim.fn.getcwd() .. '/', 'file')
-            -- runDsymutil(program)
+            runDsymutil(program)
             return program
         end,
         cwd = '${workspaceFolder}',
