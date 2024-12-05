@@ -245,5 +245,9 @@ return require('lazy').setup({
             {"zf", ":FocusHere<CR>", mode = "v"},
             {"zf", ":FocusClear<CR>", mode = "n"}
         }
+    }, {
+        "oskarrrrrrr/symbols.nvim",
+        config = function() require('phdah.symbols') end,
+        keys = {{"sb", "<cmd> SymbolsToggle<CR>", mode = 'n'}}
     }
 })
