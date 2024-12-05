@@ -179,7 +179,16 @@ return require('lazy').setup({
                 ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition (key==\'value\'): "))<CR>',
                 mode = 'n'
             }, {'<leader>db', ':DapNvimDebugee<CR>', mode = 'n'},
-            {'<leader>ds', ':DapNvimSource<CR>', mode = 'n'},
+            {'<leader>ds', ':DapNvimSource<CR>', mode = 'n'}, {
+                '<leader>c',
+                function()
+                    -- Ensure the module is loaded, this is only
+                    -- a problem if loaded by this mapping
+                    require("phdah.nvim-dap")
+                    require("dap").continue()
+                end,
+                mode = 'n'
+            },
             {
                 '<leader>dy',
                 ':lua require("phdah.nvim-dap").start_repl()<CR>',
