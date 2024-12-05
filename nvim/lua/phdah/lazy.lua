@@ -87,7 +87,7 @@ return require('lazy').setup({
     }, {
         'VonHeikemen/lsp-zero.nvim',
         event = {"BufReadPre", "BufNewFile"},
-        branch = 'v3.x',
+        branch = 'v4.x',
         config = function() require("phdah.lsp") end,
         dependencies = {
             -- LSP Support
