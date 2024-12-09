@@ -32,3 +32,4 @@ bool
 struct
 pydantic
 docstring
+DuckDB
