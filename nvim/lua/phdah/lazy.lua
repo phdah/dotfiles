@@ -210,6 +210,8 @@ return require('lazy').setup({
         "folke/flash.nvim",
         config = function() require("phdah.flash") end,
         keys = {
+            {'f', mode = 'n'}, {'F', mode = 'n'}, {'t', mode = 'n'},
+            {'T', mode = 'n'},
             {'ss', '<cmd>lua require("flash").jump()<CR>', mode = 'n'},
             {'ss', '<cmd>lua require("flash").jump()<CR>', mode = 'x'},
             {'ss', '<cmd>lua require("flash").jump()<CR>', mode = 'o'},
@@ -217,6 +219,16 @@ return require('lazy').setup({
             {'sS', '<cmd>lua require("flash").treesitter()<CR>', mode = 'x'},
             {'sS', '<cmd>lua require("flash").treesitter()<CR>', mode = 'o'}
         }
+    }, {
+        "leath-dub/snipe.nvim",
+        keys = {
+            {
+                "<leader>fb",
+                ':lua require("snipe").open_buffer_menu()<CR>',
+                mode = 'n'
+            }
+        },
+        config = function() require("phdah.snipe") end
     }, {
         -- 'phdah/nvim-statusline',
         dir = '~/repos/privat/nvim-statusline/',
