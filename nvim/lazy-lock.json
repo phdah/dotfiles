@@ -50,6 +50,7 @@
   "smart-open.nvim": { "branch": "0.2.x", "commit": "7770b01ce4d551c143d7ec8589879320796621b9" },
   "snacks.nvim": { "branch": "main", "commit": "974bccb126b6b5d7170c519c380207069d23f557" },
   "snake.nvim": { "branch": "main", "commit": "055f43656b01d5500efffb068c11c5bd3e7914e3" },
+  "snipe.nvim": { "branch": "main", "commit": "b9b4fd3c10341a3cf7895a024c3c378ca65295ac" },
   "sqlite.lua": { "branch": "master", "commit": "d0ffd703b56d090d213b497ed4eb840495f14a11" },
   "symbols.nvim": { "branch": "main", "commit": "a09ceb6d44ce71f63f8174a26cdbe85a2943cbcd" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "cf48d4dfce44e0b9a2e19a008d6ec6ea6f01a83b" },
