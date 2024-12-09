@@ -241,9 +241,15 @@ return require('lazy').setup({
         ft = "python",
         config = function() require("phdah.nvim-databricks") end
     }, {
-        'David-Kunz/gen.nvim',
-        cmd = "Gen",
-        config = function() require("phdah.gen") end
+        "olimorris/codecompanion.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"
+        },
+        keys = {
+            {"<leader>gp", "<cmd>CodeCompanionActions<CR>", 'n'},
+            {"<leader>gp", "<cmd>CodeCompanionActions<CR>", 'v'}
+        },
+        config = function() require("phdah.code_companion") end
     }, {
         "danymat/neogen",
         cmd = "Neogen",
