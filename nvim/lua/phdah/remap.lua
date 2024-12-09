@@ -1,9 +1,3 @@
--- llama gen
-vim.api.nvim_set_keymap('n', '<C-g>', ':Gen Chat<CR>',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('v', '<C-g>', ':Gen Ask<CR>',
-                        {noremap = true, silent = true})
-
 -- LSP keymaps
 vim.api.nvim_set_keymap('n', '<leader>gg',
                         ":lua vim.lsp.buf.definition(); vim.cmd('normal! zz')<CR>",
