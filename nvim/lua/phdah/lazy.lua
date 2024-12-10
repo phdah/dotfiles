@@ -39,7 +39,7 @@ return require('lazy').setup({
         version = false,
         config = function() require("phdah.surround") end
     }, {
-        dir = '~/repos/privat/nvim-utils/' -- 'phdah/nvim-utils',
+        dir = '~/repos/privat/nvim-utils/'
     }, {
         "folke/snacks.nvim",
         priority = 1000,
