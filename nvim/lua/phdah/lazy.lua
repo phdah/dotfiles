@@ -38,19 +38,26 @@ return require('lazy').setup({
         },
         version = false,
         config = function() require("phdah.surround") end
-    }, {
-        dir = '~/repos/privat/nvim-utils/'
-    }, {
+    }, {dir = '~/repos/privat/nvim-utils/'}, {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
         opts = {
-            bigfile = {enabled = true},
-            bufdelete = {enabled = true},
-            dashboard = {enabled = true},
-            notifier = {enabled = true},
-            gitbrowse = {enabled = true}
+            bigfile = {},
+            bufdelete = {},
+            dashboard = {},
+            notifier = {},
+            gitbrowse = {},
+            dim = {},
+            -- Maybe this, not sure yet, too cluttered
+            -- indent = {scope = {animate = {enabled = false}}},
+        },
+        keys = {
+            -- dim
+            {"zf", ':lua require("snacks").dim.enable()<CR>', mode = "n"},
+            {"zF", ':lua require("snacks").dim.disable()<CR>', mode = "n"}
         }
+
     }, ------------------------
     -- Can be Lazy Loaded --
     ------------------------
@@ -256,13 +263,6 @@ return require('lazy').setup({
         config = true
         -- Uncomment next line if you want to follow only stable versions
         -- version = "*"
-    }, {
-        "kelvinauta/focushere.nvim",
-        opts = {},
-        keys = {
-            {"zf", ":FocusHere<CR>", mode = "v"},
-            {"zf", ":FocusClear<CR>", mode = "n"}
-        }
     }, {
         "oskarrrrrrr/symbols.nvim",
         config = function() require('phdah.symbols') end,

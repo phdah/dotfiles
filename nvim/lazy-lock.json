@@ -13,7 +13,6 @@
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
   "codecompanion.nvim": { "branch": "main", "commit": "b993cc1d15cb041a71dc06759347add9a68c4577" },
   "flash.nvim": { "branch": "main", "commit": "34c7be146a91fec3555c33fe89c7d643f6ef5cf1" },
-  "focushere.nvim": { "branch": "main", "commit": "28c40c7e3481d6cd9e4c7b8005c36a18b5db7ac6" },
   "friendly-snippets": { "branch": "main", "commit": "efff286dd74c22f731cdec26a70b46e5b203c619" },
   "fscreen.nvim": { "branch": "main", "commit": "9f4805a54ecdf16fffaf8491160f1effd128849b" },
   "git-conflict.nvim": { "branch": "main", "commit": "4dc906855751096aaeba2edde7c2cdc7bb881c98" },
