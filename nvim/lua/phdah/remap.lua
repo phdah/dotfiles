@@ -84,10 +84,6 @@ vim.api.nvim_set_keymap('n', '<leader>dR',
                         ':lua require("phdah.nvim-dap").send_file_to_repl()<CR>',
                         {noremap = true, silent = true})
 
--- Execute vim line in shell
-vim.api.nvim_set_keymap('n', '<leader><Enter>', ':.!zsh<CR>',
-                        {noremap = true, silent = true})
-
 -- Buffer control
 vim.api.nvim_set_keymap('n', '<C-m>', ':noh<CR>',
                         {noremap = true, silent = true})
