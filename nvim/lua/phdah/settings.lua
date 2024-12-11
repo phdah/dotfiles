@@ -66,7 +66,8 @@ vim.api.nvim_create_autocmd({"BufEnter", "ColorScheme"}, {
     group = whiteGroup,
     pattern = "*",
     callback = function()
-        if vim.bo.filetype ~= "" then
+        local fileType = vim.bo.filetype
+        if fileType ~= "" and fileType ~= "dbee" then
             -- Only apply the highlight if the buffer has a filetype
             vim.api.nvim_set_hl(0, "ExtraWhitespace", {bg = "#BF616A"})
             vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
