@@ -48,7 +48,7 @@ return require('lazy').setup({
             dashboard = {},
             notifier = {},
             gitbrowse = {},
-            dim = {},
+            dim = {}
             -- Maybe this, not sure yet, too cluttered
             -- indent = {scope = {animate = {enabled = false}}},
         },
@@ -269,5 +269,14 @@ return require('lazy').setup({
         "oskarrrrrrr/symbols.nvim",
         config = function() require('phdah.symbols') end,
         keys = {{"sb", "<cmd> SymbolsToggle<CR>", mode = 'n'}}
+    }, {
+        'phdah/lazydbrix',
+        keys = {
+            {
+                "<leader>do", ':lua require("lazydbrix").lazydbrix:open()<CR>',
+                'n'
+            }
+        },
+        dependencies = {"voldikss/vim-floaterm"}
     }
 })

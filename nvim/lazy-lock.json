@@ -19,6 +19,7 @@
   "gitsigns.nvim": { "branch": "main", "commit": "5f808b5e4fef30bd8aca1b803b4e555da07fc412" },
   "inc-rename.nvim": { "branch": "main", "commit": "1871ca49ae6ee3e9ebee37955ba10c7b1425974f" },
   "lazy.nvim": { "branch": "main", "commit": "7c493713bc2cb392706866eeba53aaef6c8e9fc6" },
+  "lazydbrix": { "branch": "main", "commit": "20482b5339124b5ba507087e79fd5a413128b4b4" },
   "local-lua-debugger-vscode": { "branch": "master", "commit": "d51ee2907b02d630be0fd62d243de184e26ad431" },
   "lsp-zero.nvim": { "branch": "v4.x", "commit": "35421bdd70427fe6ecd93371533d33cc628a5b4b" },
   "markview.nvim": { "branch": "main", "commit": "72cd34279e94ee96ee33bdf30a87b00e6d45319d" },
