@@ -228,6 +228,7 @@ return require('lazy').setup({
         }
     }, {
         "leath-dub/snipe.nvim",
+        lazy = false,
         keys = {
             {
                 "<leader>fb",
