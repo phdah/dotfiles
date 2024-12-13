@@ -70,6 +70,7 @@ return require('lazy').setup({
         }
     }, {
         'stevearc/oil.nvim',
+        lazy = false,
         config = function() require('phdah.oil') end,
         dependencies = {"nvim-tree/nvim-web-devicons"},
         keys = {{'<leader>-', ':Oil --float<CR>', mode = 'n'}}
