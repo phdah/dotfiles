@@ -91,6 +91,10 @@ vim.wo.relativenumber = true
 
 -- Disable mouse
 require("nvim-utils").Mouse:new(false)
+vim.api.nvim_create_user_command('MouseToggle', function()
+    require("nvim-utils").Mouse:toggle()
+end, {})
+
 
 -- Open help in its own buffer, use ':H <args>'
 vim.cmd [[command! -nargs=1 -complete=command -bar H help <args> | only]]
