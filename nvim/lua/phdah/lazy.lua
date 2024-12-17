@@ -270,7 +270,8 @@ return require('lazy').setup({
         config = function() require('phdah.symbols') end,
         keys = {{"sb", "<cmd> SymbolsToggle<CR>", mode = 'n'}}
     }, {
-        'phdah/lazydbrix',
+        -- 'phdah/lazydbrix',
+        dir = "~/repos/privat/lazydbrix",
         keys = {
             {
                 "<leader>do", ':lua require("lazydbrix").lazydbrix:open()<CR>',
