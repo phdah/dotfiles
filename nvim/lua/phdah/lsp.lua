@@ -123,7 +123,7 @@ local function lintFile(args)
     elseif filetype == "go" then
         vim.cmd('silent! !gofmt -w % ' .. args)
         -- Replace tabs with spaces (treesitter issue)
-        vim.cmd('silent! %s/\\t/    /g')
+        -- vim.cmd('silent! %s/\\t/    /g')
     elseif filetype == 'sh' then
         vim.cmd('silent! !shfmt -w -i 4 -ci % ' .. args)
     elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or
