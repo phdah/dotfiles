@@ -15,7 +15,6 @@ return require('lazy').setup({
     ------------------
     -- Code visuals --
     ------------------
-
     {
         'nvim-treesitter/nvim-treesitter',
         event = {"BufReadPre", "BufNewFile"},
@@ -30,7 +29,8 @@ return require('lazy').setup({
                 config = function() require("phdah.gitsigns") end
             }
         }
-    }, {
+    },
+    {
         'echasnovski/mini.surround',
         keys = {
             {'sa', mode = {'v'}}, {'sd', mode = {'n'}}, {'sh', mode = {'n'}},
@@ -38,7 +38,9 @@ return require('lazy').setup({
         },
         version = false,
         config = function() require("phdah.surround") end
-    }, {dir = '~/repos/privat/nvim-utils/'}, {
+    },
+    {dir = '~/repos/privat/nvim-utils/'},
+    {
         "folke/snacks.nvim",
         priority = 1000,
         lazy = false,
@@ -58,23 +60,27 @@ return require('lazy').setup({
             {"zF", ':lua require("snacks").dim.disable()<CR>', mode = "n"}
         }
 
-    }, ------------------------
+    },
+    ------------------------
     -- Can be Lazy Loaded --
     ------------------------
-    {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
+    {'voldikss/vim-floaterm', cmd = "FloatermNew"},
+    {
         "OXY2DEV/markview.nvim",
         ft = "markdown",
         config = function() require("phdah.markview") end,
         dependencies = {
             "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons"
         }
-    }, {
+    },
+    {
         'stevearc/oil.nvim',
         lazy = false,
         config = function() require('phdah.oil') end,
         dependencies = {"nvim-tree/nvim-web-devicons"},
         keys = {{'<leader>-', ':Oil --float<CR>', mode = 'n'}}
-    }, {
+    },
+    {
         'nvim-telescope/telescope.nvim',
         keys = {
             {
@@ -115,7 +121,8 @@ return require('lazy').setup({
                 dependencies = {"kkharji/sqlite.lua"}
             }
         }
-    }, {
+    },
+    {
         'pwntester/octo.nvim',
         cmd = "Octo",
         config = function() require("phdah.octo") end,
@@ -123,7 +130,8 @@ return require('lazy').setup({
             'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim',
             'nvim-tree/nvim-web-devicons'
         }
-    }, {
+    },
+    {
         'VonHeikemen/lsp-zero.nvim',
         event = {"BufReadPre", "BufNewFile"},
         branch = 'v4.x',
@@ -134,7 +142,8 @@ return require('lazy').setup({
             'williamboman/mason-lspconfig.nvim',
             {"smjonas/inc-rename.nvim", opts = {}}
         }
-    }, {
+    },
+    {
         'mfussenegger/nvim-jdtls',
         ft = 'java',
         config = function() require("phdah.nvim-java") end
@@ -154,7 +163,8 @@ return require('lazy').setup({
         'terrortylor/nvim-comment',
         cmd = "CommentToggle",
         config = function() require("phdah.codecomment") end
-    }, {
+    },
+    {
         "MattiasMTS/nvim-dbee",
         -- "kndndrj/nvim-dbee",
         keys = {
@@ -170,12 +180,14 @@ return require('lazy').setup({
             "MunifTanjim/nui.nvim", {"MattiasMTS/cmp-dbee", opts = {}}
         },
         build = function() require("dbee").install() end
-    }, {
+    },
+    {
         "Febri-i/snake.nvim",
         cmd = "SnakeStart",
         dependencies = {"Febri-i/fscreen.nvim"},
         opts = {}
-    }, {
+    },
+    {
         'rcarriga/nvim-dap-ui',
         keys = {
             {
@@ -210,11 +222,13 @@ return require('lazy').setup({
             'tomblind/local-lua-debugger-vscode', 'nvim-neotest/nvim-nio',
             'jay-babu/mason-nvim-dap.nvim', 'rcarriga/cmp-dap'
         }
-    }, {
+    },
+    {
         "scalameta/nvim-metals",
         ft = "scala",
         dependencies = {"nvim-lua/plenary.nvim"}
-    }, {
+    },
+    {
         "folke/flash.nvim",
         config = function() require("phdah.flash") end,
         keys = {
@@ -227,7 +241,8 @@ return require('lazy').setup({
             {'sS', '<cmd>lua require("flash").treesitter()<CR>', mode = 'x'},
             {'sS', '<cmd>lua require("flash").treesitter()<CR>', mode = 'o'}
         }
-    }, {
+    },
+    {
         "leath-dub/snipe.nvim",
         lazy = false,
         keys = {
@@ -238,18 +253,21 @@ return require('lazy').setup({
             }
         },
         config = function() require("phdah.snipe") end
-    }, {
+    },
+    {
         -- 'phdah/nvim-statusline',
         dir = '~/repos/privat/nvim-statusline/',
         config = function() require("phdah.nvim-statusline") end,
         event = {"BufReadPre", "BufNewFile"}
-    }, {
+    },
+    {
         -- 'phdah/nvim-databricks',
         dir = '~/repos/privat/nvim-databricks/',
         cmd = {"DBOpen", "DBRun", "DBRunOpen", "DBPrintState"},
         ft = "python",
         config = function() require("phdah.nvim-databricks") end
-    }, {
+    },
+    {
         "olimorris/codecompanion.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim", "nvim-treesitter/nvim-treesitter"
@@ -259,28 +277,26 @@ return require('lazy').setup({
             {"<leader>gp", "<cmd>CodeCompanionActions<CR>", 'v'}
         },
         config = function() require("phdah.code_companion") end
-    }, {
+    },
+    {
         "danymat/neogen",
         cmd = "Neogen",
         config = true
         -- Uncomment next line if you want to follow only stable versions
         -- version = "*"
-    }, {
+    },
+    {
         "oskarrrrrrr/symbols.nvim",
         config = function() require('phdah.symbols') end,
         keys = {{"sb", "<cmd> SymbolsToggle<CR>", mode = 'n'}}
-    }, {
+    },
+    {
         -- 'phdah/lazydbrix',
         dir = "~/repos/privat/lazydbrix",
         build = ':lua require("lazydbrix").install()',
         ft = {"python"},
         opts = {sourceOnStart = true},
-        keys = {
-            {
-                "<leader>do", ':lua require("lazydbrix").open()<CR>',
-                'n'
-            }
-        },
+        keys = {{"<leader>do", ':lua require("lazydbrix").open()<CR>', 'n'}},
         dependencies = {"voldikss/vim-floaterm"}
     }
 })
