@@ -100,6 +100,9 @@ vim.api.nvim_set_keymap('n', '<leader>q', ':lua Snacks.bufdelete()<CR>',
 vim.api.nvim_set_keymap('n', '<leader>Q',
                         ':lua Snacks.bufdelete({force=true})<CR>',
                         {noremap = true, silent = true})
+-- Notify
+vim.api.nvim_set_keymap('n', '<leader>ns', ':lua require("snacks").notifier.show_history()<CR>',
+                        {noremap = true, silent = true})
 
 -- Window control
 vim.api.nvim_set_keymap('n', '<S-Right>', ':vertical resize +3<CR>',
@@ -193,7 +196,7 @@ vim.api.nvim_set_keymap('v', '<leader>j', '}zzk', {noremap = true})
 vim.api.nvim_set_keymap('v', '<leader>k', '{zzj', {noremap = true})
 
 -- Toggle number and sign column
-vim.api.nvim_set_keymap('n', '<leader>n',
+vim.api.nvim_set_keymap('n', '<leader>no',
                         ':set invrelativenumber invnumber<CR>:GitGutterToggle<CR>',
                         {noremap = true, silent = true})
 
