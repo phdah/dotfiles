@@ -272,9 +272,12 @@ return require('lazy').setup({
     }, {
         -- 'phdah/lazydbrix',
         dir = "~/repos/privat/lazydbrix",
+        build = ':lua require("lazydbrix").install()',
+        ft = {"python"},
+        opts = {sourceOnStart = true},
         keys = {
             {
-                "<leader>do", ':lua require("lazydbrix").lazydbrix:open()<CR>',
+                "<leader>do", ':lua require("lazydbrix").open()<CR>',
                 'n'
             }
         },
