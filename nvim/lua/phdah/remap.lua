@@ -32,28 +32,32 @@ vim.api.nvim_set_keymap('n', '<leader>vt', ":belowright sp | term<CR>",
 
 -- Quickfix list
 vim.api
+    .nvim_set_keymap('n', 'co', ':copen<CR>', {noremap = true, silent = true})
+vim.api
+    .nvim_set_keymap('n', 'cl', ':cclose<CR>', {noremap = true, silent = true})
+vim.api
     .nvim_set_keymap('n', 'cn', ':cnext<CR>', {noremap = true, silent = true})
 vim.api
-    .nvim_set_keymap('n', 'cp', ':cprev<CR>', {noremap = true, silent = true})
+    .nvim_set_keymap('n', 'cN', ':cprev<CR>', {noremap = true, silent = true})
 
 -- Git conflict
-vim.api.nvim_set_keymap('n', 'cl', ':GitConflictListQf<CR>', {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>cl', ':GitConflictListQf<CR>', {silent = true})
 vim.api
-    .nvim_set_keymap('n', 'co', ':GitConflictChooseOurs<CR>', {silent = true})
-vim.api.nvim_set_keymap('n', 'ct', ':GitConflictChooseTheirs<CR>',
+    .nvim_set_keymap('n', '<leader>co', ':GitConflictChooseOurs<CR>', {silent = true})
+vim.api.nvim_set_keymap('n', '<leader>ct', ':GitConflictChooseTheirs<CR>',
                         {silent = true})
 vim.api
-    .nvim_set_keymap('n', 'c0', ':GitConflictChooseBoth<CR>', {silent = true})
+    .nvim_set_keymap('n', '<leader>c0', ':GitConflictChooseBoth<CR>', {silent = true})
 vim.api
-    .nvim_set_keymap('n', 'cb', ':GitConflictChooseNone<CR>', {silent = true})
+    .nvim_set_keymap('n', '<leader>cb', ':GitConflictChooseNone<CR>', {silent = true})
 -- TODO: Add 'zz' after next and prev
-vim.api.nvim_set_keymap('n', 'cj', ':GitConflictNextConflict<CR>',
+vim.api.nvim_set_keymap('n', '<leader>cj', ':GitConflictNextConflict<CR>',
                         {silent = true})
-vim.api.nvim_set_keymap('n', 'ck', ':GitConflictPrevConflict<CR>',
+vim.api.nvim_set_keymap('n', '<leader>ck', ':GitConflictPrevConflict<CR>',
                         {silent = true})
 
 -- lazygit
-vim.api.nvim_set_keymap('n', '<C-l>',
+vim.api.nvim_set_keymap('n', '<leader>lo',
                         ':FloatermNew --width=0.9 --height=0.9 lazygit<CR>',
                         {noremap = true, silent = true})
 
