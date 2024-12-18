@@ -138,16 +138,55 @@ return require('lazy').setup({
         ft = 'java',
         config = function() require("phdah.nvim-java") end
     }, {
-        'hrsh7th/nvim-cmp',
-        event = {"InsertEnter"},
-        config = function() require("phdah.nvim-cmp") end,
+        'saghen/blink.cmp',
+        lazy = false, -- lazy loading handled internally
+        version = '*',
+        opts = {
+            keymap = {preset = 'default'},
+            appearance = {
+                use_nvim_cmp_as_default = true,
+                nerd_font_variant = 'mono'
+            },
+            sources = {
+                -- remember to enable your providers here
+                default = {
+                    'lsp', 'path', 'snippets', 'buffer', 'emoji', 'ripgrep'
+                },
+                providers = {
+                    lsp = {fallback_for = {"lazydev"}},
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink"
+                    },
+                    emoji = {
+                        name = 'emoji',
+                        module = 'blink.compat.source',
+                        score_offset = -3
+                    },
+                    ripgrep = {
+                        module = "blink-ripgrep",
+                        name = "Ripgrep",
+                        opts = {
+                            prefix_min_len = 3,
+                            context_size = 5,
+                            max_filesize = "1M",
+                            additional_rg_options = {}
+                        }
+                    }
+                }
+            },
+            -- experimental signature help support
+            -- signature = {enabled = true},
+            opts_extend = {"sources.default"}
+        },
         dependencies = {
-            -- Sources
-            'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-path',
-            'hrsh7th/cmp-emoji', 'quangnguyen30192/cmp-nvim-tags',
-            'lukas-reineke/cmp-rg', 'ray-x/cmp-treesitter', 'L3MON4D3/LuaSnip',
-            'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip'
+            {
+                'saghen/blink.compat',
+                version = '*',
+                lazy = true,
+                opts = {impersonate_nvim_cmp = false, debug = false}
+            }, 'hrsh7th/cmp-emoji', 'mikavilpas/blink-ripgrep.nvim',
+            'folke/lazydev.nvim'
         }
     }, {
         'terrortylor/nvim-comment',
