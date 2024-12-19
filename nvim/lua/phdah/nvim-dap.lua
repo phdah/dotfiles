@@ -395,9 +395,6 @@ local start_repl_session = function()
             on_stdout = function()
                 snacks.notify.info("debugpy started")
             end,
-            on_stderr = function(_, data)
-                snacks.notify.error("Error: ", data)
-            end
         })
         return true
     end
