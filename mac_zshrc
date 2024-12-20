@@ -148,6 +148,11 @@ export LS_COLORS="$LS_COLORS:ex=01;32"
 
 export EDITOR=$(which nvim)
 
+# Set keybinding for editing commands
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^e" edit-command-line
+
 # Dez
 export DEZ_LIB=$HOME/repos/privat/dez
 export DEZ_HOME=/usr/local/etc/dez
