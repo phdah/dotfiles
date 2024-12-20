@@ -269,8 +269,8 @@ return require('lazy').setup({
         config = function() require('phdah.symbols') end,
         keys = {{"sb", "<cmd> SymbolsToggle<CR>", mode = 'n'}}
     }, {
-        -- 'phdah/lazydbrix',
-        dir = "~/repos/privat/lazydbrix",
+        'phdah/lazydbrix',
+        -- dir = "~/repos/privat/lazydbrix",
         build = ':lua require("lazydbrix").install()',
         ft = {"python"},
         opts = {sourceOnStart = true},
