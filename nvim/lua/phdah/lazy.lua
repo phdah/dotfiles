@@ -153,10 +153,10 @@ return require('lazy').setup({
                     'lsp', 'path', 'snippets', 'buffer', 'emoji', 'ripgrep'
                 },
                 providers = {
-                    lsp = {fallback_for = {"lazydev"}},
                     lazydev = {
                         name = "LazyDev",
-                        module = "lazydev.integrations.blink"
+                        module = "lazydev.integrations.blink",
+                        fallbacks = {"lsp"}
                     },
                     emoji = {
                         name = 'emoji',
@@ -174,10 +174,9 @@ return require('lazy').setup({
                         }
                     }
                 }
-            },
+            }
             -- experimental signature help support
             -- signature = {enabled = true},
-            opts_extend = {"sources.default"}
         },
         dependencies = {
             {
