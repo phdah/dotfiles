@@ -18,7 +18,8 @@ require("blink-cmp").setup({
                     context_size = 5,
                     max_filesize = "1M",
                     additional_rg_options = {}
-                }
+                },
+                score_offset = -3
             }
         }
     }
