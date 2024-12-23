@@ -3,24 +3,13 @@ require("blink-cmp").setup({
     appearance = {use_nvim_cmp_as_default = true, nerd_font_variant = 'mono'},
     sources = {
         -- remember to enable your providers here
-        default = {'lsp', 'path', 'snippets', 'buffer', 'emoji', 'ripgrep'},
+        default = {'lsp', 'path', 'snippets', 'buffer', 'emoji'},
         providers = {
             emoji = {
                 name = 'emoji',
                 module = 'blink.compat.source',
                 score_offset = -3
             },
-            ripgrep = {
-                module = "blink-ripgrep",
-                name = "Ripgrep",
-                opts = {
-                    prefix_min_len = 3,
-                    context_size = 5,
-                    max_filesize = "1M",
-                    additional_rg_options = {}
-                },
-                score_offset = -3
-            }
         }
     }
     -- experimental signature help support
