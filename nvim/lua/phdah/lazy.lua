@@ -140,7 +140,7 @@ return require('lazy').setup({
     }, {
         'saghen/blink.cmp',
         lazy = false, -- lazy loading handled internally
-        version = '*',
+        version = '0.8.0',
         config = function() require("phdah.blink") end,
         dependencies = {
             {
