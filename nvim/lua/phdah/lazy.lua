@@ -21,7 +21,7 @@ return require('lazy').setup({
         build = ':TSUpdate',
         config = function() require("phdah.treesitter") end,
         dependencies = {
-            'p00f/nvim-ts-rainbow', 'shaunsingh/nord.nvim', {
+            'shaunsingh/nord.nvim', {
                 'akinsho/git-conflict.nvim',
                 config = function() require("phdah.git-conflict") end
             }, {
