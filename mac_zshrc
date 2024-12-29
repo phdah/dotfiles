@@ -123,6 +123,9 @@ NEWLINE=$'\n'
 PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
 RPROMPT='${vcs_info_msg_0_}'
 
+# Set max file descriptor limit, used by watchman
+ulimit -n 8192
+
 # Export config dir
 export XDG_CONFIG_HOME="$HOME/.config"
 
