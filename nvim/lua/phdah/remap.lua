@@ -38,7 +38,7 @@ vim.api
 vim.api
     .nvim_set_keymap('n', 'cn', ':cnext<CR>', {noremap = true, silent = true})
 vim.api
-    .nvim_set_keymap('n', 'cN', ':cprev<CR>', {noremap = true, silent = true})
+    .nvim_set_keymap('n', 'cp', ':cprev<CR>', {noremap = true, silent = true})
 
 -- Git conflict
 vim.api.nvim_set_keymap('n', '<leader>cl', ':GitConflictListQf<CR>', {silent = true})
