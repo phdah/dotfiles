@@ -281,5 +281,5 @@ return require('lazy').setup({
             {"<leader>dp", ':lua require("lazydbrix").show()<CR>', 'n'}
         },
         dependencies = {"voldikss/vim-floaterm"}
-    }
+    }, {'nvim-lua/plenary.nvim', cmd = "PlenaryBustedDirectory"}
 })
