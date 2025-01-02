@@ -81,3 +81,6 @@ vim.api.nvim_set_keymap('v', '<C-f>', ':', {noremap = true})
 
 -- Write/save file
 vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', {noremap = true})
+
+-- Remove unwanted keymaps
+vim.api.nvim_set_keymap('i', '<C-u>', '<Nop>', {noremap = true, silent = true, desc = "Undo in insert"})
