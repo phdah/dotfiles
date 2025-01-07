@@ -16,9 +16,12 @@ require("blink-cmp").setup({
         -- remember to enable your providers here
         default = {'lsp', 'path', 'snippets', 'buffer', 'emoji'},
         per_filetype = {
+            -- Dap
             ['dap-repl'] = {'dap'},
             ['dapui_watches'] = {'dap'},
             ['dapui_hover'] = {'dap'},
+            -- Dbee
+            sql = {'dbee', 'buffer'}
         },
         cmdline = function()
             local type = vim.fn.getcmdtype()
@@ -29,6 +32,7 @@ require("blink-cmp").setup({
             return {}
         end,
         providers = {
+            dbee = {name = 'cmp-dbee', module = 'blink.compat.source'},
             dap = {name = 'dap', module = 'blink.compat.source'},
             lsp = {min_keyword_length = 2, score_offset = 0},
             path = {min_keyword_length = 0},
