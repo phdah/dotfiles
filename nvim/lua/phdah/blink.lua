@@ -1,4 +1,7 @@
 require("blink-cmp").setup({
+    enabled = function()
+        return vim.bo.buftype ~= "prompt" or require("cmp_dap").is_dap_buffer()
+    end,
     appearance = {use_nvim_cmp_as_default = true, nerd_font_variant = 'mono'},
     completion = {
         accept = {auto_brackets = {enabled = true}},
@@ -12,6 +15,11 @@ require("blink-cmp").setup({
     sources = {
         -- remember to enable your providers here
         default = {'lsp', 'path', 'snippets', 'buffer', 'emoji'},
+        per_filetype = {
+            ['dap-repl'] = {'dap'},
+            ['dapui_watches'] = {'dap'},
+            ['dapui_hover'] = {'dap'},
+        },
         cmdline = function()
             local type = vim.fn.getcmdtype()
             -- Search forward and backward
@@ -21,6 +29,7 @@ require("blink-cmp").setup({
             return {}
         end,
         providers = {
+            dap = {name = 'dap', module = 'blink.compat.source'},
             lsp = {min_keyword_length = 2, score_offset = 0},
             path = {min_keyword_length = 0},
             snippets = {min_keyword_length = 2},
