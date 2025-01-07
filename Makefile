@@ -167,7 +167,6 @@ gnome-nord: ## Install Nord colors for Gnome
 base-symlink: ## Symlink dotfiles to repo
 	printf 'BUILD_DIR: $(BUILD_DIR)\n'
 	@printf 'Setting up symlinks\n'
-	@ln -sf $(BUILD_DIR)/gdbinit $(HOME)/.gdbinit
 	@ln -sf $(BUILD_DIR)/lazygit.yml $(CONFIG)/lazygit/config.yml
 	@ln -sf $(BUILD_DIR)/user-dirs.dirs $(CONFIG)/user-dirs.dirs
 	@ln -sf $(BUILD_DIR)/nvim $(CONFIG)
