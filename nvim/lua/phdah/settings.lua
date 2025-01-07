@@ -19,7 +19,8 @@ vim.cmd('highlight ColorColumn guifg=#4C566A')
 
 -- Set up default tabs
 local setDefaults = function()
-    if vim.bo.filetype == "make" then
+    local fileType = vim.bo.filetype
+    if fileType == "make" or fileType == "go" then
         vim.o.expandtab = false -- use tab instead of space
     else
         -- Tab settings
@@ -94,7 +95,6 @@ require("nvim-utils").Mouse:new(false)
 vim.api.nvim_create_user_command('MouseToggle', function()
     require("nvim-utils").Mouse:toggle()
 end, {})
-
 
 -- Open help in its own buffer, use ':H <args>'
 vim.cmd [[command! -nargs=1 -complete=command -bar H help <args> | only]]

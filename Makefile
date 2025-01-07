@@ -171,6 +171,7 @@ base-symlink: ## Symlink dotfiles to repo
 	@ln -sf $(BUILD_DIR)/lazygit.yml $(CONFIG)/lazygit/config.yml
 	@ln -sf $(BUILD_DIR)/user-dirs.dirs $(CONFIG)/user-dirs.dirs
 	@ln -sf $(BUILD_DIR)/nvim $(CONFIG)
+	@ln -sf $(BUILD_DIR)/clangd.yaml $(CONFIG)/clangd/config.yaml
 
 wsl-symlink: ## Symlink dotfiles to repo
 	@printf 'Setting up symlinks for wsl\n'
@@ -202,7 +203,6 @@ mac-symlink: ## Symlink dotfiles to repo
 
 copy-dirs: ## Copy files and dirs
 	@printf 'Copying files\n'
-	# @if [ ! -f "$(BUILD_DIR)/compile_flags.txt" ]; then cp $(BUILD_DIR)/compile_flags.txt $(CONFIG)/clangd/compile_flags.txt; fi
 	@if [ ! -f "$(HOME)/.paths" ]; then cp $(BUILD_DIR)/paths $(HOME)/.paths; fi
 	@if [ ! -f "$(HOME)/.envvar" ]; then cp $(BUILD_DIR)/envvar $(HOME)/.envvar; fi
 	@if [ ! -f "$(HOME)/.alias" ]; then cp $(BUILD_DIR)/alias $(HOME)/.alias; fi

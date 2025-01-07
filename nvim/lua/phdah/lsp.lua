@@ -19,7 +19,7 @@ require('mason-lspconfig').setup({
 
 -- Setup all lsp with defaults
 local lspconfig = require('lspconfig')
-local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+local lsp_capabilities = require('blink.cmp').get_lsp_capabilities()
 require('mason-lspconfig').setup_handlers({
     function(server_name)
         -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
@@ -135,9 +135,10 @@ local function lintFile(args)
         vim.cmd(
             'silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' --language postgresql % ' ..
                 args)
-    elseif filetype == 'markdown' then
+    elseif filetype == 'markdown' or filetype == 'typescriptreact' or filetype ==
+        'typescript' or filetype == 'javascript' or filetype == 'yaml' or filetype == 'css' then
         vim.cmd(
-            'silent! !prettier --print-width 80 --prose-wrap always --write % ' ..
+            'silent! !prettier --print-width 80 --prose-wrap always --write --tab-width 4 % ' ..
                 args)
     elseif filetype == 'terraform' then
         vim.cmd('silent! !terraform fmt % ' .. args)

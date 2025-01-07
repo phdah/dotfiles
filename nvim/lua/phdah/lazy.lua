@@ -21,7 +21,7 @@ return require('lazy').setup({
         build = ':TSUpdate',
         config = function() require("phdah.treesitter") end,
         dependencies = {
-            'p00f/nvim-ts-rainbow', 'shaunsingh/nord.nvim', {
+            'shaunsingh/nord.nvim', {
                 'akinsho/git-conflict.nvim',
                 config = function() require("phdah.git-conflict") end
             }, {
@@ -115,7 +115,8 @@ return require('lazy').setup({
             }
         }
     }, {
-        'pwntester/octo.nvim',
+        -- 'pwntester/octo.nvim',
+        dir = '~/repos/privat/octo.nvim',
         cmd = "Octo",
         config = function() require("phdah.octo") end,
         dependencies = {
@@ -138,16 +139,18 @@ return require('lazy').setup({
         ft = 'java',
         config = function() require("phdah.nvim-java") end
     }, {
-        'hrsh7th/nvim-cmp',
-        event = {"InsertEnter"},
-        config = function() require("phdah.nvim-cmp") end,
+        'saghen/blink.cmp',
+        lazy = false, -- lazy loading handled internally
+        version = '0.8.0',
+        config = function() require("phdah.blink") end,
         dependencies = {
-            -- Sources
-            'hrsh7th/cmp-buffer', 'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lsp-signature-help', 'hrsh7th/cmp-path',
-            'hrsh7th/cmp-emoji', 'quangnguyen30192/cmp-nvim-tags',
-            'lukas-reineke/cmp-rg', 'ray-x/cmp-treesitter', 'L3MON4D3/LuaSnip',
-            'rafamadriz/friendly-snippets', 'saadparwaiz1/cmp_luasnip'
+            {
+                'saghen/blink.compat',
+                version = '*',
+                lazy = true,
+                opts = {impersonate_nvim_cmp = false, debug = false}
+            }, 'hrsh7th/cmp-emoji', 'mikavilpas/blink-ripgrep.nvim',
+            'folke/lazydev.nvim'
         }
     }, {
         'terrortylor/nvim-comment',
@@ -279,5 +282,5 @@ return require('lazy').setup({
             {"<leader>dp", ':lua require("lazydbrix").show()<CR>', 'n'}
         },
         dependencies = {"voldikss/vim-floaterm"}
-    }
+    }, {'nvim-lua/plenary.nvim', cmd = "PlenaryBustedDirectory"}
 })

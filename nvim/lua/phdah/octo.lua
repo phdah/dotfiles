@@ -30,6 +30,8 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.api.nvim_set_keymap('n', '<leader>rt',
                                 ':lua require("octo.commands").resolve_thread()<CR>',
                                 {noremap = true, silent = true})
+        vim.keymap.set("i", "@", "@<C-x><C-o>", {silent = true, buffer = true})
+        vim.keymap.set("i", "#", "#<C-x><C-o>", {silent = true, buffer = true})
     end
 
 })
