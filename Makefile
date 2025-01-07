@@ -5,13 +5,13 @@ $(error Incorrect input. Make sure to input user.)
 endif
 
 ifeq ($(USR),CI)
-HOME=/home/runner/work/linux_set_up/linux_set_up
+HOME=/home/runner/work/dotfiles/dotfiles
 SOURCE_DIR=$(HOME)
 BUILD_DIR=$(SOURCE_DIR)
 CONFIG=$(HOME)/.config
 else
 SOURCE_DIR=$(HOME)/repos
-BUILD_DIR=$(SOURCE_DIR)/linux_set_up
+BUILD_DIR=$(SOURCE_DIR)/dotfiles
 CONFIG=$(HOME)/.config
 endif
 
