@@ -115,7 +115,8 @@ return require('lazy').setup({
             }
         }
     }, {
-        'pwntester/octo.nvim',
+        -- 'pwntester/octo.nvim',
+        dir = '~/repos/privat/octo.nvim',
         cmd = "Octo",
         config = function() require("phdah.octo") end,
         dependencies = {
