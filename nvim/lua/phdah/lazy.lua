@@ -21,10 +21,11 @@ return require('lazy').setup({
         build = ':TSUpdate',
         config = function() require("phdah.treesitter") end,
         dependencies = {
-            'shaunsingh/nord.nvim', {
-                'akinsho/git-conflict.nvim',
-                config = function() require("phdah.git-conflict") end
-            }, {
+            'shaunsingh/nord.nvim', -- {
+            --                 'akinsho/git-conflict.nvim',
+            --                 config = function() require("phdah.git-conflict") end
+            --             },
+            {
                 'lewis6991/gitsigns.nvim',
                 config = function() require("phdah.gitsigns") end
             }
@@ -60,6 +61,7 @@ return require('lazy').setup({
     }, ------------------------
     -- Can be Lazy Loaded --
     ------------------------
+    {"sindrets/diffview.nvim"},--, cmd = "DiffviewOpen"},
     {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact'}, opts = {}},
     {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
         "OXY2DEV/markview.nvim",
