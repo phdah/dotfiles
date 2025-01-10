@@ -6,6 +6,7 @@
   "cmp-dbee": { "branch": "main", "commit": "1650f67b9bf43c029fc37570665ca895a33cdf5a" },
   "cmp-emoji": { "branch": "main", "commit": "e8398e2adf512a03bb4e1728ca017ffeac670a9f" },
   "codecompanion.nvim": { "branch": "main", "commit": "e7bffd89102c31361d351a3e9e9ac6b4165f2dd6" },
+  "diffview.nvim": { "branch": "main", "commit": "4516612fe98ff56ae0415a259ff6361a89419b0a" },
   "flash.nvim": { "branch": "main", "commit": "34c7be146a91fec3555c33fe89c7d643f6ef5cf1" },
   "fscreen.nvim": { "branch": "main", "commit": "9f4805a54ecdf16fffaf8491160f1effd128849b" },
   "git-conflict.nvim": { "branch": "main", "commit": "a1badcd070d176172940eb55d9d59029dad1c5a6" },

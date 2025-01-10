@@ -22,9 +22,6 @@ return require('lazy').setup({
         config = function() require("phdah.treesitter") end,
         dependencies = {
             'shaunsingh/nord.nvim', {
-                'akinsho/git-conflict.nvim',
-                config = function() require("phdah.git-conflict") end
-            }, {
                 'lewis6991/gitsigns.nvim',
                 config = function() require("phdah.gitsigns") end
             }
@@ -60,7 +57,22 @@ return require('lazy').setup({
     }, ------------------------
     -- Can be Lazy Loaded --
     ------------------------
-    {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact'}, opts = {}},
+    {
+        "sindrets/diffview.nvim",
+        config = function() require('phdah.diffview') end,
+        keys = {
+            {
+                "<leader>gf",
+                ":lua require('phdah.diffview').toggleFileHistory()<CR>",
+                desc = "Toggle DiffviewFileHistory window"
+            }, {
+                "<leader>gd",
+                ":lua require('phdah.diffview').toggleDiffView()<CR>",
+                desc = "Toggle Diffview window"
+            }
+
+        }
+    }, {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact'}, opts = {}},
     {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
         "OXY2DEV/markview.nvim",
         ft = "markdown",
