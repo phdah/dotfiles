@@ -60,6 +60,7 @@ return require('lazy').setup({
     }, ------------------------
     -- Can be Lazy Loaded --
     ------------------------
+    {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact'}, opts = {}},
     {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
         "OXY2DEV/markview.nvim",
         ft = "markdown",
