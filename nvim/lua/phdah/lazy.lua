@@ -72,7 +72,7 @@ return require('lazy').setup({
             }
 
         }
-    }, {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact'}, opts = {}},
+    }, {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact', 'lua'}, opts = {}},
     {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
         "OXY2DEV/markview.nvim",
         ft = "markdown",

@@ -105,6 +105,14 @@ vim.o.scrolloff = 0
 -- Set colorscheme to nord
 vim.cmd [[colorscheme nord]]
 
+-- Set filechar and colors for diff
+vim.opt.fillchars:append("diff: ")
+-- Tokyonight colors: https://github.com/folke/tokyonight.nvim/blob/775f82f08a3d1fb55a37fc6d3a4ab10cd7ed8a10/extras/lua/tokyonight_night.lua#L899
+vim.api.nvim_set_hl(0, "DiffAdd", {bg = "#20303b"})
+vim.api.nvim_set_hl(0, "DiffDelete", {bg = "#37222c"})
+vim.api.nvim_set_hl(0, "DiffChange", {bg = "#1f2231"})
+vim.api.nvim_set_hl(0, "DiffText", {bg = "#394b70"})
+
 -- Set spelling on for specific files
 local auGroupSpelling = vim.api.nvim_create_augroup("nvim-spelling-custom",
                                                     {clear = true})
