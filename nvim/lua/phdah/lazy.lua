@@ -72,7 +72,8 @@ return require('lazy').setup({
             }
 
         }
-    }, {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact', 'lua'}, opts = {}},
+    },
+    {"catgoose/nvim-colorizer.lua", ft = {'typescriptreact', 'lua'}, opts = {}},
     {'voldikss/vim-floaterm', cmd = "FloatermNew"}, {
         "OXY2DEV/markview.nvim",
         ft = "markdown",
@@ -129,7 +130,7 @@ return require('lazy').setup({
         }
     }, {
         -- 'pwntester/octo.nvim',
-        dir = '~/repos/privat/octo.nvim',
+        dir = '~/repos/privat/fork-octo.nvim',
         cmd = "Octo",
         config = function() require("phdah.octo") end,
         dependencies = {
@@ -295,5 +296,6 @@ return require('lazy').setup({
             {"<leader>dp", ':lua require("lazydbrix").show()<CR>', 'n'}
         },
         dependencies = {"voldikss/vim-floaterm"}
-    }, {'nvim-lua/plenary.nvim', cmd = "PlenaryBustedDirectory"}
+    }, {'nvim-lua/plenary.nvim', cmd = "PlenaryBustedDirectory"},
+    {'stevearc/quicker.nvim', event = "FileType qf", opts = {}}
 })
