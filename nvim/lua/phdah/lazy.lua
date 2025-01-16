@@ -29,8 +29,10 @@ return require('lazy').setup({
     }, {
         'echasnovski/mini.surround',
         keys = {
-            {'sa', mode = {'v'}}, {'sd', mode = {'n'}}, {'sh', mode = {'n'}},
-            {'sr', mode = {'n'}}
+            {'sa', mode = {'v'}, desc = "(S)urround (a)round visual"},
+            {'sd', mode = {'n'}, desc = "(S)urround (d)elete"},
+            {'sh', mode = {'n'}, desc = "(S)urround (h)ighlight"},
+            {'sr', mode = {'n'}, desc = "(S)urround (r)eplace"}
         },
         version = false,
         config = function() require("phdah.surround") end
@@ -50,8 +52,17 @@ return require('lazy').setup({
         },
         keys = {
             -- dim
-            {"zf", ':lua require("snacks").dim.enable()<CR>', mode = "n"},
-            {"zF", ':lua require("snacks").dim.disable()<CR>', mode = "n"}
+            {
+                "zf",
+                ':lua require("snacks").dim.enable()<CR>',
+                mode = "n",
+                desc = "(Z)en (f)ile enable"
+            }, {
+                "zF",
+                ':lua require("snacks").dim.disable()<CR>',
+                mode = "n",
+                desc = "(Z)en (F)ile disable"
+            }
         }
 
     }, ------------------------
@@ -64,11 +75,11 @@ return require('lazy').setup({
             {
                 "<leader>gf",
                 ":lua require('phdah.diffview').toggleFileHistory()<CR>",
-                desc = "Toggle DiffviewFileHistory window"
+                desc = "(G)it (f)ile toggle DiffviewFileHistory window"
             }, {
                 "<leader>gd",
                 ":lua require('phdah.diffview').toggleDiffView()<CR>",
-                desc = "Toggle Diffview window"
+                desc = "(G)it (d)iff toggle Diffview window"
             }
 
         }
@@ -93,29 +104,40 @@ return require('lazy').setup({
             {
                 '<leader>ff',
                 ':lua require("phdah.telescope").find_files_git()<CR>',
-                mode = 'n'
+                mode = 'n',
+                desc = "(f)ind (f)iles locally"
             }, {
                 '<leader>fF',
                 ":lua require('telescope').extensions.smart_open.smart_open({cwd='~'})<CR>",
-                mode = 'n'
+                mode = 'n',
+                desc = "(f)ind (F)iles globally"
             }, {
                 '<leader>fr',
                 ':lua require("phdah.telescope").live_grep_git()<CR>',
-                mode = 'n'
+                mode = 'n',
+                desc = "(f)ind g(r)ep"
             }, {
                 '<leader>f*',
                 ':lua require("phdah/telescope").grep_string_git()<CR>',
-                mode = 'n'
-            },
-            {
+                mode = 'n',
+                desc = "(f)ind (*) search"
+            }, {
                 '<leader>fh',
                 ':lua require("telescope.builtin").help_tags()<CR>',
-                mode = 'n'
+                mode = 'n',
+                desc = "(f)ind (h)elp tags"
             }, {
-                '<leader>fc',
-                ':lua require("phdah.telescope").telescope_diff_from_history()<CR>',
-                mode = 'n'
-            }, {'<leader>fe', ':Telescope diagnostics<CR>', mode = 'n'}
+                '<leader>fe',
+                ':Telescope diagnostics<CR>',
+                mode = 'n',
+                desc = "(f)ind (e)rror"
+            },
+            {
+                '<leader>fk',
+                ':Telescope keymaps<CR>',
+                mode = 'n',
+                desc = "(f)ind (k)eymaps"
+            }
         },
         dependencies = {
             'nvim-lua/plenary.nvim',
@@ -177,7 +199,8 @@ return require('lazy').setup({
             {
                 '<leader>ö',
                 ':lua require("dbee").toggle(); require("nvim-utils").Mouse:toggle()<CR>',
-                mode = 'n'
+                mode = 'n',
+                desc = "Toggle dbee"
             }
         },
         branch = "mattias/databricks-adapter",
@@ -197,13 +220,24 @@ return require('lazy').setup({
             {
                 '<leader>b',
                 ':lua require("dap").toggle_breakpoint()<CR>',
-                mode = 'n'
+                mode = 'n',
+                desc = "Set (b)reakpoint"
             }, {
                 '<leader>B',
                 ':lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition (key==\'value\'): "))<CR>',
-                mode = 'n'
-            }, {'<leader>db', ':DapNvimDebugee<CR>', mode = 'n'},
-            {'<leader>ds', ':DapNvimSource<CR>', mode = 'n'}, {
+                mode = 'n',
+                desc = "Set conditional (B)reakpoint"
+            }, {
+                '<leader>db',
+                ':DapNvimDebugee<CR>',
+                mode = 'n',
+                desc = "Start (d)ebugg (b)ase"
+            }, {
+                '<leader>ds',
+                ':DapNvimSource<CR>',
+                mode = 'n',
+                desc = "Start (d)ebug (s)ource"
+            }, {
                 '<leader>c',
                 function()
                     -- Ensure the module is loaded, this is only
@@ -211,12 +245,13 @@ return require('lazy').setup({
                     require("phdah.nvim-dap")
                     require("dap").continue()
                 end,
-                mode = 'n'
-            },
-            {
+                mode = 'n',
+                desc = "DAP (c)continue"
+            }, {
                 '<leader>dy',
                 ':lua require("phdah.nvim-dap").start_repl()<CR>',
-                mode = 'n'
+                mode = 'n',
+                desc = "Start (D)AP repl"
             }
         },
         config = function() require("phdah.nvim-dap") end,

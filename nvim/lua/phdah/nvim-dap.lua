@@ -197,6 +197,13 @@ dap.configurations.python = {
         program = "${file}", -- Specifies the file to debug
         pythonPath = function() return pythonPath end,
         justMyCode = false -- Ensures that only user code is debugged
+    }, {
+        type = 'python',
+        request = 'launch',
+        name = "Launch pytest",
+        module = "pytest",
+        pythonPath = function() return pythonPath end,
+        justMyCode = false
     }
 }
 
@@ -394,7 +401,7 @@ local start_repl_session = function()
             on_exit = function() snacks.notify.info("debugpy exited") end,
             on_stdout = function()
                 snacks.notify.info("debugpy started")
-            end,
+            end
         })
         return true
     end
