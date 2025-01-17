@@ -130,7 +130,7 @@ local function lintFile(args)
         filetype == 'java' then
         vim.cmd('silent! !clang-format -i % ' .. args)
     elseif filetype == 'lua' then
-        vim.cmd('silent! !lua-format -i % ' .. args)
+        vim.cmd('silent! !stylua --indent-type Spaces --indent-width 4 % ' .. args)
     elseif filetype == 'sql' then
         vim.cmd(
             'silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' --language postgresql % ' ..
