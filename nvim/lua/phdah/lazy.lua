@@ -59,9 +59,12 @@ return require("lazy").setup({
             dashboard = {},
             notifier = {},
             gitbrowse = {},
+            picker = {
+                formatters = {
+                    file = { filename_first = true },
+                },
+            },
             dim = {},
-            -- Maybe this, not sure yet, too cluttered
-            -- indent = {scope = {animate = {enabled = false}}},
         },
         keys = {
             -- dim
@@ -76,6 +79,80 @@ return require("lazy").setup({
                 ':lua require("snacks").dim.disable()<CR>',
                 mode = "n",
                 desc = "(Z)en (F)ile disable",
+            },
+            {
+                "<leader>gg",
+                ":lua require('snacks').picker.lsp_definitions()<CR>",
+                desc = "Goto Definition",
+            },
+            {
+                "gr",
+                ":lua require('snacks').picker.lsp_references()<CR>",
+                nowait = true,
+                desc = "References",
+            },
+            {
+                "gI",
+                ":lua require('snacks').picker.lsp_implementations()<CR>",
+                desc = "Goto Implementation",
+            },
+            {
+                "gy",
+                ":lua require('snacks').picker.lsp_type_definitions()<CR>",
+                desc = "Goto T[y]pe Definition",
+            },
+            {
+                "<leader>sb",
+                ":lua require('snacks').picker.lsp_symbols()<CR>",
+                desc = "LSP Symbols",
+            },
+            {
+                "<leader>ff",
+                ":lua require('snacks').picker.smart({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
+                mode = "n",
+                desc = "(f)ind (f)iles locally",
+            },
+            {
+                "<leader>fF",
+                ":lua require('snacks').picker.smart({ cwd = '~' })<CR>",
+                mode = "n",
+                desc = "(f)ind (F)iles globally",
+            },
+            {
+                "<leader>fr",
+                ":lua require('snacks').picker.grep({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
+                mode = "n",
+                desc = "(f)ind g(r)ep",
+            },
+            {
+                "<leader>fp",
+                ":lua require('snacks').picker.projects()<CR>",
+                mode = "n",
+                desc = "(f)ind g(r)ep",
+            },
+            {
+                "<leader>f*",
+                ":lua require('snacks').picker.grep_word({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
+                mode = "n",
+                desc = "(f)ind (*) search",
+            },
+            {
+                "<leader>fh",
+                ":lua require('snacks').picker.help()<CR>",
+                mode = "n",
+                desc = "(f)ind (h)elp tags",
+            },
+            {
+                "<leader>fe",
+                ":lua require('snacks').picker.diagnostics()<CR>",
+                mode = "n",
+                desc = "(f)ind (e)rror",
+            },
+            {
+                "<leader>fk",
+                ":lua require('snacks').picker.keymaps()<CR>",
+                mode = "n",
+                desc = "(f)ind (k)eymaps",
             },
         },
     }, ------------------------
@@ -120,65 +197,6 @@ return require("lazy").setup({
         end,
         dependencies = { "nvim-tree/nvim-web-devicons" },
         keys = { { "<leader>-", ":Oil --float<CR>", mode = "n" } },
-    },
-    {
-        "nvim-telescope/telescope.nvim",
-        keys = {
-            {
-                "<leader>ff",
-                ':lua require("phdah.telescope").find_files_git()<CR>',
-                mode = "n",
-                desc = "(f)ind (f)iles locally",
-            },
-            {
-                "<leader>fF",
-                ":lua require('telescope').extensions.smart_open.smart_open({cwd='~'})<CR>",
-                mode = "n",
-                desc = "(f)ind (F)iles globally",
-            },
-            {
-                "<leader>fr",
-                ':lua require("phdah.telescope").live_grep_git()<CR>',
-                mode = "n",
-                desc = "(f)ind g(r)ep",
-            },
-            {
-                "<leader>f*",
-                ':lua require("phdah/telescope").grep_string_git()<CR>',
-                mode = "n",
-                desc = "(f)ind (*) search",
-            },
-            {
-                "<leader>fh",
-                ':lua require("telescope.builtin").help_tags()<CR>',
-                mode = "n",
-                desc = "(f)ind (h)elp tags",
-            },
-            {
-                "<leader>fe",
-                ":Telescope diagnostics<CR>",
-                mode = "n",
-                desc = "(f)ind (e)rror",
-            },
-            {
-                "<leader>fk",
-                ":Telescope keymaps<CR>",
-                mode = "n",
-                desc = "(f)ind (k)eymaps",
-            },
-        },
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-            {
-                "danielfalk/smart-open.nvim",
-                branch = "0.2.x",
-                config = function()
-                    require("telescope").load_extension("smart_open")
-                end,
-                dependencies = { "kkharji/sqlite.lua" },
-            },
-        },
     },
     {
         -- 'pwntester/octo.nvim',
@@ -402,13 +420,6 @@ return require("lazy").setup({
         config = true,
         -- Uncomment next line if you want to follow only stable versions
         -- version = "*"
-    },
-    {
-        "oskarrrrrrr/symbols.nvim",
-        config = function()
-            require("phdah.symbols")
-        end,
-        keys = { { "sb", "<cmd> SymbolsToggle<CR>", mode = "n" } },
     },
     {
         "phdah/lazydbrix",

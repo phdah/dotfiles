@@ -1,7 +1,4 @@
 -- LSP keymaps
-vim.api.nvim_set_keymap('n', '<leader>gg',
-                        ":lua vim.lsp.buf.definition(); vim.cmd('normal! zz')<CR>",
-                        {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<leader>gv',
                         ":lua vim.cmd('vsplit'); vim.cmd('wincmd l'); vim.lsp.buf.definition(); vim.cmd('normal! zz')<CR>",
                         {noremap = true, silent = true})
