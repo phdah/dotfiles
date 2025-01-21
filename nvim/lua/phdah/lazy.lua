@@ -63,6 +63,11 @@ return require("lazy").setup({
                 formatters = {
                     file = { filename_first = true },
                 },
+                previewers = {
+                    git = {
+                        native = true,
+                    },
+                },
             },
             dim = {},
         },
