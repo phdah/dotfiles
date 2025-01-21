@@ -7,13 +7,6 @@ require("octo").setup({
         },
         pull_request = {
             open_in_browser = {lhs = "<leader>bo", desc = "open PR in browser"}
-            -- Maybe create a PR on the repo to add this?
-            -- Add the entry to mappings.lua
-            -- resolve_thread = function()
-            --     require("octo.commands").resolve_thread()
-            -- end,
-            -- then add default keymaps in the config.lua
-            -- resolve_thread = { lhs = "<leader>rt", desc = "resolve the current thread" }
         }
     }
 
