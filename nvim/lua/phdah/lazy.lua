@@ -60,6 +60,13 @@ return require("lazy").setup({
             notifier = {},
             gitbrowse = {},
             picker = {
+                win = {
+                    input = {
+                        keys = {
+                            ["<C-i>"] = { "confirm", mode = { "n", "i" } },
+                        },
+                    },
+                },
                 formatters = {
                     file = { filename_first = true },
                 },
