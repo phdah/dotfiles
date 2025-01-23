@@ -34,10 +34,10 @@ require("blink-cmp").setup({
         providers = {
             dbee = {name = 'cmp-dbee', module = 'blink.compat.source'},
             dap = {name = 'dap', module = 'blink.compat.source'},
-            lsp = {min_keyword_length = 2, score_offset = 0},
+            lsp = {min_keyword_length = 0, score_offset = 0},
             path = {min_keyword_length = 0},
             snippets = {min_keyword_length = 2},
-            buffer = {min_keyword_length = 3, max_items = 5},
+            buffer = {min_keyword_length = 1, max_items = 5},
             emoji = {
                 name = 'emoji',
                 module = 'blink.compat.source',
