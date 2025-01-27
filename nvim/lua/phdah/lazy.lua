@@ -175,6 +175,7 @@ return require("lazy").setup({
         config = function()
             require("phdah.diffview")
         end,
+        cmd = { "DiffviewOpen", "DiffviewFileHistory" },
         keys = {
             {
                 "<leader>gf",
