@@ -29,7 +29,7 @@
   "nvim-dap": { "branch": "master", "commit": "99807078c5089ed30e0547aa4b52c5867933f426" },
   "nvim-dap-ui": { "branch": "master", "commit": "727c032a8f63899baccb42a1c26f27687e62fc5e" },
   "nvim-dap-virtual-text": { "branch": "master", "commit": "df66808cd78b5a97576bbaeee95ed5ca385a9750" },
-  "nvim-dbee": { "branch": "mattias/databricks-adapter", "commit": "5cc7a58e9a376922a02db5230b4497b946b5b7e0" },
+  "nvim-dbee": { "branch": "master", "commit": "495f6f718ccfb98eba51c7998e30f3f3ea6e95e1" },
   "nvim-jdtls": { "branch": "master", "commit": "5b079475890a2a9ff45c850b428357cc89c95278" },
   "nvim-lspconfig": { "branch": "master", "commit": "9ee2e7dac2e1c74538a0e0d79b9e2d59a8517bd6" },
   "nvim-metals": { "branch": "main", "commit": "e6b02c99161b43c67cfe1d6e5f9a9b9a0bb4701c" },

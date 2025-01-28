@@ -273,8 +273,8 @@ return require("lazy").setup({
         end,
     },
     {
-        "MattiasMTS/nvim-dbee",
-        -- "kndndrj/nvim-dbee",
+        -- "MattiasMTS/nvim-dbee",
+        "kndndrj/nvim-dbee",
         keys = {
             {
                 "<leader>ö",
@@ -283,7 +283,7 @@ return require("lazy").setup({
                 desc = "Toggle dbee",
             },
         },
-        branch = "mattias/databricks-adapter",
+        -- branch = "mattias/databricks-adapter",
         config = function()
             require("phdah.nvim-dbee")
         end,
