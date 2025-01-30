@@ -1,63 +1,73 @@
 ---------------
 -- Mason lsp --
 ---------------
-local lsp_zero = require('lsp-zero')
+local lsp_zero = require("lsp-zero")
 
 lsp_zero.on_attach(function(client, bufnr)
     -- see :help lsp-zero-keybindings
     -- to learn the available actions
-    lsp_zero.default_keymaps({buffer = bufnr})
+    lsp_zero.default_keymaps({ buffer = bufnr })
 end)
 
-require('mason').setup({})
-require('mason-lspconfig').setup({
+require("mason").setup({})
+require("mason-lspconfig").setup({
     ensure_installed = {
-        'pyright', 'ruff', 'clangd', 'jsonls', 'yamlls', 'bashls', 'gopls',
-        'jdtls'
-    }
+        "pyright",
+        "ruff",
+        "clangd",
+        "jsonls",
+        "yamlls",
+        "bashls",
+        "gopls",
+        "jdtls",
+    },
 })
 
 -- Setup all lsp with defaults
-local lspconfig = require('lspconfig')
-local lsp_capabilities = require('blink.cmp').get_lsp_capabilities()
-require('mason-lspconfig').setup_handlers({
+local lspconfig = require("lspconfig")
+local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
+require("mason-lspconfig").setup_handlers({
     function(server_name)
         -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
-        if server_name ~= 'jdtls' then
-            lspconfig[server_name].setup({capabilities = lsp_capabilities})
+        if server_name ~= "jdtls" then
+            lspconfig[server_name].setup({ capabilities = lsp_capabilities })
         end
-    end
+    end,
 })
 
-vim.diagnostic.config({virtual_text = true, signs = false})
+vim.diagnostic.config({ virtual_text = true, signs = false })
 
 -- TODO: Figure out how to use ruff as the LSP instead
 vim.api.nvim_create_autocmd("LspAttach", {
-    group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover',
-                                        {clear = true}),
+    group = vim.api.nvim_create_augroup(
+        "lsp_attach_disable_ruff_hover",
+        { clear = true }
+    ),
     callback = function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client == nil then return end
-        if client.name == 'ruff' then
+        if client == nil then
+            return
+        end
+        if client.name == "ruff" then
             -- Disable hover in favor of Pyright
             client.server_capabilities.hoverProvider = false
         end
     end,
-    desc = 'LSP: Disable hover capability from Ruff (https://docs.astral.sh/ruff/editors/setup/#neovim)'
+    desc = "LSP: Disable hover capability from Ruff (https://docs.astral.sh/ruff/editors/setup/#neovim)",
 })
 
-lspconfig.pyright.setup {
+lspconfig.pyright.setup({
     settings = {
         python = {
             analysis = {
                 autoSearchPaths = true,
                 diagnosticMode = "workspace",
-                useLibraryCodeForTypes = true
+                useLibraryCodeForTypes = true,
             },
-            pythonPath = "python3"
-        }
-    }
-}
+            pythonPath = "python3",
+        },
+    },
+})
 
 -- Set up the lua-language-server
 lspconfig.lua_ls.setup({
@@ -65,19 +75,19 @@ lspconfig.lua_ls.setup({
         Lua = {
             runtime = {
                 -- LuaJIT in the case of Neovim
-                version = 'LuaJIT',
-                path = vim.split(package.path, ';')
+                version = "LuaJIT",
+                path = vim.split(package.path, ";"),
             },
-            diagnostics = {globals = {'vim'}},
+            diagnostics = { globals = { "vim" } },
             workspace = {
                 library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.stdpath('config') .. '/lua'] = true
-                }
+                    [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+                    [vim.fn.stdpath("config") .. "/lua"] = true,
+                },
             },
-            telemetry = {enable = false}
-        }
-    }
+            telemetry = { enable = false },
+        },
+    },
 })
 
 ----------------
@@ -87,17 +97,17 @@ lspconfig.lua_ls.setup({
 local metals_config = require("metals").bare_config()
 
 -- Build in automatic setup dap adapter
-metals_config.on_attach =
-    function(client, bufnr) require("metals").setup_dap() end
+metals_config.on_attach = function(client, bufnr)
+    require("metals").setup_dap()
+end
 
-local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals",
-                                                      {clear = true})
+local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"scala", "sbt"},
+    pattern = { "scala", "sbt" },
     callback = function()
         require("metals").initialize_or_attach(metals_config)
     end,
-    group = nvim_metals_group
+    group = nvim_metals_group,
 })
 
 ----------------
@@ -107,48 +117,65 @@ vim.api.nvim_create_autocmd("FileType", {
 local function lintFile(args)
     local snacks = require("snacks")
     -- Clean out all trailing ExtraWhitespace, and tabs
-    local ok, _ = pcall(function() vim.cmd("%s/\\t\\+$\\| \\+$//") end)
+    local ok, _ = pcall(function()
+        vim.cmd("%s/\\t\\+$\\| \\+$//")
+    end)
     if ok then
         snacks.notify.info("Found and removed all trailing whitespace")
     end
 
     -- Save the file first
-    vim.cmd('silent! w')
+    vim.cmd("silent! w")
 
     local filetype = vim.bo.filetype
 
     -- Run the corresponding formatter based on the filetype
-    if filetype == 'python' then
-        vim.cmd('silent! !ruff format % ' .. args)
+    if filetype == "python" then
+        vim.cmd("silent! !ruff format % " .. args)
     elseif filetype == "go" then
-        vim.cmd('silent! !gofmt -w % ' .. args)
+        vim.cmd("silent! !gofmt -w % " .. args)
         -- Replace tabs with spaces (treesitter issue)
         -- vim.cmd('silent! %s/\\t/    /g')
-    elseif filetype == 'sh' then
-        vim.cmd('silent! !shfmt -w -i 4 -ci % ' .. args)
-    elseif filetype == 'c' or filetype == 'cpp' or filetype == 'json' or
-        filetype == 'java' then
-        vim.cmd('silent! !clang-format -i % ' .. args)
-    elseif filetype == 'lua' then
-        vim.cmd('silent! !stylua --indent-type Spaces --indent-width 4 % ' .. args)
-    elseif filetype == 'sql' then
+    elseif filetype == "sh" then
+        vim.cmd("silent! !shfmt -w -i 4 -ci % " .. args)
+    elseif
+        filetype == "c"
+        or filetype == "cpp"
+        or filetype == "json"
+        or filetype == "java"
+    then
+        vim.cmd("silent! !clang-format -i % " .. args)
+    elseif filetype == "lua" then
         vim.cmd(
-            'silent! !sql-formatter --fix --config \'{\"tabWidth\": 4, \"linesBetweenQueries\": 2}\' --language postgresql % ' ..
-                args)
-    elseif filetype == 'markdown' or filetype == 'typescriptreact' or filetype ==
-        'typescript' or filetype == 'javascript' or filetype == 'yaml' or filetype == 'css' then
+            "silent! !stylua --indent-type Spaces --indent-width 4 --column-width 90 % "
+                .. args
+        )
+    elseif filetype == "sql" then
         vim.cmd(
-            'silent! !prettier --print-width 80 --prose-wrap always --write --tab-width 4 % ' ..
-                args)
-    elseif filetype == 'terraform' then
-        vim.cmd('silent! !terraform fmt % ' .. args)
+            'silent! !sql-formatter --fix --config \'{"tabWidth": 4, "linesBetweenQueries": 2}\' --language postgresql % '
+                .. args
+        )
+    elseif
+        filetype == "markdown"
+        or filetype == "typescriptreact"
+        or filetype == "typescript"
+        or filetype == "javascript"
+        or filetype == "yaml"
+        or filetype == "css"
+    then
+        vim.cmd(
+            "silent! !prettier --print-width 90 --prose-wrap always --write --tab-width 4 % "
+                .. args
+        )
+    elseif filetype == "terraform" then
+        vim.cmd("silent! !terraform fmt % " .. args)
     end
-    snacks.notify.info("Formatted file: " ..
-                           vim.fn
-                               .fnamemodify(vim.api.nvim_buf_get_name(0), ":t"))
+    snacks.notify.info(
+        "Formatted file: " .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t")
+    )
 end
 
 -- Create the :Lint command
-vim.api.nvim_create_user_command('Lint', function(opts) lintFile(opts.args) end,
-                                 {nargs = "*"})
-
+vim.api.nvim_create_user_command("Lint", function(opts)
+    lintFile(opts.args)
+end, { nargs = "*" })
