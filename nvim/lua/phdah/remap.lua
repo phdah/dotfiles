@@ -158,12 +158,22 @@ vim.api.nvim_set_keymap('n', '<leader>o', 'o<Esc>', {noremap = true})
 vim.api.nvim_set_keymap('n', '<leader>O', 'O<Esc>', {noremap = true})
 
 -- Git gutter commands
-vim.api.nvim_set_keymap('n', 'gj',
-                        ':lua require("gitsigns").nav_hunk("next")<CR>zz',
-                        {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', 'gk',
-                        ':lua require("gitsigns").nav_hunk("prev")<CR>zz',
-                        {noremap = true, silent = true})
+vim.keymap.set("n", "gj", function()
+    if vim.wo.diff then
+        vim.cmd("normal! ]c")
+    else
+        require("gitsigns").nav_hunk("next")
+    end
+    vim.cmd("normal! zz")
+end, { noremap = true, silent = true })
+vim.keymap.set("n", "gk", function()
+    if vim.wo.diff then
+        vim.cmd("normal! [c")
+    else
+        require("gitsigns").nav_hunk("prev")
+    end
+    vim.cmd("normal! zz")
+end, { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', 'gu', ':lua require("gitsigns").reset_hunk()<CR>',
                         {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', 'gU',
