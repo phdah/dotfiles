@@ -166,6 +166,12 @@ return require("lazy").setup({
                 mode = "n",
                 desc = "(f)ind (k)eymaps",
             },
+            {
+                "<leader>fx",
+                ":lua Snacks.picker.explorer({ cwd = require('nvim-utils').Git.find_git_root(), auto_close = true, })<CR>",
+                mode = "n",
+                desc = "(f)ind (k)eymaps",
+            },
         },
     }, ------------------------
     -- Can be Lazy Loaded --
