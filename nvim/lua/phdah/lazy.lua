@@ -454,4 +454,14 @@ return require("lazy").setup({
     },
     { "nvim-lua/plenary.nvim", cmd = "PlenaryBustedDirectory" },
     { "stevearc/quicker.nvim", event = "FileType qf", opts = {} },
+    {
+        "David-Kunz/gen.nvim",
+        config = function()
+            require("phdah.gen")
+        end,
+        keys = {
+            { "<C-g>", mode = "n", ":Gen Chat<CR>" },
+            { "<C-g>", mode = "v", ":Gen Ask<CR>" },
+        },
+    },
 })
