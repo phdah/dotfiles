@@ -137,6 +137,12 @@ return require("lazy").setup({
                 desc = "(f)ind g(r)ep",
             },
             {
+                "<leader>fR",
+                ":lua require('snacks').picker.recent()<CR>",
+                mode = "n",
+                desc = "(f)ind (R)ecent",
+            },
+            {
                 "<leader>fp",
                 ":lua require('snacks').picker.projects()<CR>",
                 mode = "n",
@@ -219,7 +225,7 @@ return require("lazy").setup({
     },
     {
         -- 'pwntester/octo.nvim',
-        dir = "~/repos/privat/fork-octo.nvim",
+        dir = "~/repos/privat/octo.nvim",
         cmd = "Octo",
         config = function()
             require("phdah.octo")
@@ -279,7 +285,6 @@ return require("lazy").setup({
         end,
     },
     {
-        -- "MattiasMTS/nvim-dbee",
         "kndndrj/nvim-dbee",
         keys = {
             {
@@ -289,7 +294,6 @@ return require("lazy").setup({
                 desc = "Toggle dbee",
             },
         },
-        -- branch = "mattias/databricks-adapter",
         config = function()
             require("phdah.nvim-dbee")
         end,
@@ -298,7 +302,7 @@ return require("lazy").setup({
             { "MattiasMTS/cmp-dbee", opts = {} },
         },
         build = function()
-            require("dbee").install()
+            require("dbee").install("go")
         end,
     },
     {
