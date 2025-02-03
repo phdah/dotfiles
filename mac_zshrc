@@ -63,6 +63,9 @@ function rgf() {
 function vimrg() {
     vim $(rg $1 -l)
 }
+function vimrgf() {
+    vim $(rg --files | rg $1)
+}
 function sedall() {
     sed -i "s/$1/$2/g" $(rg $1 -l)
 }
