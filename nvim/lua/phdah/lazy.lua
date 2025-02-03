@@ -199,7 +199,7 @@ return require("lazy").setup({
     { "voldikss/vim-floaterm", cmd = "FloatermNew" },
     {
         "OXY2DEV/markview.nvim",
-        ft = "markdown",
+        ft = {"markdown", "octo"},
         config = function()
             require("phdah.markview")
         end,
