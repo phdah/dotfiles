@@ -1,3 +1,4 @@
+local M = {}
 -- Quickfix list
 local function jumpToQuickfixEntry()
     local lineNumber = vim.fn.line('.')
@@ -17,20 +18,13 @@ vim.api.nvim_create_autocmd("FileType", {
     end
 })
 
-local set_git_root = function()
-    -- If git repo, show all files in repo.
-    local root = vim.fn.trim(vim.fn.system('git rev-parse --show-toplevel'))
-    if root ==
-        'fatal: not a git repository (or any of the parent directories): .git' then
-        return
-    end
-
+M.set_git_root = function()
     local filetype = vim.bo.filetype
+    local root = require('nvim-utils').Git.find_git_root()
+
     if filetype == 'python' then
         vim.fn.setenv("PYTHONPATH", root)
     end
 end
 
-vim.api.nvim_create_user_command('SetGitRoot', function()
-    set_git_root()
-end, {})
+return M

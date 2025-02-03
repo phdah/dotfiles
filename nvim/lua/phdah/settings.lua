@@ -188,6 +188,9 @@ local function resizeSplitsEqually()
     end
 end
 
-vim.api.nvim_create_user_command("EqualizeSplits", function()
-    resizeSplitsEqually()
-end, {})
+local filetypeAC = vim.api.nvim_create_augroup("filetype-autocommands", {clear = true})
+vim.api.nvim_create_autocmd("FileType", {
+    group = filetypeAC,
+    pattern = {"python"},
+    callback = function() require("phdah.function-remap").set_git_root() end
+})
