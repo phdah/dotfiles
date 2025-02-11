@@ -296,7 +296,19 @@ dap.configurations.go = {
                                 'file')
         end,
         stopOnEntry = true
-    }
+    }, {
+      type = "go",
+      name = "Debug test",
+      request = "launch",
+      mode = "test",
+      program = "${file}",
+    }, {
+      type = "go",
+      name = "Debug test (go.mod)",
+      request = "launch",
+      mode = "test",
+      program = "./${relativeFileDirname}",
+    },
 }
 dap.configurations.java = {
     {
