@@ -6,7 +6,7 @@ local M = {}
 -- DAP setup --
 ---------------
 local dap_ok, dap = pcall(require, "dap")
-if not (dap_ok) then
+if not dap_ok then
     snacks.notify.info("nvim-dap not installed!")
     return
 end
@@ -15,17 +15,19 @@ local dapui = require("dapui")
 -- require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
 
 -- Mason setup
-require("nvim-dap-virtual-text").setup({virt_text_pos = 'eol'})
+require("nvim-dap-virtual-text").setup({ virt_text_pos = "eol" })
 require("mason").setup()
 require("mason-nvim-dap").setup({
-    ensure_installed = {"codelldb", "bash-debug-adapter", "debugpy", "delve"}
+    ensure_installed = { "codelldb", "bash-debug-adapter", "debugpy", "delve" },
 })
 
 local function filtered_pick_process()
     local opts = {}
     vim.ui.input({
-        prompt = "Search by process name (lua pattern), or hit enter to select from the process list: "
-    }, function(input) opts["filter"] = input or "" end)
+        prompt = "Search by process name (lua pattern), or hit enter to select from the process list: ",
+    }, function(input)
+        opts["filter"] = input or ""
+    end)
     return require("dap.utils").pick_process(opts)
 end
 
@@ -34,43 +36,43 @@ end
 --------------------
 
 dap.adapters.codelldb = {
-    type = 'server',
+    type = "server",
     port = "${port}",
     executable = {
         -- CHANGE THIS to your path!
-        command = vim.fn.stdpath("data") .. '/mason/bin/codelldb',
-        args = {"--port", "${port}"}
-    }
+        command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
+        args = { "--port", "${port}" },
+    },
 }
 
 dap.adapters["lldb-dap"] = {
-    type = 'server',
+    type = "server",
     port = "${port}",
     executable = {
-        command = '/opt/homebrew/opt/llvm/bin/lldb-dap',
-        args = {'--port', "${port}"}
-    }
+        command = "/opt/homebrew/opt/llvm/bin/lldb-dap",
+        args = { "--port", "${port}" },
+    },
 }
 
-local pythonPath = 'python3'
+local pythonPath = "python3"
 dap.adapters.python = {
-    type = 'executable',
+    type = "executable",
     command = pythonPath,
-    args = {'-m', 'debugpy.adapter'}
+    args = { "-m", "debugpy.adapter" },
 }
 
 dap.adapters.bashdb = {
-    type = 'executable',
-    command = vim.fn.stdpath("data") ..
-        '/mason/packages/bash-debug-adapter/bash-debug-adapter',
-    name = 'bashdb'
+    type = "executable",
+    command = vim.fn.stdpath("data")
+        .. "/mason/packages/bash-debug-adapter/bash-debug-adapter",
+    name = "bashdb",
 }
 
 dap.adapters["local-lua"] = {
     type = "executable",
     command = "node",
     args = {
-        "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/extension/debugAdapter.js"
+        "/Users/Philip.Sjoberg/.local/share/nvim/lazy/local-lua-debugger-vscode/extension/debugAdapter.js",
     },
     enrich_config = function(config, on_config)
         if not config["extensionPath"] then
@@ -81,20 +83,20 @@ dap.adapters["local-lua"] = {
         else
             on_config(config)
         end
-    end
+    end,
 }
 
 dap.adapters.go = {
     type = "server",
     host = "127.0.0.1",
     port = "${port}",
-    cwd = '${workspaceFolder}',
+    cwd = "${workspaceFolder}",
     executable = {
         command = "/Users/Philip.Sjoberg/.local/share/nvim/mason/bin/dlv",
-        args = {"dap", "-l", "127.0.0.1:${port}"},
-        detached = true
+        args = { "dap", "-l", "127.0.0.1:${port}" },
+        detached = true,
     },
-    options = {initialize_timeout_sec = 20}
+    options = { initialize_timeout_sec = 20 },
 }
 
 --------------------------
@@ -116,7 +118,7 @@ local function runDsymutil(executable)
     if not dsymExists(dsymPath) then
         snacks.notify.info("No .dSYM exists on: " .. dsymPath)
         -- Run dsymutil if the .dSYM is missing
-        local handle = io.popen('dsymutil ' .. executable)
+        local handle = io.popen("dsymutil " .. executable)
         if handle ~= nil then
             local result = handle:read("*a")
             handle:close()
@@ -131,48 +133,48 @@ dap.configurations.cpp = {
         type = "lldb-dap",
         request = "launch",
         program = function()
-            program = vim.fn.input('Path to executable: ',
-                                   vim.fn.getcwd() .. '/', 'file')
+            program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
             runDsymutil(program)
             return program
         end,
-        cwd = '${workspaceFolder}',
-        stopOnEntry = false
-    }, {
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+    },
+    {
         name = "Debug with Args",
         type = "lldb-dap",
         request = "launch",
         program = function()
-            program = vim.fn.input('Path to executable: ',
-                                   vim.fn.getcwd() .. '/', 'file')
+            program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
             runDsymutil(program)
             return program
         end,
-        cwd = '${workspaceFolder}',
+        cwd = "${workspaceFolder}",
         stopOnEntry = false,
         args = function()
-            local args_str = vim.fn.input('Program arguments: ')
+            local args_str = vim.fn.input("Program arguments: ")
             return vim.split(args_str, " +")
-        end
-    }, {
+        end,
+    },
+    {
         name = "Attach",
         type = "lldb-dap",
         request = "attach",
         pid = filtered_pick_process,
-        stopOnEntry = false
-    }, {
+        stopOnEntry = false,
+    },
+    {
         name = "Attach to Name (wait)",
         type = "lldb-dap",
         stopOnEntry = false,
         request = "attach",
         program = function()
-            program = vim.fn.input('Path to executable: ',
-                                   vim.fn.getcwd() .. '/', 'file')
+            program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
             runDsymutil(program)
             return program
         end,
-        waitFor = true
-    }
+        waitFor = true,
+    },
 }
 
 dap.configurations.c = dap.configurations.cpp
@@ -180,71 +182,79 @@ dap.configurations.rust = dap.configurations.cpp
 
 dap.configurations.python = {
     {
-        type = 'python',
-        request = 'launch', -- Specifies the debug request type
+        type = "python",
+        request = "launch", -- Specifies the debug request type
         name = "Launch File",
         program = "${file}", -- Specifies the file to debug
-        pythonPath = function() return pythonPath end,
-        justMyCode = false -- Ensures that only user code is debugged
-    }, {
-        type = 'python',
-        request = 'launch', -- Specifies the debug request type
+        pythonPath = function()
+            return pythonPath
+        end,
+        justMyCode = false, -- Ensures that only user code is debugged
+    },
+    {
+        type = "python",
+        request = "launch", -- Specifies the debug request type
         name = "Launch File With args",
         args = function()
-            local args_string = vim.fn.input('Arguments: ')
+            local args_string = vim.fn.input("Arguments: ")
             return vim.split(args_string, " +")
         end,
         program = "${file}", -- Specifies the file to debug
-        pythonPath = function() return pythonPath end,
-        justMyCode = false -- Ensures that only user code is debugged
-    }, {
-        type = 'python',
-        request = 'launch',
+        pythonPath = function()
+            return pythonPath
+        end,
+        justMyCode = false, -- Ensures that only user code is debugged
+    },
+    {
+        type = "python",
+        request = "launch",
         name = "Launch pytest",
         module = "pytest",
-        pythonPath = function() return pythonPath end,
-        justMyCode = false
-    }
+        pythonPath = function()
+            return pythonPath
+        end,
+        justMyCode = false,
+    },
 }
 
 dap.configurations.sh = {
     {
-        type = 'bashdb',
-        request = 'launch',
+        type = "bashdb",
+        request = "launch",
         name = "Launch file",
         showDebugOutput = true,
-        pathBashdb = vim.fn.stdpath("data") ..
-            '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
-        pathBashdbLib = vim.fn.stdpath("data") ..
-            '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
+        pathBashdb = vim.fn.stdpath("data")
+            .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
+        pathBashdbLib = vim.fn.stdpath("data")
+            .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
         trace = true,
         file = "${file}",
         program = "${file}",
-        cwd = '${workspaceFolder}',
+        cwd = "${workspaceFolder}",
         pathCat = "cat",
         pathBash = "/opt/homebrew/bin/bash",
         pathMkfifo = "mkfifo",
         pathPkill = "pkill",
         args = {},
         env = {},
-        terminalKind = "integrated"
-    }
+        terminalKind = "integrated",
+    },
 }
 
 dap.configurations.lua = {
     {
-        name = 'Current file (local-lua-dbg, nlua)',
-        type = 'local-lua',
-        request = 'launch',
-        cwd = '${workspaceFolder}',
+        name = "Current file (local-lua-dbg, nlua)",
+        type = "local-lua",
+        request = "launch",
+        cwd = "${workspaceFolder}",
         program = {
-            lua = 'nlua', -- To allow vim debug
+            lua = "nlua", -- To allow vim debug
             -- lua = '/opt/homebrew/bin/lua', -- Basic lua debug
-            file = '${file}'
+            file = "${file}",
         },
         verbose = true,
-        args = {}
-    }
+        args = {},
+    },
 }
 
 dap.configurations.vim = dap.configurations.lua
@@ -255,13 +265,14 @@ dap.configurations.scala = {
         type = "scala",
         request = "launch",
         name = "Run or Test File",
-        metals = {runType = "runOrTestFile"}
-    }, {
+        metals = { runType = "runOrTestFile" },
+    },
+    {
         type = "scala",
         request = "launch",
         name = "Test Target",
-        metals = {runType = "testTarget"}
-    }
+        metals = { runType = "testTarget" },
+    },
 }
 
 dap.configurations.go = {
@@ -270,65 +281,71 @@ dap.configurations.go = {
         name = "Debug",
         request = "launch",
         program = "${file}",
-        buildFlags = ""
-    }, {
+        buildFlags = "",
+    },
+    {
         type = "go",
         name = "Debug with Args",
         request = "launch",
         program = "${file}",
         args = function()
-            local args_string = vim.fn.input('Arguments: ')
+            local args_string = vim.fn.input("Arguments: ")
             return vim.split(args_string, " +")
-        end
-    }, {
+        end,
+    },
+    {
         type = "go",
         name = "Attach",
         mode = "local",
         request = "attach",
-        processId = filtered_pick_process
-    }, {
+        processId = filtered_pick_process,
+    },
+    {
         name = "Attach to Name (wait)",
         type = "go",
         mode = "local",
         request = "attach",
         waitFor = function()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/',
-                                'file')
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
         end,
-        stopOnEntry = true
-    }, {
-      type = "go",
-      name = "Debug test",
-      request = "launch",
-      mode = "test",
-      program = "${file}",
-    }, {
-      type = "go",
-      name = "Debug test (go.mod)",
-      request = "launch",
-      mode = "test",
-      program = "./${relativeFileDirname}",
+        stopOnEntry = true,
+    },
+    {
+        type = "go",
+        name = "Debug test",
+        request = "launch",
+        mode = "test",
+        program = "${file}",
+    },
+    {
+        type = "go",
+        name = "Debug test (go.mod)",
+        request = "launch",
+        mode = "test",
+        program = "./${relativeFileDirname}",
     },
 }
 dap.configurations.java = {
     {
         name = "Debug Launch (2GB)",
-        type = 'java',
-        request = 'launch',
-        vmArgs = "" .. "-Xmx2g "
-    }, {
+        type = "java",
+        request = "launch",
+        vmArgs = "" .. "-Xmx2g ",
+    },
+    {
         name = "Debug Attach (8000)",
-        type = 'java',
-        request = 'attach',
+        type = "java",
+        request = "attach",
         hostName = "127.0.0.1",
-        port = 8000
-    }, {
+        port = 8000,
+    },
+    {
         name = "Debug Attach (5005)",
-        type = 'java',
-        request = 'attach',
+        type = "java",
+        request = "attach",
         hostName = "127.0.0.1",
-        port = 5005
-    }
+        port = 5005,
+    },
 }
 
 ---------------------
@@ -340,21 +357,23 @@ dapui.setup({
     layouts = {
         {
             elements = {
-                {id = 'breakpoints', size = 0.20}, {id = 'stacks', size = 0.40},
-                {id = 'watches', size = 0.40}
+                { id = "breakpoints", size = 0.20 },
+                { id = "stacks", size = 0.40 },
+                { id = "watches", size = 0.40 },
             },
             size = 0.25,
-            position = 'right'
-        }, {elements = {'scopes', 'repl'}, size = 0.25, position = 'bottom'}
+            position = "right",
+        },
+        { elements = { "scopes", "repl" }, size = 0.25, position = "bottom" },
     },
     mappings = {
-        expand = {"<C-j>"},
+        expand = { "<C-j>" },
         open = "o",
         remove = "d",
         edit = "e",
         repl = "r",
-        toggle = "t"
-    }
+        toggle = "t",
+    },
 })
 
 ---------------------------------
@@ -367,24 +386,24 @@ Open another Neovim instance with the source file
 Place breakpoint and start debugger with `DapNvimSource`
 In the debuggee, call the specific function to debug
 ]]
-vim.api.nvim_create_user_command('DapNvimDebugee', function()
-    require("osv").launch({port = 8086})
+vim.api.nvim_create_user_command("DapNvimDebugee", function()
+    require("osv").launch({ port = 8086 })
 end, {})
 
-vim.api.nvim_create_user_command('DapNvimSource', function()
+vim.api.nvim_create_user_command("DapNvimSource", function()
     dap.configurations.lua = {
         {
-            type = 'nlua',
-            request = 'attach',
-            name = "Attach to running Neovim instance"
-        }
+            type = "nlua",
+            request = "attach",
+            name = "Attach to running Neovim instance",
+        },
     }
 
     dap.adapters.nlua = function(callback, config)
         callback({
-            type = 'server',
+            type = "server",
             host = config.host or "127.0.0.1",
-            port = config.port or 8086
+            port = config.port or 8086,
         })
     end
     require("dap").continue()
@@ -406,15 +425,20 @@ local start_repl_session = function()
     local filetype = vim.bo.filetype
 
     -- Start debugpy server in the background for the given filetype
-    if filetype == 'python' then
-        vim.fn.jobstart("PYDEVD_DISABLE_FILE_VALIDATION=1 " .. pythonPath ..
-                            " -Xfrozen_modules=off -m debugpy --listen 5678 -c 'import code; code.interact()'",
-                        {
-            on_exit = function() snacks.notify.info("debugpy exited") end,
-            on_stdout = function()
-                snacks.notify.info("debugpy started")
-            end
-        })
+    if filetype == "python" then
+        vim.fn.jobstart(
+            "PYDEVD_DISABLE_FILE_VALIDATION=1 "
+                .. pythonPath
+                .. " -Xfrozen_modules=off -m debugpy --listen 5678 -c 'import code; code.interact()'",
+            {
+                on_exit = function()
+                    snacks.notify.info("debugpy exited")
+                end,
+                on_stdout = function()
+                    snacks.notify.info("debugpy started")
+                end,
+            }
+        )
         return true
     end
     snacks.notify.error("Error: No setup for " .. filetype .. " repl start")
@@ -425,28 +449,28 @@ end
 -- Setup REPL configurations --
 -------------------------------
 
-dap.adapters.python_repl = {type = 'server', host = '127.0.0.1', port = 5678}
+dap.adapters.python_repl = { type = "server", host = "127.0.0.1", port = 5678 }
 
 local repl = {
     configurations = {
         ["python"] = {
-            type = 'python_repl',
-            request = 'attach',
+            type = "python_repl",
+            request = "attach",
             name = "Attach to running process",
-            connect = {host = "127.0.0.1", port = dap.adapters.python_repl.port},
+            connect = { host = "127.0.0.1", port = dap.adapters.python_repl.port },
             pythonPath = function()
                 M.repl_run = true
                 return pythonPath
-            end
-        }
-    }
+            end,
+        },
+    },
 }
 
 M.start_repl = function()
     local filetype = vim.bo.filetype
     local session_started = start_repl_session()
     if session_started then
-        require('dap').run(repl.configurations[filetype])
+        require("dap").run(repl.configurations[filetype])
     else
         snacks.notify.error("REPL session not started")
     end
@@ -461,11 +485,14 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
     if not M.repl_run then
         dapui.open({})
         vim.o.mouse = "a"
-        vim.api.nvim_set_keymap('n', '<leader>dh',
-                                ':lua require("dap.ui.widgets").hover()<CR>',
-                                {noremap = true, silent = true})
+        vim.api.nvim_set_keymap(
+            "n",
+            "<leader>dh",
+            ':lua require("dap.ui.widgets").hover()<CR>',
+            { noremap = true, silent = true }
+        )
     else
-        dap.repl.open({height = 10})
+        dap.repl.open({ height = 10 })
     end
 end
 
@@ -479,9 +506,12 @@ M.dapui_terminate = function()
     M.repl_run = false
     dapui.close()
     vim.o.mouse = ""
-    vim.api.nvim_set_keymap('n', '<leader>dh',
-                            ':lua vim.diagnostic.open_float()<CR>',
-                            {noremap = true, silent = true})
+    vim.api.nvim_set_keymap(
+        "n",
+        "<leader>dh",
+        ":lua vim.diagnostic.open_float()<CR>",
+        { noremap = true, silent = true }
+    )
 end
 
 return M
