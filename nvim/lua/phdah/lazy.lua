@@ -205,7 +205,7 @@ return require("lazy").setup({
     { "voldikss/vim-floaterm", cmd = "FloatermNew" },
     {
         "OXY2DEV/markview.nvim",
-        ft = {"markdown", "octo"},
+        ft = { "markdown", "octo" },
         config = function()
             require("phdah.markview")
         end,
@@ -468,5 +468,12 @@ return require("lazy").setup({
             { "<C-g>", mode = "n", ":Gen Chat<CR>" },
             { "<C-g>", mode = "v", ":Gen Ask<CR>" },
         },
+    },
+    {
+        "3rd/image.nvim",
+        ft = { "markdown", "octo" },
+        config = function()
+            require("phdah.image")
+        end,
     },
 })
