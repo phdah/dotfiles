@@ -32,6 +32,50 @@ return require("lazy").setup({
                 config = function()
                     require("phdah.gitsigns")
                 end,
+                keys = {
+                    {
+                        "gu",
+                        ':lua require("gitsigns").reset_hunk()<CR>',
+                        mode = "n",
+                        desc = "(g)it (u)undo",
+                    },
+                    {
+                        "gU",
+                        ':lua require("gitsigns").undo_stage_hunk()<CR>',
+                        mode = "n",
+                        desc = "(g)it (U)undo staged hunk",
+                    },
+                    {
+                        "gd",
+                        ':lua require("gitsigns").preview_hunk()<CR>',
+                        mode = "n",
+                        desc = "(g)it (d)iff",
+                    },
+                    {
+                        "gD",
+                        ':lua require("gitsigns").diffthis()<CR>',
+                        mode = "n",
+                        desc = "(g)it (d)iff this file",
+                    },
+                    {
+                        "gs",
+                        ':lua require("gitsigns").stage_hunk()<CR>',
+                        mode = "n",
+                        desc = "(g)it (s)tage",
+                    },
+                    {
+                        "gs",
+                        [[:lua require("gitsigns").stage_hunk({vim.fn.line("'<"), vim.fn.line("'>")})<CR>]],
+                        mode = "v",
+                        desc = "(g)it (s)tage",
+                    },
+                    {
+                        "gb",
+                        ':lua require("gitsigns").blame_line()<CR>',
+                        mode = "n",
+                        desc = "(g)it (b)lame",
+                    },
+                },
             },
         },
     },
@@ -79,7 +123,30 @@ return require("lazy").setup({
             dim = {},
         },
         keys = {
-            -- dim
+            {
+                "<leader>q",
+                ":lua Snacks.bufdelete()<CR>",
+                mode = "n",
+                desc = "(q)uite buffer",
+            },
+            {
+                "<leader>Q",
+                ":lua Snacks.bufdelete({force=true})<CR>",
+                mode = "n",
+                desc = "(Q)uite buffer",
+            },
+            {
+                "<leader>ns",
+                ':lua require("snacks").notifier.show_history()<CR>',
+                mode = "n",
+                desc = "(n)otifier (s)how history",
+            },
+            {
+                "go",
+                ":lua require('snacks').gitbrowse.open()<CR>",
+                mode = "n",
+                desc = "(G)it (o)pen browser link",
+            },
             {
                 "zf",
                 ':lua require("snacks").dim.enable()<CR>',
@@ -178,6 +245,12 @@ return require("lazy").setup({
                 mode = "n",
                 desc = "(f)ind (k)eymaps",
             },
+            {
+                "z=",
+                ":lua Snacks.picker.spelling()<CR>",
+                mode = "n",
+                desc = "Spelling suggestions list",
+            },
         },
     }, ------------------------
     -- Can be Lazy Loaded --
@@ -202,7 +275,18 @@ return require("lazy").setup({
         },
     },
     { "catgoose/nvim-colorizer.lua", ft = { "typescriptreact", "lua" }, opts = {} },
-    { "voldikss/vim-floaterm", cmd = "FloatermNew" },
+    {
+        "voldikss/vim-floaterm",
+        cmd = "FloatermNew",
+        keys = {
+            {
+                "<leader>lo",
+                ":FloatermNew --width=0.9 --height=0.9 lazygit<CR>",
+                mode = "n",
+                desc = "(l)azygit open in floating terminal",
+            },
+        },
+    },
     {
         "OXY2DEV/markview.nvim",
         ft = { "markdown", "octo" },
@@ -230,6 +314,9 @@ return require("lazy").setup({
         config = function()
             require("phdah.octo")
         end,
+        keys = {
+            { "<C-o>", ":Octo<CR>", mode = "n", desc = "Open (o)cto action list" },
+        },
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-telescope/telescope.nvim",
@@ -279,10 +366,17 @@ return require("lazy").setup({
     },
     {
         "terrortylor/nvim-comment",
-        cmd = "CommentToggle",
         config = function()
             require("phdah.codecomment")
         end,
+        keys = {
+            {
+                "<leader>'",
+                ":CommentToggle<CR>",
+                mode = { "n", "v" },
+                desc = "Toggle comment on line/s",
+            },
+        },
     },
     {
         -- "kndndrj/nvim-dbee",
@@ -355,6 +449,54 @@ return require("lazy").setup({
                 ':lua require("phdah.nvim-dap").start_repl()<CR>',
                 mode = "n",
                 desc = "Start (D)AP repl",
+            },
+            {
+                "<leader>t",
+                ':lua require("phdah.nvim-dap").dapui_terminate()<CR>',
+                mode = "n",
+                desc = "(t)erminate dap",
+            },
+            {
+                "<leader>i",
+                ':lua require("dap").step_into()<CR>',
+                mode = "n",
+                desc = "dap step (i)into function",
+            },
+            {
+                "<leader>m",
+                ':lua require("dap").step_over()<CR>',
+                mode = "n",
+                desc = "dap (m)ove to next line",
+            },
+            {
+                "<leader>e",
+                ':lua require("dap").step_out()<CR>',
+                mode = "n",
+                desc = "dap (e)xit current function",
+            },
+            {
+                "<leader>CB",
+                ':lua require("dap").clear_breakpoints()<CR>',
+                mode = "n",
+                desc = "(C)lear all (B)reakpoints",
+            },
+            {
+                "<Leader>r",
+                ':lua require("dapui").open({reset = true})<CR>',
+                mode = "n",
+                desc = "(r)edraw dap UI",
+            },
+            {
+                "<leader>dr",
+                ':lua require("phdah.nvim-dap").send_code_to_repl()<CR>',
+                mode = "v",
+                desc = "(d)ap send line to (r)epl",
+            },
+            {
+                "<leader>dR",
+                ':lua require("phdah.nvim-dap").send_file_to_repl()<CR>',
+                mode = "n",
+                desc = "(d)ap send all file to (R)epl",
             },
         },
         config = function()
