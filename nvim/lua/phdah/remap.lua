@@ -58,46 +58,6 @@ vim.api.nvim_set_keymap("n", "cl", ":cclose<CR>", { noremap = true, silent = tru
 vim.api.nvim_set_keymap("n", "cn", ":cnext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "cp", ":cprev<CR>", { noremap = true, silent = true })
 
--- Git conflict
-vim.api.nvim_set_keymap("n", "<leader>cl", ":GitConflictListQf<CR>", { silent = true })
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>co",
-    ":GitConflictChooseOurs<CR>",
-    { silent = true }
-)
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>ct",
-    ":GitConflictChooseTheirs<CR>",
-    { silent = true }
-)
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>c0",
-    ":GitConflictChooseBoth<CR>",
-    { silent = true }
-)
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>cb",
-    ":GitConflictChooseNone<CR>",
-    { silent = true }
-)
--- TODO: Add 'zz' after next and prev
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>cj",
-    ":GitConflictNextConflict<CR>",
-    { silent = true }
-)
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>ck",
-    ":GitConflictPrevConflict<CR>",
-    { silent = true }
-)
-
 -- lazygit
 vim.api.nvim_set_keymap(
     "n",
@@ -355,14 +315,6 @@ vim.api.nvim_set_keymap(
     "n",
     "<leader>no",
     ":set invrelativenumber invnumber<CR>:GitGutterToggle<CR>",
-    { noremap = true, silent = true }
-)
-
--- Toggle markdown preview
-vim.api.nvim_set_keymap(
-    "n",
-    "<leader>MD",
-    ":MarkdownPreviewToggle<CR>",
     { noremap = true, silent = true }
 )
 
