@@ -186,6 +186,9 @@ export PYDEVD_WARN_SLOW_RESOLVE_TIMEOUT=2
 # Set default fzf stdout
 export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"
 
+# Needed for image.nvim and Magick
+export DYLD_LIBRARY_PATH="/opt/homebrew/lib/"
+
 # Path
 source $HOME/.paths
 # Envs
