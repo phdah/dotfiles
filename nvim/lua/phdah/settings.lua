@@ -51,6 +51,9 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     callback = setDefaults,
 })
 
+-- Set short message (a)ll and (t)runcate filename
+vim.o.shortmess = "at"
+
 -- Set automatic pwd to the current buffer's pwd
 vim.o.autochdir = true
 
@@ -65,13 +68,14 @@ vim.wo.foldenable = false
 vim.o.laststatus = 3
 
 -- Highlighting for white space
-local whiteGroup = vim.api.nvim_create_augroup("MyCustomWhiteSpaceHighlights", { clear = true })
+local whiteGroup =
+    vim.api.nvim_create_augroup("MyCustomWhiteSpaceHighlights", { clear = true })
 vim.api.nvim_create_autocmd({ "BufEnter", "ColorScheme" }, {
     group = whiteGroup,
     pattern = "*",
     callback = function()
         local fileType = vim.bo.filetype
-        if fileType ~= "" and fileType ~= "dbee" then
+        if fileType ~= "" and fileType ~= "dbee" and fileType ~= "snacks_picker_list" then
             -- Only apply the highlight if the buffer has a filetype
             vim.api.nvim_set_hl(0, "ExtraWhitespace", { bg = "#BF616A" })
             vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
@@ -119,7 +123,8 @@ vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231" })
 vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70" })
 
 -- Set spelling on for specific files
-local auGroupSpelling = vim.api.nvim_create_augroup("nvim-spelling-custom", { clear = true })
+local auGroupSpelling =
+    vim.api.nvim_create_augroup("nvim-spelling-custom", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = auGroupSpelling,
     pattern = "markdown",
@@ -129,7 +134,8 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- Set configs for floaterm
-local auGroupFloaterm = vim.api.nvim_create_augroup("nvim-floaterm-custom", { clear = true })
+local auGroupFloaterm =
+    vim.api.nvim_create_augroup("nvim-floaterm-custom", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = auGroupFloaterm,
     pattern = "floaterm",
@@ -188,9 +194,11 @@ local function resizeSplitsEqually()
     end
 end
 
-local filetypeAC = vim.api.nvim_create_augroup("filetype-autocommands", {clear = true})
+local filetypeAC = vim.api.nvim_create_augroup("filetype-autocommands", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = filetypeAC,
-    pattern = {"python"},
-    callback = function() require("phdah.function-remap").set_git_root() end
+    pattern = { "python" },
+    callback = function()
+        require("phdah.function-remap").set_git_root()
+    end,
 })
