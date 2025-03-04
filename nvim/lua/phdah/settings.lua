@@ -157,7 +157,7 @@ vim.api.nvim_create_autocmd("FileType", {
 local function defineMake(args)
     local filetype = vim.bo.filetype
     if filetype == "python" then
-        vim.cmd("DBRun " .. args) -- nvim-databricks run command
+        vim.cmd("silent! DBRun " .. args) -- nvim-databricks run command
     elseif filetype == "sh" then
         vim.cmd("!bash % " .. args)
     elseif filetype == "c" or filetype == "cpp" then
