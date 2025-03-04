@@ -1,6 +1,7 @@
 require("octo").setup({
     suppress_missing_scope = { projects_v2 = true },
     enable_builtin = true,
+    -- picker = "snacks",
     mappings = {
         issue = {
             reload = { lhs = "<localleader>r", desc = "reload PR" },
