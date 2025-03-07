@@ -638,20 +638,6 @@ return require("lazy").setup({
         end,
     },
     {
-        "olimorris/codecompanion.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-treesitter/nvim-treesitter",
-        },
-        keys = {
-            { "<leader>gp", "<cmd>CodeCompanionActions<CR>", "n" },
-            { "<leader>gp", "<cmd>CodeCompanionActions<CR>", "v" },
-        },
-        config = function()
-            require("phdah.code_companion")
-        end,
-    },
-    {
         "danymat/neogen",
         cmd = "Neogen",
         config = true,
