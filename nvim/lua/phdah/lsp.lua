@@ -37,6 +37,13 @@ require("mason-lspconfig").setup_handlers({
 
 vim.diagnostic.config({ virtual_text = true, signs = false })
 
+-- Hover boarder
+local border = "rounded"
+vim.lsp.handlers["textDocument/hover"] =
+    vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/signatureHelp"] =
+    vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
+
 -- TODO: Figure out how to use ruff as the LSP instead
 vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup(
