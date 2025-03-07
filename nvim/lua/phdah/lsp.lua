@@ -25,15 +25,6 @@ require("mason-lspconfig").setup({
 
 -- Setup all lsp with defaults
 local lspconfig = require("lspconfig")
-local lsp_capabilities = require("blink.cmp").get_lsp_capabilities()
-require("mason-lspconfig").setup_handlers({
-    function(server_name)
-        -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
-        if server_name ~= "jdtls" then
-            lspconfig[server_name].setup({ capabilities = lsp_capabilities })
-        end
-    end,
-})
 
 vim.diagnostic.config({ virtual_text = true, signs = false })
 

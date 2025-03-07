@@ -154,28 +154,28 @@ return require("lazy").setup({
             {
                 "go",
                 ":lua require('snacks').gitbrowse.open()<CR>",
-                mode = {"n"},
+                mode = { "n" },
                 desc = "(G)it (o)pen browser link",
                 silent = true,
             },
             {
                 "go",
                 [[:lua require('snacks').gitbrowse.open({ line_start = vim.fn.line("'<"), line_end = vim.fn.line("'>")})<CR>]],
-                mode = {"v"},
+                mode = { "v" },
                 desc = "(G)it (o)pen browser link",
                 silent = true,
             },
             {
                 "gy",
                 ":lua require('snacks').gitbrowse({ open = function(url) vim.fn.setreg('+', url) end })<CR>",
-                mode = {"n"},
+                mode = { "n" },
                 desc = "(G)it (y)ank browser link",
                 silent = true,
             },
             {
                 "gy",
                 [[:lua require('snacks').gitbrowse({ line_start = vim.fn.line("'<"), line_end = vim.fn.line("'>"), open = function(url) vim.fn.setreg('+', url) end })<CR>]],
-                mode = {"v"},
+                mode = { "v" },
                 desc = "(G)it (y)ank browser link",
                 silent = true,
             },
@@ -208,7 +208,7 @@ return require("lazy").setup({
             },
             {
                 "gI",
-               ":lua require('snacks').picker.lsp_implementations()<CR>",
+                ":lua require('snacks').picker.lsp_implementations()<CR>",
                 desc = "Goto Implementation",
                 silent = true,
             },
@@ -402,7 +402,7 @@ return require("lazy").setup({
     {
         "saghen/blink.cmp",
         lazy = false, -- lazy loading handled internally
-        version = "0.8.0",
+        version = "0.10.0",
         config = function()
             require("phdah.blink")
         end,
@@ -413,6 +413,7 @@ return require("lazy").setup({
                 lazy = true,
                 opts = { impersonate_nvim_cmp = false, debug = false },
             },
+            { "L3MON4D3/LuaSnip", version = "v2.*" },
             "hrsh7th/cmp-emoji",
             "mikavilpas/blink-ripgrep.nvim",
             "folke/lazydev.nvim",

@@ -12,6 +12,7 @@ require("blink-cmp").setup({
             window = { border = "rounded" },
         },
     },
+    snippets = { preset = 'luasnip' },
     sources = {
         -- remember to enable your providers here
         default = { "lsp", "path", "snippets", "buffer", "emoji" },
