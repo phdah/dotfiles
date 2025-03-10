@@ -507,6 +507,13 @@ return require("lazy").setup({
                 silent = true,
             },
             {
+                "<leader>dl",
+                ":lua require('dap').run_last()<CR>",
+                mode = "n",
+                desc = "(D)AP run (l)ast",
+                silent = true,
+            },
+            {
                 "<leader>dy",
                 ':lua require("phdah.nvim-dap").start_repl()<CR>',
                 mode = "n",
