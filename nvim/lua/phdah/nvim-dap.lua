@@ -10,9 +10,7 @@ if not dap_ok then
     snacks.notify.info("nvim-dap not installed!")
     return
 end
-local dapui = require("dapui")
-
--- require('dap').set_log_level('DEBUG') -- Helps when configuring DAP, see logs with :DapShowLog
+local dv = require("dap-view")
 
 -- Mason setup
 require("nvim-dap-virtual-text").setup({ virt_text_pos = "eol" })
@@ -348,31 +346,19 @@ dap.configurations.java = {
     },
 }
 
----------------------
--- Configure dapui --
----------------------
+------------------------
+-- Configure dap view --
+------------------------
 
-dapui.setup({
-    expand_lines = false,
-    layouts = {
-        {
-            elements = {
-                { id = "breakpoints", size = 0.20 },
-                { id = "stacks", size = 0.40 },
-                { id = "watches", size = 0.40 },
-            },
-            size = 0.25,
-            position = "right",
-        },
-        { elements = { "scopes", "repl" }, size = 0.25, position = "bottom" },
+dv.setup({
+    winbar = {
+        default_section = "repl",
     },
-    mappings = {
-        expand = { "<C-j>" },
-        open = "o",
-        remove = "d",
-        edit = "e",
-        repl = "r",
-        toggle = "t",
+    windows = {
+        height = 20,
+        terminal = {
+            hide = { "python", "go" },
+        },
     },
 })
 
@@ -480,38 +466,18 @@ end
 -- Setup start and stop --
 --------------------------
 
--- Setup event listener to start dapui
-dap.listeners.after.event_initialized["dapui_config"] = function()
-    if not M.repl_run then
-        dapui.open({})
-        vim.o.mouse = "a"
-        vim.api.nvim_set_keymap(
-            "n",
-            "<leader>dh",
-            ':lua require("dap.ui.widgets").hover()<CR>',
-            { noremap = true, silent = true }
-        )
-    else
-        dap.repl.open({ height = 10 })
-    end
+dap.listeners.before.attach["dap-view-config"] = function()
+    dv.open()
+end
+dap.listeners.before.launch["dap-view-config"] = function()
+    dv.open()
 end
 
--- Setup close function for dapui
-M.dapui_terminate = function()
-    if dap.session() then
-        dap.terminate()
-        dap.disconnect()
-    end
-    dap.repl.close()
-    M.repl_run = false
-    dapui.close()
-    vim.o.mouse = ""
-    vim.api.nvim_set_keymap(
-        "n",
-        "<leader>dh",
-        ":lua vim.diagnostic.open_float()<CR>",
-        { noremap = true, silent = true }
-    )
-end
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = { "dap-float" },
+    callback = function(evt)
+        vim.keymap.set("n", "q", "<C-w>q", { silent = true, buffer = evt.buf })
+    end,
+})
 
 return M
