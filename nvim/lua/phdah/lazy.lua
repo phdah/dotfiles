@@ -464,7 +464,7 @@ return require("lazy").setup({
         opts = {},
     },
     {
-        "rcarriga/nvim-dap-ui",
+        "igorlfs/nvim-dap-view",
         keys = {
             {
                 "<leader>b",
@@ -507,10 +507,31 @@ return require("lazy").setup({
                 silent = true,
             },
             {
+                "<leader>dw",
+                ":lua require('dap-view').add_expr()<CR>",
+                mode = "n",
+                desc = "(D)AP add variable to (w)atch",
+                silent = true,
+            },
+            {
                 "<leader>dl",
                 ":lua require('dap').run_last()<CR>",
                 mode = "n",
                 desc = "(D)AP run (l)ast",
+                silent = true,
+            },
+            {
+                "<leader>dh",
+                ":lua require('dap.ui.widgets').hover(nil, { border = 'rounded' })<CR>",
+                mode = "n",
+                desc = "(D)AP (h)over varaible",
+                silent = true,
+            },
+            {
+                "<leader>dH",
+                ":lua require('dap.ui.widgets').centered_float(require('dap.ui.widgets').scopes, { border = 'rounded' })<CR>",
+                mode = "n",
+                desc = "(D)AP (H)over scopes",
                 silent = true,
             },
             {
@@ -522,7 +543,7 @@ return require("lazy").setup({
             },
             {
                 "<leader>t",
-                ':lua require("phdah.nvim-dap").dapui_terminate()<CR>',
+                ':lua require("dap").terminate(); require("dap-view").close(true)<CR>',
                 mode = "n",
                 desc = "(t)erminate dap",
                 silent = true,
