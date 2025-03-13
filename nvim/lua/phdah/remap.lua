@@ -11,9 +11,7 @@ vim.api.nvim_set_keymap(
     ":lua vim.lsp.buf.hover()<CR>",
     { noremap = true, silent = true }
 )
-vim.keymap.set("n", "<leader>gr", function()
-    return ":IncRename " .. vim.fn.expand("<cword>")
-end, { expr = true, noremap = true, silent = true })
+vim.keymap.set("n", "<leader>gr", vim.lsp.buf.rename)
 
 -- Diagnostic / Error
 vim.api.nvim_set_keymap(
