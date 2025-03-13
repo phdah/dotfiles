@@ -114,6 +114,8 @@ vim.o.scrolloff = 0
 -- Set colorscheme to nord
 vim.cmd([[colorscheme nord]])
 
+vim.o.diffopt = "internal,filler,closeoff,linematch:60"
+
 -- Set filechar and colors for diff
 vim.opt.fillchars:append("diff: ")
 -- Tokyonight colors: https://github.com/folke/tokyonight.nvim/blob/775f82f08a3d1fb55a37fc6d3a4ab10cd7ed8a10/extras/lua/tokyonight_night.lua#L899
