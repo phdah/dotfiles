@@ -357,7 +357,7 @@ dv.setup({
     windows = {
         height = 20,
         terminal = {
-            hide = { "python", "go" },
+            hide = { "python", "go", "nlua" },
         },
     },
 })
