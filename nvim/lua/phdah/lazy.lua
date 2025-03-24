@@ -416,8 +416,6 @@ return require("lazy").setup({
             },
             { "L3MON4D3/LuaSnip", version = "v2.*" },
             "hrsh7th/cmp-emoji",
-            "mikavilpas/blink-ripgrep.nvim",
-            "folke/lazydev.nvim",
         },
     },
     {
