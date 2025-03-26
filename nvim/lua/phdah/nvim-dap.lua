@@ -178,12 +178,14 @@ dap.configurations.cpp = {
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
+local fileName = vim.fn.expand("%:p")
+
 dap.configurations.python = {
     {
         type = "python",
         request = "launch", -- Specifies the debug request type
         name = "Launch File",
-        program = "${file}", -- Specifies the file to debug
+        program = fileName,
         pythonPath = function()
             return pythonPath
         end,
@@ -197,7 +199,7 @@ dap.configurations.python = {
             local args_string = vim.fn.input("Arguments: ")
             return vim.split(args_string, " +")
         end,
-        program = "${file}", -- Specifies the file to debug
+        program = fileName,
         pythonPath = function()
             return pythonPath
         end,
@@ -226,8 +228,8 @@ dap.configurations.sh = {
         pathBashdbLib = vim.fn.stdpath("data")
             .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
         trace = true,
-        file = "${file}",
-        program = "${file}",
+        file = fileName,
+        program = fileName,
         cwd = "${workspaceFolder}",
         pathCat = "cat",
         pathBash = "/opt/homebrew/bin/bash",
@@ -248,7 +250,7 @@ dap.configurations.lua = {
         program = {
             lua = "nlua", -- To allow vim debug
             -- lua = '/opt/homebrew/bin/lua', -- Basic lua debug
-            file = "${file}",
+            file = fileName,
         },
         verbose = true,
         args = {},
@@ -278,7 +280,7 @@ dap.configurations.go = {
         type = "go",
         name = "Debug",
         request = "launch",
-        program = "${file}",
+        program = fileName,
         buildFlags = "",
         outputMode = "remote",
     },
@@ -286,7 +288,7 @@ dap.configurations.go = {
         type = "go",
         name = "Debug with Args",
         request = "launch",
-        program = "${file}",
+        program = fileName,
         args = function()
             local args_string = vim.fn.input("Arguments: ")
             return vim.split(args_string, " +")
@@ -317,7 +319,7 @@ dap.configurations.go = {
         name = "Debug test",
         request = "launch",
         mode = "test",
-        program = "${file}",
+        program = fileName,
         args = { "-test.v" },
         outputMode = "remote",
     },
