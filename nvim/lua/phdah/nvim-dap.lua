@@ -280,6 +280,7 @@ dap.configurations.go = {
         request = "launch",
         program = "${file}",
         buildFlags = "",
+        outputMode = "remote",
     },
     {
         type = "go",
@@ -290,6 +291,7 @@ dap.configurations.go = {
             local args_string = vim.fn.input("Arguments: ")
             return vim.split(args_string, " +")
         end,
+        outputMode = "remote",
     },
     {
         type = "go",
@@ -297,6 +299,7 @@ dap.configurations.go = {
         mode = "local",
         request = "attach",
         processId = filtered_pick_process,
+        outputMode = "remote",
     },
     {
         name = "Attach to Name (wait)",
@@ -307,6 +310,7 @@ dap.configurations.go = {
             return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
         end,
         stopOnEntry = true,
+        outputMode = "remote",
     },
     {
         type = "go",
@@ -314,6 +318,8 @@ dap.configurations.go = {
         request = "launch",
         mode = "test",
         program = "${file}",
+        args = { "-test.v" },
+        outputMode = "remote",
     },
     {
         type = "go",
@@ -321,6 +327,8 @@ dap.configurations.go = {
         request = "launch",
         mode = "test",
         program = "./${relativeFileDirname}",
+        args = { "-test.v" },
+        outputMode = "remote",
     },
 }
 dap.configurations.java = {
