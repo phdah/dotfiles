@@ -10,7 +10,7 @@ if not dap_ok then
     snacks.notify.info("nvim-dap not installed!")
     return
 end
-local dv = require("dap-view")
+local dapui = require("dapui")
 
 -- Mason setup
 require("nvim-dap-virtual-text").setup({ virt_text_pos = "eol" })
@@ -83,6 +83,14 @@ dap.adapters["local-lua"] = {
         end
     end,
 }
+
+dap.adapters.nlua = function(callback, config)
+    callback({
+        type = "server",
+        host = config.host or "127.0.0.1",
+        port = config.port or 8086,
+    })
+end
 
 dap.adapters.go = {
     type = "server",
@@ -179,6 +187,7 @@ dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
 
 local fileName = vim.fn.expand("%:p")
+local gitRootDir = require("nvim-utils").Git.find_git_root()
 
 dap.configurations.python = {
     {
@@ -208,8 +217,20 @@ dap.configurations.python = {
     {
         type = "python",
         request = "launch",
-        name = "Launch pytest",
+        name = "Launch file pytest",
         module = "pytest",
+        args = { "-vs", fileName },
+        pythonPath = function()
+            return pythonPath
+        end,
+        justMyCode = false,
+    },
+    {
+        type = "python",
+        request = "launch",
+        name = "Launch all pytest",
+        module = "pytest",
+        args = { "-vs", gitRootDir },
         pythonPath = function()
             return pythonPath
         end,
@@ -254,6 +275,11 @@ dap.configurations.lua = {
         },
         verbose = true,
         args = {},
+    },
+    {
+        type = "nlua",
+        request = "attach",
+        name = "Attach to running Neovim instance",
     },
 }
 
@@ -356,54 +382,32 @@ dap.configurations.java = {
     },
 }
 
-------------------------
--- Configure dap view --
-------------------------
+---------------------
+-- Configure dapui --
+---------------------
 
-dv.setup({
-    winbar = {
-        default_section = "repl",
-    },
-    windows = {
-        height = 20,
-        terminal = {
-            hide = { "python", "go", "nlua", "python_repl" },
+dapui.setup({
+    expand_lines = false,
+    layouts = {
+        {
+            elements = { { id = "watches", size = 0.40 }, { id = "repl", size = 0.60 } },
+            size = 0.40,
+            position = "bottom",
         },
+    },
+    mappings = {
+        expand = { "<C-j>" },
+        open = "o",
+        remove = "d",
+        edit = "e",
+        repl = "r",
+        toggle = "t",
     },
 })
 
----------------------------------
--- Setup debugger for nvim lua --
----------------------------------
-
---[[
-Launch the server in the debuggee using `DapNvimDebugee`
-Open another Neovim instance with the source file
-Place breakpoint and start debugger with `DapNvimSource`
-In the debuggee, call the specific function to debug
-]]
-vim.api.nvim_create_user_command("DapNvimDebugee", function()
-    require("osv").launch({ port = 8086 })
-end, {})
-
-vim.api.nvim_create_user_command("DapNvimSource", function()
-    dap.configurations.lua = {
-        {
-            type = "nlua",
-            request = "attach",
-            name = "Attach to running Neovim instance",
-        },
-    }
-
-    dap.adapters.nlua = function(callback, config)
-        callback({
-            type = "server",
-            host = config.host or "127.0.0.1",
-            port = config.port or 8086,
-        })
-    end
-    require("dap").continue()
-end, {})
+------------------------------------------
+-- Setup debugger to interact with repl --
+------------------------------------------
 
 M.send_code_to_repl = function()
     local code = vim.fn.getregion(vim.fn.getpos("'<"), vim.fn.getpos("'>"))
@@ -476,11 +480,24 @@ end
 -- Setup start and stop --
 --------------------------
 
-dap.listeners.before.attach["dap-view-config"] = function()
-    dv.open()
+-- Setup event listener to start dapui
+dap.listeners.after.event_initialized["dapui_config"] = function()
+    if not M.repl_run then
+        dapui.open({})
+    else
+        dap.repl.open({ height = 10 })
+    end
 end
-dap.listeners.before.launch["dap-view-config"] = function()
-    dv.open()
+
+-- Setup close function for dapui
+M.dapui_terminate = function()
+    if dap.session() then
+        dap.terminate()
+        dap.disconnect()
+    end
+    dap.repl.close()
+    M.repl_run = false
+    dapui.close()
 end
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
