@@ -481,9 +481,16 @@ end
 --------------------------
 
 -- Setup event listener to start dapui
+local dapui_resize_group = vim.api.nvim_create_augroup("DapUIResize", { clear = true })
 dap.listeners.after.event_initialized["dapui_config"] = function()
     if not M.repl_run then
         dapui.open({})
+        vim.api.nvim_create_autocmd("VimResized", {
+            group = dapui_resize_group,
+            callback = function()
+                require("dapui").open({ reset = true })
+            end,
+        })
     else
         dap.repl.open({ height = 10 })
     end
@@ -498,6 +505,7 @@ M.dapui_terminate = function()
     dap.repl.close()
     M.repl_run = false
     dapui.close()
+    vim.api.nvim_clear_autocmds({ group = dapui_resize_group })
 end
 
 vim.api.nvim_create_autocmd({ "FileType" }, {
