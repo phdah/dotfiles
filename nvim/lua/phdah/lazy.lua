@@ -492,6 +492,7 @@ return require("lazy").setup({
                     -- Ensure the module is loaded, this is only
                     -- a problem if loaded by this mapping
                     require("phdah.nvim-dap")
+                    require("phdah.nvim-dap").setup_configs()
                     require("dap").continue()
                 end,
                 mode = "n",

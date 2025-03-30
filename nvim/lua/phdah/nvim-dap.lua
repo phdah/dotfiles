@@ -110,7 +110,6 @@ dap.adapters.go = {
 --------------------------
 
 -- Function to run dsymutil
-local program
 local function runDsymutil(executable)
     -- Determine the .dSYM path based on the executable name
     local dsymPath = executable .. ".dSYM"
@@ -133,254 +132,264 @@ local function runDsymutil(executable)
     end
 end
 
-dap.configurations.cpp = {
-    {
-        name = "Launch file",
-        type = "lldb-dap",
-        request = "launch",
-        program = function()
-            program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-            runDsymutil(program)
-            return program
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-    },
-    {
-        name = "Debug with Args",
-        type = "lldb-dap",
-        request = "launch",
-        program = function()
-            program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-            runDsymutil(program)
-            return program
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-        args = function()
-            local args_str = vim.fn.input("Program arguments: ")
-            return vim.split(args_str, " +")
-        end,
-    },
-    {
-        name = "Attach",
-        type = "lldb-dap",
-        request = "attach",
-        pid = filtered_pick_process,
-        stopOnEntry = false,
-    },
-    {
-        name = "Attach to Name (wait)",
-        type = "lldb-dap",
-        stopOnEntry = false,
-        request = "attach",
-        program = function()
-            program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-            runDsymutil(program)
-            return program
-        end,
-        waitFor = true,
-    },
-}
-
-dap.configurations.c = dap.configurations.cpp
-dap.configurations.rust = dap.configurations.cpp
-
-local fileName = vim.fn.expand("%:p")
-local gitRootDir = require("nvim-utils").Git.find_git_root()
-
-dap.configurations.python = {
-    {
-        type = "python",
-        request = "launch", -- Specifies the debug request type
-        name = "Launch File",
-        program = fileName,
-        pythonPath = function()
-            return pythonPath
-        end,
-        justMyCode = false, -- Ensures that only user code is debugged
-    },
-    {
-        type = "python",
-        request = "launch", -- Specifies the debug request type
-        name = "Launch File With args",
-        args = function()
-            local args_string = vim.fn.input("Arguments: ")
-            return vim.split(args_string, " +")
-        end,
-        program = fileName,
-        pythonPath = function()
-            return pythonPath
-        end,
-        justMyCode = false, -- Ensures that only user code is debugged
-    },
-    {
-        type = "python",
-        request = "launch",
-        name = "Launch file pytest",
-        module = "pytest",
-        args = { "-vs", fileName },
-        pythonPath = function()
-            return pythonPath
-        end,
-        justMyCode = false,
-    },
-    {
-        type = "python",
-        request = "launch",
-        name = "Launch all pytest",
-        module = "pytest",
-        args = { "-vs", gitRootDir },
-        pythonPath = function()
-            return pythonPath
-        end,
-        justMyCode = false,
-    },
-}
-
-dap.configurations.sh = {
-    {
-        type = "bashdb",
-        request = "launch",
-        name = "Launch file",
-        showDebugOutput = true,
-        pathBashdb = vim.fn.stdpath("data")
-            .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
-        pathBashdbLib = vim.fn.stdpath("data")
-            .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
-        trace = true,
-        file = fileName,
-        program = fileName,
-        cwd = "${workspaceFolder}",
-        pathCat = "cat",
-        pathBash = "/opt/homebrew/bin/bash",
-        pathMkfifo = "mkfifo",
-        pathPkill = "pkill",
-        args = {},
-        env = {},
-        terminalKind = "integrated",
-    },
-}
-
-dap.configurations.lua = {
-    {
-        name = "Current file (local-lua-dbg, nlua)",
-        type = "local-lua",
-        request = "launch",
-        cwd = "${workspaceFolder}",
-        program = {
-            lua = "nlua", -- To allow vim debug
-            -- lua = '/opt/homebrew/bin/lua', -- Basic lua debug
-            file = fileName,
+-- Function to set all configs
+M.setup_configs = function()
+    local fileName = vim.fn.expand("%:p")
+    local gitRootDir = require("nvim-utils").Git.find_git_root()
+    dap.configurations.cpp = {
+        {
+            name = "Launch file",
+            type = "lldb-dap",
+            request = "launch",
+            program = function()
+                local program =
+                    vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                runDsymutil(program)
+                return program
+            end,
+            cwd = "${workspaceFolder}",
+            stopOnEntry = false,
         },
-        verbose = true,
-        args = {},
-    },
-    {
-        type = "nlua",
-        request = "attach",
-        name = "Attach to running Neovim instance",
-    },
-}
+        {
+            name = "Debug with Args",
+            type = "lldb-dap",
+            request = "launch",
+            program = function()
+                local program =
+                    vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                runDsymutil(program)
+                return program
+            end,
+            cwd = "${workspaceFolder}",
+            stopOnEntry = false,
+            args = function()
+                local args_str = vim.fn.input("Program arguments: ")
+                return vim.split(args_str, " +")
+            end,
+        },
+        {
+            name = "Attach",
+            type = "lldb-dap",
+            request = "attach",
+            pid = filtered_pick_process,
+            stopOnEntry = false,
+        },
+        {
+            name = "Attach to Name (wait)",
+            type = "lldb-dap",
+            stopOnEntry = false,
+            request = "attach",
+            program = function()
+                local program =
+                    vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                runDsymutil(program)
+                return program
+            end,
+            waitFor = true,
+        },
+    }
 
-dap.configurations.vim = dap.configurations.lua
+    dap.configurations.c = dap.configurations.cpp
+    dap.configurations.rust = dap.configurations.cpp
 
--- NOTE: The adapter is sourced in plugin/lsp.lua
-dap.configurations.scala = {
-    {
-        type = "scala",
-        request = "launch",
-        name = "Run or Test File",
-        metals = { runType = "runOrTestFile" },
-    },
-    {
-        type = "scala",
-        request = "launch",
-        name = "Test Target",
-        metals = { runType = "testTarget" },
-    },
-}
+    dap.configurations.python = {
+        {
+            type = "python",
+            request = "launch", -- Specifies the debug request type
+            name = "Launch File",
+            program = fileName,
+            pythonPath = function()
+                return pythonPath
+            end,
+            justMyCode = false, -- Ensures that only user code is debugged
+        },
+        {
+            type = "python",
+            request = "launch", -- Specifies the debug request type
+            name = "Launch File With args",
+            args = function()
+                local args_string = vim.fn.input("Arguments: ")
+                return vim.split(args_string, " +")
+            end,
+            program = fileName,
+            pythonPath = function()
+                return pythonPath
+            end,
+            justMyCode = false, -- Ensures that only user code is debugged
+        },
+        {
+            type = "python",
+            request = "launch",
+            name = "Launch file pytest",
+            module = "pytest",
+            args = { "-vs", fileName },
+            pythonPath = function()
+                return pythonPath
+            end,
+            justMyCode = false,
+        },
+        {
+            type = "python",
+            request = "launch",
+            name = "Launch all pytest",
+            module = "pytest",
+            args = { "-vs", gitRootDir },
+            pythonPath = function()
+                return pythonPath
+            end,
+            justMyCode = false,
+        },
+    }
 
-dap.configurations.go = {
-    {
-        type = "go",
-        name = "Debug",
-        request = "launch",
-        program = fileName,
-        buildFlags = "",
-        outputMode = "remote",
-    },
-    {
-        type = "go",
-        name = "Debug with Args",
-        request = "launch",
-        program = fileName,
-        args = function()
-            local args_string = vim.fn.input("Arguments: ")
-            return vim.split(args_string, " +")
-        end,
-        outputMode = "remote",
-    },
-    {
-        type = "go",
-        name = "Attach",
-        mode = "local",
-        request = "attach",
-        processId = filtered_pick_process,
-        outputMode = "remote",
-    },
-    {
-        name = "Attach to Name (wait)",
-        type = "go",
-        mode = "local",
-        request = "attach",
-        waitFor = function()
-            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        stopOnEntry = true,
-        outputMode = "remote",
-    },
-    {
-        type = "go",
-        name = "Debug test",
-        request = "launch",
-        mode = "test",
-        program = fileName,
-        args = { "-test.v" },
-        outputMode = "remote",
-    },
-    {
-        type = "go",
-        name = "Debug test (go.mod)",
-        request = "launch",
-        mode = "test",
-        program = "./${relativeFileDirname}",
-        args = { "-test.v" },
-        outputMode = "remote",
-    },
-}
-dap.configurations.java = {
-    {
-        name = "Debug Launch (2GB)",
-        type = "java",
-        request = "launch",
-        vmArgs = "" .. "-Xmx2g ",
-    },
-    {
-        name = "Debug Attach (8000)",
-        type = "java",
-        request = "attach",
-        hostName = "127.0.0.1",
-        port = 8000,
-    },
-    {
-        name = "Debug Attach (5005)",
-        type = "java",
-        request = "attach",
-        hostName = "127.0.0.1",
-        port = 5005,
-    },
-}
+    dap.configurations.sh = {
+        {
+            type = "bashdb",
+            request = "launch",
+            name = "Launch file",
+            showDebugOutput = true,
+            pathBashdb = vim.fn.stdpath("data")
+                .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb",
+            pathBashdbLib = vim.fn.stdpath("data")
+                .. "/mason/packages/bash-debug-adapter/extension/bashdb_dir",
+            trace = true,
+            file = fileName,
+            program = fileName,
+            cwd = "${workspaceFolder}",
+            pathCat = "cat",
+            pathBash = "/opt/homebrew/bin/bash",
+            pathMkfifo = "mkfifo",
+            pathPkill = "pkill",
+            args = {},
+            env = {},
+            terminalKind = "integrated",
+        },
+    }
+
+    dap.configurations.lua = {
+        {
+            name = "Current file (local-lua-dbg, nlua)",
+            type = "local-lua",
+            request = "launch",
+            cwd = "${workspaceFolder}",
+            program = {
+                lua = "nlua", -- To allow vim debug
+                -- lua = '/opt/homebrew/bin/lua', -- Basic lua debug
+                file = fileName,
+            },
+            verbose = true,
+            args = {},
+        },
+        {
+            type = "nlua",
+            request = "attach",
+            name = "Attach to running Neovim instance",
+        },
+    }
+
+    dap.configurations.vim = dap.configurations.lua
+
+    -- NOTE: The adapter is sourced in plugin/lsp.lua
+    dap.configurations.scala = {
+        {
+            type = "scala",
+            request = "launch",
+            name = "Run or Test File",
+            metals = { runType = "runOrTestFile" },
+        },
+        {
+            type = "scala",
+            request = "launch",
+            name = "Test Target",
+            metals = { runType = "testTarget" },
+        },
+    }
+
+    dap.configurations.go = {
+        {
+            type = "go",
+            name = "Debug",
+            request = "launch",
+            program = fileName,
+            buildFlags = "",
+            outputMode = "remote",
+        },
+        {
+            type = "go",
+            name = "Debug with Args",
+            request = "launch",
+            program = fileName,
+            args = function()
+                local args_string = vim.fn.input("Arguments: ")
+                return vim.split(args_string, " +")
+            end,
+            outputMode = "remote",
+        },
+        {
+            type = "go",
+            name = "Attach",
+            mode = "local",
+            request = "attach",
+            processId = filtered_pick_process,
+            outputMode = "remote",
+        },
+        {
+            name = "Attach to Name (wait)",
+            type = "go",
+            mode = "local",
+            request = "attach",
+            waitFor = function()
+                return vim.fn.input(
+                    "Path to executable: ",
+                    vim.fn.getcwd() .. "/",
+                    "file"
+                )
+            end,
+            stopOnEntry = true,
+            outputMode = "remote",
+        },
+        {
+            type = "go",
+            name = "Debug test",
+            request = "launch",
+            mode = "test",
+            program = fileName,
+            args = { "-test.v" },
+            outputMode = "remote",
+        },
+        {
+            type = "go",
+            name = "Debug test (go.mod)",
+            request = "launch",
+            mode = "test",
+            program = "./${relativeFileDirname}",
+            args = { "-test.v" },
+            outputMode = "remote",
+        },
+    }
+    dap.configurations.java = {
+        {
+            name = "Debug Launch (2GB)",
+            type = "java",
+            request = "launch",
+            vmArgs = "" .. "-Xmx2g ",
+        },
+        {
+            name = "Debug Attach (8000)",
+            type = "java",
+            request = "attach",
+            hostName = "127.0.0.1",
+            port = 8000,
+        },
+        {
+            name = "Debug Attach (5005)",
+            type = "java",
+            request = "attach",
+            hostName = "127.0.0.1",
+            port = 5005,
+        },
+    }
+end
+M.setup_configs()
 
 ---------------------
 -- Configure dapui --
