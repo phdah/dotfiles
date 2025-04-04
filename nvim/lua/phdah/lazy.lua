@@ -481,7 +481,10 @@ return require("lazy").setup({
             },
             {
                 "<leader>db",
-                ':lua require("osv").launch({ port = 8086 })<CR>',
+                function()
+                    require("phdah.nvim-dap")
+                    require("osv").launch({ port = 8086 })
+                end,
                 mode = "n",
                 desc = "Start (d)ebugg (b)ase",
                 silent = true,
