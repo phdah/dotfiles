@@ -197,10 +197,14 @@ local function lintFile(args)
         )
     elseif filetype == "terraform" then
         vim.cmd("silent! !terraform fmt % " .. args)
+    else
+        snacks.notify.info("No available formatter for " .. filetype)
+        return
     end
     snacks.notify.info(
         "Formatted file: " .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t")
     )
+    vim.cmd(":noh")
 end
 
 -- Create the :Lint command
