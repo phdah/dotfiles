@@ -685,9 +685,37 @@ return require("lazy").setup({
     {
         "danymat/neogen",
         cmd = "Neogen",
-        config = true,
-        -- Uncomment next line if you want to follow only stable versions
-        -- version = "*"
+        dependencies = { "L3MON4D3/LuaSnip", version = "v2.*" },
+        keys = {
+            {
+                "<leader>ne",
+                function()
+                    require("neogen").generate()
+                end,
+                desc = "(N)(e)ogen Comment",
+            },
+        },
+        opts = {
+            snippet_engine = "luasnip",
+            input_after_comment = false,
+            languages = {
+                python = {
+                    template = {
+                        annotation_convention = "google_docstrings",
+                    },
+                },
+                go = {
+                    template = {
+                        annotation_convention = "godoc",
+                    },
+                },
+                lua = {
+                    template = {
+                        annotation_convention = "emmylua",
+                    },
+                },
+            },
+        },
     },
     {
         "phdah/lazydbrix",
