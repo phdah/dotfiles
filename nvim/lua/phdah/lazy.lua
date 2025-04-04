@@ -99,6 +99,12 @@ return require("lazy").setup({
             require("phdah.surround")
         end,
     },
+    {
+        "echasnovski/mini.ai",
+        version = "*",
+        event = { "BufReadPre", "BufNewFile" },
+        opts = {},
+    },
     { dir = "~/repos/privat/nvim-utils/" },
     {
         "folke/snacks.nvim",
