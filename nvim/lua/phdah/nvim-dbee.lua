@@ -13,6 +13,7 @@ require("dbee").setup({
             { key = "<C-s>", mode = "v", action = "run_selection" },
             -- run the whole file on the active connection
             { key = "<C-s>", mode = "n", action = "run_file" },
+            { key = "<C-y>", mode = "n", action = "run_under_cursor" },
         },
     },
     result = {
