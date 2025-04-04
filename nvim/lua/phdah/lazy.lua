@@ -395,8 +395,6 @@ return require("lazy").setup({
             "neovim/nvim-lspconfig",
             "williamboman/mason.nvim",
             "williamboman/mason-lspconfig.nvim",
-            -- Currently broken
-            -- { "smjonas/inc-rename.nvim", opts = {} },
         },
     },
     {
