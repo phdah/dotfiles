@@ -40,7 +40,12 @@ vim.keymap.set(
 )
 
 -- Lint
-vim.api.nvim_set_keymap("n", "<C-CR>", ":Lint<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+    "n",
+    "<C-CR>",
+    ":Lint<CR>",
+    { noremap = true, silent = true }
+)
 
 -- Terminal keymaps
 vim.api.nvim_set_keymap(
