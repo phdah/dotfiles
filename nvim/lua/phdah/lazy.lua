@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         "clone",
         "--filter=blob:none",
         "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable", -- latest stable release
+        "--branch=stable",
         lazypath,
     })
 end
@@ -306,6 +306,13 @@ return require("lazy").setup({
                 "<leader>sb",
                 ":lua require('snacks').picker.lsp_symbols()<CR>",
                 desc = "LSP Symbols",
+                silent = true,
+            },
+            {
+                "<leader>fu",
+                ":lua require('snacks').picker.undo()<CR>",
+                mode = "n",
+                desc = "(f)ind (f)iles locally",
                 silent = true,
             },
             {
