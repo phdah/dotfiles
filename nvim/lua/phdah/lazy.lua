@@ -386,7 +386,7 @@ return require("lazy").setup({
     {
         "williamboman/mason.nvim",
         cmd = "Mason",
-        opts = {}
+        opts = {},
     },
     {
         "mfussenegger/nvim-jdtls",
@@ -397,7 +397,7 @@ return require("lazy").setup({
     },
     {
         "saghen/blink.cmp",
-        lazy = false, -- lazy loading handled internally
+        event = { "InsertEnter", "CmdlineEnter" },
         version = "0.10.0",
         config = function()
             require("phdah.blink")
