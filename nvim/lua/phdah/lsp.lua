@@ -1,46 +1,12 @@
 ---------------
--- Mason lsp --
+-- LSP --
 ---------------
-local lsp_zero = require("lsp-zero")
-
-lsp_zero.on_attach(function(client, bufnr)
-    -- see :help lsp-zero-keybindings
-    -- to learn the available actions
-    lsp_zero.default_keymaps({ buffer = bufnr })
-end)
-
-require("mason").setup({})
-require("mason-lspconfig").setup({
-    ensure_installed = {
-        "pyright",
-        "ruff",
-        "clangd",
-        "jsonls",
-        "yamlls",
-        "bashls",
-        "gopls",
-        "jdtls",
-    },
-})
 
 -- Setup all lsp with defaults
-local lspconfig = require("lspconfig")
-require("mason-lspconfig").setup_handlers({
-    function(server_name)
-        -- Don't call setup for JDTLS Java LSP because it will be setup from a separate config
-        if server_name ~= "jdtls" then
-            lspconfig[server_name].setup({})
-        end
-    end,
+vim.diagnostic.config({
+    virtual_text = { current_line = true },
+    signs = false,
 })
-vim.diagnostic.config({ virtual_text = true, signs = false })
-
--- Hover boarder
-local border = "rounded"
-vim.lsp.handlers["textDocument/hover"] =
-    vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/signatureHelp"] =
-    vim.lsp.with(vim.lsp.handlers.signature_help, { border = border })
 
 -- TODO: Figure out how to use ruff as the LSP instead
 vim.api.nvim_create_autocmd("LspAttach", {
@@ -61,29 +27,31 @@ vim.api.nvim_create_autocmd("LspAttach", {
     desc = "LSP: Disable hover capability from Ruff (https://docs.astral.sh/ruff/editors/setup/#neovim)",
 })
 
-local notifyNoInfo = function()
-    require("snacks").notify.info("No information available")
-end
-lspconfig.pyright.setup({
-    -- Specific handler to remove the `&nbsp;`. Not sure how to resolve it
-    -- otherwise...
-    handlers = {
-        ["textDocument/hover"] = vim.lsp.with(function(_, result, _, config)
-            if not (result and result.contents) then
-                notifyNoInfo()
-                return
-            end
-            local contents = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
-            contents = vim.split(table.concat(contents, "\n"), "\n", { trimempty = true })
-            if vim.tbl_isempty(contents) then
-                notifyNoInfo()
-                return
-            end
-            for i, line in ipairs(contents) do
-                contents[i] = line:gsub("&nbsp;", " ")
-            end
-            vim.lsp.util.open_floating_preview(contents, "markdown", config)
-        end, { border = border }),
+vim.lsp.config.ruff = {
+    cmd = { "ruff", "server" },
+    filetypes = { "python" },
+    root_markers = {
+        "pyproject.toml",
+        "setup.py",
+        "setup.cfg",
+        "requirements.txt",
+        "Pipfile",
+        "pyrightconfig.json",
+        ".git",
+    },
+}
+
+vim.lsp.config.pyright = {
+    cmd = { "pyright-langserver", "--stdio" },
+    filetypes = { "python" },
+    root_markers = {
+        "pyproject.toml",
+        "setup.py",
+        "setup.cfg",
+        "requirements.txt",
+        "Pipfile",
+        "pyrightconfig.json",
+        ".git",
     },
     settings = {
         python = {
@@ -95,10 +63,22 @@ lspconfig.pyright.setup({
             pythonPath = "python3",
         },
     },
-})
+}
 
 -- Set up the lua-language-server
-lspconfig.lua_ls.setup({
+vim.lsp.config.luals = {
+    cmd = { "lua-language-server" },
+    filetypes = { "lua" },
+    root_markers = {
+        ".luarc.json",
+        ".luarc.jsonc",
+        ".luacheckrc",
+        ".stylua.toml",
+        "stylua.toml",
+        "selene.toml",
+        "selene.yml",
+        ".git",
+    },
     settings = {
         Lua = {
             runtime = {
@@ -116,7 +96,50 @@ lspconfig.lua_ls.setup({
             telemetry = { enable = false },
         },
     },
-})
+}
+
+vim.lsp.config.gopls = {
+    cmd = { "gopls" },
+    filetypes = { "go", "gomod", "gowork", "gotmpl" },
+    root_markers = { "go.work", "go.mod", ".git" },
+}
+
+vim.lsp.config.clangd = {
+    cmd = { "clangd", "--background-index" },
+    root_markers = {
+        ".clangd",
+        ".clang-tidy",
+        ".clang-format",
+        "compile_commands.json",
+        "compile_flags.txt",
+        "configure.ac",
+        ".git",
+    },
+    filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+}
+
+vim.lsp.config.bash = {
+    cmd = { "bash-language-server", "start" },
+    settings = {
+        bashIde = {
+            globPattern = vim.env.GLOB_PATTERN or "*@(.sh|.inc|.bash|.command)",
+        },
+    },
+    filetypes = { "bash", "sh", "zsh" },
+    root_markers = { ".git" },
+}
+
+vim.lsp.config.json = {
+    cmd = { "vscode-json-language-server", "--stdio" },
+    filetypes = { "json", "jsonc" },
+    init_options = {
+        provideFormatter = true,
+    },
+    root_markers = { ".git" },
+}
+
+-- All lsp config's are taken from: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/configs
+vim.lsp.enable({ "luals", "pyright", "gopls", "clangd", "ruff", "bash", "json" })
 
 ----------------
 -- Metals lsp --

@@ -54,6 +54,9 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 -- Set short message (a)ll and (t)runcate filename
 vim.o.shortmess = "at"
 
+-- Set window boarder to rounded
+vim.o.winborder = "rounded"
+
 -- Set automatic pwd to the current buffer's pwd
 vim.o.autochdir = true
 

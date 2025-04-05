@@ -384,18 +384,9 @@ return require("lazy").setup({
         },
     },
     {
-        "VonHeikemen/lsp-zero.nvim",
-        event = { "BufReadPre", "BufNewFile" },
-        branch = "v4.x",
-        config = function()
-            require("phdah.lsp")
-        end,
-        dependencies = {
-            -- LSP Support
-            "neovim/nvim-lspconfig",
-            "williamboman/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
-        },
+        "williamboman/mason.nvim",
+        cmd = "Mason",
+        opts = {}
     },
     {
         "mfussenegger/nvim-jdtls",
