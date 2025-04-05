@@ -444,7 +444,6 @@ return require("lazy").setup({
     },
     {
         "stevearc/oil.nvim",
-        lazy = false,
         config = function()
             require("phdah.oil")
         end,
@@ -740,7 +739,6 @@ return require("lazy").setup({
     },
     {
         "leath-dub/snipe.nvim",
-        lazy = false,
         keys = {
             {
                 "<leader>fb",
