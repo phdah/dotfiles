@@ -192,6 +192,13 @@ return require("lazy").setup({
                     input = {
                         keys = {
                             ["<C-i>"] = { "confirm", mode = { "n", "i" } },
+                            ["<C-k>"] = { "<Esc>", mode = { "n", "i" }, expr = true },
+                            ["<C-c>"] = { "close", mode = { "n", "i" } },
+                            ["<c-h>"] = {
+                                { "toggle_hidden", "toggle_ignored" },
+                                mode = { "i", "n" },
+                            },
+                            ["<c-j>"] = false,
                         },
                     },
                 },
@@ -340,6 +347,13 @@ return require("lazy").setup({
                 "<leader>f*",
                 ":lua require('snacks').picker.grep_word({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
                 mode = "n",
+                desc = "(f)ind (*) search",
+                silent = true,
+            },
+            {
+                "<leader>f*",
+                ":lua require('snacks').picker.grep({ search = require('nvim-utils').String.escape_line(require('nvim-utils').String.get_visual_selection()) })<CR>",
+                mode = "v",
                 desc = "(f)ind (*) search",
                 silent = true,
             },
