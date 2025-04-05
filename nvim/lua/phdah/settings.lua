@@ -190,25 +190,32 @@ vim.api.nvim_create_user_command("Make", function(opts)
     defineMake(opts.args)
 end, { nargs = "*" })
 
-local function resizeSplitsEqually()
-    local total_width = 0
-    local num_splits = vim.fn.winnr("$")
-    -- Iterate over all windows to get the total width
-    for i = 1, num_splits do
-        total_width = total_width + vim.api.nvim_win_get_width(vim.fn.win_getid(i))
-    end
-    local new_width = math.floor(total_width / num_splits)
-    for i = 1, num_splits do
-        vim.cmd(i .. "wincmd w")
-        vim.cmd("vertical resize " .. new_width)
-    end
-end
-
 local filetypeAC = vim.api.nvim_create_augroup("filetype-autocommands", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = filetypeAC,
     pattern = { "python" },
     callback = function()
-        require("phdah.function-remap").set_git_root()
+        local filetype = vim.bo.filetype
+        local root = require("nvim-utils").Git.find_git_root()
+
+        if filetype == "python" then
+            vim.fn.setenv("PYTHONPATH", root)
+        end
+    end,
+})
+
+-- Quickfix list
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "qf",
+    callback = function()
+        vim.api.nvim_buf_set_keymap(0, "n", "<C-j>", "", {
+            noremap = true,
+            silent = true,
+            callback = function()
+                local lineNumber = vim.fn.line(".")
+                vim.cmd("cc " .. lineNumber)
+            end,
+        })
+        vim.api.nvim_buf_set_keymap(0, "n", "cl", ":cclose<CR>", { silent = true })
     end,
 })
