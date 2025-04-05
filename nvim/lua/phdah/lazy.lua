@@ -448,6 +448,13 @@ return require("lazy").setup({
                 desc = "Toggle dbee",
                 silent = true,
             },
+            {
+                "<leader>ä",
+                ':lua require("dbee").open()<CR>',
+                mode = "n",
+                desc = "Toggle dbee",
+                silent = true,
+            },
         },
         config = function()
             require("phdah.nvim-dbee")
