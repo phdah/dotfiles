@@ -113,7 +113,78 @@ return require("lazy").setup({
         opts = {
             bigfile = {},
             bufdelete = {},
-            dashboard = {},
+            dashboard = {
+                sections = {
+                    { section = "header" },
+                    {
+                        icon = " ",
+                        title = "Keymaps",
+                        section = "keys",
+                        indent = 2,
+                        padding = 1,
+                    },
+                    {
+                        icon = " ",
+                        title = "Recent Files",
+                        section = "recent_files",
+                        indent = 2,
+                        padding = 1,
+                    },
+                    { section = "startup" },
+                },
+                preset = {
+                    keys = {
+                        {
+                            icon = " ",
+                            key = "f",
+                            desc = "Find File",
+                            action = "<leader>ff",
+                        },
+                        {
+                            icon = " ",
+                            key = "n",
+                            desc = "New File",
+                            action = ":ene | startinsert",
+                        },
+                        {
+                            icon = " ",
+                            key = "g",
+                            desc = "Find Text",
+                            action = "<leader>fr",
+                        },
+                        {
+                            icon = " ",
+                            key = "r",
+                            desc = "Recent Files",
+                            action = "<leader>fR",
+                        },
+                        {
+                            icon = " ",
+                            key = "c",
+                            desc = "Config",
+                            action = function()
+                                require("snacks").picker.smart({
+                                    cwd = vim.fn.stdpath("config"),
+                                })
+                            end,
+                        },
+                        {
+                            icon = " ",
+                            key = "s",
+                            desc = "Restore Session",
+                            section = "session",
+                        },
+                        {
+                            icon = "󰒲 ",
+                            key = "L",
+                            desc = "Lazy",
+                            action = ":Lazy",
+                            enabled = package.loaded.lazy ~= nil,
+                        },
+                        { icon = " ", key = "q", desc = "Quit", action = ":qa" },
+                    },
+                },
+            },
             notifier = {},
             gitbrowse = {},
             picker = {
