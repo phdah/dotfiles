@@ -138,8 +138,23 @@ vim.lsp.config.json = {
     root_markers = { ".git" },
 }
 
+vim.lsp.config.terraform = {
+    cmd = { "terraform-ls", "serve" },
+    filetypes = { "terraform", "terraform-vars" },
+    root_markers = { ".terraform", ".git" },
+}
+
 -- All lsp config's are taken from: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/configs
-vim.lsp.enable({ "luals", "pyright", "gopls", "clangd", "ruff", "bash", "json" })
+vim.lsp.enable({
+    "luals",
+    "pyright",
+    "gopls",
+    "clangd",
+    "ruff",
+    "bash",
+    "json",
+    "terraform",
+})
 
 ----------------
 -- Metals lsp --
