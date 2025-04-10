@@ -19,6 +19,7 @@ alias bat='bat --theme=Nord'
 alias insta=$HOME/repos/privat/insta-infra/run.sh
 alias ns='vim ~/repos/dotfiles/nvim/lua/phdah/lazy.lua'
 alias tf='terraform'
+alias k='kubectl'
 # Git alias
 alias pgp='source ~/repos/dotfiles/scripts/set_python_path_to_git_root.sh'
 alias pcpp='source ~/repos/dotfiles/scripts/set_cpp_include_path.sh'

@@ -22,6 +22,13 @@ local setDefaults = function()
     local fileType = vim.bo.filetype
     if fileType == "make" or fileType == "go" then
         vim.o.expandtab = false -- use tab instead of space
+    elseif fileType == "yaml" then
+        -- Tab settings
+        vim.o.tabstop = 2
+        vim.o.softtabstop = 2 -- set number of spaces, but treat as one object
+        vim.o.shiftwidth = 2 -- set width for 'enter' after tabbed line
+        vim.o.expandtab = true -- use spaces instead of tab
+
     else
         -- Tab settings
         vim.o.tabstop = 4

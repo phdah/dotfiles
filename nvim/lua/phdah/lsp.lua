@@ -226,11 +226,15 @@ local function lintFile(args)
         or filetype == "typescriptreact"
         or filetype == "typescript"
         or filetype == "javascript"
-        or filetype == "yaml"
         or filetype == "css"
     then
         vim.cmd(
             "silent! !prettier --print-width 90 --prose-wrap always --write --tab-width 4 % "
+                .. args
+        )
+    elseif filetype == "yaml" then
+        vim.cmd(
+            "silent! !prettier --print-width 90 --prose-wrap always --write --tab-width 2 % "
                 .. args
         )
     elseif filetype == "terraform" then
