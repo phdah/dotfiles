@@ -157,26 +157,6 @@ vim.lsp.enable({
 })
 
 ----------------
--- Metals lsp --
-----------------
-
-local metals_config = require("metals").bare_config()
-
--- Build in automatic setup dap adapter
-metals_config.on_attach = function(client, bufnr)
-    require("metals").setup_dap()
-end
-
-local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "scala", "sbt" },
-    callback = function()
-        require("metals").initialize_or_attach(metals_config)
-    end,
-    group = nvim_metals_group,
-})
-
-----------------
 -- Formatters --
 ----------------
 -- Function to set the lint command for filetype
@@ -239,6 +219,13 @@ local function lintFile(args)
         )
     elseif filetype == "terraform" then
         vim.cmd("silent! !terraform fmt % " .. args)
+    elseif filetype == "scala" or filetype == "sbt" then
+        vim.cmd(
+            "silent! !scalafmt --config "
+                .. vim.lsp.get_clients({ bufnr = 0 })[1].config.root_dir
+                .. "/.scalafmt.conf % "
+                .. args
+        )
     else
         snacks.notify.info("No available formatter for " .. filetype)
         return

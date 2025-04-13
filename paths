@@ -7,5 +7,6 @@ path+=/usr/bin/
 path+=$HOME/.screenlayout/
 path+=/snap/bin/
 path+=/opt/homebrew/bin/
+path+=$SPARK_HOME/bin:$PATH
 
 # Spesific paths
