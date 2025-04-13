@@ -323,6 +323,14 @@ return require("lazy").setup({
                 silent = true,
             },
             {
+                "<leader>fc",
+                ":lua require('snacks').picker.smart({ cwd = vim.fn.stdpath('config') })<CR>",
+                mode = "n",
+                desc = "(f)ind neovim (c)onfig",
+                silent = true,
+            },
+
+            {
                 "<leader>fF",
                 ":lua require('snacks').picker.smart({ cwd = '~' })<CR>",
                 mode = "n",
