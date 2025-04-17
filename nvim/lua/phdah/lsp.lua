@@ -80,7 +80,7 @@ vim.lsp.config.pyright = {
         python = {
             analysis = {
                 autoSearchPaths = true,
-                diagnosticMode = "workspace",
+                diagnosticMode = "openFilesOnly", -- Testing to reduce Node taking all cpu
                 useLibraryCodeForTypes = true,
             },
             pythonPath = "python3",
