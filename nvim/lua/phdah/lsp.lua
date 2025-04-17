@@ -41,7 +41,30 @@ vim.lsp.config.ruff = {
     },
 }
 
+local notifyNoInfo = function()
+    require("snacks").notify.info("No information available")
+end
 vim.lsp.config.pyright = {
+    -- Specific handler to remove the `&nbsp;`. Not sure how to resolve it
+    -- otherwise...
+    handlers = {
+        ["textDocument/hover"] = vim.lsp.with(function(_, result, _, config)
+            if not (result and result.contents) then
+                notifyNoInfo()
+                return
+            end
+            local contents = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+            contents = vim.split(table.concat(contents, "\n"), "\n", { trimempty = true })
+            if vim.tbl_isempty(contents) then
+                notifyNoInfo()
+                return
+            end
+            for i, line in ipairs(contents) do
+                contents[i] = line:gsub("&nbsp;", " ")
+            end
+            vim.lsp.util.open_floating_preview(contents, "markdown", config)
+        end, {}),
+    },
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
     root_markers = {
