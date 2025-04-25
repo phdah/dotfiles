@@ -219,6 +219,17 @@ M.setup_configs = function()
         },
         {
             type = "python",
+            request = "launch", -- Specifies the debug request type
+            name = "Launch File From Git Root",
+            program = fileName,
+            cwd = gitRootDir,
+            pythonPath = function()
+                return pythonPath
+            end,
+            justMyCode = false, -- Ensures that only user code is debugged
+        },
+        {
+            type = "python",
             request = "launch",
             name = "Launch file pytest",
             module = "pytest",
