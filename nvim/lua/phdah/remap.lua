@@ -64,6 +64,7 @@ vim.api.nvim_set_keymap("n", "cp", ":cprev<CR>", { noremap = true, silent = true
 -- Buffer control
 vim.api.nvim_set_keymap("n", "<C-m>", ":noh<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-n>", ":bn<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<C-p>", ":bp<CR>", { noremap = true, silent = true })
 
 -- Window control
 vim.api.nvim_set_keymap(
