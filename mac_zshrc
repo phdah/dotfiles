@@ -126,10 +126,89 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats '%b'
 
-# Prompt definition
-NEWLINE=$'\n'
-PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
-RPROMPT='${vcs_info_msg_0_}'
+# Timer logic
+start_timer() {
+    timer_start=$(($(gdate +%s%0N)/1000000))
+}
+
+update_timer() {
+    if [ -n "$timer_start" ]; then
+        now=$(($(gdate +%s%0N)/1000000))
+        elapsed_ms=$(($now - $timer_start))
+
+        if [ "$elapsed_ms" -lt 1000 ]; then
+            # Less than 1 second, show in milliseconds
+            elapsed="${elapsed_ms}ms"
+        else
+            # Convert to seconds
+            total_seconds=$((elapsed_ms / 1000))
+            seconds=$((total_seconds % 60))
+            minutes=$((total_seconds / 60 % 60))
+            hours=$((total_seconds / 3600))
+
+            if [ "$hours" -gt 0 ]; then
+                elapsed="${hours}h ${minutes}m ${seconds}s"
+            elif [ "$minutes" -gt 0 ]; then
+                elapsed="${minutes}m ${seconds}s"
+            else
+                elapsed="${seconds}s"
+            fi
+        fi
+    else
+        elapsed=""
+    fi
+}
+
+# Register hooks
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec start_timer
+add-zsh-hook precmd update_timer
+
+# Custom right-aligned prompt logic
+draw_prompt() {
+    local NEWLINE=$'\n'
+    # Get terminal width
+    local TERM_WIDTH=$(tput cols)
+
+    # Get the full directory path expanded
+    local DIR_PATH="${PWD/#$HOME/~}"
+
+    # If a virtual environment is active, prepend it
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        local VENV="($(basename $VIRTUAL_ENV)) "
+    else
+        local VENV=""
+    fi
+
+    # Construct the left part with virtual environment
+    local LEFT="%b${VENV}%F{#D08770}%B%~%b"
+
+    # Right part (timer + branch)
+    local RIGHT="%F{#4C566A}${elapsed} %F{#A3BE8C}${vcs_info_msg_0_}%f%b"
+
+    # Input part
+    local INPUT="%F{#D08770}%% %b"
+
+    # Real visible length of left and right segments
+    local LEFT_LEN=$(( ${#DIR_PATH} + ${#VENV} ))
+    local RIGHT_LEN=${#RIGHT}
+
+    # Calculate padding
+    local EXTRA_PADDING=25
+    local SPACE_LEFT=$((TERM_WIDTH - LEFT_LEN - RIGHT_LEN + EXTRA_PADDING))
+    local FILLER=""
+
+    if (( SPACE_LEFT > 0 )); then
+        FILLER=$(printf '%*s' $SPACE_LEFT)
+    fi
+
+    # Final prompt assembly
+    PROMPT="${LEFT}${FILLER}${RIGHT}${NEWLINE}${INPUT}"
+}
+
+# Register the custom prompt renderer
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd draw_prompt
 
 # Set max file descriptor limit, used by watchman
 ulimit -n 8192
