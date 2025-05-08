@@ -12,7 +12,7 @@ require("blink-cmp").setup({
             window = { border = "rounded" },
         },
     },
-    snippets = { preset = 'luasnip' },
+    snippets = { preset = "luasnip" },
     sources = {
         -- remember to enable your providers here
         default = { "lsp", "path", "snippets", "buffer", "emoji" },
@@ -55,8 +55,8 @@ require("blink-cmp").setup({
         ["<up>"] = { "scroll_documentation_up", "fallback" },
         ["<down>"] = { "scroll_documentation_down", "fallback" },
         ["<C-i>"] = { "accept", "fallback" },
-        ['<C-e>'] = { 'cancel' },
-        ['<C-o>'] = { 'show', 'show_documentation', 'hide_documentation' },
+        ["<C-e>"] = { "cancel" },
+        ["<C-o>"] = { "show", "show_documentation", "hide_documentation" },
     },
     -- experimental signature help support
     signature = { enabled = true, window = { border = "rounded" } },
