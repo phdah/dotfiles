@@ -7,6 +7,8 @@ require("dbee").setup({
         -- directory where to store the scratchpads.
         -- directory = "path/to/scratchpad/dir",
 
+        open_note_on_start = false,
+
         -- mappings for the buffer
         mappings = {
             -- run what's currently selected on the active connection
