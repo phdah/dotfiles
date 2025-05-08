@@ -885,4 +885,5 @@ return require("lazy").setup({
             require("phdah.image")
         end,
     },
+    { 'vuciv/golf', cmd = "Golf" },
 })
