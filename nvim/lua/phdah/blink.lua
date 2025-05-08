@@ -55,6 +55,8 @@ require("blink-cmp").setup({
         ["<up>"] = { "scroll_documentation_up", "fallback" },
         ["<down>"] = { "scroll_documentation_down", "fallback" },
         ["<C-i>"] = { "accept", "fallback" },
+        ['<C-e>'] = { 'cancel' },
+        ['<C-o>'] = { 'show', 'show_documentation', 'hide_documentation' },
     },
     -- experimental signature help support
     signature = { enabled = true, window = { border = "rounded" } },
