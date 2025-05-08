@@ -466,8 +466,8 @@ return require("lazy").setup({
         keys = { { "<leader>-", ":Oil --float<CR>", mode = "n" } },
     },
     {
-        -- 'pwntester/octo.nvim',
-        dir = "~/repos/privat/octo.nvim",
+        "pwntester/octo.nvim",
+        -- dir = "~/repos/privat/octo.nvim",
         cmd = "Octo",
         config = function()
             require("phdah.octo")
@@ -478,7 +478,23 @@ return require("lazy").setup({
         },
         dependencies = {
             "nvim-lua/plenary.nvim",
-            "nvim-telescope/telescope.nvim",
+            {
+                "nvim-telescope/telescope.nvim",
+                config = function()
+                    require("telescope").setup({
+                        defaults = {
+                            mappings = {
+                                i = {
+                                    ["<C-i>"] = require("telescope.actions").select_default,
+                                },
+                                n = {
+                                    ["<C-i>"] = require("telescope.actions").select_default,
+                                },
+                            },
+                        },
+                    })
+                end,
+            },
             "nvim-tree/nvim-web-devicons",
         },
     },
