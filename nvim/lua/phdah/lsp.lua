@@ -48,7 +48,7 @@ vim.lsp.config.pyright = {
     -- Specific handler to remove the `&nbsp;`. Not sure how to resolve it
     -- otherwise...
     handlers = {
-        ["textDocument/hover"] = vim.lsp.with(function(_, result, _, config)
+        ["textDocument/hover"] = function(_, result, _, config)
             if not (result and result.contents) then
                 notifyNoInfo()
                 return
@@ -63,7 +63,7 @@ vim.lsp.config.pyright = {
                 contents[i] = line:gsub("&nbsp;", " ")
             end
             vim.lsp.util.open_floating_preview(contents, "markdown", config)
-        end, {}),
+        end,
     },
     cmd = { "pyright-langserver", "--stdio" },
     filetypes = { "python" },
