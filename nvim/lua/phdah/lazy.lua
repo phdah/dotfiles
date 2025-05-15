@@ -103,7 +103,7 @@ return require("lazy").setup({
         "echasnovski/mini.ai",
         version = "*",
         event = { "BufReadPre", "BufNewFile" },
-        opts = {},
+        opts = { n_lines = 500 },
     },
     { dir = "~/repos/privat/nvim-utils/" },
     {
@@ -885,5 +885,5 @@ return require("lazy").setup({
             require("phdah.image")
         end,
     },
-    { 'vuciv/golf', cmd = "Golf" },
+    { "vuciv/golf", cmd = "Golf" },
 })
