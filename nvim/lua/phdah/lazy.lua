@@ -561,6 +561,13 @@ return require("lazy").setup({
                 desc = "Toggle dbee",
                 silent = true,
             },
+            {
+                "<C-s",
+                ':lua require("dbee").run_selection()<CR>',
+                mode = "v",
+                desc = "Run dbee selection outside of dbee UI",
+                silent = true,
+            },
         },
         config = function()
             require("phdah.nvim-dbee")
