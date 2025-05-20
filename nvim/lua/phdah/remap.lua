@@ -166,7 +166,7 @@ vim.api.nvim_set_keymap("v", "<leader>k", "{zzj", { noremap = true })
 vim.api.nvim_set_keymap(
     "n",
     "<leader>no",
-    ":set invrelativenumber invnumber<CR>:GitGutterToggle<CR>",
+    ":set invrelativenumber invnumber<CR>",
     { noremap = true, silent = true }
 )
 
