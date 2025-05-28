@@ -1,11 +1,26 @@
 gui:
-  showIcons: true
+  nerdFontsVersion: "3"
   theme:
-    activeBorderColor:
-      - blue
-      - bold
     inactiveBorderColor:
-      - blue
+      - "#81a1c1"
+    activeBorderColor:
+      - "#81a1c1"
+      - "bold"
+    unstagedChangesColor:
+      - "#bf616a"
+    searchingActiveBorderColor:
+      - "#b48ead"
+      - "bold"
+    optionsTextColor:
+      - "#88c0d0"
+    defaultFgColor:
+      - "#d8dee9"
+    cherryPickedCommitFgColor:
+      - "#88c0d0"
+    cherryPickedCommitBgColor:
+      - "#81a1c1"
+    selectedLineBgColor:
+      - "#5e81ac"
   showFileTree: true
   os:
     editCommand: "nvim"

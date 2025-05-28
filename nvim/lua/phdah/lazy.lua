@@ -212,8 +212,22 @@ return require("lazy").setup({
                 },
             },
             dim = {},
+            lazygit = {
+                theme = {
+                    inactiveBorderColor = { fg = "Boolean" },
+                    activeBorderColor = { fg = "Boolean", bold = true },
+                    selectedLineBgColor = { bg = "Search" },
+                },
+            },
         },
         keys = {
+            {
+                "<leader>lo",
+                ":lua Snacks.lazygit.open()<CR>",
+                mode = "n",
+                desc = "(l)azygit open in floating terminal",
+                silent = true,
+            },
             {
                 "<leader>q",
                 ":lua Snacks.bufdelete()<CR>",
@@ -434,19 +448,6 @@ return require("lazy").setup({
     },
     { "catgoose/nvim-colorizer.lua", ft = { "typescriptreact", "lua" }, opts = {} },
     {
-        "voldikss/vim-floaterm",
-        cmd = "FloatermNew",
-        keys = {
-            {
-                "<leader>lo",
-                ":FloatermNew --width=0.9 --height=0.9 lazygit<CR>",
-                mode = "n",
-                desc = "(l)azygit open in floating terminal",
-                silent = true,
-            },
-        },
-    },
-    {
         "OXY2DEV/markview.nvim",
         ft = { "markdown", "octo" },
         config = function()
@@ -654,6 +655,14 @@ return require("lazy").setup({
                 desc = "(D)AP add variable to (w)atch",
                 silent = true,
             },
+            {
+                "<leader>dw",
+                ":lua require('dapui').elements.watches.add(require('nvim-utils').String.get_visual_selection())<CR>",
+                mode = "v",
+                desc = "(D)AP add variable to (w)atch",
+                silent = true,
+            },
+
             {
                 "<leader>dh",
                 ":lua require('dap.ui.widgets').hover(nil, { border = 'rounded' })<CR>",
