@@ -436,6 +436,14 @@ return require("lazy").setup({
                 "<leader>gf",
                 ":lua require('phdah.diffview').toggleFileHistory()<CR>",
                 desc = "(G)it (f)ile toggle DiffviewFileHistory window",
+                mode = "n",
+                silent = true,
+            },
+            {
+                "<leader>gf",
+                ":'<,'>DiffviewFileHistory<CR>",
+                desc = "(G)it (f)ile toggle DiffviewFileHistory window for lines",
+                mode = "v",
                 silent = true,
             },
             {
