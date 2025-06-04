@@ -196,18 +196,30 @@ vim.api.nvim_create_user_command("Make", function(opts)
     defineMake(opts.args)
 end, { nargs = "*" })
 
+local function setPythonPathToRoot()
+    local filetype = vim.bo.filetype
+    local root = nil
+
+    if filetype == "python" then
+        root = require("nvim-utils").Git.find_git_root()
+        vim.fn.setenv("PYTHONPATH", root)
+    end
+    return root
+end
+
+vim.api.nvim_create_user_command("PythonPath", function(opts)
+    local snacks = require("snacks")
+    local root = setPythonPathToRoot()
+    if root ~= nil then
+        snacks.notify.info("PYTHONPATH set to: " .. root)
+    end
+end, { nargs = "*" })
+
 local filetypeAC = vim.api.nvim_create_augroup("filetype-autocommands", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = filetypeAC,
     pattern = { "python" },
-    callback = function()
-        local filetype = vim.bo.filetype
-        local root = require("nvim-utils").Git.find_git_root()
-
-        if filetype == "python" then
-            vim.fn.setenv("PYTHONPATH", root)
-        end
-    end,
+    callback = setPythonPathToRoot,
 })
 
 -- Quickfix list
