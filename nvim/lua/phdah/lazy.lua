@@ -534,7 +534,8 @@ return require("lazy").setup({
                 opts = { impersonate_nvim_cmp = false, debug = false },
             },
             { "L3MON4D3/LuaSnip", version = "v2.*" },
-            "hrsh7th/cmp-emoji",
+            "moyiz/blink-emoji.nvim",
+            "Kaiser-Yang/blink-cmp-git",
         },
     },
     {

@@ -23,6 +23,7 @@ require("blink-cmp").setup({
             ["dapui_hover"] = { "dap" },
             -- Dbee
             sql = { "dbee", "buffer" },
+            octo = { "lsp", "path", "snippets", "buffer", "emoji", "git" },
         },
         cmdline = function()
             local type = vim.fn.getcmdtype()
@@ -44,10 +45,14 @@ require("blink-cmp").setup({
             snippets = { min_keyword_length = 2 },
             buffer = { min_keyword_length = 1, max_items = 5 },
             emoji = {
-                name = "emoji",
-                module = "blink.compat.source",
+                module = "blink-emoji",
+                name = "Emoji",
                 score_offset = -3,
                 min_keyword_length = 1,
+            },
+            git = {
+                module = "blink-cmp-git",
+                name = "Git",
             },
         },
     },
