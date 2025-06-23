@@ -12,6 +12,7 @@ vim.api.nvim_set_keymap(
     { noremap = true, silent = true }
 )
 vim.keymap.set("n", "<leader>gr", vim.lsp.buf.rename)
+vim.keymap.set("n", "<leader>gn", ":lua require('phdah.lsp').switchSourceHeader()<CR>")
 
 -- Diagnostic / Error
 vim.api.nvim_set_keymap(
@@ -40,12 +41,7 @@ vim.keymap.set(
 )
 
 -- Lint
-vim.api.nvim_set_keymap(
-    "n",
-    "<C-CR>",
-    ":Lint<CR>",
-    { noremap = true, silent = true }
-)
+vim.api.nvim_set_keymap("n", "<C-CR>", ":Lint<CR>", { noremap = true, silent = true })
 
 -- Terminal keymaps
 vim.api.nvim_set_keymap(
