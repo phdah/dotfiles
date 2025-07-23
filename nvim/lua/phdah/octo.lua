@@ -1,7 +1,7 @@
 require("octo").setup({
     suppress_missing_scope = { projects_v2 = true },
     enable_builtin = true,
-    use_local_fs = true,
+    -- use_local_fs = true, causing issues with diff
     -- picker = "snacks",
     mappings = {
         issue = {
