@@ -133,20 +133,20 @@ local function runDsymutil(executable)
 end
 
 -- Function to set all configs
-M.setup_configs = function()
+function M.setup_configs()
     local fileName = vim.fn.expand("%:p")
     local gitRootDir = require("nvim-utils").Git.find_git_root()
+    local program = nil
+    if vim.o.filetype == "c" or vim.o.filetype == "cpp" or vim.o.filetype == "rust" then
+        program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        runDsymutil(program)
+    end
     dap.configurations.cpp = {
         {
             name = "Launch file",
             type = "lldb-dap",
             request = "launch",
-            program = function()
-                local program =
-                    vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-                runDsymutil(program)
-                return program
-            end,
+            program = program,
             cwd = "${workspaceFolder}",
             stopOnEntry = false,
         },
@@ -154,12 +154,7 @@ M.setup_configs = function()
             name = "Debug with Args",
             type = "lldb-dap",
             request = "launch",
-            program = function()
-                local program =
-                    vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-                runDsymutil(program)
-                return program
-            end,
+            program = program,
             cwd = "${workspaceFolder}",
             stopOnEntry = false,
             args = function()
@@ -179,12 +174,7 @@ M.setup_configs = function()
             type = "lldb-dap",
             stopOnEntry = false,
             request = "attach",
-            program = function()
-                local program =
-                    vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-                runDsymutil(program)
-                return program
-            end,
+            program = program,
             waitFor = true,
         },
     }
@@ -400,7 +390,6 @@ M.setup_configs = function()
         },
     }
 end
-M.setup_configs()
 
 ---------------------
 -- Configure dapui --
