@@ -482,8 +482,20 @@ return require("lazy").setup({
             require("phdah.octo")
         end,
         keys = {
-            { "<C-o>", ":Octo<CR>", mode = "n", desc = "Open (o)cto action list" },
-            silent = true,
+            {
+                "<C-o>",
+                ":Octo<CR>",
+                mode = "n",
+                desc = "Open (o)cto action list",
+                silent = true,
+            },
+            {
+                "<leader>fo",
+                ":Octo pr list<CR>",
+                mode = "n",
+                desc = "Open (o)cto pr list",
+                silent = true,
+            },
         },
         dependencies = {
             "nvim-lua/plenary.nvim",
