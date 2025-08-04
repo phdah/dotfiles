@@ -882,8 +882,8 @@ return require("lazy").setup({
         },
     },
     {
-        "phdah/lazydbrix",
-        -- dir = "~/repos/privat/lazydbrix",
+        -- "phdah/lazydbrix",
+        dir = "~/repos/privat/lazydbrix",
         build = ':lua require("lazydbrix").install()',
         ft = { "python" },
         opts = { sourceOnStart = true },
