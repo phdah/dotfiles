@@ -917,9 +917,11 @@ return require("lazy").setup({
         config = function()
             require("phdah.gen")
         end,
+        cmd = { "Gen" },
         keys = {
-            { "<C-g>", mode = "n", ":Gen Chat<CR>" },
-            { "<C-g>", mode = "v", ":Gen Ask<CR>" },
+            { "<C-g>g", mode = "n", ":Gen Chat<CR>" },
+            { "<C-g>g", mode = "v", ":Gen Ask<CR>" },
+            { "<C-g>d", mode = "v", ":Gen Add_docstring<CR>" },
         },
     },
     {
