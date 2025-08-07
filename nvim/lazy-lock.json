@@ -15,6 +15,7 @@
   "image.nvim": { "branch": "master", "commit": "4c51d6202628b3b51e368152c053c3fb5c5f76f2" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "local-lua-debugger-vscode": { "branch": "master", "commit": "d51ee2907b02d630be0fd62d243de184e26ad431" },
+  "marks.nvim": { "branch": "master", "commit": "f353e8c08c50f39e99a9ed474172df7eddd89b72" },
   "markview.nvim": { "branch": "main", "commit": "a4d10e7ddb07d35fefaf9c5f4b48413b3ad28113" },
   "mason-nvim-dap.nvim": { "branch": "main", "commit": "4c2cdc69d69fe00c15ae8648f7e954d99e5de3ea" },
   "mason.nvim": { "branch": "main", "commit": "8024d64e1330b86044fed4c8494ef3dcd483a67c" },

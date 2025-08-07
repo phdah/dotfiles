@@ -28,6 +28,11 @@ return require("lazy").setup({
         dependencies = {
             "shaunsingh/nord.nvim",
             {
+                "chentoast/marks.nvim",
+                event = "VeryLazy",
+                opts = {},
+            },
+            {
                 "lewis6991/gitsigns.nvim",
                 config = function()
                     require("phdah.gitsigns")
@@ -925,4 +930,29 @@ return require("lazy").setup({
         end,
     },
     { "vuciv/golf", cmd = "Golf" },
+    {
+        -- "phdah/snipe-marks",
+        dir = "~/repos/privat/snipe-marks",
+        dependencies = { "leath-dub/snipe.nvim" },
+        keys = {
+            {
+                "<leader>fm",
+                mode = "n",
+                function()
+                    require("snipe_marks").open()
+                end,
+                desc = "(f)ind all (m)arks",
+                silent = true,
+            },
+            {
+                "<leader>dm",
+                mode = "n",
+                function()
+                    require("snipe_marks").delAll()
+                end,
+                desc = "(d)elete all (m)arks",
+                silent = true,
+            },
+        },
+    },
 })
