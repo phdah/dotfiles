@@ -16,6 +16,12 @@ vim.g.clipboard = {
 -- Width limit
 vim.wo.colorcolumn = "80"
 vim.cmd("highlight ColorColumn guifg=#4C566A")
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        vim.api.nvim_set_hl(0, "ExtraWhitespace", { bg = "#BF616A" })
+        vim.api.nvim_set_hl(0, "NonText", { fg = "#838996" })
+    end,
+})
 
 -- Set up default tabs
 local setDefaults = function()
@@ -91,7 +97,6 @@ vim.api.nvim_create_autocmd({ "BufEnter", "ColorScheme" }, {
             and fileType ~= "snacks_dashboard"
         then
             -- Only apply the highlight if the buffer has a filetype
-            vim.api.nvim_set_hl(0, "ExtraWhitespace", { bg = "#BF616A" })
             vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
         end
     end,
@@ -143,7 +148,7 @@ local auGroupSpelling =
     vim.api.nvim_create_augroup("nvim-spelling-custom", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = auGroupSpelling,
-    pattern = "markdown",
+    pattern = { "markdown", "octo" },
     callback = function()
         vim.cmd("setlocal spell! spelllang=en_us")
     end,

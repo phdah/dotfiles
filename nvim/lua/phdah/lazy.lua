@@ -193,6 +193,9 @@ return require("lazy").setup({
             notifier = {},
             gitbrowse = {},
             picker = {
+                layout = {
+                    preview = false,
+                },
                 win = {
                     input = {
                         keys = {
@@ -204,11 +207,13 @@ return require("lazy").setup({
                                 mode = { "i", "n" },
                             },
                             ["<c-j>"] = false,
+                            ["<C-t>"] = { "toggle_preview", mode = { "i", "n" } },
+                            ["<C-f>"] = { "toggle_follow", mode = { "i", "n" } },
                         },
                     },
                 },
                 formatters = {
-                    file = { filename_first = true },
+                    file = { filename_first = true, truncate = 100 },
                 },
                 previewers = {
                     git = {
@@ -358,7 +363,7 @@ return require("lazy").setup({
             },
             {
                 "<leader>fr",
-                ":lua require('snacks').picker.grep({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
+                ":lua require('snacks').picker.grep( { layout = { preview = true }, cwd = require('nvim-utils').Git.find_git_root() })<CR>",
                 mode = "n",
                 desc = "(f)ind g(r)ep",
                 silent = true,
@@ -379,35 +384,35 @@ return require("lazy").setup({
             },
             {
                 "<leader>f*",
-                ":lua require('snacks').picker.grep_word({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
+                ":lua require('snacks').picker.grep_word({ layout = { preview = true }, cwd = require('nvim-utils').Git.find_git_root() })<CR>",
                 mode = "n",
                 desc = "(f)ind (*) search",
                 silent = true,
             },
             {
                 "<leader>f*",
-                ":lua require('snacks').picker.grep({ search = require('nvim-utils').String.escape_line(require('nvim-utils').String.get_visual_selection()) })<CR>",
+                ":lua require('snacks').picker.grep({ layout = { preview = true }, search = require('nvim-utils').String.escape_line(require('nvim-utils').String.get_visual_selection()) })<CR>",
                 mode = "v",
                 desc = "(f)ind (*) search",
                 silent = true,
             },
             {
                 "<leader>fh",
-                ":lua require('snacks').picker.help()<CR>",
+                ":lua require('snacks').picker.help( { layout = { preview = true } } )<CR>",
                 mode = "n",
                 desc = "(f)ind (h)elp tags",
                 silent = true,
             },
             {
                 "<leader>fe",
-                ":lua require('snacks').picker.diagnostics()<CR>",
+                ":lua require('snacks').picker.diagnostics({ layout = { preview = true } })<CR>",
                 mode = "n",
                 desc = "(f)ind (e)rror",
                 silent = true,
             },
             {
                 "<leader>fk",
-                ":lua require('snacks').picker.keymaps()<CR>",
+                ":lua require('snacks').picker.keymaps({ layout = { preview = true } })<CR>",
                 mode = "n",
                 desc = "(f)ind (k)eymaps",
                 silent = true,
@@ -960,10 +965,7 @@ return require("lazy").setup({
     {
         "NickvanDyke/opencode.nvim",
         dependencies = { "folke/snacks.nvim" },
-        ---@type opencode.Config
-        opts = {
-            -- Your configuration, if any
-        },
+        opts = {},
         keys = {
             {
                 "<leader>at",

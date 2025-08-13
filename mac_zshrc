@@ -96,7 +96,7 @@ bindkey "^[[6~" history-beginning-search-forward
 
 bindkey -s "^ff" "vim +\":lua require('snacks').picker.smart({ cwd = require('nvim-utils').Git.find_git_root() })\"^j"
 bindkey -s "^fF" "vim +\":lua require('snacks').picker.smart({ cwd = '~' })\"^j"
-bindkey -s "^fr" "vim +\":lua require('snacks').picker.grep({ cwd = require('nvim-utils').Git.find_git_root() })\"^j"
+bindkey -s "^fr" "vim +\":lua require('snacks').picker.grep({ layout = { preview = true }, cwd = require('nvim-utils').Git.find_git_root() })\"^j"
 bindkey -s "^fR" "vim +\":lua require('snacks').picker.recent()\"^j"
 bindkey -s "^fp" "vim +\":lua require('snacks').picker.projects()\"^j"
 bindkey -s "^fx" "vim +\":lua require('snacks').picker.explorer({ cwd = require('nvim-utils').Git.find_git_root(), auto_close = true, })\"^j"
