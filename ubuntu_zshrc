@@ -5,8 +5,6 @@ compinit
 # Aliases
 # Aliases
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
 alias ls='ls --color --sort=extension'
 alias ll='ls --color -Al'
 alias vim='nvim'
@@ -40,7 +38,7 @@ function gitallremote() {
     git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
 }
 function cat() {
-    bat $1 --style=plain --paging=never
+    batcat $1 --style=plain --paging=never
 }
 function rgf() {
     rg --files | rg $1

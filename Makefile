@@ -44,15 +44,19 @@ os-check: ## Check what OS is installed
 
 base-dir: ## Setup base directories
 	@printf '\nSetting up base directories\n\n'
-	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit
+	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit $(CONFIG)/i3
 
 base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 	@printf '\nApt installs\n\n'
 	@if [ "$(USR)" != "CI" ]; then \
 		sudo apt upgrade --yes; \
 		sudo apt update --yes; \
+		sudo add-apt-repository ppa:git-core/ppa --yes; \
 		sudo apt install --yes \
 			zsh \
+			kitty \
+		    git-delta \
+		    bat \
 			curl \
 			bat \
 			ripgrep \
@@ -77,13 +81,13 @@ ubuntu-pkr: ## Install packages for Ubuntu
 		sudo apt upgrade --yes; \
 		sudo apt update --yes; \
 		sudo apt install --yes \
-			i3 \ # Window manger
-			zsh \ # Shell
-			arandr \ # Monitor ctl
-			dunst \ # Notifications
-			pulseaudio \ # Sound software used by pavucontrol
-			pavucontrol \ # Sound and mic controller
-			brightnessctl # Light controller
+			i3 \
+			zsh \
+			arandr \
+			dunst \
+			pulseaudio \
+			pavucontrol \
+			brightnessctl \
 			; \
 		sudo apt update --yes; \
 		printf 'Packages not updated\n'; \
@@ -141,7 +145,7 @@ google-chrome: ## Install Google Chrome from source
 
 zsh-shell: ## Set zsh as the shell
 	@if [ "$(USR)" != "CI" ]; then \
-		sudo chsh -s $$(which zsh); \
+		chsh -s $$(which zsh); \
 	fi
 
 nvim-install: ## Install neovim from source, unless CI mode, since it's like 10m install
@@ -162,7 +166,10 @@ zshhl-install: ## Set zsh syntax highlighting
 gnome-nord: ## Install Nord colors for Gnome
 # GNOME color theme
 	@printf 'Setting up Nord Gnome terminal\n'
-	@! [ -d $(SOURCE_DIR)/nord-gnome-terminal ] && git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $(SOURCE_DIR)/nord-gnome-terminal && $(SOURCE_DIR)/nord-gnome-terminal/src/nord.sh
+	@if [ ! -d $(SOURCE_DIR)/nord-gnome-terminal ]; then \
+		git clone https://github.com/arcticicestudio/nord-gnome-terminal.git $(SOURCE_DIR)/nord-gnome-terminal; \
+	fi
+	@$(SOURCE_DIR)/nord-gnome-terminal/src/nord.sh
 
 base-symlink: ## Symlink dotfiles to repo
 	printf 'BUILD_DIR: $(BUILD_DIR)\n'
@@ -179,6 +186,9 @@ wsl-symlink: ## Symlink dotfiles to repo
 ubuntu-symlink: ## Symlink dotfiles to repo
 	@printf 'Setting up symlinks for wsl\n'
 	@ln -sf $(BUILD_DIR)/ubuntu_zshrc $(HOME)/.zshrc
+	@ln -sf $(BUILD_DIR)/i3status.conf $(CONFIG)/i3/i3status.conf
+	@ln -sf $(BUILD_DIR)/i3config $(CONFIG)/i3/config
+	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
 
 arch-symlink: ## Symlink for arch
 	@printf 'Setting up symlinks for arch\n'
