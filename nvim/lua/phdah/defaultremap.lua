@@ -84,3 +84,7 @@ vim.api.nvim_set_keymap('n', '<leader>w', ':w<CR>', {noremap = true})
 
 -- Remove unwanted keymaps
 vim.api.nvim_set_keymap('i', '<C-u>', '<Nop>', {noremap = true, silent = true, desc = "Undo in insert"})
+
+-- Remove default keymaps
+vim.keymap.del("n", "gcc")
+vim.keymap.del("v", "gc")
