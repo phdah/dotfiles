@@ -1,17 +1,25 @@
 # Autocomplete in cli
+autoload bashcompinit
+bashcompinit
 autoload -Uz compinit
 compinit
 
 # Aliases
 # Aliases
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
-alias ls='ls --color --sort=extension'
-alias ll='ls --color -Al'
+alias ls='eza'
+alias ll='eza -alh'
 alias vim='nvim'
 alias nb='nvim ~/repos/privat/logbook/README.md'
+alias tree='eza --tree'
+alias act='act --container-architecture linux/amd64'
 alias open='xdg-open'
+alias ns='vim ~/repos/dotfiles/nvim/lua/phdah/lazy.lua'
 # Git alias
-alias gitl='git log --oneline'
+alias pgp='source ~/repos/dotfiles/scripts/set_python_path_to_git_root.sh'
+alias pcpp='source ~/repos/dotfiles/scripts/set_cpp_include_path.sh'
+alias vimconflict='vim $(rg -l "<<<<<<< HEAD")'
+alias gitl='git log --graph --oneline'
 alias gits='git status'
 alias gitp='git pull'
 alias gitd='git diff'
@@ -19,35 +27,42 @@ alias gitb='git branch'
 alias gitc='git checkout'
 
 # Functions
-function vfzf() {
-    if [[ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" == "true" ]]
-        then FZF_FILE_VIM=$(rg -l --hidden "" $(git rev-parse --show-toplevel) -g '!.git/' | fzf)
-        else FZF_FILE_VIM=$(rg -l --hidden "" . -g '!.git/' | fzf)
-    fi
-    if [ -e "$FZF_FILE_VIM" ]
-        then nvim $FZF_FILE_VIM;
+function lg() {
+    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+
+    lazygit "$@"
+
+    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
+            cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
+            rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
     fi
 }
-function Vfzf() {
-    FZF_FILE_VIM=$(rg -l --hidden "" ~ | fzf) && if [ -e "$FZF_FILE_VIM" ]; then nvim $FZF_FILE_VIM; fi
+setenv() {
+  export "$1=$2"
 }
 function gitall() {
-    git status && git add . && git commit -m "$1" && git push
+    git status && git add --all && git commit -m "$1" && git push
 }
 function gitallremote() {
-    git -C "$1" status && git -C "$1" add . && git -C $1 commit -m $2 && git -C "$1" push
+    git -C "$1" status && git -C "$1" add --all && git -C $1 commit -m $2 && git -C "$1" push
 }
 function cat() {
-    batcat $1 --style=plain --paging=never
+    batcat $1 --style=plain --paging=never --theme=Nord
 }
 function rgf() {
     rg --files | rg $1
+}
+function vimrg() {
+    vim $(rg $1 -l)
+}
+function vimrgf() {
+    vim $(rg --files | rg $1)
 }
 function sedall() {
     sed -i "s/$1/$2/g" $(rg $1 -l)
 }
 function sedtrailingspace() {
-    sed -i 's/\s\+$//g' $(rg '' -l)
+    sed -i 's/\s\+$//g' $(rg --files)
 }
 
 # Default to emacs keybindings
@@ -68,8 +83,15 @@ bindkey  "^[[3~"  delete-char
 bindkey "^[[5~" history-beginning-search-backward
 bindkey "^[[6~" history-beginning-search-forward
 
-bindkey -s "^f" "Vfzf^j"
-bindkey -s "^g" "vfzf^j"
+bindkey -s "^ff" "vim +\":lua require('snacks').picker.smart({ cwd = require('nvim-utils').Git.find_git_root() })\"^j"
+bindkey -s "^fF" "vim +\":lua require('snacks').picker.smart({ cwd = '~' })\"^j"
+bindkey -s "^fr" "vim +\":lua require('snacks').picker.grep({ layout = { preview = true }, cwd = require('nvim-utils').Git.find_git_root() })\"^j"
+bindkey -s "^fR" "vim +\":lua require('snacks').picker.recent()\"^j"
+bindkey -s "^fp" "vim +\":lua require('snacks').picker.projects()\"^j"
+bindkey -s "^fx" "vim +\":lua require('snacks').picker.explorer({ cwd = require('nvim-utils').Git.find_git_root(), auto_close = true, })\"^j"
+
+bindkey -s "^fo" "vim +\":Octo pr list\"^j"
+bindkey -s "^z" "fg ^j"
 
 # Path
 source $HOME/.paths
@@ -79,9 +101,17 @@ source $HOME/.envvar
 ### Set up prompt ###
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 HISTFILE=$HOME/.zsh_history
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_ALL_DUPS
+setopt EXTENDED_HISTORY
 
 # Show current git branch right of prompt
 autoload -Uz vcs_info
@@ -90,15 +120,114 @@ precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 zstyle ':vcs_info:git:*' formats '%b'
 
-# Prompt definition
-NEWLINE=$'\n'
-PROMPT="%F{#D08770}%B%~${NEWLINE}%%%b "
-RPROMPT='${vcs_info_msg_0_}'
+# Timer logic
+start_timer() {
+    timer_start=$(($(date +%s%0N)/1000000))
+}
+
+update_timer() {
+    if [ -n "$timer_start" ]; then
+        now=$(($(date +%s%0N)/1000000))
+        elapsed_ms=$(($now - $timer_start))
+
+        if [ "$elapsed_ms" -lt 1000 ]; then
+            # Less than 1 second, show in milliseconds
+            elapsed="${elapsed_ms}ms"
+        else
+            # Convert to seconds
+            total_seconds=$((elapsed_ms / 1000))
+            seconds=$((total_seconds % 60))
+            minutes=$((total_seconds / 60 % 60))
+            hours=$((total_seconds / 3600))
+
+            if [ "$hours" -gt 0 ]; then
+                elapsed="${hours}h ${minutes}m ${seconds}s"
+            elif [ "$minutes" -gt 0 ]; then
+                elapsed="${minutes}m ${seconds}s"
+            else
+                elapsed="${seconds}s"
+            fi
+        fi
+    else
+        elapsed=""
+    fi
+}
+
+# Register hooks
+autoload -Uz add-zsh-hook
+add-zsh-hook preexec start_timer
+add-zsh-hook precmd update_timer
+
+# Custom right-aligned prompt logic
+draw_prompt() {
+    local NEWLINE=$'\n'
+    # Get terminal width
+    local TERM_WIDTH=$(tput cols)
+
+    # Get the full directory path expanded
+    local DIR_PATH="${PWD/#$HOME/~}"
+
+    # If a virtual environment is active, prepend it
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        local VENV="($(basename $VIRTUAL_ENV)) "
+    else
+        local VENV=""
+    fi
+
+    # Construct the left part with virtual environment
+    local LEFT="%b${VENV}%F{#D08770}%B%~%b"
+
+    # Right part (timer + branch)
+    local RIGHT="%F{#4C566A}${elapsed} %F{#A3BE8C}${vcs_info_msg_0_}%f%b"
+
+    # Input part
+    local INPUT="%F{#D08770}%% %b"
+
+    # Real visible length of left and right segments
+    local LEFT_LEN=$(( ${#DIR_PATH} + ${#VENV} ))
+    local RIGHT_LEN=${#RIGHT}
+
+    # Calculate padding
+    local EXTRA_PADDING=25
+    local SPACE_LEFT=$((TERM_WIDTH - LEFT_LEN - RIGHT_LEN + EXTRA_PADDING))
+    local FILLER=""
+
+    if (( SPACE_LEFT > 0 )); then
+        FILLER=$(printf '%*s' $SPACE_LEFT)
+    fi
+
+    # Final prompt assembly
+    PROMPT="${LEFT}${FILLER}${RIGHT}${NEWLINE}${INPUT}"
+}
+
+# Register the custom prompt renderer
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd draw_prompt
+
+# Set max file descriptor limit, used by watchman
+ulimit -n 8192
+
+# Export config dir
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # Syntax highligthing
 # TODO: use the fast-syntax-highlighting.plugin.zsh instead. Then the arch
 # and ubuntu one are the same.
 source $HOME/repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+source /usr/share/doc/fzf/examples/completion.zsh
+export FZF_COMPLETION_DIR_COMMANDS="cd ls pushd rmdir tree"
+_fzf_compgen_path() {
+    rg --files --hidden . "$1"
+}
+# TODO: Fix a path search
+# _fzf_compgen_dir() {
+#     rg --files --hidden . "$1" | awk -F/ 'NF{NF-=1}1' | uniq
+# }
+
+
+# Set executable color to green
+export LS_COLORS="$LS_COLORS:ex=01;32"
 
 export EDITOR=$(which nvim)
 

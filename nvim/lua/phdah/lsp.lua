@@ -52,7 +52,7 @@ function M.switchSourceHeader(bufnr)
 end
 
 vim.lsp.config.ruff = {
-    cmd = { "ruff", "server" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/ruff", "server" },
     filetypes = { "python" },
     root_markers = {
         "pyproject.toml",
@@ -89,7 +89,7 @@ vim.lsp.config.pyright = {
             vim.lsp.util.open_floating_preview(contents, "markdown", config)
         end,
     },
-    cmd = { "pyright-langserver", "--stdio" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/pyright-langserver", "--stdio" },
     filetypes = { "python" },
     root_markers = {
         "pyproject.toml",
@@ -114,7 +114,7 @@ vim.lsp.config.pyright = {
 
 -- Set up the lua-language-server
 vim.lsp.config.luals = {
-    cmd = { "lua-language-server" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/lua-language-server" },
     filetypes = { "lua" },
     root_markers = {
         ".luarc.json",
@@ -146,13 +146,13 @@ vim.lsp.config.luals = {
 }
 
 vim.lsp.config.gopls = {
-    cmd = { "gopls" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
     root_markers = { "go.work", "go.mod", ".git" },
 }
 
 vim.lsp.config.clangd = {
-    cmd = { "clangd", "--background-index" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/clangd", "--background-index" },
     root_markers = {
         ".clangd",
         ".clang-tidy",
@@ -166,7 +166,7 @@ vim.lsp.config.clangd = {
 }
 
 vim.lsp.config.bash = {
-    cmd = { "bash-language-server", "start" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/bash-language-server", "start" },
     settings = {
         bashIde = {
             globPattern = vim.env.GLOB_PATTERN or "*@(.sh|.inc|.bash|.command)",
@@ -177,7 +177,10 @@ vim.lsp.config.bash = {
 }
 
 vim.lsp.config.json = {
-    cmd = { "vscode-json-language-server", "--stdio" },
+    cmd = {
+        vim.fn.stdpath("data") .. "/mason/bin/vscode-json-language-server",
+        "--stdio",
+    },
     filetypes = { "json", "jsonc" },
     init_options = {
         provideFormatter = true,
@@ -186,7 +189,7 @@ vim.lsp.config.json = {
 }
 
 vim.lsp.config.terraform = {
-    cmd = { "terraform-ls", "serve" },
+    cmd = { vim.fn.stdpath("data") .. "/mason/bin/terraform-ls", "serve" },
     filetypes = { "terraform", "terraform-vars" },
     root_markers = { ".terraform", ".git" },
 }
@@ -240,7 +243,7 @@ local function lintFile(args)
         vim.cmd("silent! !clang-format -i % " .. args)
     elseif filetype == "lua" then
         vim.cmd(
-            "silent! !stylua --indent-type Spaces --indent-width 4 --column-width 90 % "
+            "silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "stylua --indent-type Spaces --indent-width 4 --column-width 90 % "
                 .. args
         )
     elseif filetype == "sql" then

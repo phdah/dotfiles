@@ -54,7 +54,8 @@ base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 		sudo add-apt-repository ppa:git-core/ppa --yes; \
 		sudo apt install --yes \
 			zsh \
-			kitty \
+		    eza \
+			# Issues which this kitty \
 		    git-delta \
 		    bat \
 			curl \
@@ -88,6 +89,7 @@ ubuntu-pkr: ## Install packages for Ubuntu
 			pulseaudio \
 			pavucontrol \
 			brightnessctl \
+			bluetoothctl \
 			; \
 		sudo apt update --yes; \
 		printf 'Packages not updated\n'; \
