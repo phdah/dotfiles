@@ -55,7 +55,7 @@ base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 		sudo apt install --yes \
 			zsh \
 		    eza \
-			# Issues which this kitty \
+			golang-go \
 		    git-delta \
 		    bat \
 			curl \
@@ -89,7 +89,6 @@ ubuntu-pkr: ## Install packages for Ubuntu
 			pulseaudio \
 			pavucontrol \
 			brightnessctl \
-			bluetoothctl \
 			; \
 		sudo apt update --yes; \
 		printf 'Packages not updated\n'; \
@@ -230,7 +229,7 @@ wsl-install: args os-check base-dir base-apt-pkr zsh-shell nvim-install zshhl-in
 arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install base-symlink arch-symlink copy-dirs finish
 	@echo "Arch install done"
 
-ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr google-chrome zsh-shell nvim-install zshhl-install gnome-nord base-symlink ubuntu-symlink copy-dirs finish
+ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr zsh-shell zshhl-install gnome-nord base-symlink ubuntu-symlink copy-dirs finish
 	@echo "Ubuntu install done"
 
 mac-install: args base-dir mac-pkr nvim-install base-symlink mac-symlink copy-dirs finish
