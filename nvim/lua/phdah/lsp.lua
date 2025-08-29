@@ -3,6 +3,8 @@
 ---------------
 local M = {}
 
+local masonBinPath = vim.fn.stdpath("data") .. "/mason/bin/"
+
 -- Setup all lsp with defaults
 vim.diagnostic.config({
     virtual_text = { current_line = true },
@@ -52,7 +54,7 @@ function M.switchSourceHeader(bufnr)
 end
 
 vim.lsp.config.ruff = {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/ruff", "server" },
+    cmd = { masonBinPath .. "ruff", "server" },
     filetypes = { "python" },
     root_markers = {
         "pyproject.toml",
@@ -89,7 +91,7 @@ vim.lsp.config.pyright = {
             vim.lsp.util.open_floating_preview(contents, "markdown", config)
         end,
     },
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/pyright-langserver", "--stdio" },
+    cmd = { masonBinPath .. "pyright-langserver", "--stdio" },
     filetypes = { "python" },
     root_markers = {
         "pyproject.toml",
@@ -114,7 +116,7 @@ vim.lsp.config.pyright = {
 
 -- Set up the lua-language-server
 vim.lsp.config.luals = {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/lua-language-server" },
+    cmd = { masonBinPath .. "lua-language-server" },
     filetypes = { "lua" },
     root_markers = {
         ".luarc.json",
@@ -146,13 +148,13 @@ vim.lsp.config.luals = {
 }
 
 vim.lsp.config.gopls = {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/gopls" },
+    cmd = { masonBinPath .. "gopls" },
     filetypes = { "go", "gomod", "gowork", "gotmpl" },
     root_markers = { "go.work", "go.mod", ".git" },
 }
 
 vim.lsp.config.clangd = {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/clangd", "--background-index" },
+    cmd = { masonBinPath .. "clangd", "--background-index" },
     root_markers = {
         ".clangd",
         ".clang-tidy",
@@ -166,7 +168,7 @@ vim.lsp.config.clangd = {
 }
 
 vim.lsp.config.bash = {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/bash-language-server", "start" },
+    cmd = { masonBinPath .. "bash-language-server", "start" },
     settings = {
         bashIde = {
             globPattern = vim.env.GLOB_PATTERN or "*@(.sh|.inc|.bash|.command)",
@@ -178,7 +180,7 @@ vim.lsp.config.bash = {
 
 vim.lsp.config.json = {
     cmd = {
-        vim.fn.stdpath("data") .. "/mason/bin/vscode-json-language-server",
+        masonBinPath .. "vscode-json-language-server",
         "--stdio",
     },
     filetypes = { "json", "jsonc" },
@@ -189,7 +191,7 @@ vim.lsp.config.json = {
 }
 
 vim.lsp.config.terraform = {
-    cmd = { vim.fn.stdpath("data") .. "/mason/bin/terraform-ls", "serve" },
+    cmd = { masonBinPath .. "terraform-ls", "serve" },
     filetypes = { "terraform", "terraform-vars" },
     root_markers = { ".terraform", ".git" },
 }
@@ -227,28 +229,32 @@ local function lintFile(args)
 
     -- Run the corresponding formatter based on the filetype
     if filetype == "python" then
-        vim.cmd("silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "ruff format % " .. args)
+        vim.cmd("silent! !" .. masonBinPath .. "ruff format % " .. args)
     elseif filetype == "go" then
         vim.cmd("silent! !gofmt -w % " .. args)
         -- Replace tabs with spaces (treesitter issue)
         -- vim.cmd('silent! %s/\\t/    /g')
     elseif filetype == "sh" then
-        vim.cmd("silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "shfmt -w -i 4 -ci % " .. args)
+        vim.cmd("silent! !" .. masonBinPath .. "shfmt -w -i 4 -ci % " .. args)
     elseif
         filetype == "c"
         or filetype == "cpp"
         or filetype == "json"
         or filetype == "java"
     then
-        vim.cmd("silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "clang-format -i % " .. args)
+        vim.cmd("silent! !" .. masonBinPath .. "clang-format -i % " .. args)
     elseif filetype == "lua" then
         vim.cmd(
-            "silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "stylua --indent-type Spaces --indent-width 4 --column-width 90 % "
+            "silent! !"
+                .. masonBinPath
+                .. "stylua --indent-type Spaces --indent-width 4 --column-width 90 % "
                 .. args
         )
     elseif filetype == "sql" then
         vim.cmd(
-            'silent! !sql-formatter --fix --config \'{"tabWidth": 4, "linesBetweenQueries": 2}\' --language postgresql % '
+            "silent! !"
+                .. masonBinPath
+                .. 'sql-formatter --fix --config \'{"tabWidth": 4, "linesBetweenQueries": 2}\' --language postgresql % '
                 .. args
         )
     elseif
@@ -259,12 +265,16 @@ local function lintFile(args)
         or filetype == "css"
     then
         vim.cmd(
-            "silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "prettier --print-width 90 --prose-wrap always --write --tab-width 4 % "
+            "silent! !"
+                .. masonBinPath
+                .. "prettier --print-width 90 --prose-wrap always --write --tab-width 4 % "
                 .. args
         )
     elseif filetype == "yaml" then
         vim.cmd(
-            "silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "prettier --print-width 90 --prose-wrap always --write --tab-width 2 % "
+            "silent! !"
+                .. masonBinPath
+                .. "prettier --print-width 90 --prose-wrap always --write --tab-width 2 % "
                 .. args
         )
     elseif filetype == "terraform" then
