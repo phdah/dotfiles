@@ -227,20 +227,20 @@ local function lintFile(args)
 
     -- Run the corresponding formatter based on the filetype
     if filetype == "python" then
-        vim.cmd("silent! !ruff format % " .. args)
+        vim.cmd("silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "ruff format % " .. args)
     elseif filetype == "go" then
         vim.cmd("silent! !gofmt -w % " .. args)
         -- Replace tabs with spaces (treesitter issue)
         -- vim.cmd('silent! %s/\\t/    /g')
     elseif filetype == "sh" then
-        vim.cmd("silent! !shfmt -w -i 4 -ci % " .. args)
+        vim.cmd("silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "shfmt -w -i 4 -ci % " .. args)
     elseif
         filetype == "c"
         or filetype == "cpp"
         or filetype == "json"
         or filetype == "java"
     then
-        vim.cmd("silent! !clang-format -i % " .. args)
+        vim.cmd("silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "clang-format -i % " .. args)
     elseif filetype == "lua" then
         vim.cmd(
             "silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "stylua --indent-type Spaces --indent-width 4 --column-width 90 % "
@@ -259,12 +259,12 @@ local function lintFile(args)
         or filetype == "css"
     then
         vim.cmd(
-            "silent! !prettier --print-width 90 --prose-wrap always --write --tab-width 4 % "
+            "silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "prettier --print-width 90 --prose-wrap always --write --tab-width 4 % "
                 .. args
         )
     elseif filetype == "yaml" then
         vim.cmd(
-            "silent! !prettier --print-width 90 --prose-wrap always --write --tab-width 2 % "
+            "silent! !" .. vim.fn.stdpath("data") .. "/mason/bin/" .. "prettier --print-width 90 --prose-wrap always --write --tab-width 2 % "
                 .. args
         )
     elseif filetype == "terraform" then
