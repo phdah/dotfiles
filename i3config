@@ -195,6 +195,7 @@ default_border pixel
 for_window [class="Google-chrome" title="Google Chrome"] border pixel
 
 # Set up computer unique touchpad
+exec_always --no-startup-id xset r rate 200 30
 exec sh ~/.i3mousepad
 
 # Start dunst notifications
