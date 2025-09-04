@@ -1,5 +1,5 @@
 require("gen").setup({
-    model = "gpt-oss:20b-32k",
+    model = "gpt-oss:20b",
     display_mode = "horizontal-split", -- "float" or "split" or "horizontal-split"
     persistent_window = true,
     show_model = true,
