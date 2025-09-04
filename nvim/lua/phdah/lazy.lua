@@ -974,57 +974,27 @@ return require("lazy").setup({
                     require("opencode").toggle()
                 end,
                 desc = "Toggle embedded opencode",
+        "hat0uma/csvview.nvim",
+        opts = {
+            parser = { comments = { "#", "//" } },
+            keymaps = {
+                jump_next_field_end = { "w", mode = { "n", "v" } },
+                jump_prev_field_end = { "b", mode = { "n", "v" } },
+                jump_next_row = { "j", mode = { "n", "v" } },
+                jump_prev_row = { "k", mode = { "n", "v" } },
             },
+        },
+        cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+        keys = {
             {
                 "<leader>aa",
                 function()
                     require("opencode").ask()
                 end,
                 desc = "Ask opencode",
+                "so",
+                ":CsvViewEnable display_mode=border header_lnum=1<CR>",
                 mode = "n",
-            },
-            {
-                "<leader>aa",
-                function()
-                    require("opencode").ask("@selection: ")
-                end,
-                desc = "Ask opencode about selection",
-                mode = "v",
-            },
-            {
-                "<leader>ap",
-                function()
-                    require("opencode").select_prompt()
-                end,
-                desc = "Select prompt",
-                mode = { "n", "v" },
-            },
-            {
-                "<leader>an",
-                function()
-                    require("opencode").command("session_new")
-                end,
-                desc = "New session",
-            },
-            {
-                "<leader>ay",
-                function()
-                    require("opencode").command("messages_copy")
-                end,
-                desc = "Copy last message",
-            },
-            {
-                "<S-C-u>",
-                function()
-                    require("opencode").command("messages_half_page_up")
-                end,
-                desc = "Scroll messages up",
-            },
-            {
-                "<S-C-d>",
-                function()
-                    require("opencode").command("messages_half_page_down")
-                end,
                 desc = "Scroll messages down",
             },
         },
