@@ -5,6 +5,7 @@ autoload -Uz compinit
 compinit
 
 # Aliases
+source $HOME/.alias
 # Aliases
 alias sudo='sudo ' # Allow to append users alias etc to sudo commands
 alias ls='eza'
