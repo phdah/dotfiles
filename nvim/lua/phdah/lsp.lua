@@ -108,6 +108,9 @@ vim.lsp.config.pyright = {
                 autoSearchPaths = true,
                 diagnosticMode = "workspace",
                 useLibraryCodeForTypes = true,
+                extraPaths = {
+                    "plugins", -- Airflow
+                },
             },
             pythonPath = "python3",
         },
