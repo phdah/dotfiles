@@ -207,7 +207,12 @@ local function setPythonPathToRoot()
 
     if filetype == "python" then
         root = require("nvim-utils").Git.find_git_root()
-        vim.fn.setenv("PYTHONPATH", root)
+        local preset = vim.fn.getenv("PYTHONPATH")
+        local current = ""
+        if preset ~= vim.NIL then
+            current = preset .. ":"
+        end
+        vim.fn.setenv("PYTHONPATH", current .. root)
     end
     return root
 end
