@@ -579,8 +579,8 @@ return require("lazy").setup({
         },
     },
     {
-        "kndndrj/nvim-dbee",
-        -- dir = "~/repos/privat/nvim-dbee",
+        -- "kndndrj/nvim-dbee",
+        dir = "~/repos/privat/nvim-dbee",
         keys = {
             {
                 "<leader>ö",
