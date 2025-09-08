@@ -242,7 +242,7 @@ local function lintFile(args)
         or filetype == "json"
         or filetype == "java"
     then
-        vim.cmd("silent! !" .. masonBinPath .. "clang-format -i % " .. args)
+        vim.cmd("silent! !clang-format -i % " .. args)
     elseif filetype == "lua" then
         vim.cmd(
             "silent! !"
