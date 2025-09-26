@@ -974,15 +974,119 @@ return require("lazy").setup({
     },
     {
         "NickvanDyke/opencode.nvim",
-        dependencies = { "folke/snacks.nvim" },
-        opts = {},
+        dependencies = {
+            -- Recommended for better prompt input, and required to use `opencode.nvim`'s embedded terminal — otherwise optional
+            { "folke/snacks.nvim", opts = { input = { enabled = true } } },
+        },
+        config = function()
+            vim.g.opencode_opts = {
+                -- Your configuration, if any — see `lua/opencode/config.lua`
+            }
+            vim.opt.autoread = true
+        end,
         keys = {
+            -- Recommended keymaps
             {
                 "<leader>at",
+                mode = "n",
                 function()
                     require("opencode").toggle()
                 end,
-                desc = "Toggle embedded opencode",
+                desc = "Toggle",
+            },
+            {
+                "<leader>aA",
+                mode = "n",
+                function()
+                    require("opencode").ask()
+                end,
+                desc = "Ask",
+            },
+            {
+                "<leader>aa",
+                mode = "n",
+                function()
+                    require("opencode").ask("@cursor: ")
+                end,
+                desc = "Ask about this",
+            },
+            {
+                "<leader>aa",
+                mode = "v",
+                function()
+                    require("opencode").ask("@selection: ")
+                end,
+                desc = "Ask about selection",
+            },
+            {
+                "<leader>ab",
+                mode = "n",
+                function()
+                    require("opencode").append_prompt("@buffer")
+                end,
+                desc = "Add buffer to prompt",
+            },
+            {
+                "<leader>ab",
+                mode = "v",
+                function()
+                    require("opencode").append_prompt("@selection")
+                end,
+                desc = "Add selection to prompt",
+            },
+            {
+                "<leader>an",
+                mode = "n",
+                function()
+                    require("opencode").command("session_new")
+                end,
+                desc = "New session",
+            },
+            {
+                "<leader>ay",
+                mode = "n",
+                function()
+                    require("opencode").command("messages_copy")
+                end,
+                desc = "Copy last response",
+            },
+            {
+                "<leader>au",
+                mode = "n",
+                function()
+                    require("opencode").command("messages_half_page_up")
+                end,
+                desc = "Messages half page up",
+            },
+            {
+                "<leader>ad",
+                mode = "n",
+                function()
+                    require("opencode").command("messages_half_page_down")
+                end,
+                desc = "Messages half page down",
+            },
+            {
+                "<leader>ae",
+                mode = "v",
+                function()
+                    require("opencode").prompt("Explain @selection and its context")
+                end,
+                desc = "Explain this code",
+            },
+            {
+                "<leader>ad",
+                mode = "v",
+                function()
+                    require("opencode").prompt(
+                        "Add a docstring to @selection and its context. Make sure to use proper indentation for the entire docstring."
+                    )
+                end,
+                desc = "Explain this code",
+            },
+        },
+    },
+    {
         "hat0uma/csvview.nvim",
         opts = {
             parser = { comments = { "#", "//" } },
@@ -996,11 +1100,6 @@ return require("lazy").setup({
         cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
         keys = {
             {
-                "<leader>aa",
-                function()
-                    require("opencode").ask()
-                end,
-                desc = "Ask opencode",
                 "so",
                 ":CsvViewEnable display_mode=border header_lnum=1<CR>",
                 mode = "n",
