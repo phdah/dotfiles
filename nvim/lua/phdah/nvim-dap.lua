@@ -52,7 +52,7 @@ dap.adapters["lldb-dap"] = {
     },
 }
 
-local pythonPath = "python3"
+local pythonPath = vim.fn.exepath("python3")
 dap.adapters.python = {
     type = "executable",
     command = pythonPath,
