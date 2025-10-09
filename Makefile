@@ -69,6 +69,7 @@ base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 			neofetch \
 			snap \
 			ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip \
+			playerctl \
 			; \
 		sudo apt update --yes; \
 		printf 'Packages not updated\n'; \
