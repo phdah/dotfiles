@@ -55,7 +55,9 @@ bindsym "XF86MonBrightnessUp" exec "brightnessctl --device='intel_backlight' set
 bindsym "XF86MonBrightnessDown" exec "brightnessctl --device='intel_backlight' set 10%- && dunstctl close-all && notify-send -t 1000 'Brightness' $(brightnessctl --device='intel_backlight' | rg 'Current brightness' | cut -d'(' -f2 | cut -d ')' -f1)"
 
 # Screen laptop
-bindsym "XF86AudioPlay" exec "~/.screenlayout/laptop.sh"
+bindsym $mod+Tab exec --no-startup-id ~/.screenlayout/laptop.sh
+bindsym $mod+Shift+Tab exec --no-startup-id ~/.screenlayout/home.sh
+bindsym $mod+Ctrl+Tab exec --no-startup-id ~/.screenlayout/office.sh
 
 # kill focused window
 bindsym $mod+Shift+q kill
