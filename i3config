@@ -45,6 +45,11 @@ bindsym "XF86AudioMute" exec "pactl set-sink-mute `pactl get-default-sink` toggl
 bindsym "XF86AudioLowerVolume" exec "pactl set-sink-volume `pactl get-default-sink` -10% && dunstctl close-all && notify-send -t 1000 'Sound' $(pactl list sinks | perl -000ne 'if(/'$(pactl get-default-sink)'/){/Volume:.*?(\d*%)/; print $1}')"
 bindsym "XF86AudioRaiseVolume" exec "pactl set-sink-volume `pactl get-default-sink` +10% && dunstctl close-all && notify-send -t 1000 'Sound' $(pactl list sinks | perl -000ne 'if(/'$(pactl get-default-sink)'/){/Volume:.*?(\d*%)/; print $1}')"
 
+# Playback
+bindsym "XF86AudioPlay" exec --no-startup-id playerctl play-pause
+bindsym "XF86AudioNext" exec --no-startup-id playerctl -p spotify next
+bindsym "XF86AudioPrev" exec --no-startup-id playerctl -p spotify previous
+
 # Screen brightness
 bindsym "XF86MonBrightnessUp" exec "brightnessctl --device='intel_backlight' set +10% && dunstctl close-all && notify-send -t 1000 'Brightness' $(brightnessctl --device='intel_backlight' | rg 'Current brightness' | cut -d'(' -f2 | cut -d ')' -f1)"
 bindsym "XF86MonBrightnessDown" exec "brightnessctl --device='intel_backlight' set 10%- && dunstctl close-all && notify-send -t 1000 'Brightness' $(brightnessctl --device='intel_backlight' | rg 'Current brightness' | cut -d'(' -f2 | cut -d ')' -f1)"
