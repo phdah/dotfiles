@@ -202,20 +202,26 @@ vim.api.nvim_create_user_command("Make", function(opts)
     defineMake(opts.args)
 end, { nargs = "*" })
 
+-- Set PYTHONPATH same as LSP
 local function setPythonPathToRoot()
     local filetype = vim.bo.filetype
-    local root = nil
+    local PYTHONPATH = nil
 
     if filetype == "python" then
-        root = require("nvim-utils").Git.find_git_root()
-        local preset = vim.fn.getenv("PYTHONPATH")
-        local current = ""
-        if preset ~= vim.NIL then
-            current = preset .. ":"
+        local client = vim.lsp.get_clients({ bufnr = 0, name = "pyright" })[1]
+        local cfg = client.config
+        local root = cfg.root_dir
+        local extra = cfg.settings.python.analysis.extraPaths or {}
+
+        local paths = {}
+        table.insert(paths, root)
+        for _, p in ipairs(extra) do
+            table.insert(paths, root .. "/" .. p)
         end
-        vim.fn.setenv("PYTHONPATH", current .. root)
+        local PYTHONPATH = table.concat(paths, ":")
+        vim.fn.setenv("PYTHONPATH", PYTHONPATH)
     end
-    return root
+    return PYTHONPATH
 end
 
 vim.api.nvim_create_user_command("PythonPath", function(opts)
@@ -226,11 +232,15 @@ vim.api.nvim_create_user_command("PythonPath", function(opts)
     end
 end, { nargs = "*" })
 
-local filetypeAC = vim.api.nvim_create_augroup("filetype-autocommands", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
+local filetypeAC = vim.api.nvim_create_augroup("pyright-autocommands", { clear = true })
+vim.api.nvim_create_autocmd("LspAttach", {
     group = filetypeAC,
-    pattern = { "python" },
-    callback = setPythonPathToRoot,
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        if client.name == "pyright" then
+            setPythonPathToRoot()
+        end
+    end,
 })
 
 -- Quickfix list
