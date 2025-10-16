@@ -95,6 +95,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "ColorScheme" }, {
             and fileType ~= "dbee"
             and fileType ~= "snacks_picker_list"
             and fileType ~= "snacks_dashboard"
+            and fileType ~= "opencode_terminal"
         then
             -- Only apply the highlight if the buffer has a filetype
             vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
