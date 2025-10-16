@@ -29,6 +29,8 @@ local function filtered_pick_process()
     return require("dap.utils").pick_process(opts)
 end
 
+local masonBinPath = vim.fn.stdpath("data") .. "/mason/bin/"
+
 --------------------
 -- Setup adaptors --
 --------------------
@@ -98,7 +100,7 @@ dap.adapters.go = {
     port = "${port}",
     cwd = "${workspaceFolder}",
     executable = {
-        command = "/Users/Philip.Sjoberg/.local/share/nvim/mason/bin/dlv",
+        command = masonBinPath .. "/dlv",
         args = { "dap", "-l", "127.0.0.1:${port}" },
         detached = true,
     },
