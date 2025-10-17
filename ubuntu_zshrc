@@ -39,7 +39,7 @@ function lg() {
     fi
 }
 setenv() {
-  export "$1=$2"
+  set -o allexport && source "$1" && set +o allexport
 }
 function gitall() {
     git status && git add --all && git commit -m "$1" && git push
