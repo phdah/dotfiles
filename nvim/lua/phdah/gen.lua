@@ -6,7 +6,7 @@ require("gen").setup({
     -- no_auto_close = true,
 })
 require("gen").prompts["Add_docstring"] = {
-    prompt = "Add $filetype docstring(s) to the following code, use google style if possible and only output the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```",
+    prompt = "Add $filetype docstring(s) to the following code, use numpy style if possible, otherwise google style and only output the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```",
     replace = true,
     extract = "```$filetype\n(.-)```",
 }
