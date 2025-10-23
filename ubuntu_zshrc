@@ -16,6 +16,7 @@ alias tree='eza --tree'
 alias act='act --container-architecture linux/amd64'
 alias open='xdg-open'
 alias ns='vim ~/repos/dotfiles/nvim/lua/phdah/lazy.lua'
+alias bat='batcat'
 # Git alias
 alias pgp='source ~/repos/dotfiles/scripts/set_python_path_to_git_root.sh'
 alias pcpp='source ~/repos/dotfiles/scripts/set_cpp_include_path.sh'

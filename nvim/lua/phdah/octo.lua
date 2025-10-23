@@ -7,10 +7,12 @@ require("octo").setup({
         issue = {
             reload = { lhs = "<localleader>r", desc = "reload PR" },
             open_in_browser = { lhs = "<leader>bo", desc = "open PR in browser" },
+            copy_sha = { lhs = "<C-s>", desc = "copy commit SHA to system clipboard" },
         },
         pull_request = {
             reload = { lhs = "<localleader>r", desc = "reload PR" },
             open_in_browser = { lhs = "<leader>bo", desc = "open PR in browser" },
+            copy_sha = { lhs = "<C-s>", desc = "copy commit SHA to system clipboard" },
         },
         review_thread = {
             select_next_entry = { lhs = "<TAB>", desc = "move to next changed file" },
@@ -25,6 +27,7 @@ require("octo").setup({
                 lhs = "<S-TAB>",
                 desc = "move to previous changed file",
             },
+            copy_sha = { lhs = "<C-s>", desc = "copy commit SHA to system clipboard" },
         },
         file_panel = {
             select_next_entry = { lhs = "<TAB>", desc = "move to next changed file" },

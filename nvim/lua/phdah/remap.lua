@@ -15,6 +15,7 @@ vim.keymap.set("n", "<leader>gr", vim.lsp.buf.rename)
 vim.keymap.set("n", "<leader>gn", ":lua require('phdah.lsp').switchSourceHeader()<CR>")
 vim.keymap.set("n", "<leader>gb", "<C-o>", { noremap = true, silent = true })
 vim.keymap.set("n", "gc", ":tabclose<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "gC", ":tabnew<CR>", { noremap = true, silent = true })
 
 -- Diagnostic / Error
 vim.api.nvim_set_keymap(
