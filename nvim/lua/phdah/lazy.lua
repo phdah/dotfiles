@@ -1075,11 +1075,12 @@ return require("lazy").setup({
                 desc = "Explain this code",
             },
             {
-                "<leader>ad",
+                "<leader>aD",
                 mode = "v",
                 function()
                     require("opencode").prompt(
                         "Add a docstring to @selection and its context. Make sure to use proper indentation for the entire docstring."
+                            .. " If it's python, use numpy-style, without any backticks"
                     )
                 end,
                 desc = "Explain this code",
