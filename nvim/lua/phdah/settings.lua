@@ -1,3 +1,4 @@
+local snacks = require("snacks")
 -- TODO: Move all coloring to it's own file.
 -- It's importatnt that the nord theme coloring is
 -- caled last.
@@ -96,6 +97,7 @@ vim.api.nvim_create_autocmd({ "BufEnter", "ColorScheme" }, {
             and fileType ~= "snacks_picker_list"
             and fileType ~= "snacks_dashboard"
             and fileType ~= "opencode_terminal"
+            and fileType ~= "snacks_terminal"
         then
             -- Only apply the highlight if the buffer has a filetype
             vim.fn.matchadd("ExtraWhitespace", "\\s\\+$")
@@ -202,6 +204,15 @@ vim.api.nvim_create_user_command("Make", function(opts)
     defineMake(opts.args)
 end, { nargs = "*" })
 
+-- Open presentation
+vim.api.nvim_create_user_command("Presentation", function (_)
+    if vim.o.filetype == "markdown" then
+        snacks.terminal.open("slides " .. vim.api.nvim_buf_get_name(0))
+        return
+    end
+    snacks.notify.info("File is not markdown, can't present")
+end, { nargs = "*" })
+
 -- Set PYTHONPATH same as LSP
 local function setPythonPathToRoot()
     local filetype = vim.bo.filetype
@@ -211,6 +222,9 @@ local function setPythonPathToRoot()
         local client = vim.lsp.get_clients({ bufnr = 0, name = "pyright" })[1]
         local cfg = client.config
         local root = cfg.root_dir
+        if root == nil then
+            return PYTHONPATH
+        end
         local extra = cfg.settings.python.analysis.extraPaths or {}
 
         local paths = {}
@@ -225,7 +239,6 @@ local function setPythonPathToRoot()
 end
 
 vim.api.nvim_create_user_command("PythonPath", function(opts)
-    local snacks = require("snacks")
     local root = setPythonPathToRoot()
     if root ~= nil then
         snacks.notify.info("PYTHONPATH set to: " .. root)
