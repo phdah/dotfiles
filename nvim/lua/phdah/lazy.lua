@@ -553,7 +553,7 @@ return require("lazy").setup({
     {
         "saghen/blink.cmp",
         event = { "InsertEnter", "CmdlineEnter" },
-        version = "0.10.0",
+        version = "1.7.0",
         config = function()
             require("phdah.blink")
         end,

@@ -25,18 +25,6 @@ require("blink-cmp").setup({
             sql = { "dbee", "buffer" },
             octo = { "lsp", "path", "snippets", "buffer", "emoji", "git" },
         },
-        cmdline = function()
-            local type = vim.fn.getcmdtype()
-            -- Search forward and backward
-            if type == "/" or type == "?" then
-                return { "buffer" }
-            end
-            -- Commands
-            if type == ":" then
-                return { "cmdline" }
-            end
-            return {}
-        end,
         providers = {
             dbee = { name = "cmp-dbee", module = "blink.compat.source" },
             dap = { name = "dap", module = "blink.compat.source" },
@@ -56,12 +44,26 @@ require("blink-cmp").setup({
             },
         },
     },
+    cmdline = {
+        keymap = { preset = "inherit" },
+        completion = { menu = { auto_show = true } },
+    },
     keymap = {
+        preset = "none",
+        -- Scrolling
+        ["<C-p>"] = { "select_prev", "fallback_to_mappings" },
+        ["<C-n>"] = { "select_next", "fallback_to_mappings" },
         ["<up>"] = { "scroll_documentation_up", "fallback" },
         ["<down>"] = { "scroll_documentation_down", "fallback" },
+        -- Actions
         ["<C-i>"] = { "accept", "fallback" },
         ["<C-e>"] = { "cancel" },
+        -- Toggle info
         ["<C-o>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-s>"] = { "show_signature", "hide_signature", "fallback" },
+        -- Snippet
+        ["<Tab>"] = { "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
     },
     -- experimental signature help support
     signature = { enabled = true, window = { border = "rounded" } },
