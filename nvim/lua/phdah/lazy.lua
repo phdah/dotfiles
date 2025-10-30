@@ -318,7 +318,7 @@ return require("lazy").setup({
             },
             {
                 "gr",
-                ":lua require('snacks').picker.lsp_references()<CR>",
+                ":lua require('snacks').picker.lsp_references({ layout = { preview = true } })<CR>",
                 nowait = true,
                 desc = "References",
                 silent = true,
