@@ -65,6 +65,7 @@ require("blink-cmp").setup({
         ["<Tab>"] = { "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
     },
+    fuzzy = { implementation = "prefer_rust_with_warning" },
     -- experimental signature help support
     signature = { enabled = true, window = { border = "rounded" } },
 })
