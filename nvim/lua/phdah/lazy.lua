@@ -495,7 +495,8 @@ return require("lazy").setup({
     },
     {
         "pwntester/octo.nvim",
-        -- dir = "~/repos/privat/octo.nvim",
+        -- Pinned due to issue created in this change: https://github.com/pwntester/octo.nvim/issues/1184
+        commit= "f60d563",
         cmd = "Octo",
         config = function()
             require("phdah.octo")
