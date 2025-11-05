@@ -226,6 +226,7 @@ function M.setup_configs()
             name = "Launch file pytest",
             module = "pytest",
             args = { "-vs", fileName },
+            cwd = gitRootDir,
             pythonPath = function()
                 return pythonPath
             end,
@@ -237,6 +238,7 @@ function M.setup_configs()
             name = "Launch all pytest",
             module = "pytest",
             args = { "-vs", gitRootDir },
+            cwd = gitRootDir,
             pythonPath = function()
                 return pythonPath
             end,
