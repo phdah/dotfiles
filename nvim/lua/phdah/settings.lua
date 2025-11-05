@@ -176,12 +176,14 @@ vim.api.nvim_create_autocmd("FileType", {
         })
     end,
 })
-
 -- Function to set the executor based on file type
 local function defineMake(args)
     local filetype = vim.bo.filetype
     if filetype == "python" then
-        vim.cmd("silent! DBRun " .. args) -- nvim-databricks run command
+        snacks.terminal.open(
+            vim.fn.exepath("python3") .. " " .. vim.api.nvim_buf_get_name(0),
+            { auto_close = false }
+        )
     elseif filetype == "sh" then
         vim.cmd("!bash % " .. args)
     elseif filetype == "c" or filetype == "cpp" then
@@ -191,11 +193,17 @@ local function defineMake(args)
     elseif filetype == "haskell" then
         vim.cmd("!ghc -no-keep-hi-files -no-keep-o-files -o %:r % && ./%:r " .. args)
     elseif filetype == "lua" then
-        vim.cmd("!luajit % " .. args)
+        snacks.terminal.open(
+            vim.fn.exepath("luajit") .. " " .. vim.api.nvim_buf_get_name(0),
+            { auto_close = false }
+        )
     elseif filetype == "make" then
         vim.cmd("!make " .. args)
     elseif filetype == "go" then
-        vim.cmd("!go run % " .. args)
+        snacks.terminal.open(
+            vim.fn.exepath("go") .. " run " .. vim.api.nvim_buf_get_name(0),
+            { auto_close = false }
+        )
     end
 end
 
@@ -205,7 +213,7 @@ vim.api.nvim_create_user_command("Make", function(opts)
 end, { nargs = "*" })
 
 -- Open presentation
-vim.api.nvim_create_user_command("Presentation", function (_)
+vim.api.nvim_create_user_command("Presentation", function(_)
     if vim.o.filetype == "markdown" then
         snacks.terminal.open("slides " .. vim.api.nvim_buf_get_name(0))
         return
