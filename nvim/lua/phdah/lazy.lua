@@ -606,7 +606,7 @@ return require("lazy").setup({
                 silent = true,
             },
             {
-                "<C-s",
+                "<C-s>",
                 ':lua require("dbee").run_selection()<CR>',
                 mode = "v",
                 desc = "Run dbee selection outside of dbee UI",
