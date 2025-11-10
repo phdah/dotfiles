@@ -304,4 +304,48 @@ vim.api.nvim_create_user_command("Lint", function(opts)
     lintFile(opts.args)
 end, { nargs = "*" })
 
+-- Copy buffer and linter erros
+local function copy_buffer_with_diagnostics()
+    -- Get all lines in current buffer
+    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+
+    -- Get diagnostics for current buffer
+    local diags = vim.diagnostic.get(0)
+
+    -- Group diagnostics by line number
+    local by_line = {}
+    for _, d in ipairs(diags) do
+        local l = d.lnum + 1
+        by_line[l] = by_line[l] or {}
+        table.insert(by_line[l], d)
+    end
+
+    -- Build annotated buffer
+    local annotated = {}
+    for i, line in ipairs(lines) do
+        table.insert(annotated, line)
+        if by_line[i] then
+            for _, d in ipairs(by_line[i]) do
+                table.insert(
+                    annotated,
+                    string.format(
+                        "  <-- [%s] %s",
+                        vim.diagnostic.severity[d.severity],
+                        d.message
+                    )
+                )
+            end
+        end
+    end
+
+    -- Join and copy to clipboard
+    local output = table.concat(annotated, "\n")
+    vim.fn.setreg("+", output)
+    print("Copied buffer with diagnostics to clipboard.")
+end
+
+vim.api.nvim_create_user_command("CopyBufferWithDiagnostics", function()
+    copy_buffer_with_diagnostics()
+end, {})
+
 return M
