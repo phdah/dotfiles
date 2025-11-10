@@ -118,6 +118,7 @@ return require("lazy").setup({
         opts = {
             bigfile = {},
             bufdelete = {},
+            terminal = {},
             dashboard = {
                 sections = {
                     { section = "header" },
