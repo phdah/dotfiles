@@ -91,6 +91,9 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
+# Disable floating for classes
+for_window [class="Appgate SDP"] floating disable
+
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1"
@@ -103,6 +106,9 @@ set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
+
+# Move workspaces 1-9 to primary screen
+exec_always --no-startup-id ~/repos/dotfiles/scripts/i3_workspaces.sh
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
