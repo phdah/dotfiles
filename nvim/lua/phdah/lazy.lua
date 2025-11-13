@@ -14,6 +14,8 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+local masonBinPath = vim.fn.stdpath("data") .. "/mason/bin/"
+
 return require("lazy").setup({
     ------------------
     -- Code visuals --
@@ -475,6 +477,25 @@ return require("lazy").setup({
         },
     },
     { "catgoose/nvim-colorizer.lua", ft = { "typescriptreact", "lua" }, opts = {} },
+    {
+        "fabridamicelli/cronex.nvim",
+        ft = { "python" },
+        opts = {
+            file_patterns = {
+                "*.yaml",
+                "*.yml",
+                "*.tf",
+                "*.cfg",
+                "*.config",
+                "*.conf",
+                "*.py",
+            },
+            explainer = {
+                cmd = masonBinPath .. "cronstrue",
+                timeout = 10000,
+            },
+        },
+    },
     {
         "OXY2DEV/markview.nvim",
         ft = { "markdown", "octo" },
