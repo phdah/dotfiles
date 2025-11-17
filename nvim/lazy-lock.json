@@ -36,7 +36,7 @@
   "nvim-statusline": { "branch": "main", "commit": "5dfdf32cdc537235bcd14b1d02269f1ffe679e11" },
   "nvim-treesitter": { "branch": "master", "commit": "42fc28ba918343ebfd5565147a42a26580579482" },
   "nvim-web-devicons": { "branch": "master", "commit": "8dcb311b0c92d460fac00eac706abd43d94d68af" },
-  "octo.nvim": { "branch": "master", "commit": "aeee82dac023f03560111d056c88963d723d3cbe" },
+  "octo.nvim": { "branch": "master", "commit": "f60d563906e4e3be355eaf2523e01551cd177f8b" },
   "oil.nvim": { "branch": "master", "commit": "7e1cd7703ff2924d7038476dcbc04b950203b902" },
   "one-small-step-for-vimkind": { "branch": "main", "commit": "8fdbb4ed7bd20f92d3c1344b1e619af9017c743d" },
   "opencode.nvim": { "branch": "main", "commit": "d815c315f8c824aad3597f71421c798ad206f7ea" },
