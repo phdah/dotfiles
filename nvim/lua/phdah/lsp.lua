@@ -67,6 +67,20 @@ vim.lsp.config.ruff = {
     },
 }
 
+vim.lsp.config.pyrefly = {
+    cmd = { masonBinPath .. "pyrefly", "lsp" },
+    filetypes = { "python" },
+    root_markers = {
+        "requirements.txt",
+        "Pipfile",
+        "setup.py",
+        "setup.cfg",
+        "pyproject.toml",
+        "pyrightconfig.json",
+        ".git",
+    },
+}
+
 local notifyNoInfo = function()
     require("snacks").notify.info("No information available")
 end
@@ -203,6 +217,7 @@ vim.lsp.config.terraform = {
 vim.lsp.enable({
     "luals",
     "pyright",
+    -- "pyrefly",
     "gopls",
     "clangd",
     "ruff",
