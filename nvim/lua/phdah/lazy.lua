@@ -1106,7 +1106,7 @@ return require("lazy").setup({
                             .. " If it's python, use numpy-style, without any backticks"
                     )
                 end,
-                desc = "Explain this code",
+                desc = "(A)dd (d)ocstring to selection",
             },
         },
     },
