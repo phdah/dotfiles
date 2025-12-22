@@ -552,7 +552,38 @@ return require("lazy").setup({
     {
         "williamboman/mason.nvim",
         cmd = "Mason",
-        opts = {},
+        config = function()
+            require("mason").setup({})
+            require("mason-tool-installer").check_install(true)
+        end,
+        dependencies = {
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
+            cmd = { "MasonToolsUpdate", "MasonToolsInstall" },
+            opts = {
+                ensure_installed = {
+                    -- formatters
+                    "clang-format",
+                    "prettier",
+                    "shfmt",
+                    "sql-formatter",
+                    "stylua",
+
+                    -- linters
+                    "ruff",
+
+                    -- debuggers
+                    "codelldb",
+                    "delve",
+
+                    -- tools / servers
+                    "gopls",
+                    "lua-language-server",
+                    "pyright",
+                    "terraform-ls",
+                },
+                run_on_start = true,
+            },
+        },
     },
     {
         "mfussenegger/nvim-jdtls",
