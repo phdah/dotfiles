@@ -281,6 +281,7 @@ local function lintFile(args)
         or filetype == "typescript"
         or filetype == "javascript"
         or filetype == "css"
+        or filetype == "octo"
     then
         vim.cmd(
             "silent! !"
