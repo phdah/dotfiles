@@ -81,6 +81,27 @@ vim.lsp.config.pyrefly = {
     },
 }
 
+vim.lsp.config.ty = {
+    cmd = { masonBinPath .. "ty", "server" },
+    filetypes = { "python" },
+    root_markers = {
+        "requirements.txt",
+        "Pipfile",
+        "setup.py",
+        "setup.cfg",
+        "pyproject.toml",
+        "pyrightconfig.json",
+        ".git",
+    },
+    settings = {
+        ty = {
+            -- autoSearchPaths = true,
+            diagnosticMode = "workspace",
+            -- useLibraryCodeForTypes = true,
+        },
+    },
+}
+
 local notifyNoInfo = function()
     require("snacks").notify.info("No information available")
 end
@@ -218,6 +239,7 @@ vim.lsp.enable({
     "luals",
     "pyright",
     -- "pyrefly",
+    -- "ty",
     "gopls",
     "clangd",
     "ruff",
