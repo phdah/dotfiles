@@ -162,16 +162,26 @@ local auGroupFloaterm =
     vim.api.nvim_create_augroup("nvim-floaterm-custom", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
     group = auGroupFloaterm,
-    pattern = "floaterm",
+    pattern = { "floaterm", "snacks_terminal" },
     callback = function()
         -- What will happen on entry
-        vim.opt.mouse = "a"
+        vim.keymap.del("t", "<C-j>")
+        vim.keymap.del("t", "<C-k>")
+        local mouseOption = vim.o.mouse
+        vim.o.mouse = "a"
         -- What will happen on exit
-        vim.api.nvim_create_autocmd("BufLeave", {
+        vim.api.nvim_create_autocmd("TermClose", {
             buffer = 0,
             once = true,
             callback = function()
-                vim.o.mouse = ""
+                vim.keymap.set(
+                    "t",
+                    "<C-k>",
+                    [[<C-\><C-n>]],
+                    { noremap = true, silent = true }
+                )
+                vim.keymap.set("t", "<C-j>", "<Enter>", { noremap = true })
+                vim.o.mouse = mouseOption
             end,
         })
     end,

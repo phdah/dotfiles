@@ -244,6 +244,13 @@ return require("lazy").setup({
         },
         keys = {
             {
+                "<leader>lj",
+                ":lua Snacks.terminal.open('jiratui ui --search-on-startup -p DATA')<CR>",
+                mode = "n",
+                desc = "(l) jira tui open in floating terminal",
+                silent = true,
+            },
+            {
                 "<leader>lo",
                 ":lua Snacks.lazygit.open()<CR>",
                 mode = "n",
@@ -477,25 +484,6 @@ return require("lazy").setup({
         },
     },
     { "catgoose/nvim-colorizer.lua", ft = { "typescriptreact", "lua" }, opts = {} },
-    {
-        "fabridamicelli/cronex.nvim",
-        ft = { "python" },
-        opts = {
-            file_patterns = {
-                "*.yaml",
-                "*.yml",
-                "*.tf",
-                "*.cfg",
-                "*.config",
-                "*.conf",
-                "*.py",
-            },
-            explainer = {
-                cmd = masonBinPath .. "cronstrue",
-                timeout = 10000,
-            },
-        },
-    },
     {
         "OXY2DEV/markview.nvim",
         ft = { "markdown", "octo" },
