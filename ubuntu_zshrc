@@ -17,10 +17,11 @@ alias act='act --container-architecture linux/amd64'
 alias open='xdg-open'
 alias ns='vim ~/repos/dotfiles/nvim/lua/phdah/lazy.lua'
 alias bat='batcat'
+alias lg='lazygit'
 # Git alias
 alias pgp='source ~/repos/dotfiles/scripts/set_python_path_to_git_root.sh'
 alias pcpp='source ~/repos/dotfiles/scripts/set_cpp_include_path.sh'
-alias vimconflict='vim $(rg -l "<<<<<<< HEAD")'
+alias vimconflict='nvim $(rg -l "<<<<<<< HEAD")'
 alias gitl='git log --graph --oneline'
 alias gits='git status'
 alias gitp='git pull'
@@ -29,15 +30,8 @@ alias gitb='git branch'
 alias gitc='git checkout'
 
 # Functions
-function lg() {
-    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
-
-    lazygit "$@"
-
-    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
-            cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
-            rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
-    fi
+function snvim() {
+  sudo -E nvim "$1"
 }
 setenv() {
   set -o allexport && source "$1" && set +o allexport
