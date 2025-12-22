@@ -506,7 +506,7 @@ return require("lazy").setup({
     {
         "pwntester/octo.nvim",
         -- Still some issue with "merging" on main
-        commit = "f60d563906e4e3be355eaf2523e01551cd177f8b",
+        -- commit = "f60d563906e4e3be355eaf2523e01551cd177f8b",
         cmd = "Octo",
         config = function()
             require("phdah.octo")
