@@ -322,7 +322,7 @@ return require("lazy").setup({
             },
             {
                 "<leader>gg",
-                ":lua require('snacks').picker.lsp_definitions()<CR>",
+                ":lua require('snacks').picker.lsp_definitions({ layout = { preview = true } })<CR>",
                 desc = "Goto Definition",
                 silent = true,
             },
@@ -353,7 +353,7 @@ return require("lazy").setup({
             },
             {
                 "<leader>fu",
-                ":lua require('snacks').picker.undo()<CR>",
+                ":lua require('snacks').picker.undo({ layout = { preview = true } })<CR>",
                 mode = "n",
                 desc = "(f)ind (f)iles locally",
                 silent = true,
@@ -410,7 +410,7 @@ return require("lazy").setup({
             },
             {
                 "<leader>f*",
-                ":lua require('snacks').picker.grep({ layout = { preview = true }, search = require('nvim-utils').String.escape_line(require('nvim-utils').String.get_visual_selection()) })<CR>",
+                ":lua require('snacks').picker.grep({ layout = { preview = true }, cwd = require('nvim-utils').Git.find_git_root(), search = require('nvim-utils').String.escape_line(require('nvim-utils').String.get_visual_selection()) })<CR>",
                 mode = "v",
                 desc = "(f)ind (*) search",
                 silent = true,
