@@ -14,6 +14,10 @@ vim.g.clipboard = {
     cache_enabled = 0,
 }
 
+-- cmd options
+require("vim._extui").enable({})
+vim.o.cmdheight = 1
+
 -- Width limit
 vim.wo.colorcolumn = "80"
 vim.cmd("highlight ColorColumn guifg=#4C566A")
