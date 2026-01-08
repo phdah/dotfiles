@@ -169,6 +169,9 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Background
+exec_always --no-startup-id xsetroot -solid "#2e3440"
+
 # class                 border  bground text    indicator child_border
 client.focused          #88C0D0 #88C0D0 #88C0D0 #03B4A8   #88C0D0
 client.focused_inactive #2E3440 #2E3440 #2E3440 #2E3440   #2E3440
