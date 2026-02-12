@@ -8,4 +8,4 @@ for i in $(seq 9); do
     i3-msg "workspace $i; move workspace to output $primary"
 done
 
-i3-msg "workspace number $current_ws"
+i3-msg "workspace number 1"
