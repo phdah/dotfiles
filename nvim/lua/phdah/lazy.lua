@@ -1066,7 +1066,7 @@ return require("lazy").setup({
                 "<leader>ab",
                 mode = "n",
                 function()
-                    require("opencode").append_prompt("@buffer")
+                    require("opencode").ask("@buffer: ")
                 end,
                 desc = "Add buffer to prompt",
             },
