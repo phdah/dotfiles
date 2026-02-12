@@ -1150,4 +1150,13 @@ return require("lazy").setup({
             },
         },
     },
+    {
+        "ywpkwon/yank-path.nvim",
+        config = function()
+            require("yank-path").setup({
+                default_mapping = false,
+            })
+        end,
+        keys = { { "<leader>yp", ":YankPath<CR>", mode = "n", desc = "Yank file path" } },
+    },
 })
