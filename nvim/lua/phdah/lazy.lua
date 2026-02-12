@@ -497,6 +497,7 @@ return require("lazy").setup({
     },
     {
         "stevearc/oil.nvim",
+        ft = {"netrw"},
         config = function()
             require("phdah.oil")
         end,
@@ -531,6 +532,7 @@ return require("lazy").setup({
             "nvim-lua/plenary.nvim",
             {
                 "nvim-telescope/telescope.nvim",
+                lazy = true,
                 config = function()
                     require("telescope").setup({
                         defaults = {
