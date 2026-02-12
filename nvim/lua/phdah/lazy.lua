@@ -1048,7 +1048,7 @@ return require("lazy").setup({
                 "<leader>aa",
                 mode = "n",
                 function()
-                    require("opencode").ask("@cursor: ")
+                    require("opencode").ask("@this: ")
                 end,
                 desc = "Ask about this",
             },
@@ -1056,7 +1056,7 @@ return require("lazy").setup({
                 "<leader>aa",
                 mode = "v",
                 function()
-                    require("opencode").ask("@selection: ")
+                    require("opencode").ask("@this: ")
                 end,
                 desc = "Ask about selection",
             },
@@ -1067,14 +1067,6 @@ return require("lazy").setup({
                     require("opencode").append_prompt("@buffer")
                 end,
                 desc = "Add buffer to prompt",
-            },
-            {
-                "<leader>ab",
-                mode = "v",
-                function()
-                    require("opencode").append_prompt("@selection")
-                end,
-                desc = "Add selection to prompt",
             },
             {
                 "<leader>an",
@@ -1112,7 +1104,7 @@ return require("lazy").setup({
                 "<leader>ae",
                 mode = "v",
                 function()
-                    require("opencode").prompt("Explain @selection and its context")
+                    require("opencode").prompt("Explain @this and its context")
                 end,
                 desc = "Explain this code",
             },
@@ -1121,7 +1113,7 @@ return require("lazy").setup({
                 mode = "v",
                 function()
                     require("opencode").prompt(
-                        "Add a docstring to @selection and its context. Make sure to use proper indentation for the entire docstring."
+                        "Add a docstring to @this and its context. Make sure to use proper indentation for the entire docstring."
                             .. " If it's python, use numpy-style, without any backticks"
                     )
                 end,
