@@ -173,6 +173,12 @@ gnome-nord: ## Install Nord colors for Gnome
 	fi
 	@$(SOURCE_DIR)/nord-gnome-terminal/src/nord.sh
 
+display-i3:
+	@printf 'Installing auto display rule\n'
+	@sudo install -m 644 "$(BUILD_DIR)/99-display-hotplug.rules" "/etc/udev/rules.d/99-display-hotplug.rules"
+	@sudo udevadm control --reload-rules
+	@sudo udevadm trigger -c change -s drm
+
 base-symlink: ## Symlink dotfiles to repo
 	printf 'BUILD_DIR: $(BUILD_DIR)\n'
 	@printf 'Setting up symlinks\n'
@@ -191,6 +197,8 @@ ubuntu-symlink: ## Symlink dotfiles to repo
 	@ln -sf $(BUILD_DIR)/i3status.conf $(CONFIG)/i3/i3status.conf
 	@ln -sf $(BUILD_DIR)/i3config $(CONFIG)/i3/config
 	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
+	@ln -sf $(BUILD_DIR)/scripts/auto-extend-on-top.sh $(HOME)/.local/bin/auto-extend-on-top.sh
+	@ln -sf $(BUILD_DIR)/display-hotplug.service $(CONFIG)/systemd/user/display-hotplug.service
 
 arch-symlink: ## Symlink for arch
 	@printf 'Setting up symlinks for arch\n'
@@ -230,7 +238,7 @@ wsl-install: args os-check base-dir base-apt-pkr zsh-shell nvim-install zshhl-in
 arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install base-symlink arch-symlink copy-dirs finish
 	@echo "Arch install done"
 
-ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr zsh-shell zshhl-install gnome-nord base-symlink ubuntu-symlink copy-dirs finish
+ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr zsh-shell zshhl-install gnome-nord display-i3 base-symlink ubuntu-symlink copy-dirs finish
 	@echo "Ubuntu install done"
 
 mac-install: args base-dir mac-pkr nvim-install base-symlink mac-symlink copy-dirs finish

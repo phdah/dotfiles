@@ -1,0 +1,12 @@
+[Unit]
+Description=Auto-extend displays on hotplug
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=%h/.Xauthority
+ExecStart=%h/.local/bin/auto-extend-on-top.sh
+
+[Install]
+WantedBy=default.target
