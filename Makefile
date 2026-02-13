@@ -211,6 +211,8 @@ arch-symlink: ## Symlink for arch
 	@ln -sf $(BUILD_DIR)/i3status.conf $(CONFIG)/i3/i3status.conf
 	@ln -sf $(BUILD_DIR)/i3config $(CONFIG)/i3/config
 	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
+	@ln -sf $(BUILD_DIR)/scripts/auto-extend-on-top.sh $(HOME)/.local/bin/auto-extend-on-top.sh
+	@ln -sf $(BUILD_DIR)/display-hotplug.service $(CONFIG)/systemd/user/display-hotplug.service
 
 mac-symlink: ## Symlink dotfiles to repo
 	@printf 'Setting up symlinks for Mac\n'
@@ -235,7 +237,7 @@ finish: ## Finish the install
 wsl-install: args os-check base-dir base-apt-pkr zsh-shell nvim-install zshhl-install base-symlink wsl-symlink copy-dirs finish
 	@echo "WSL install done"
 
-arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install base-symlink arch-symlink copy-dirs finish
+arch-install: args i3-args os-check base-dir arch-pkr zsh-shell nvim-install display-i3 base-symlink arch-symlink copy-dirs finish
 	@echo "Arch install done"
 
 ubuntu-install: args i3-args os-check base-dir base-apt-pkr ubuntu-pkr zsh-shell zshhl-install gnome-nord display-i3 base-symlink ubuntu-symlink copy-dirs finish
