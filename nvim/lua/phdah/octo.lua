@@ -1,4 +1,7 @@
 require("octo").setup({
+    gh_env = function()
+        return { GH_HOST = require("octo.utils").get_remote_host() }
+    end,
     suppress_missing_scope = { projects_v2 = true },
     enable_builtin = true,
     -- use_local_fs = true, causing issues with diff
