@@ -486,7 +486,16 @@ return require("lazy").setup({
     { "catgoose/nvim-colorizer.lua", ft = { "typescriptreact", "lua" }, opts = {} },
     {
         "OXY2DEV/markview.nvim",
-        ft = { "markdown", "octo" },
+        ft = {
+            "md",
+            "rmd",
+            "quarto",
+            "markdown",
+            "octo",
+            "Avante",
+            "copilot-chat",
+            "opencode_output",
+        },
         config = function()
             require("phdah.markview")
         end,
@@ -497,7 +506,7 @@ return require("lazy").setup({
     },
     {
         "stevearc/oil.nvim",
-        ft = {"netrw"},
+        ft = { "netrw" },
         config = function()
             require("phdah.oil")
         end,
@@ -1017,113 +1026,6 @@ return require("lazy").setup({
         },
     },
     {
-        "NickvanDyke/opencode.nvim",
-        dependencies = {
-            -- Recommended for better prompt input, and required to use `opencode.nvim`'s embedded terminal — otherwise optional
-            { "folke/snacks.nvim", opts = { input = { enabled = true } } },
-        },
-        config = function()
-            vim.g.opencode_opts = {
-                -- Your configuration, if any — see `lua/opencode/config.lua`
-            }
-            vim.opt.autoread = true
-        end,
-        keys = {
-            -- Recommended keymaps
-            {
-                "<leader>at",
-                mode = "n",
-                function()
-                    require("opencode").toggle()
-                end,
-                desc = "Toggle",
-            },
-            {
-                "<leader>aA",
-                mode = "n",
-                function()
-                    require("opencode").ask()
-                end,
-                desc = "Ask",
-            },
-            {
-                "<leader>aa",
-                mode = "n",
-                function()
-                    require("opencode").ask("@this: ")
-                end,
-                desc = "Ask about this",
-            },
-            {
-                "<leader>aa",
-                mode = "v",
-                function()
-                    require("opencode").ask("@this: ")
-                end,
-                desc = "Ask about selection",
-            },
-            {
-                "<leader>ab",
-                mode = "n",
-                function()
-                    require("opencode").ask("@buffer: ")
-                end,
-                desc = "Add buffer to prompt",
-            },
-            {
-                "<leader>an",
-                mode = "n",
-                function()
-                    require("opencode").command("session_new")
-                end,
-                desc = "New session",
-            },
-            {
-                "<leader>ay",
-                mode = "n",
-                function()
-                    require("opencode").command("messages_copy")
-                end,
-                desc = "Copy last response",
-            },
-            {
-                "<leader>au",
-                mode = "n",
-                function()
-                    require("opencode").command("messages_half_page_up")
-                end,
-                desc = "Messages half page up",
-            },
-            {
-                "<leader>ad",
-                mode = "n",
-                function()
-                    require("opencode").command("messages_half_page_down")
-                end,
-                desc = "Messages half page down",
-            },
-            {
-                "<leader>ae",
-                mode = "v",
-                function()
-                    require("opencode").prompt("Explain @this and its context")
-                end,
-                desc = "Explain this code",
-            },
-            {
-                "<leader>aD",
-                mode = "v",
-                function()
-                    require("opencode").prompt(
-                        "Add a docstring to @this and its context. Make sure to use proper indentation for the entire docstring."
-                            .. " If it's python, use numpy-style, without any backticks"
-                    )
-                end,
-                desc = "(A)dd (d)ocstring to selection",
-            },
-        },
-    },
-    {
         "hat0uma/csvview.nvim",
         opts = {
             parser = { comments = { "#", "//" } },
@@ -1152,5 +1054,35 @@ return require("lazy").setup({
             })
         end,
         keys = { { "<leader>yp", ":YankPath<CR>", mode = "n", desc = "Yank file path" } },
+    },
+    {
+        "sudo-tee/opencode.nvim",
+        config = function()
+            require("opencode").setup({
+                keymap_prefix = "<leader>a",
+            })
+        end,
+        dependencies = {
+            -- "OXY2DEV/markview.nvim"
+            "folke/snacks.nvim",
+            "saghen/blink.cmp",
+            "nvim-lua/plenary.nvim",
+        },
+        keys = {
+            {
+                "<leader>ag",
+                ":lua require('opencode.api').toggle()<CR>",
+                mode = "n",
+                desc = "Opencode To(g)gle",
+                silent = true,
+            },
+            {
+                "<leader>aD",
+                ":Opencode quick_chat \"Add docstring(s) to the following code, use numpy style if python and possible, otherwise google style.\" context.selection.enabled=true<CR>",
+                mode = "v",
+                desc = "Opencode Add Comment",
+                silent = true,
+            },
+        },
     },
 })
