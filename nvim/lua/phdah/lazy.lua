@@ -1078,9 +1078,9 @@ return require("lazy").setup({
             },
             {
                 "<leader>aD",
-                ":Opencode quick_chat \"Add docstring(s) to the following code, use numpy style if python and possible, otherwise google style.\" context.selection.enabled=true<CR>",
+                ':Opencode quick_chat "Add docstring(s) to the following code, use numpy style if python and possible, otherwise google style." agent=build context.selection.enabled=true<CR>',
                 mode = "v",
-                desc = "Opencode Add Comment",
+                desc = "Opencode (a) (d)ocstring",
                 silent = true,
             },
         },
