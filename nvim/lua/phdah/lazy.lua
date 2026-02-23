@@ -1085,4 +1085,41 @@ return require("lazy").setup({
             },
         },
     },
+    {
+        "obsidian-nvim/obsidian.nvim",
+        version = "*", -- use latest release, remove to use latest commit
+        ft = "markdown",
+        cmd = "Obsidian",
+        opts = {
+            legacy_commands = false, -- this will be removed in the next major release
+            workspaces = {
+                {
+                    name = "work",
+                    path = "~/vaults/work",
+                },
+                {
+                    name = "personal",
+                    path = "~/vaults/personal",
+                },
+            },
+            picker = {
+                -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
+                name = "snacks.pick",
+                -- Optional, configure key mappings for the picker. These are the defaults.
+                -- Not all pickers support all mappings.
+                -- note_mappings = {
+                --     -- Create a new note from your query.
+                --     new = "<C-x>",
+                --     -- Insert a link to the selected note.
+                --     insert_link = "<C-l>",
+                -- },
+                -- tag_mappings = {
+                --     -- Add tag(s) to current note.
+                --     tag_note = "<C-x>",
+                --     -- Insert a tag at the current location.
+                --     insert_tag = "<C-l>",
+                -- },
+            },
+        },
+    },
 })

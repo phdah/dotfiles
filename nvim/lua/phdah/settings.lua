@@ -87,6 +87,9 @@ vim.wo.foldenable = false
 -- Set to only one status line
 vim.o.laststatus = 3
 
+-- For obsidian
+vim.o.conceallevel = 2
+
 -- Highlighting for white space
 local whiteGroup =
     vim.api.nvim_create_augroup("MyCustomWhiteSpaceHighlights", { clear = true })
