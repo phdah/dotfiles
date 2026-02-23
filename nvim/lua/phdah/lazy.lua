@@ -1040,9 +1040,9 @@ return require("lazy").setup({
         keys = {
             {
                 "so",
-                ":CsvViewEnable display_mode=border header_lnum=1<CR>",
+                ":CsvViewToggle display_mode=border header_lnum=1<CR>",
                 mode = "n",
-                desc = "Scroll messages down",
+                desc = "Toggle c(s)v (o)pen",
             },
         },
     },
