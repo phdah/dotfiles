@@ -87,6 +87,7 @@ bindkey -s "^fp" "vim +\":lua require('snacks').picker.projects()\"^j"
 bindkey -s "^fx" "vim +\":lua require('snacks').picker.explorer({ cwd = require('nvim-utils').Git.find_git_root(), auto_close = true, })\"^j"
 
 bindkey -s "^fo" "vim +\":Octo pr list\"^j"
+bindkey -s "^fn" "vim +\":Obsidian today\"^j"
 bindkey -s "^z" "fg ^j"
 
 # Path
