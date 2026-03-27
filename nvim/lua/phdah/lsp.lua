@@ -311,6 +311,8 @@ local function lintFile(args)
                 .. "prettier --print-width 90 --prose-wrap always --write --tab-width 4 % "
                 .. args
         )
+    elseif filetype == "toml" then
+        vim.cmd("silent! !" .. masonBinPath .. "pyproject-fmt % " .. args)
     elseif filetype == "yaml" then
         vim.cmd(
             "silent! !"
