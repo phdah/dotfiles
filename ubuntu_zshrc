@@ -79,8 +79,8 @@ bindkey  "^[[3~"  delete-char
 bindkey "^[[5~" history-beginning-search-backward
 bindkey "^[[6~" history-beginning-search-forward
 
-bindkey -s "^ff" "vim +\":lua require('snacks').picker.smart({ cwd = require('nvim-utils').Git.find_git_root() })\"^j"
-bindkey -s "^fF" "vim +\":lua require('snacks').picker.smart({ cwd = '~' })\"^j"
+bindkey -s "^ff" "vim +\":lua require('neural-open').open({ cwd = require('nvim-utils').Git.find_git_root() })\"^j"
+bindkey -s "^fF" "vim +\":lua require('neural-open').open({ cwd = '~' })\"^j"
 bindkey -s "^fr" "vim +\":lua require('snacks').picker.grep({ layout = { preview = true }, cwd = require('nvim-utils').Git.find_git_root() })\"^j"
 bindkey -s "^fR" "vim +\":lua require('snacks').picker.recent()\"^j"
 bindkey -s "^fp" "vim +\":lua require('snacks').picker.projects()\"^j"

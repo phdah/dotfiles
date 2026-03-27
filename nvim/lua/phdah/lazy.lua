@@ -115,6 +115,7 @@ return require("lazy").setup({
     { dir = "~/repos/privat/nvim-utils/" },
     {
         "folke/snacks.nvim",
+        dependencies = { "dtormoen/neural-open.nvim" },
         priority = 1000,
         lazy = false,
         opts = {
@@ -360,14 +361,14 @@ return require("lazy").setup({
             },
             {
                 "<leader>ff",
-                ":lua require('snacks').picker.smart({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
+                ":lua require('neural-open').open({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
                 mode = "n",
                 desc = "(f)ind (f)iles locally",
                 silent = true,
             },
             {
                 "<leader>fc",
-                ":lua require('snacks').picker.smart({ cwd = vim.fn.stdpath('config') })<CR>",
+                ":lua require('neural-open').open({ cwd = vim.fn.stdpath('config') })<CR>",
                 mode = "n",
                 desc = "(f)ind neovim (c)onfig",
                 silent = true,
@@ -375,7 +376,7 @@ return require("lazy").setup({
 
             {
                 "<leader>fF",
-                ":lua require('snacks').picker.smart({ cwd = '~' })<CR>",
+                ":lua require('neural-open').open({ cwd = '~' })<CR>",
                 mode = "n",
                 desc = "(f)ind (F)iles globally",
                 silent = true,
