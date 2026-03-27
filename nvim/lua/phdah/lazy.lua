@@ -486,26 +486,6 @@ return require("lazy").setup({
     },
     { "catgoose/nvim-colorizer.lua", ft = { "typescriptreact", "lua" }, opts = {} },
     {
-        "OXY2DEV/markview.nvim",
-        ft = {
-            "md",
-            "rmd",
-            "quarto",
-            "markdown",
-            "octo",
-            "Avante",
-            "copilot-chat",
-            "opencode_output",
-        },
-        config = function()
-            require("phdah.markview")
-        end,
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-            "nvim-tree/nvim-web-devicons",
-        },
-    },
-    {
         "stevearc/oil.nvim",
         ft = { "netrw" },
         config = function()
@@ -1109,22 +1089,7 @@ return require("lazy").setup({
                 },
             },
             picker = {
-                -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
                 name = "snacks.pick",
-                -- Optional, configure key mappings for the picker. These are the defaults.
-                -- Not all pickers support all mappings.
-                -- note_mappings = {
-                --     -- Create a new note from your query.
-                --     new = "<C-x>",
-                --     -- Insert a link to the selected note.
-                --     insert_link = "<C-l>",
-                -- },
-                -- tag_mappings = {
-                --     -- Add tag(s) to current note.
-                --     tag_note = "<C-x>",
-                --     -- Insert a tag at the current location.
-                --     insert_tag = "<C-l>",
-                -- },
             },
         },
     },
