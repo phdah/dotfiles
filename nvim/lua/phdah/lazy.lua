@@ -672,7 +672,11 @@ return require("lazy").setup({
         end,
         dependencies = {
             "MunifTanjim/nui.nvim",
-            { "MattiasMTS/cmp-dbee", opts = {} },
+            {
+                dir = "~/repos/privat/cmp-dbee/",
+                -- "MattiasMTS/cmp-dbee",
+                opts = {},
+            },
         },
         build = function()
             require("dbee").install("go")
