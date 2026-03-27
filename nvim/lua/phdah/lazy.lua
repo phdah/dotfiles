@@ -1073,6 +1073,7 @@ return require("lazy").setup({
             "saghen/blink.cmp",
             "nvim-lua/plenary.nvim",
         },
+        cmd = { "Opencode" },
         keys = {
             {
                 "<leader>ag",
