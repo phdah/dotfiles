@@ -44,7 +44,7 @@ os-check: ## Check what OS is installed
 
 base-dir: ## Setup base directories
 	@printf '\nSetting up base directories\n\n'
-	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit $(CONFIG)/i3
+	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit $(CONFIG)/i3 $(HOME)/.local/bin $(CONFIG)/systemd/user
 
 base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 	@printf '\nApt installs\n\n'
@@ -102,48 +102,43 @@ arch-pkr: ## Install packges for arch
 	@printf '\nParu installs\n\n'
 		@paru
 		@paru -Syy \
-			i3-wm \ # Window manager
-			i3lock \ # Lock screen
-			i3status \ # Status bar
-			dmenu \ # Application meny
-			dunst \ # Notifications
-			xorg-xsetroot \ # X
-			zsh \ # Shell
-			zsh-vi-mode.plugin.zsh \ # zsh terminal vim mode
-			fast-syntax-highlighting.plugin.zsh \ # zsh terminal highlighting
-			arandr \ # Monitor ctl
-			ripgrep \ # A better grep
-			bat \ # A better cat
-			xsel \ # Allow to copy
-			maim \ # Allow to screen snippet
-			xclip \ # Allo to screen snippet
-			cmake \ # Make for c
-			fzf \ # Fuzzy finder
-			neofetch \ # Display os info
-			gdb \ # Debugger
-			google-chrome \ # Web browser
-			bluez \ # Bluethooth
-			bluez-utils \ # Bluethooth, use bluetoothctl
-			pulseaudio \ # Sound software used by pavucontrol
-			pavucontrol \ # Sound and mic controller
-			brightnessctl \ # Light controller
+			i3-wm \
+			i3lock \
+			i3status \
+			dmenu \
+			dunst \
+			xorg-xsetroot \
+			zsh \
+			zsh-vi-mode.plugin.zsh \
+			fast-syntax-highlighting.plugin.zsh \
+			arandr \
+			ripgrep \
+			bat \
+			xsel \
+			maim \
+			xclip \
+			cmake \
+			fzf \
+			neofetch \
+			gdb \
+			google-chrome \
+			bluez \
+			bluez-utils \
+			pulseaudio \
+			pavucontrol \
+			brightnessctl \
+			lazygit \
+			eza \
+			opencode \
+			github-cli \
+			npm \
+			go \
+			git-delta \
 		@paru
 
 mac-pkr: ## Install Mac packages using Homebrew
 	@brew analytics off
 	@HOMEBREW_ACCEPT_EULA=Y brew bundle --file=./Brewfile
-
-
-google-chrome: ## Install Google Chrome from source
-	# Install Google Chrome
-	@if [ "$(USR)" != "CI" ]; then \
-		printf '\nInstall Google chrome\n\n'; \
-		wget -P $(HOME) https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb; \
-		dpkg -i $(HOME)/google-chrome-stable_current_amd64.deb; \
-		sudo apt-get install -f --yes; \
-		printf 'Removing files\n\n'; \
-		rm $(HOME)/google-chrome-stable_current_amd64.deb; \
-	fi
 
 zsh-shell: ## Set zsh as the shell
 	@if [ "$(USR)" != "CI" ]; then \
@@ -152,11 +147,7 @@ zsh-shell: ## Set zsh as the shell
 
 nvim-install: ## Install neovim from source, unless CI mode, since it's like 10m install
 	@if [ "$(USR)" != "CI" ]; then \
-		printf '\nBuilding (stable) neovim from source\n\n'; \
-		if [ ! -d $(SOURCE_DIR)/neovim ]; then \
-			git clone https://github.com/neovim/neovim.git $(SOURCE_DIR)/neovim; \
-			cd $(SOURCE_DIR)/neovim && git checkout nightly && make clean && make CMAKE_BUILD_TYPE=RelWithDebInfo && sudo make install && cd $(BUILD_DIR); \
-		fi \
+		echo "install using curl on the app image: https://github.com/neovim/neovim/releases/latest"
 	fi
 
 zshhl-install: ## Set zsh syntax highlighting
