@@ -15,7 +15,6 @@ alias nb='nvim ~/repos/privat/logbook/README.md'
 alias tree='eza --tree'
 alias open='xdg-open'
 alias ns='vim ~/repos/dotfiles/nvim/lua/phdah/lazy.lua'
-alias bat='batcat'
 alias lg='lazygit'
 # Git alias
 alias pgp='source ~/repos/dotfiles/scripts/set_python_path_to_git_root.sh'
@@ -42,7 +41,7 @@ function gitallremote() {
     git -C "$1" status && git -C "$1" add --all && git -C $1 commit -m $2 && git -C "$1" push
 }
 function cat() {
-    batcat $1 --style=plain --paging=never --theme=Nord
+    bat $1 --style=plain --paging=never --theme=Nord
 }
 function rgf() {
     rg --files | rg $1
