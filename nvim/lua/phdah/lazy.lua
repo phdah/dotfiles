@@ -557,11 +557,12 @@ return require("lazy").setup({
                     "clang-format",
                     "prettier",
                     "shfmt",
-                    "sql-formatter",
+                    "sqruff",
                     "stylua",
 
                     -- linters
                     "ruff",
+                    "actionlint",
 
                     -- debuggers
                     "codelldb",
