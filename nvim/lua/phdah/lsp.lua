@@ -237,8 +237,8 @@ vim.lsp.config.terraform = {
 -- All lsp config's are taken from: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/configs
 vim.lsp.enable({
     "luals",
-    "pyright",
-    -- "pyrefly",
+    -- "pyright",
+    "pyrefly",
     -- "ty",
     "gopls",
     "clangd",
