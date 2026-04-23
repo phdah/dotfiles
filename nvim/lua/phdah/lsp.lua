@@ -234,6 +234,21 @@ vim.lsp.config.terraform = {
     root_markers = { ".terraform", ".git" },
 }
 
+vim.lsp.config.sqruff = {
+    cmd = {
+        "~/.local/python_venvs/.sqruff/bin/" .. "sqruff",
+        "lsp",
+        "--dialect",
+        "snowflake",
+        -- function()
+        --     return "--config "
+        --         .. (vim.fs.root(0, { ".git", ".sqruff" }) .. "/.sqruff " or "")
+        -- end,
+    },
+    filetypes = { "sql" },
+    root_markers = { ".git", ".sqruff" },
+}
+
 -- All lsp config's are taken from: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/configs
 vim.lsp.enable({
     "luals",
@@ -246,6 +261,7 @@ vim.lsp.enable({
     "bash",
     "json",
     "terraform",
+    "sqruff",
 })
 
 ----------------
@@ -291,10 +307,14 @@ local function lintFile(args)
                 .. args
         )
     elseif filetype == "sql" then
+        -- local sqruff_config = "--config "
+        --     .. vim.fs.root(0, { ".git", ".sqruff" })
+        --     .. "/.sqruff "
         vim.cmd(
             "silent! !"
-                .. masonBinPath
-                .. 'sql-formatter --fix --config \'{"tabWidth": 4, "linesBetweenQueries": 2}\' --language postgresql % '
+                .. "~/.local/python_venvs/.sqruff/bin/"
+                .. "sqruff fix % --dialect snowflake "
+                -- .. sqruff_config or ""
                 .. args
         )
     elseif
