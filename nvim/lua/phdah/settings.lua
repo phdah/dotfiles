@@ -33,7 +33,7 @@ local setDefaults = function()
     local fileType = vim.bo.filetype
     if fileType == "make" or fileType == "go" then
         vim.o.expandtab = false -- use tab instead of space
-    elseif fileType == "yaml" or fileType == "scala" then
+    elseif fileType == "yaml" or fileType == "scala" or fileType == "terraform" then
         -- Tab settings
         vim.o.tabstop = 2
         vim.o.softtabstop = 2 -- set number of spaces, but treat as one object
