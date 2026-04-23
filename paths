@@ -8,5 +8,9 @@ path+=$HOME/.screenlayout/
 path+=/snap/bin/
 path+=/opt/homebrew/bin/
 path+=$SPARK_HOME/bin:$PATH
+path+=$HOME/.cargo/bin/
+path+=$HOME/.local/share/nvim/mason/bin
+path+=$HOME/go/bin/
+path+=$HOME/.opencode/bin
 
 # Spesific paths
