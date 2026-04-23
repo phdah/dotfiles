@@ -1,95 +1,70 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not (vim.uv or vim.loop).fs_stat(lazypath) then
-    vim.fn.system({
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "https://github.com/folke/lazy.nvim.git",
-        "--branch=stable",
-        lazypath,
-    })
-end
-vim.opt.rtp:prepend(lazypath)
-
+vim.pack.add({
+    { src = "https://github.com/folke/lazy.nvim.git" },
+    { src = "https://github.com/chentoast/marks.nvim" },
+    { src = "https://github.com/shaunsingh/nord.nvim" },
+})
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-
-local masonBinPath = vim.fn.stdpath("data") .. "/mason/bin/"
 
 return require("lazy").setup({
     ------------------
     -- Code visuals --
     ------------------
     {
-        "nvim-treesitter/nvim-treesitter",
-        event = { "BufReadPre", "BufNewFile" },
-        build = ":TSUpdate",
+        "lewis6991/gitsigns.nvim",
+        lazy = false,
         config = function()
-            require("phdah.treesitter")
+            require("phdah.gitsigns")
         end,
-        dependencies = {
-            "shaunsingh/nord.nvim",
+        keys = {
             {
-                "chentoast/marks.nvim",
-                event = "VeryLazy",
-                opts = {},
+                "gu",
+                ':lua require("gitsigns").reset_hunk()<CR>',
+                mode = "n",
+                desc = "(g)it (u)undo",
+                silent = true,
             },
             {
-                "lewis6991/gitsigns.nvim",
-                config = function()
-                    require("phdah.gitsigns")
-                end,
-                keys = {
-                    {
-                        "gu",
-                        ':lua require("gitsigns").reset_hunk()<CR>',
-                        mode = "n",
-                        desc = "(g)it (u)undo",
-                        silent = true,
-                    },
-                    {
-                        "gU",
-                        ':lua require("gitsigns").undo_stage_hunk()<CR>',
-                        mode = "n",
-                        desc = "(g)it (U)undo staged hunk",
-                        silent = true,
-                    },
-                    {
-                        "gd",
-                        ':lua require("gitsigns").preview_hunk()<CR>',
-                        mode = "n",
-                        desc = "(g)it (d)iff",
-                        silent = true,
-                    },
-                    {
-                        "gD",
-                        ':lua require("gitsigns").diffthis()<CR>',
-                        mode = "n",
-                        desc = "(g)it (d)iff this file",
-                        silent = true,
-                    },
-                    {
-                        "gs",
-                        ':lua require("gitsigns").stage_hunk()<CR>',
-                        mode = "n",
-                        desc = "(g)it (s)tage",
-                        silent = true,
-                    },
-                    {
-                        "gs",
-                        [[:lua require("gitsigns").stage_hunk({vim.fn.line("'<"), vim.fn.line("'>")})<CR>]],
-                        mode = "v",
-                        desc = "(g)it (s)tage",
-                        silent = true,
-                    },
-                    {
-                        "gb",
-                        ':lua require("gitsigns").blame_line()<CR>',
-                        mode = "n",
-                        desc = "(g)it (b)lame",
-                        silent = true,
-                    },
-                },
+                "gU",
+                ':lua require("gitsigns").undo_stage_hunk()<CR>',
+                mode = "n",
+                desc = "(g)it (U)undo staged hunk",
+                silent = true,
+            },
+            {
+                "gd",
+                ':lua require("gitsigns").preview_hunk()<CR>',
+                mode = "n",
+                desc = "(g)it (d)iff",
+                silent = true,
+            },
+            {
+                "gD",
+                ':lua require("gitsigns").diffthis()<CR>',
+                mode = "n",
+                desc = "(g)it (d)iff this file",
+                silent = true,
+            },
+            {
+                "gs",
+                ':lua require("gitsigns").stage_hunk()<CR>',
+                mode = "n",
+                desc = "(g)it (s)tage",
+                silent = true,
+            },
+            {
+                "gs",
+                [[:lua require("gitsigns").stage_hunk({vim.fn.line("'<"), vim.fn.line("'>")})<CR>]],
+                mode = "v",
+                desc = "(g)it (s)tage",
+                silent = true,
+            },
+            {
+                "gb",
+                ':lua require("gitsigns").blame_line()<CR>',
+                mode = "n",
+                desc = "(g)it (b)lame",
+                silent = true,
             },
         },
     },
@@ -569,6 +544,7 @@ return require("lazy").setup({
                     "delve",
 
                     -- tools / servers
+                    "tree-sitter-cli",
                     "gopls",
                     "lua-language-server",
                     "pyright",
@@ -1094,18 +1070,7 @@ return require("lazy").setup({
             },
         },
     },
-    {
-        "selimacerbas/markdown-preview.nvim",
-        dependencies = { "selimacerbas/live-server.nvim" },
-        cmd = { "MarkdownPreview", "MarkdownPreviewStop", "MarkdownPreviewRefresh" },
-        config = function()
-            require("markdown_preview").setup({
-                -- all optional; sane defaults shown
-                instance_mode = "takeover", -- "takeover" (one tab) or "multi" (tab per instance)
-                port = 0, -- 0 = auto (8421 for takeover, OS-assigned for multi)
-                open_browser = true,
-                debounce_ms = 300,
-            })
-        end,
-    },
+    { "brianhuster/live-preview.nvim", ft = "markdown", keys = { "LivePreview" } },
+}, {
+    performance = { rtp = { reset = false } },
 })

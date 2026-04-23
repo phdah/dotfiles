@@ -20,6 +20,8 @@ vim.o.cmdheight = 1
 
 -- Width limit
 vim.wo.colorcolumn = "80"
+
+-- Set Color
 vim.cmd("highlight ColorColumn guifg=#4C566A")
 vim.api.nvim_create_autocmd("ColorScheme", {
     callback = function()
@@ -27,6 +29,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         vim.api.nvim_set_hl(0, "NonText", { fg = "#838996" })
     end,
 })
+vim.cmd.colorscheme("nord")
 
 -- Set up default tabs
 local setDefaults = function()
@@ -139,9 +142,6 @@ vim.cmd([[command! -nargs=1 -complete=command -bar H help <args> | only]])
 
 -- Center search
 vim.o.scrolloff = 0
-
--- Set colorscheme to nord
-vim.cmd([[colorscheme nord]])
 
 vim.o.diffopt = "internal,filler,closeoff,linematch:60"
 
