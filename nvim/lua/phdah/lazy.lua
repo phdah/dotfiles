@@ -2,6 +2,7 @@ vim.pack.add({
     { src = "https://github.com/folke/lazy.nvim.git" },
     { src = "https://github.com/chentoast/marks.nvim" },
     { src = "https://github.com/shaunsingh/nord.nvim" },
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
 })
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
