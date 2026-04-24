@@ -459,7 +459,11 @@ return require("lazy").setup({
             },
         },
     },
-    { "catgoose/nvim-colorizer.lua", ft = { "typescriptreact", "lua" }, opts = {} },
+    {
+        "catgoose/nvim-colorizer.lua",
+        ft = { "typescriptreact", "lua", "markdown" },
+        opts = {},
+    },
     {
         "stevearc/oil.nvim",
         ft = { "netrw" },
@@ -885,15 +889,6 @@ return require("lazy").setup({
         end,
         event = { "BufReadPre", "BufNewFile" },
     },
-    -- {
-    --     'phdah/nvim-databricks',
-    --     -- dir = "~/repos/privat/nvim-databricks/",
-    --     cmd = { "DBOpen", "DBRun", "DBRunOpen", "DBPrintState" },
-    --     ft = "python",
-    --     config = function()
-    --         require("phdah.nvim-databricks")
-    --     end,
-    -- },
     {
         "danymat/neogen",
         cmd = "Neogen",
@@ -929,18 +924,6 @@ return require("lazy").setup({
             },
         },
     },
-    -- {
-    --     "phdah/lazydbrix",
-    --     -- dir = "~/repos/privat/lazydbrix",
-    --     build = ':lua require("lazydbrix").install()',
-    --     ft = { "python" },
-    --     opts = { sourceOnStart = true },
-    --     keys = {
-    --         { "<leader>do", ':lua require("lazydbrix").open()<CR>', "n" },
-    --         { "<leader>dp", ':lua require("lazydbrix").show()<CR>', "n" },
-    --     },
-    --     dependencies = { "voldikss/vim-floaterm" },
-    -- },
     { "nvim-lua/plenary.nvim", cmd = "PlenaryBustedDirectory" },
     { "stevearc/quicker.nvim", event = "FileType qf", opts = {} },
     {
@@ -955,13 +938,6 @@ return require("lazy").setup({
             { "<C-g>d", mode = "v", ":Gen Add_docstring<CR>" },
         },
     },
-    -- {
-    --     "3rd/image.nvim",
-    --     ft = { "markdown", "octo" },
-    --     config = function()
-    --         require("phdah.image")
-    --     end,
-    -- },
     { "vuciv/golf", cmd = "Golf" },
     {
         "phdah/snipe-marks",
