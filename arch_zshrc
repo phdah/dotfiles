@@ -228,3 +228,6 @@ export EDITOR=$(which nvim)
 
 # Set default fzf stdout
 export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"
+
+# Load keychain
+eval $(keychain --eval ~/.ssh/id_rsa 2>/dev/null)
