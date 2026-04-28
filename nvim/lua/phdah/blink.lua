@@ -38,10 +38,7 @@ require("blink-cmp").setup({
                 score_offset = -3,
                 min_keyword_length = 1,
             },
-            git = {
-                module = "blink-cmp-git",
-                name = "Git",
-            },
+            git = require("phdah.blink-git"),
         },
     },
     cmdline = {
