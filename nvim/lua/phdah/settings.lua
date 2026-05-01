@@ -299,17 +299,41 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- treesitter auto install
 vim.api.nvim_create_autocmd("FileType", {
+    desc = "Enable treesitter and async-install parser if missing",
     callback = function(args)
         local treesitter = require("nvim-treesitter")
         local lang = vim.treesitter.language.get_lang(args.match)
-        if vim.list_contains(treesitter.get_available(), lang) then
-            if not vim.list_contains(treesitter.get_installed(), lang) then
-                local masonBinPath = vim.fn.stdpath("data") .. "/mason/bin/"
-                vim.env.PATH = vim.env.PATH .. ":" .. masonBinPath
-                treesitter.install(lang):wait()
-            end
-            vim.treesitter.start(args.buf)
+
+        if not lang or not vim.list_contains(treesitter.get_available(), lang) then
+            return
         end
+
+        if vim.list_contains(treesitter.get_installed(), lang) then
+            vim.treesitter.start(args.buf, lang)
+            return
+        end
+
+        local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+        if not vim.env.PATH:find(vim.pesc(mason_bin), 1, false) then
+            vim.env.PATH = vim.env.PATH .. ":" .. mason_bin
+        end
+
+        treesitter.install(lang):await(function(err)
+            if err then
+                vim.schedule(function()
+                    vim.notify(
+                        ("treesitter install failed for %s: %s"):format(lang, err),
+                        vim.log.levels.ERROR
+                    )
+                end)
+                return
+            end
+
+            vim.schedule(function()
+                if vim.api.nvim_buf_is_valid(args.buf) then
+                    pcall(vim.treesitter.start, args.buf, lang)
+                end
+            end)
+        end)
     end,
-    desc = "Enable nvim-treesitter and install parser if not installed",
 })
