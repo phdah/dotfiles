@@ -36,8 +36,8 @@ i3-args: ## Check mousepad name
 		# Making it persistent and computer unique; \
 		cp "$(BUILD_DIR)"/i3mousepad "$(HOME)"/.i3mousepad
 		printf 'Add these two lines to ~/.i3mousepad\n'
-		echo "xinput set-prop 'NAME_OF_MOUSE_PAD' 'libinput Tapping Enable' 1"
-		echo "xinput set-prop 'NAME_OF_MOUSE_PAD' 'libinput Natural Scrolling Enabled' 1"
+		@echo "xinput set-prop 'NAME_OF_MOUSE_PAD' 'libinput Tapping Enable' 1"
+		@echo "xinput set-prop 'NAME_OF_MOUSE_PAD' 'libinput Natural Scrolling Enabled' 1"
 
 os-check: ## Check what OS is installed
 	@uname -a
@@ -133,7 +133,10 @@ arch-pkr: ## Install packges for arch
 			github-cli \
 			npm \
 			go \
+			nmp \
+			ttf-jetbrains-mono-nerd \
 			git-delta \
+			keychain \
 		@paru
 
 mac-pkr: ## Install Mac packages using Homebrew
