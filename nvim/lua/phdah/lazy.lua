@@ -1025,11 +1025,12 @@ return require("lazy").setup({
     },
     {
         "obsidian-nvim/obsidian.nvim",
-        version = "*", -- use latest release, remove to use latest commit
+        version = "*",
         ft = "markdown",
         cmd = "Obsidian",
         opts = {
-            legacy_commands = false, -- this will be removed in the next major release
+            legacy_commands = false,
+
             workspaces = {
                 {
                     name = "work",
@@ -1037,7 +1038,26 @@ return require("lazy").setup({
                 },
                 {
                     name = "personal",
-                    path = "~/vaults/personal",
+                    path = "~/repos/privat/obsidian-notes/private",
+                },
+                {
+                    name = "running",
+                    path = "~/repos/privat/obsidian-notes/running",
+                    overrides = {
+                        templates = {
+                            folder = "templates",
+                            date_format = "YYYY-MM-DD",
+                            time_format = "HH:mm",
+                        },
+
+                        daily_notes = {
+                            enabled = true,
+                            folder = "daily",
+                            date_format = "YYYY-MM-DD",
+                            template = "running-daily.md",
+                            workdays_only = false,
+                        },
+                    },
                 },
             },
             picker = {

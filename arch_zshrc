@@ -86,6 +86,7 @@ bindkey -s "^fx" "vim +\":lua require('snacks').picker.explorer({ cwd = require(
 
 bindkey -s "^fo" "vim +\":Octo pr list\"^j"
 bindkey -s "^fn" "vim +\":Obsidian today\"^j"
+bindkey -s "^fN" "vim +\":Obsidian workspace running\" +\":Obsidian today\"^j"
 bindkey -s "^z" "fg ^j"
 
 # Path
