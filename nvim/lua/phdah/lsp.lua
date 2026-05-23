@@ -191,6 +191,32 @@ vim.lsp.config.gopls = {
     root_markers = { "go.work", "go.mod", ".git" },
 }
 
+vim.lsp.config.rust_analyzer = {
+    cmd = { "rust-analyzer" },
+    filetypes = { "rust" },
+    root_markers = { "Cargo.toml", "rust-project.json", ".git" },
+    settings = {
+        ["rust-analyzer"] = {
+            files = {
+                -- Exclude heavy directories from indexing
+                excludeDirs = { ".git", "target", "node_modules", "*.rustup*" },
+            },
+            cargo = {
+                -- Only load features relevant to the current crate
+                features = {},
+            },
+            -- Disable proc macro expansion (very memory intensive)
+            procMacro = {
+                enable = false,
+            },
+            -- Disable check on save to reduce background work
+            checkOnSave = {
+                enable = false,
+            },
+        },
+    },
+}
+
 vim.lsp.config.clangd = {
     cmd = { masonBinPath .. "clangd", "--background-index" },
     root_markers = {
@@ -257,6 +283,7 @@ vim.lsp.enable({
     -- "ty",
     "gopls",
     "clangd",
+    "rust_analyzer",
     "ruff",
     "bash",
     "json",
@@ -333,6 +360,8 @@ local function lintFile(args)
         )
     elseif filetype == "toml" then
         vim.cmd("silent! !" .. masonBinPath .. "pyproject-fmt % " .. args)
+    elseif filetype == "rust" then
+        vim.cmd("silent! !rustfmt % " .. args)
     elseif filetype == "yaml" then
         vim.cmd(
             "silent! !"
