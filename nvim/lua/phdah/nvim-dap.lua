@@ -16,7 +16,7 @@ local dapui = require("dapui")
 require("nvim-dap-virtual-text").setup({ virt_text_pos = "eol" })
 require("mason").setup()
 require("mason-nvim-dap").setup({
-    ensure_installed = { "codelldb", "bash-debug-adapter", "debugpy", "delve" },
+    ensure_installed = { "bash-debug-adapter", "debugpy", "delve" },
 })
 
 local function filtered_pick_process()
@@ -35,13 +35,18 @@ local masonBinPath = vim.fn.stdpath("data") .. "/mason/bin/"
 -- Setup adaptors --
 --------------------
 
-dap.adapters.codelldb = {
-    type = "server",
-    port = "${port}",
-    executable = {
-        -- CHANGE THIS to your path!
-        command = vim.fn.stdpath("data") .. "/mason/bin/codelldb",
-        args = { "--port", "${port}" },
+dap.adapters.rust_gdb = {
+    type = "executable",
+    command = "rust-gdb",
+    args = {
+        "--interpreter=dap",
+        "--quiet",
+        "--eval-command",
+        "set print pretty on",
+        "--eval-command",
+        "set print elements 64",
+        "--eval-command",
+        "set print characters 256",
     },
 }
 
@@ -135,11 +140,42 @@ local function runDsymutil(executable)
 end
 
 -- Function to set all configs
+local rust_binary_cache = {}
+local function get_rust_binary(root)
+    if rust_binary_cache[root] then
+        return rust_binary_cache[root]
+    end
+    local result = vim.system(
+        { "cargo", "metadata", "--no-deps", "--format-version", "1" },
+        { cwd = root, text = true }
+    ):wait()
+    if result.code ~= 0 or not result.stdout then
+        return nil
+    end
+    local metadata = vim.json.decode(result.stdout)
+    local bins = {}
+    for _, pkg in ipairs(metadata.packages or {}) do
+        for _, target in ipairs(pkg.targets or {}) do
+            if vim.list_contains(target.kind, "bin") then
+                table.insert(bins, target.name)
+            end
+        end
+    end
+    local bin
+    if #bins == 1 then
+        bin = root .. "/target/debug/" .. bins[1]
+    elseif #bins > 1 then
+        bin = vim.fn.input("Path to executable: ", root .. "/target/debug/", "file")
+    end
+    rust_binary_cache[root] = bin
+    return bin
+end
+
 function M.setup_configs()
     local fileName = vim.fn.expand("%:p")
     local gitRootDir = require("nvim-utils").Git.find_git_root()
     local program = nil
-    if vim.o.filetype == "c" or vim.o.filetype == "cpp" or vim.o.filetype == "rust" then
+    if vim.o.filetype == "c" or vim.o.filetype == "cpp" then
         program = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
         runDsymutil(program)
     end
@@ -182,7 +218,54 @@ function M.setup_configs()
     }
 
     dap.configurations.c = dap.configurations.cpp
-    dap.configurations.rust = dap.configurations.cpp
+
+    dap.configurations.rust = {
+        {
+            name = "Launch file",
+            type = "rust_gdb",
+            request = "launch",
+            program = function()
+                return get_rust_binary(gitRootDir)
+                    or vim.fn.input(
+                        "Path to executable: ",
+                        gitRootDir .. "/target/debug/",
+                        "file"
+                    )
+            end,
+            cwd = gitRootDir,
+            -- stopAtBeginningOfMainSubprogram = false,
+
+            exceptionBreakpoints = {},
+        },
+        {
+            name = "Debug with Args",
+            type = "rust_gdb",
+            request = "launch",
+            program = function()
+                return get_rust_binary(gitRootDir)
+                    or vim.fn.input(
+                        "Path to executable: ",
+                        gitRootDir .. "/target/debug/",
+                        "file"
+                    )
+            end,
+            cwd = gitRootDir,
+            stopAtBeginningOfMainSubprogram = false,
+            args = function()
+                local args_str = vim.fn.input("Program arguments: ")
+                return vim.split(args_str, " +")
+            end,
+        },
+        {
+            name = "Attach",
+            type = "rust_gdb",
+            request = "attach",
+            pid = filtered_pick_process,
+            stopOnEntry = false,
+            sourceLanguages = { "rust" },
+            showDisassembly = "never",
+        },
+    }
 
     dap.configurations.python = {
         {
