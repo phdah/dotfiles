@@ -181,6 +181,7 @@ return require("lazy").setup({
                     },
                 },
             },
+            gh = {},
             picker = {
                 layout = {
                     preview = false,
