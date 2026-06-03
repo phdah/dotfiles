@@ -7,6 +7,8 @@ vim.pack.add({
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+require("marks").setup()
+
 return require("lazy").setup({
     ------------------
     -- Code visuals --
