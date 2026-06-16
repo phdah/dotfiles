@@ -872,17 +872,28 @@ return require("lazy").setup({
         },
     },
     {
-        "leath-dub/snipe.nvim",
+        "tjgao/quickbuf.nvim",
+        opts = {
+            picker = {
+                move_up_key = "k",
+                move_down_key = "j",
+                select_key = "<C-j>",
+                toggle_pin_key = "T",
+            },
+        },
         keys = {
             {
                 "<leader>fb",
-                ':lua require("snipe").open_buffer_menu()<CR>',
+                "<cmd>QuickBuf<CR>",
+                mode = "n",
+            },
+            {
+                "<leader>qt",
+                "<cmd>QuickBufPinToggle<CR>",
+                desc = "Pin toggle",
                 mode = "n",
             },
         },
-        config = function()
-            require("phdah.snipe")
-        end,
     },
     {
         "phdah/nvim-statusline",
@@ -944,6 +955,19 @@ return require("lazy").setup({
     {
         "phdah/snipe-marks",
         dependencies = { "leath-dub/snipe.nvim" },
+        config = function()
+            require("snipe").setup({
+                hints = {
+                    dictionary = "asdflewcmpghio",
+                },
+                ui = {
+                    position = "center",
+                    preselect_current = true,
+                    text_align = "file-first",
+                },
+                navigate = { cancel_snipe = "q", under_cursor = "<C-j>" },
+            })
+        end,
         keys = {
             {
                 "<leader>fm",
