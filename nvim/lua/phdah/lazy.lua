@@ -1024,6 +1024,14 @@ return require("lazy").setup({
         config = function()
             require("opencode").setup({
                 keymap_prefix = "<leader>a",
+                keymap = {
+                    input_window = {
+                        ["<S-cr>"] = false,
+                        ["<cr>"] = { "submit_input_prompt", mode = { "n", "i" } },
+                        ["~"] = false,
+                        ["<M-v>"] = { "paste_image", mode = { "i", "n" } }, -- Paste image from clipboard as attachment
+                    },
+                },
             })
         end,
         dependencies = {
