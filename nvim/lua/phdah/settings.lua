@@ -77,8 +77,24 @@ vim.o.shortmess = "at"
 -- Set window boarder to rounded
 vim.o.winborder = "rounded"
 
--- Set automatic pwd to the current buffer's pwd
-vim.o.autochdir = true
+-- Auto-change window-local dir to current file's dir (same UX as autochdir but
+-- keeps global/process cwd stable at git root for tools like opencode)
+local autodirGroup = vim.api.nvim_create_augroup("AutoLcd", { clear = true })
+vim.api.nvim_create_autocmd("BufEnter", {
+    group = autodirGroup,
+    callback = function()
+        local dir = vim.fn.expand("%:p:h")
+        if vim.fn.isdirectory(dir) == 1 then
+            vim.cmd.lcd(dir)
+        end
+    end,
+})
+vim.api.nvim_create_autocmd("VimEnter", {
+    once = true,
+    callback = function()
+        vim.cmd.cd(require("nvim-utils").Git.find_git_root())
+    end,
+})
 
 -- Turn of swap files
 vim.opt.swapfile = false
@@ -301,10 +317,10 @@ vim.api.nvim_create_autocmd("FileType", {
 vim.env.GH_HOST = require("octo.utils").get_remote_host()
 -- vim.env.GH_HOST = require("nvim-utils").Git:parse_git_remote()
 vim.api.nvim_create_autocmd("DirChanged", {
-    callback = function ()
+    callback = function()
         vim.env.GH_HOST = require("octo.utils").get_remote_host()
         -- vim.env.GH_HOST = require("nvim-utils").Git:parse_git_remote()
-    end
+    end,
 })
 
 -- treesitter auto install
