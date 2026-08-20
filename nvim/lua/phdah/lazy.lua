@@ -788,10 +788,10 @@ return require("lazy").setup({
                 silent = true,
             },
             {
-                "<leader>e",
+                "<leader>de",
                 ':lua require("dap").step_out()<CR>',
                 mode = "n",
-                desc = "dap (e)xit current function",
+                desc = "(d)ap (e)xit current function",
                 silent = true,
             },
             {

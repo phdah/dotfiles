@@ -6,3 +6,4 @@ require("phdah.remap")
 require("phdah.lsp")
 -- Finally load default settings to ensure they are not overwritten
 require("phdah.settings")
+require("phdah.keymap_conflicts")
