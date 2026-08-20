@@ -884,6 +884,7 @@ return require("lazy").setup({
         "tjgao/quickbuf.nvim",
         opts = {
             picker = {
+                include_special = true,
                 move_up_key = "k",
                 move_down_key = "j",
                 select_key = "<C-j>",
