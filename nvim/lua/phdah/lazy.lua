@@ -201,6 +201,8 @@ return require("lazy").setup({
                             ["<c-j>"] = false,
                             ["<C-t>"] = { "toggle_preview", mode = { "i", "n" } },
                             ["<C-f>"] = { "toggle_follow", mode = { "i", "n" } },
+                            ["<c-u>"] = { "preview_scroll_up", mode = { "i", "n" } },
+                            ["<c-d>"] = { "preview_scroll_down", mode = { "i", "n" } },
                         },
                     },
                 },
@@ -343,6 +345,13 @@ return require("lazy").setup({
                 ":lua require('neural-open').open({ cwd = require('nvim-utils').Git.find_git_root() })<CR>",
                 mode = "n",
                 desc = "(f)ind (f)iles locally",
+                silent = true,
+            },
+            {
+                "<leader>fg",
+                ":lua Snacks.picker.git_log({ live = true })<CR>",
+                mode = "n",
+                desc = "(f)ind (g)it diffs",
                 silent = true,
             },
             {
@@ -1074,6 +1083,10 @@ return require("lazy").setup({
                 {
                     name = "personal",
                     path = "~/repos/privat/obsidian-notes/private",
+                },
+                {
+                    name = "ava",
+                    path = "~/stuff/project-vault",
                 },
                 {
                     name = "running",
