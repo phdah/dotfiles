@@ -313,6 +313,7 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+-- TODO: don't load octo eager here.
 -- Autocmd for change dir
 vim.env.GH_HOST = require("octo.utils").get_remote_host()
 -- vim.env.GH_HOST = require("nvim-utils").Git:parse_git_remote()
