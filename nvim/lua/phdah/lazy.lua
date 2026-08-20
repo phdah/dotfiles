@@ -898,7 +898,7 @@ return require("lazy").setup({
                 mode = "n",
             },
             {
-                "<leader>qt",
+                "<C-q>t",
                 "<cmd>QuickBufPinToggle<CR>",
                 desc = "Pin toggle",
                 mode = "n",
