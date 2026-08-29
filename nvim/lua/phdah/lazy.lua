@@ -226,10 +226,10 @@ return require("lazy").setup({
         },
         keys = {
             {
-                "<leader>lj",
-                ":lua Snacks.terminal.open('jiratui ui --search-on-startup -p DATA')<CR>",
+                "<leader>lb",
+                ":lua Snacks.terminal.open('backlog board')<CR>",
                 mode = "n",
-                desc = "(l) jira tui open in floating terminal",
+                desc = "(l) (b)acklog.md board open in floating terminal",
                 silent = true,
             },
             {
