@@ -546,6 +546,7 @@ return require("lazy").setup({
                     -- formatters
                     "clang-format",
                     "prettier",
+                    "rumdl",
                     "shfmt",
                     "sqruff",
                     "stylua",

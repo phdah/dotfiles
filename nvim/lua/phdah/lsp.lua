@@ -344,13 +344,26 @@ local function lintFile(args)
                 -- .. sqruff_config or ""
                 .. args
         )
+    elseif filetype == "markdown" or filetype == "octo" then
+        -- rumdl reflows to a fixed width like prettier, but ignores link URL
+        -- length when deciding wrap points, so concealed URLs never cause a
+        -- line to wrap in a place that looks wrong on screen.
+        vim.cmd(
+            "silent! !"
+                .. masonBinPath
+                .. "rumdl fmt --config 'MD013.line-length=90' "
+                .. "--config 'MD013.reflow=true' "
+                .. "--config 'MD013.reflow-mode=\"default\"' "
+                .. "--config 'MD013.reflow-length-exemptions=true' "
+                .. "--config 'MD007.indent=4' "
+                .. "--config 'MD007.style=\"fixed\"' % "
+                .. args
+        )
     elseif
-        filetype == "markdown"
-        or filetype == "typescriptreact"
+        filetype == "typescriptreact"
         or filetype == "typescript"
         or filetype == "javascript"
         or filetype == "css"
-        or filetype == "octo"
     then
         vim.cmd(
             "silent! !"
