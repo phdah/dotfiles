@@ -1084,7 +1084,22 @@ return require("lazy").setup({
                 },
                 {
                     name = "personal",
-                    path = "~/repos/privat/obsidian-notes/private",
+                    path = "~/repos/privat/knowledge-vault/",
+                    overrides = {
+                        templates = {
+                            folder = "data/templates",
+                            date_format = "YYYY-MM-DD",
+                            time_format = "HH:mm",
+                        },
+
+                        daily_notes = {
+                            enabled = true,
+                            folder = "data/personal/running/daily",
+                            date_format = "YYYY-MM-DD",
+                            template = "template.md",
+                            workdays_only = false,
+                        },
+                    },
                 },
                 {
                     name = "ava",
