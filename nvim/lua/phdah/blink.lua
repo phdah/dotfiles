@@ -24,6 +24,8 @@ require("blink-cmp").setup({
             -- Dbee
             sql = { "dbee", "buffer" },
             octo = { "lsp", "path", "snippets", "buffer", "emoji", "git" },
+            -- Vimtex citation/label/package completion via omnifunc
+            tex = { inherit_defaults = true, "omni" },
         },
         providers = {
             dbee = { name = "cmp-dbee", module = "blink.compat.source" },

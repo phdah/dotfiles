@@ -440,7 +440,15 @@ return require("lazy").setup({
                 silent = true,
             },
         },
-    }, ------------------------
+    },
+    {
+        "lervag/vimtex",
+        lazy = false, -- vimtex must not be lazy loaded, see README
+        init = function()
+            require("phdah.vimtex")
+        end,
+    },
+    ------------------------
     -- Can be Lazy Loaded --
     ------------------------
     {
@@ -565,6 +573,8 @@ return require("lazy").setup({
                     "lua-language-server",
                     "pyright",
                     "terraform-ls",
+                    "texlab",
+                    "tex-fmt",
                 },
                 run_on_start = true,
             },

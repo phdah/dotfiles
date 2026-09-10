@@ -38,12 +38,13 @@
   "one-small-step-for-vimkind": { "branch": "main", "commit": "1af6ffb9b5229a856e8090fa2f690e0931a5aace" },
   "opencode.nvim": { "branch": "main", "commit": "bafc8e779eca5c87de8cf284ef0d4e5bd6c0d109" },
   "plenary.nvim": { "branch": "master", "commit": "74b06c6c75e4eeb3108ec01852001636d85a932b" },
-  "quickbuf.nvim": { "branch": "main", "commit": "9a70d2ab8513e910bacf037c6dcba4ebbf89cf71" },
+  "quickbuf.nvim": { "branch": "main", "commit": "a1b4f5724af5bf18d4abcb188e7e8e5f6e472b9c" },
   "quicker.nvim": { "branch": "master", "commit": "4a6883cb13fe097a20a046eb55f6dffd239276e3" },
   "snacks.nvim": { "branch": "main", "commit": "882c996cf28183f4d63640de0b4c02ec886d01f2" },
   "snake.nvim": { "branch": "main", "commit": "055f43656b01d5500efffb068c11c5bd3e7914e3" },
   "snipe-marks": { "branch": "main", "commit": "493fb124905b69cc9f834c0d5c15b540e703852b" },
   "snipe.nvim": { "branch": "main", "commit": "d2d196c335919767803f905d573ce66340e33ee6" },
   "telescope.nvim": { "branch": "master", "commit": "40aedd8a68c78a656a10a8d62d80c54af59420fb" },
+  "vimtex": { "branch": "master", "commit": "e355987594cbf16283bee7b37e3aa3a65d5e1c5c" },
   "yank-path.nvim": { "branch": "main", "commit": "e660248de1e4c91a760f510fc165c172a19cc1d5" }
 }

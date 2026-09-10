@@ -260,6 +260,12 @@ vim.lsp.config.terraform = {
     root_markers = { ".terraform", ".git" },
 }
 
+vim.lsp.config.texlab = {
+    cmd = { masonBinPath .. "texlab" },
+    filetypes = { "tex", "plaintex", "bib" },
+    root_markers = { ".latexmkrc", "latexmkrc", ".git" },
+}
+
 vim.lsp.config.sqruff = {
     cmd = {
         "~/.local/python_venvs/.sqruff/bin/" .. "sqruff",
@@ -289,6 +295,7 @@ vim.lsp.enable({
     "json",
     "terraform",
     "sqruff",
+    "texlab",
 })
 
 ----------------
@@ -375,6 +382,8 @@ local function lintFile(args)
         vim.cmd("silent! !" .. masonBinPath .. "pyproject-fmt % " .. args)
     elseif filetype == "rust" then
         vim.cmd("silent! !rustfmt % " .. args)
+    elseif filetype == "tex" or filetype == "plaintex" or filetype == "bib" then
+        vim.cmd("silent! !" .. masonBinPath .. "tex-fmt % " .. args)
     elseif filetype == "yaml" then
         vim.cmd(
             "silent! !"
