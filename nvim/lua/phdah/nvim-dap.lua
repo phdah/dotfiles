@@ -327,6 +327,18 @@ function M.setup_configs()
             end,
             justMyCode = false,
         },
+        {
+            type = "python",
+            request = "launch",
+            name = "Launch DAG (sub process)",
+            program = fileName,
+            cwd = "${fileDirname}",
+            pythonPath = function()
+                return pythonPath
+            end,
+            justMyCode = false,
+            subProcess = true,
+        },
     }
 
     dap.configurations.sh = {
