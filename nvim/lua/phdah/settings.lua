@@ -169,6 +169,9 @@ vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#37222c" })
 vim.api.nvim_set_hl(0, "DiffChange", { bg = "#1f2231" })
 vim.api.nvim_set_hl(0, "DiffText", { bg = "#394b70" })
 
+-- Store spellfile additions in the dotfiles repo (symlinked to ~/.config/nvim)
+vim.opt.spellfile = vim.fn.stdpath("config") .. "/spell/en.utf-8.add"
+
 -- Set spelling on for specific files
 local auGroupSpelling =
     vim.api.nvim_create_augroup("nvim-spelling-custom", { clear = true })
