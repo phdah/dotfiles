@@ -1056,7 +1056,6 @@ return require("lazy").setup({
             })
         end,
         dependencies = {
-            -- "OXY2DEV/markview.nvim"
             "folke/snacks.nvim",
             "saghen/blink.cmp",
             "nvim-lua/plenary.nvim",
@@ -1086,6 +1085,7 @@ return require("lazy").setup({
         cmd = "Obsidian",
         opts = {
             legacy_commands = false,
+            ui = { enable = false },
 
             workspaces = {
                 {
@@ -1140,7 +1140,93 @@ return require("lazy").setup({
             },
         },
     },
-    { "brianhuster/live-preview.nvim", ft = "markdown", keys = { "LivePreview" } },
+    {
+        "OXY2DEV/markview.nvim",
+        ft = { "markdown", "opencode_output" },
+        config = function(_, opts)
+            require("markview").setup(opts)
+
+            -- opencode's output buffer is streamed into via the API while it
+            -- may not be the focused buffer, so `TextChanged`/`TextChangedI`
+            -- (which only fire for the current buffer) never trigger a
+            -- markview re-render. Force one on every raw buffer edit instead.
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "opencode_output",
+                callback = function(args)
+                    local buf = args.buf
+
+                    if vim.b[buf].__markview_opencode_bg_render then
+                        return
+                    end
+                    vim.b[buf].__markview_opencode_bg_render = true
+
+                    vim.api.nvim_buf_attach(buf, false, {
+                        on_lines = function()
+                            vim.schedule(function()
+                                if vim.api.nvim_buf_is_valid(buf) then
+                                    require("markview").render(buf)
+                                end
+                            end)
+                        end,
+                    })
+                end,
+            })
+        end,
+        opts = {
+            preview = {
+                modes = { "n", "no", "c", "i" },
+                hybrid_modes = { "n", "i" },
+                linewise_hybrid_mode = true,
+                debounce = 0,
+                filetypes = { "markdown", "quarto", "rmd", "typst", "opencode_output" },
+                ignore_buftypes = {},
+                callbacks = {
+                    -- Default behaviour, replicated so we can add the
+                    -- opencode_output-only branch below without losing it.
+                    on_attach = function(buffer, wins)
+                        for _, win in ipairs(wins) do
+                            vim.wo[win].conceallevel = 3
+                        end
+
+                        -- Never do hybrid (raw-current-line) rendering in the
+                        -- opencode output buffer: it's read-only, so always
+                        -- fully render it.
+                        if vim.bo[buffer].filetype == "opencode_output" then
+                            require("markview.actions").hybridDisable(buffer)
+                        end
+                    end,
+                },
+            },
+            markdown = {
+                headings = {
+                    heading_1 = { sign = "" },
+                    heading_2 = { sign = "" },
+                    setext_1 = { sign = "" },
+                    setext_2 = { sign = "" },
+                },
+                code_blocks = {
+                    sign = false,
+                },
+            },
+            -- Per-node-class renderer overrides. Used to fully skip code
+            -- block rendering in the opencode output buffer, falling back
+            -- to markview's normal renderer everywhere else.
+            renderers = {
+                markdown_code_block = function(buffer, item)
+                    if vim.bo[buffer].filetype == "opencode_output" then
+                        return
+                    end
+                    require("markview.renderers.markdown").code_block(buffer, item)
+                end,
+                markdown_indented_code_block = function(buffer, item)
+                    if vim.bo[buffer].filetype == "opencode_output" then
+                        return
+                    end
+                    require("markview.renderers.markdown").indented_code_block(buffer, item)
+                end,
+            },
+        },
+    },
 }, {
     performance = { rtp = { reset = false } },
 })
