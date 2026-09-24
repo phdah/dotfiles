@@ -38,6 +38,7 @@ bindsym $mod+Control+j exec --no-startup-id sh -c 'command -v kitty &>/dev/null 
 bindsym $mod+Control+c exec --no-startup-id sh -c 'google-chrome || google-chrome-stable'
 bindsym $mod+Control+l exec --no-startup-id sh -c 'systemctl suspend'
 bindsym $mod+g exec guake-toggle
+bindsym $mod+Shift+t exec --no-startup-id ~/repos/dotfiles/scripts/pomodoro_toggle.sh
 
 # set up F1 keys
 # Volume
@@ -194,7 +195,7 @@ bar {
             binding_mode       #BF616A #BF616A #FFFFFF
     }
     tray_output none
-    status_command i3status --config /home/phdah/.config/i3/i3status.conf
+    status_command i3status --config /home/phdah/.config/i3/i3status.conf | ~/repos/dotfiles/scripts/pomodoro_wrapper.sh
     separator_symbol "|"
 }
 
