@@ -61,6 +61,53 @@ function sedtrailingspace() {
     sed -i 's/\s\+$//g' $(rg --files)
 }
 
+function todo() {
+    if [ -n "$1" ]; then
+        (cd /home/phdah/vaults/work && backlog task "$1")
+    else
+        (cd /home/phdah/vaults/work && backlog board)
+    fi
+}
+function _todo_colorize() {
+    local TASK=$'\e[38;2;94;129;172m'   # task numbers - #5e81ac
+    local CMD=$'\e[38;2;180;142;173m'   # commands - #b48ead
+    local TEXT=$'\e[38;2;143;188;187m'  # text/descriptions - #8fbcbb
+    local RESET=$'\e[0m'
+    while IFS= read -r line; do
+        if [[ "$line" == "(cd "* || "$line" == "todo-add "* || "$line" == "todo-refine "* || "$line" == "CMD:"* ]]; then
+            print -r -- "${CMD}${line}${RESET}"
+        else
+            print -r -- "${TEXT}$(sed -E "s/([Tt][Aa][Ss][Kk]-[0-9]+)/${TASK}\1${TEXT}/g" <<< "$line")${RESET}"
+        fi
+    done
+}
+function todo-add() {
+    opencode run --format json --dir /home/phdah/vaults/work "I want you to create a TASK using backlog.md for this prompt: \"$@\". Before creating it, check if there already exists a TASK that covers this, or can be refined to cover this. When done, report back in exactly this format:
+Action: <Created|Updated>
+ID: <task-id>
+CMD:
+(cd /home/phdah/vaults/work && backlog task <task-id>)" 2>/dev/null | jq -s -r '[.[] | select(.type=="text")] | last | .part.text' | _todo_colorize
+}
+
+function todo-refine() {
+    opencode run --format json --dir /home/phdah/vaults/work "I want you to refine an EXISTING task using backlog.md, never create a new one. Input: \"$@\". If the input matches a task-id pattern (e.g. task-12, TASK-12, or a bare number), use it directly as the task ID. Otherwise, treat the input as search text: use backlog search to find the task it matches, and only proceed on a confident single match (if ambiguous or no match is found, stop and report that instead of guessing or creating a new task). Use the input text as additional context/instructions to refine the task's description and acceptance criteria (via backlog task edit). When done, report back in exactly this format:
+Action: Refined
+ID: <task-id>
+CMD:
+(cd /home/phdah/vaults/work && backlog task <task-id>)" 2>/dev/null | jq -s -r '[.[] | select(.type=="text")] | last | .part.text' | _todo_colorize
+}
+
+function todo-ask() {
+    opencode run --format json --dir /home/phdah/vaults/work "I want you to answer a question about my EXISTING backlog.md tasks. Do not create, edit, or refine any task, this is read-only. Question: \"$@\". Search across ALL tasks regardless of status (To Do, In Progress, Done, etc.) for tasks that relate to this question. Report back in exactly this format and nothing else, no extra commentary:
+If one or more matching tasks are found, list each on its own line as:
+- <task-id>: <short one-line summary of what the task covers>
+CMD:
+(cd /home/phdah/vaults/work && backlog task <task-id>)
+If no matching task is found, respond with exactly:
+No matching task found. Create one with:
+todo-add \"<a short suggested prompt describing the task>\"" 2>/dev/null | jq -s -r '[.[] | select(.type=="text")] | last | .part.text' | _todo_colorize
+}
+
 # Default to emacs keybindings
 bindkey -e
 
