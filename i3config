@@ -199,7 +199,7 @@ bar {
 }
 
 # Set up search bar color
-bindsym $mod+d exec "dmenu_run -nf '#FFFFFF' -nb '#2E3440' -sb '#88C0D0' -sf '#000000' -fn 'monospace-10' -p 'dmenu prompt &gt;'"
+bindsym $mod+d exec "PATH=$HOME/.local/bin:$PATH dmenu_run -nf '#FFFFFF' -nb '#2E3440' -sb '#88C0D0' -sf '#000000' -fn 'monospace-10' -p 'dmenu prompt &gt;'"
 
 # Screendump select or whole screen
 bindsym $mod+p exec --no-startup-id maim -s | tee ~/downloads/screenshot_$(date +%s).png | xclip -selection clipboard -t image/png

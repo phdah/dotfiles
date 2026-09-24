@@ -193,6 +193,9 @@ ubuntu-symlink: ## Symlink dotfiles to repo
 	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
 	@ln -sf $(BUILD_DIR)/scripts/auto-extend-on-top.sh $(HOME)/.local/bin/auto-extend-on-top.sh
 	@ln -sf $(BUILD_DIR)/display-hotplug.service $(CONFIG)/systemd/user/display-hotplug.service
+	@ln -sf $(BUILD_DIR)/scripts/openvpn_toggle.sh $(HOME)/.local/bin/openvpn_toggle.sh
+	@ln -sf $(BUILD_DIR)/openvpn-status-check.service $(CONFIG)/systemd/user/openvpn-status-check.service
+	@ln -sf $(BUILD_DIR)/openvpn-status-check.timer $(CONFIG)/systemd/user/openvpn-status-check.timer
 
 arch-symlink: ## Symlink for arch
 	@printf 'Setting up symlinks for arch\n'

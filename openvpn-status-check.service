@@ -1,0 +1,6 @@
+[Unit]
+Description=Update OpenVPN CloudConnexa status sentinel for i3status
+
+[Service]
+Type=oneshot
+ExecStart=%h/repos/dotfiles/scripts/openvpn_status_check.sh
