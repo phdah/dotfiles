@@ -32,3 +32,10 @@ git:
   pagers:
     - colorArg: always
       pager: delta --dark --paging=never
+os:
+  # Default clipboard copy dies with the terminal job (e.g. a Neovim floating
+  # terminal) that spawned it, since it stays attached to that job's session.
+  # Emitting an OSC52 sequence instead makes the *terminal* (Neovim's
+  # :terminal handler, or the host terminal emulator directly) perform the
+  # clipboard write itself, so it survives the terminal/job being closed.
+  copyToClipboardCmd: printf "\033]52;c;$(printf {{text}} | base64 -w 0)\a" > /dev/tty
