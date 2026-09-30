@@ -1,0 +1,6 @@
+[Unit]
+Description=Update GitHub PR review count sentinel for i3status
+
+[Service]
+Type=oneshot
+ExecStart=%h/repos/dotfiles/scripts/gh_pr_review_count_check.sh

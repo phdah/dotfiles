@@ -61,6 +61,32 @@ function sedtrailingspace() {
     sed -i 's/\s\+$//g' $(rg --files)
 }
 
+function pr-review() {
+    local out key selection repo url hostname dir notify_cmd
+    out=$(~/repos/dotfiles/scripts/gh_pr_reviews.sh | fzf --delimiter='\t' --with-nth=1,2 \
+        --expect=ctrl-i,ctrl-b \
+        --header 'enter/ctrl-b: open in browser, ctrl-i: open in Octo')
+    [ -z "$out" ] && return
+    key=$(head -1 <<< "$out")
+    selection=$(tail -n +2 <<< "$out")
+    [ -z "$selection" ] && return
+    repo=$(cut -f1 <<< "$selection")
+    url=$(cut -f3 <<< "$selection")
+    if [ "$key" = "ctrl-i" ]; then
+        hostname=$(cut -d/ -f3 <<< "$url")
+        dir=$(~/repos/dotfiles/scripts/gh_find_repo_dir.sh "$hostname" "$repo")
+        if [ -n "$dir" ]; then
+            cd "$dir" || return
+            notify_cmd=":lua vim.notify('pr-review: opened ${repo} from ${dir}')"
+        else
+            notify_cmd=":lua vim.notify('pr-review: no local clone of ${repo} found under ~/repos, opening without cd', vim.log.levels.WARN)"
+        fi
+        vim +"$notify_cmd" +":Octo $url"
+    else
+        open "$url"
+    fi
+}
+
 function todo() {
     if [ -n "$1" ]; then
         (cd /home/phdah/vaults/work && backlog task "$1")
