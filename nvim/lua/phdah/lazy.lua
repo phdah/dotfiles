@@ -1052,6 +1052,10 @@ return require("lazy").setup({
                         ["~"] = false,
                         ["<M-v>"] = { "paste_image", mode = { "i", "n" } }, -- Paste image from clipboard as attachment
                     },
+                    output_window = {
+                        ["gj"] = { "next_user_message" },
+                        ["gk"] = { "prev_user_message" },
+                    },
                 },
             })
         end,
@@ -1222,7 +1226,10 @@ return require("lazy").setup({
                     if vim.bo[buffer].filetype == "opencode_output" then
                         return
                     end
-                    require("markview.renderers.markdown").indented_code_block(buffer, item)
+                    require("markview.renderers.markdown").indented_code_block(
+                        buffer,
+                        item
+                    )
                 end,
             },
         },
