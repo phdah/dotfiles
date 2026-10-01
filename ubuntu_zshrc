@@ -304,3 +304,15 @@ export EDITOR=$(which nvim)
 
 # Set default fzf stdout
 export FZF_DEFAULT_COMMAND="rg --hidden -l '' -g '!.git/'"
+
+. "$HOME/.local/bin/env"
+
+# fnm
+FNM_PATH="/home/phdah/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "$(fnm env --shell zsh)"
+fi
+
+# direnv
+eval "$(direnv hook zsh)"
