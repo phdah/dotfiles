@@ -44,7 +44,7 @@ os-check: ## Check what OS is installed
 
 base-dir: ## Setup base directories
 	@printf '\nSetting up base directories\n\n'
-	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit $(CONFIG)/i3 $(HOME)/.local/bin $(CONFIG)/systemd/user
+	@mkdir -p $(HOME)/repos $(HOME)/repos/work $(HOME)/repos/privat $(HOME)/scripts $(HOME)/downloads $(CONFIG) $(CONFIG)/clangd $(CONFIG)/lazygit $(CONFIG)/i3 $(CONFIG)/dunst $(HOME)/.local/bin $(CONFIG)/systemd/user
 
 base-apt-pkr: ## Install packages for base Ubuntu, e.g., WSL
 	@printf '\nApt installs\n\n'
@@ -188,6 +188,7 @@ wsl-symlink: ## Symlink dotfiles to repo
 ubuntu-symlink: ## Symlink dotfiles to repo
 	@printf 'Setting up symlinks for wsl\n'
 	@ln -sf $(BUILD_DIR)/ubuntu_zshrc $(HOME)/.zshrc
+	@ln -sf $(BUILD_DIR)/dunstrc $(CONFIG)/dunst/dunstrc
 	@ln -sf $(BUILD_DIR)/i3status.conf $(CONFIG)/i3/i3status.conf
 	@ln -sf $(BUILD_DIR)/i3config $(CONFIG)/i3/config
 	@ln -sf $(BUILD_DIR)/kitty.conf $(CONFIG)/kitty/kitty.conf
