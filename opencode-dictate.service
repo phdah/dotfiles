@@ -1,0 +1,13 @@
+[Unit]
+Description=OpenCode server for dictate.py agent mode (read-only dictate agent)
+
+[Service]
+WorkingDirectory=%h
+# Only the Atlassian MCP is useful to the dictate agent; skip the rest.
+Environment='OPENCODE_CONFIG_CONTENT={"mcp":{"backlog":{"enabled":false},"codebase-memory-mcp":{"enabled":false}}}'
+# ~/.envvar provides GOOGLE_* for the Vertex model provider.
+ExecStart=/usr/bin/zsh -c 'source ~/.envvar; exec %h/.opencode/bin/opencode serve --hostname 127.0.0.1 --port 4199'
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -90,6 +90,7 @@ ubuntu-pkr: ## Install packages for Ubuntu
 			pulseaudio \
 			pavucontrol \
 			brightnessctl \
+			xdotool \
 			; \
 		sudo apt update --yes; \
 		printf 'Packages not updated\n'; \
@@ -197,6 +198,7 @@ ubuntu-symlink: ## Symlink dotfiles to repo
 	@ln -sf $(BUILD_DIR)/scripts/openvpn_toggle.sh $(HOME)/.local/bin/openvpn_toggle.sh
 	@ln -sf $(BUILD_DIR)/openvpn-status-check.service $(CONFIG)/systemd/user/openvpn-status-check.service
 	@ln -sf $(BUILD_DIR)/openvpn-status-check.timer $(CONFIG)/systemd/user/openvpn-status-check.timer
+	@ln -sf $(BUILD_DIR)/opencode-dictate.service $(CONFIG)/systemd/user/opencode-dictate.service
 
 arch-symlink: ## Symlink for arch
 	@printf 'Setting up symlinks for arch\n'

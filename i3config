@@ -39,6 +39,17 @@ bindsym $mod+Control+c exec --no-startup-id sh -c 'google-chrome || google-chrom
 bindsym $mod+Control+l exec --no-startup-id sh -c 'systemctl suspend'
 bindsym $mod+g exec guake-toggle
 bindsym $mod+Shift+t exec --no-startup-id ~/repos/dotfiles/scripts/pomodoro_toggle.sh
+# push-to-talk dictation (Vertex AI): press to record, press again to paste it
+# Shift+d: verbatim, Shift+e: rewritten/concise,
+# Shift+a: like Shift+e but via a read-only OpenCode agent with Atlassian lookups
+# Shift+x: include the clipboard as context in the next dictation (green notification)
+bindsym $mod+Shift+d exec --no-startup-id "zsh -c 'source ~/.envvar; PATH=$HOME/.local/bin:$PATH ~/repos/dotfiles/scripts/dictate.py raw'"
+bindsym $mod+Shift+e exec --no-startup-id "zsh -c 'source ~/.envvar; PATH=$HOME/.local/bin:$PATH ~/repos/dotfiles/scripts/dictate.py rewrite'"
+bindsym $mod+Shift+a exec --no-startup-id "zsh -c 'source ~/.envvar; PATH=$HOME/.local/bin:$PATH ~/repos/dotfiles/scripts/dictate.py agent'"
+bindsym $mod+Shift+x exec --no-startup-id "zsh -c 'PATH=$HOME/.local/bin:$PATH ~/repos/dotfiles/scripts/dictate.py context'"
+# restart the dictation OpenCode server on i3 reload/restart, to pick up agent
+# config changes (~8s during which agent dictation is unavailable)
+exec_always --no-startup-id systemctl --user restart opencode-dictate
 
 # set up F1 keys
 # Volume
