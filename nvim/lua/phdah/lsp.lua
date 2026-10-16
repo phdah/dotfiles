@@ -282,7 +282,7 @@ vim.lsp.config.sqruff = {
 }
 
 -- All lsp config's are taken from: https://github.com/neovim/nvim-lspconfig/tree/master/lua/lspconfig/configs
-vim.lsp.enable({
+local servers = {
     "luals",
     "pyright",
     -- "pyrefly",
@@ -296,7 +296,24 @@ vim.lsp.enable({
     "terraform",
     "sqruff",
     "texlab",
-})
+}
+
+-- Don't start LSPs in virtual buffers (e.g. octo://, fugitive://, diffview://)
+-- that carry a real filetype but aren't files on disk. Otherwise identical
+-- to the default root_markers lookup.
+for _, name in ipairs(servers) do
+    local markers = vim.lsp.config[name].root_markers
+    vim.lsp.config(name, {
+        root_dir = function(bufnr, on_dir)
+            if vim.api.nvim_buf_get_name(bufnr):match("^%a[%w+.-]*://") then
+                return
+            end
+            on_dir(markers and vim.fs.root(bufnr, markers) or nil)
+        end,
+    })
+end
+
+vim.lsp.enable(servers)
 
 ----------------
 -- Formatters --
