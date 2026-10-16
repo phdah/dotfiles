@@ -108,7 +108,7 @@ vim.o.laststatus = 3
 
 -- For obsidian
 vim.o.conceallevel = 2
-vim.api.nvim_set_hl(0, "@markup.raw.markdown_inline", { bg = "#3B4252", fg = "#88C0D0" })
+vim.api.nvim_set_hl(0, "@markup.raw.markdown_inline", { bg = "#3B4252" })
 
 -- Highlighting for white space
 local whiteGroup =
