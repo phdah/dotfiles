@@ -1,3 +1,5 @@
+require("phdah.plugins.lib").eager({ "vimtex" })
+
 -- Compiler defaults to latexmk, which is the recommended backend, so no
 -- vim.g.vimtex_compiler_method is set here.
 

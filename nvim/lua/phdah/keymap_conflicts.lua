@@ -25,6 +25,13 @@ local IGNORE_SHORT = {
     ["dm"] = true,
     ["a"] = true,
     ["i"] = true,
+    -- surround.lua plugin
+    ["s"] = true,
+    ["sF"] = true,
+    ["sd"] = true,
+    ["sf"] = true,
+    ["sh"] = true,
+    ["sr"] = true,
 }
 
 local function find_conflicts(mode)
@@ -32,7 +39,11 @@ local function find_conflicts(mode)
     local conflicts = {}
 
     for _, short in ipairs(maps) do
-        if short.nowait == 0 and not is_bare_leader(short.lhs) and not IGNORE_SHORT[short.lhs] then
+        if
+            short.nowait == 0
+            and not is_bare_leader(short.lhs)
+            and not IGNORE_SHORT[short.lhs]
+        then
             for _, long in ipairs(maps) do
                 if
                     long.lhs ~= short.lhs

@@ -317,17 +317,6 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- TODO: don't load octo eager here.
--- Autocmd for change dir
-vim.env.GH_HOST = require("octo.utils").get_remote_host()
--- vim.env.GH_HOST = require("nvim-utils").Git:parse_git_remote()
-vim.api.nvim_create_autocmd("DirChanged", {
-    callback = function()
-        vim.env.GH_HOST = require("octo.utils").get_remote_host()
-        -- vim.env.GH_HOST = require("nvim-utils").Git:parse_git_remote()
-    end,
-})
-
 -- treesitter auto install
 vim.api.nvim_create_autocmd("FileType", {
     desc = "Enable treesitter and async-install parser if missing",
