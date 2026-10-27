@@ -45,7 +45,7 @@ local load = lib.once(function()
                 },
             },
         },
-        picker = { name = "snacks.pick" },
+        picker = { name = "snacks.picker" },
     })
 end)
 
