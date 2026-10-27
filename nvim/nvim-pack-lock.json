@@ -166,7 +166,7 @@
       "version": ">=0.0.0"
     },
     "octo.nvim": {
-      "rev": "b495047f0b9d35de3d8c6b84fad9de296d353b41",
+      "rev": "8461d99d13cca243f89848bf4d9fadee096f0a48",
       "src": "https://github.com/pwntester/octo.nvim"
     },
     "oil.nvim": {
