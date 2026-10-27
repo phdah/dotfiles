@@ -40,7 +40,7 @@ local SPECS = {
     ["mason.nvim"] = { src = "https://github.com/williamboman/mason.nvim" },
     ["mason-tool-installer.nvim"] = { src = "https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim" },
     ["nvim-jdtls"] = { src = "https://github.com/mfussenegger/nvim-jdtls" },
-    ["blink.cmp"] = { src = "https://github.com/saghen/blink.cmp", version = "v1.7.0" },
+    ["blink.cmp"] = { src = "https://github.com/saghen/blink.cmp", version = vim.version.range("1") },
     ["blink.compat"] = { src = "https://github.com/saghen/blink.compat", version = vim.version.range("*") },
     ["LuaSnip"] = { src = "https://github.com/L3MON4D3/LuaSnip", version = vim.version.range("2") },
     ["blink-emoji.nvim"] = { src = "https://github.com/moyiz/blink-emoji.nvim" },

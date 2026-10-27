@@ -14,9 +14,9 @@
       "src": "https://github.com/moyiz/blink-emoji.nvim"
     },
     "blink.cmp": {
-      "rev": "327fff91fe6af358e990be7be1ec8b78037d2138",
+      "rev": "78336bc89ee5365633bcf754d93df01678b5c08f",
       "src": "https://github.com/saghen/blink.cmp",
-      "version": "'v1.7.0'"
+      "version": "1.0.0 - 2.0.0"
     },
     "blink.compat": {
       "rev": "2ed6d9a28b07fa6f3bface818470605f8896408c",
