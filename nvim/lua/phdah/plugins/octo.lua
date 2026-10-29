@@ -14,7 +14,16 @@ local load = lib.once(function()
 
     require("octo").setup({
         gh_env = function()
-            return { GH_HOST = require("octo.utils").get_remote_host() }
+            -- octo runs gh with a stripped env; without the display vars,
+            -- `gh --web` -> xdg-open can't find the desktop browser
+            return {
+                GH_HOST = require("octo.utils").get_remote_host(),
+                DISPLAY = vim.env.DISPLAY,
+                WAYLAND_DISPLAY = vim.env.WAYLAND_DISPLAY,
+                XDG_CURRENT_DESKTOP = vim.env.XDG_CURRENT_DESKTOP,
+                XDG_RUNTIME_DIR = vim.env.XDG_RUNTIME_DIR,
+                BROWSER = vim.env.BROWSER,
+            }
         end,
         suppress_missing_scope = { projects_v2 = true },
         enable_builtin = true,
