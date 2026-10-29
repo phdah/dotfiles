@@ -20,7 +20,7 @@ vim.keymap.set("n", "gC", ":tabnew<CR>", { noremap = true, silent = true })
 -- Diagnostic / Error
 vim.api.nvim_set_keymap(
     "n",
-    "<leader>dh",
+    "<leader>eh",
     ":lua vim.diagnostic.open_float()<CR>",
     { noremap = true, silent = true }
 )
