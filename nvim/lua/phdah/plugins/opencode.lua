@@ -13,8 +13,8 @@ local load = lib.once(function()
                 ["<M-v>"] = { "paste_image", mode = { "i", "n" } }, -- Paste image from clipboard as attachment
             },
             output_window = {
-                ["gj"] = { "next_message" },
-                ["gk"] = { "prev_message" },
+                ["gj"] = { "next_user_message" },
+                ["gk"] = { "prev_user_message" },
             },
         },
     })
