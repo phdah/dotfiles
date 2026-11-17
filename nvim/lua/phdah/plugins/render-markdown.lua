@@ -1,9 +1,10 @@
 local lib = require("phdah.plugins.lib")
 
+local file_types = { "markdown", "opencode_output", "octo" }
 lib.on_event("FileType", function()
     lib.load({ "render-markdown.nvim" })
     require("render-markdown").setup({
-        file_types = { "markdown", "opencode_output" },
+        file_types = file_types,
         render_modes = true, -- render in all modes, incl. insert
         sign = { enabled = false },
         overrides = {
@@ -13,4 +14,4 @@ lib.on_event("FileType", function()
             },
         },
     })
-end, { "markdown", "opencode_output" })
+end, file_types)
