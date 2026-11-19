@@ -2,6 +2,51 @@ local lib = require("phdah.plugins.lib")
 
 lib.eager({ "snacks.nvim", "neural-open.nvim" })
 
+-- GitHub `user-attachments/assets/<id>` URLs need a browser session (token
+-- auth returns the login page), but the markdown API with a repo context
+-- rewrites them to short-lived signed URLs. Download that once into the
+-- snacks cache and return the local path. The repo comes from the Octo
+-- buffer name (octo://[host/]owner/repo/...). Returns nil on failure.
+local gh_failed = {} ---@type table<string, boolean>
+local function gh_attachment(file, src)
+    local host = src:match("^https://([^/]+)/user%-attachments/assets/[%w%-]+$")
+    local path = file:match("^octo:/+(.+)$") -- snacks normalizes to octo:/
+    -- `:Octo <url>` on a non-default host prefixes the buffer name with it
+    if host and path and vim.startswith(path, host .. "/") then
+        path = path:sub(#host + 2)
+    end
+    local repo = path and path:match("^([^/]+/[^/]+)/")
+    if not (host and repo) or gh_failed[src] then
+        return
+    end
+    local cache = vim.fn.stdpath("cache") .. "/snacks/image"
+    local base = cache .. "/gh-" .. vim.fn.sha256(src):sub(1, 8) .. "-" .. src:match("[^/]+$")
+    local found = vim.fn.glob(base .. ".*", false, true)[1]
+    if found then
+        return found
+    end
+    gh_failed[src] = true -- only try once per session, this blocks
+    local md = vim.system({
+        "gh", "api", "--hostname", host, "markdown",
+        "-f", "text=![](" .. src .. ")", "-f", "mode=gfm", "-f", "context=" .. repo,
+    }, { text = true }):wait(10000)
+    local url = md.code == 0 and md.stdout:match('<img src="([^"]+)"')
+    if not url or url == src then
+        return
+    end
+    url = url:gsub("&amp;", "&")
+    local out = base .. "." .. (url:gsub("%?.*", ""):match("%.(%w+)$") or "img")
+    vim.fn.mkdir(cache, "p")
+    -- -f and the content type check keep error pages out of the cache
+    local dl = vim.system({ "curl", "-fsSL", "--max-time", "15", "-w", "%{content_type}", "-o", out .. ".tmp", url }, { text = true }):wait(20000)
+    if dl.code == 0 and dl.stdout:match("^image/") then
+        vim.uv.fs_rename(out .. ".tmp", out)
+        gh_failed[src] = nil
+        return out
+    end
+    vim.fn.delete(out .. ".tmp")
+end
+
 require("snacks").setup({
     bigfile = {},
     bufdelete = {},
@@ -134,6 +179,35 @@ require("snacks").setup({
         },
     },
     dim = {},
+    -- Inline images (local, URL via curl, ![[wikilinks]]), mermaid (mmdc)
+    -- and math (pdflatex) in markdown, rendered via kitty graphics.
+    image = {
+        -- Max inline image size in cells (defaults are 80x40)
+        doc = { max_width = 60, max_height = 20 },
+        convert = {
+            notify = true, -- default false hides failed conversions (e.g. mmdc)
+            -- mmdc's headless Chromium dies with "No usable sandbox!" since
+            -- Ubuntu 23.10+ restricts unprivileged user namespaces, so pass
+            -- --no-sandbox via a puppeteer config. Otherwise snacks' default.
+            mermaid = function()
+                local pp = vim.fn.stdpath("cache") .. "/snacks-puppeteer.json"
+                if vim.fn.filereadable(pp) == 0 then
+                    vim.fn.writefile({ '{"args":["--no-sandbox"]}' }, pp)
+                end
+                local theme = vim.o.background == "light" and "neutral" or "dark"
+                return { "-p", pp, "-i", "{src}", "-o", "{file}", "-b", "transparent", "-t", theme, "-s", "{scale}" }
+            end,
+        },
+        -- GitHub "blob" URLs return an HTML page, not the image; rewrite
+        -- them to the raw file. Returning nil keeps the default resolving.
+        resolve = function(file, src)
+            local repo, path = src:match("^https://github%.com/([^/]+/[^/]+)/blob/(.+)$")
+            if repo then
+                return ("https://raw.githubusercontent.com/%s/%s"):format(repo, (path:gsub("%?raw=true$", "")))
+            end
+            return gh_attachment(file, src)
+        end,
+    },
     lazygit = {
         theme = {
             inactiveBorderColor = { fg = "Boolean" },
@@ -142,6 +216,10 @@ require("snacks").setup({
         },
     },
 })
+
+-- snacks only sets up image on the first BufReadPre, which never fires for
+-- BufReadCmd buffers like octo://, so `nvim +"Octo <url>"` had no images.
+Snacks.image.setup()
 
 ----------------------------------------------------------------------------
 -- Keymaps
