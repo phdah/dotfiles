@@ -72,6 +72,7 @@ local SPECS = {
     ["obsidian.nvim"] = { src = "https://github.com/obsidian-nvim/obsidian.nvim", version = vim.version.range("*") },
     ["render-markdown.nvim"] = { src = "https://github.com/MeanderingProgrammer/render-markdown.nvim" },
     ["live-preview.nvim"] = { src = "https://github.com/brianhuster/live-preview.nvim" },
+    ["venn.nvim"] = { src = "https://github.com/jbyuki/venn.nvim" },
 }
 
 local M = {}
