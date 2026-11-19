@@ -134,6 +134,34 @@ require("snacks").setup({
         },
     },
     dim = {},
+    -- Inline images (local, URL via curl, ![[wikilinks]]), mermaid (mmdc)
+    -- and math (pdflatex) in markdown, rendered via kitty graphics.
+    image = {
+        -- Max inline image size in cells (defaults are 80x40)
+        doc = { max_width = 60, max_height = 20 },
+        convert = {
+            notify = true, -- default false hides failed conversions (e.g. mmdc)
+            -- mmdc's headless Chromium dies with "No usable sandbox!" since
+            -- Ubuntu 23.10+ restricts unprivileged user namespaces, so pass
+            -- --no-sandbox via a puppeteer config. Otherwise snacks' default.
+            mermaid = function()
+                local pp = vim.fn.stdpath("cache") .. "/snacks-puppeteer.json"
+                if vim.fn.filereadable(pp) == 0 then
+                    vim.fn.writefile({ '{"args":["--no-sandbox"]}' }, pp)
+                end
+                local theme = vim.o.background == "light" and "neutral" or "dark"
+                return { "-p", pp, "-i", "{src}", "-o", "{file}", "-b", "transparent", "-t", theme, "-s", "{scale}" }
+            end,
+        },
+        -- GitHub "blob" URLs return an HTML page, not the image; rewrite
+        -- them to the raw file. Returning nil keeps the default resolving.
+        resolve = function(_, src)
+            local repo, path = src:match("^https://github%.com/([^/]+/[^/]+)/blob/(.+)$")
+            if repo then
+                return ("https://raw.githubusercontent.com/%s/%s"):format(repo, (path:gsub("%?raw=true$", "")))
+            end
+        end,
+    },
     lazygit = {
         theme = {
             inactiveBorderColor = { fg = "Boolean" },
