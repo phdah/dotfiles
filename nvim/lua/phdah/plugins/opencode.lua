@@ -4,6 +4,7 @@ local load = lib.once(function()
     require("phdah.plugins.blink")()
     lib.load({ "plenary.nvim", "opencode.nvim" })
     require("opencode").setup({
+        default_mode = "orchestrator",
         keymap_prefix = "<leader>a",
         keymap = {
             input_window = {
