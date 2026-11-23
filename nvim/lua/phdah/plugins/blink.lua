@@ -97,7 +97,7 @@ local load = lib.once(function()
                 dbee = { name = "cmp-dbee", module = "blink.compat.source" },
                 dap = { name = "dap", module = "blink.compat.source" },
                 lsp = { min_keyword_length = 0, score_offset = 0 },
-                path = { min_keyword_length = 0 },
+                path = { min_keyword_length = 0, opts = { show_hidden_files_by_default = true } },
                 snippets = { min_keyword_length = 2 },
                 buffer = { min_keyword_length = 1, max_items = 5 },
                 emoji = {
