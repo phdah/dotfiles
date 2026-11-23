@@ -227,6 +227,7 @@ copy-dirs: ## Copy files and dirs
 	@if [ ! -f "$(HOME)/.paths" ]; then cp $(BUILD_DIR)/paths $(HOME)/.paths; fi
 	@if [ ! -f "$(HOME)/.envvar" ]; then cp $(BUILD_DIR)/envvar $(HOME)/.envvar; fi
 	@if [ ! -f "$(HOME)/.alias" ]; then cp $(BUILD_DIR)/alias $(HOME)/.alias; fi
+	@if [ ! -f "$(HOME)/.gh_pr_exclude" ]; then cp $(BUILD_DIR)/gh_pr_exclude $(HOME)/.gh_pr_exclude; fi
 
 finish: ## Finish the install
 	@if [ "$(USR)" != "CI" ]; then \

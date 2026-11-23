@@ -1,0 +1,3 @@
+# Repos to hide from scripts/gh_pr_reviews.sh (pr-review picker and i3status).
+# One owner/name per line, e.g.
+# my_org/my_repo

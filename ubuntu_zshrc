@@ -63,15 +63,15 @@ function sedtrailingspace() {
 
 function pr-review() {
     local out key selection repo url hostname dir notify_cmd
-    out=$(~/repos/dotfiles/scripts/gh_pr_reviews.sh | fzf --delimiter='\t' --with-nth=1,2 \
+    out=$(~/repos/dotfiles/scripts/gh_pr_reviews.sh | fzf --delimiter='\t' --with-nth=1,2,3 \
         --expect=ctrl-i,ctrl-b \
-        --header 'enter/ctrl-b: open in browser, ctrl-i: open in Octo')
+        --header 'review: requested from you, response: reply on your PR | enter/ctrl-b: browser, ctrl-i: Octo')
     [ -z "$out" ] && return
     key=$(head -1 <<< "$out")
     selection=$(tail -n +2 <<< "$out")
     [ -z "$selection" ] && return
-    repo=$(cut -f1 <<< "$selection")
-    url=$(cut -f3 <<< "$selection")
+    repo=$(cut -f2 <<< "$selection")
+    url=$(cut -f4 <<< "$selection")
     if [ "$key" = "ctrl-i" ]; then
         hostname=$(cut -d/ -f3 <<< "$url")
         dir=$(~/repos/dotfiles/scripts/gh_find_repo_dir.sh "$hostname" "$repo")

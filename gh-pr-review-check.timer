@@ -1,5 +1,5 @@
 [Unit]
-Description=Periodically check for GitHub PRs awaiting your review
+Description=Periodically check for GitHub PRs awaiting your review or response
 
 [Timer]
 OnBootSec=10s
